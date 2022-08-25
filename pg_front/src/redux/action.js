@@ -1,5 +1,9 @@
+import { products } from '../asset/products'
 import axios from 'axios';
-import {SIGN_UP} from './const';
+import Swal from 'sweetalert2'
+import {SIGN_UP, SEARCH_PRODUCT} from './const';
+
+
 const URL = 'http://localhost:4000';
 
 export function signUp(body){
@@ -12,5 +16,21 @@ export function signUp(body){
             })
         }  
         catch(e){console.log(e)}     
+    }
+}
+
+
+export  function searchProduct(payload){
+    return async function (dispatch) {
+        try {
+            var product = await axios.get(`${URL}/products?name=${payload}`, {})
+            console.log(product)
+            return dispatch({
+                type: SEARCH_PRODUCT,
+                payload: product.data
+            });
+        } catch (error) {
+           Swal.fire({title: '¡No se encontró tu producto!', text: 'Revisá tu búsqueda', icon:'Error', confirmButtonText: 'Volver'})
+        }
     }
 }

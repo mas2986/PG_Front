@@ -6,6 +6,7 @@ import Login from './componentes/Login';
 import Detail from './componentes/Detail';
 import Products from './componentes/Products';
 import CreateProduct from './componentes/CreateProduct';
+import Home from './componentes/Home';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <header className="App-header">
         <Route exact path='/' component={Landing}/>
         <Route exact path='/login' component={Login}/>
-        <Route exact path='/home' component={Products}/>
+        <Route exact path='/home' component={Home}/>
         <Route exact path='/detail/:id' render={({match})=><Detail match={match}/>}/>
         <Route exact path='/create' component={CreateProduct}/>
       </header>

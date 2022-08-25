@@ -1,4 +1,4 @@
-import {SIGN_UP} from './const';
+import {SIGN_UP, SEARCH_PRODUCT} from './const';
 
 const initialState = {
     products:[],
@@ -12,6 +12,11 @@ export const rootReducer = (state = initialState, action) =>{
                 ...state,
                 user:action.payload
             }
+        case SEARCH_PRODUCT:
+                return {
+                    ...state,
+                    products:action.payload
+                }    
         default: return {...state}
     }
 }

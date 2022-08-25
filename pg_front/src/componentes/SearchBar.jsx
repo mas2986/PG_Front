@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button/Button"
-import "../components/SearchBar.css"
+import "../Style/SearchBar.css"
+import { searchProduct } from "../redux/action";
 
 
 export default function SearchBar() {
 
 const [input, setInput] = useState('')
-const dispatch = useDispatch()
+const dispatch = useDispatch();
 
 function handleInput (e){
     setInput(e.target.value);
@@ -17,7 +18,7 @@ function handleInput (e){
 
 function handleSubmit(e) {
     e.preventDefault()
-    // dispatch(searchRecipes(recipe));
+    dispatch(searchProduct(input));
     setInput('')
 }
     return (
