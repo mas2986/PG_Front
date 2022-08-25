@@ -1,9 +1,15 @@
 import React from 'react';
+import {Button} from '@mui/material';
+import {Link} from 'react-router-dom';
 
 export default function Landing(){
     return(
         <>
-            <h3>Soy el LandingPage</h3>
+            <Link to='/login'>
+                <Button variant="contained" href="#contained-buttons">
+                    LOGIN
+                </Button>
+            </Link>
         </>
     )
 }
