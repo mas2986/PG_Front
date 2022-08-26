@@ -1,6 +1,7 @@
+import {products} from '../asset/products'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import {SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
+import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
 
 
 const URL = 'http://localhost:4000';
@@ -18,12 +19,25 @@ export function signUp(body){
     }
 }
 
+export function getProduct(){
+
+    return async function (dispatch) {
+        try {
+            return dispatch({
+                type: GET_PRODUCTS,
+                payload: products
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 
 export  function searchProduct(payload){
     return async function (dispatch) {
         try {
             var product = await axios.get(`${URL}/products?name=${payload}`, {})
-            console.log(product)
             return dispatch({
                 type: SEARCH_PRODUCT,
                 payload: product.data
@@ -35,7 +49,7 @@ export  function searchProduct(payload){
 }
 
 export function filterBySport(payload) {
-    console.log(payload)
+
     return {
         type: FILTER_SPORT,
         payload, //Acá llegaría el tipo de deporte
@@ -43,7 +57,6 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
-    console.log(payload)
     return {
         type: FILTER_GENRE,
         payload, //Acá llegaría el tipo de genero
@@ -51,7 +64,6 @@ export function filterByGenre(payload) {
 }
 
 export function filterByBrand(payload) {
-    console.log(payload)
     return {
         type: FILTER_BRAND,
         payload, //Acá llegaría el tipo de genero
