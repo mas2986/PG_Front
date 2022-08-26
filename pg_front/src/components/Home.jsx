@@ -71,18 +71,5 @@ export default function Home(){
             </Container>
         </>
 
-
-/*         <div className="backGround">
-            <h2>Sports Apparel · Footwear · </h2>
-            <div>
-                {products.length>0&&products.map(e=>
-                    <CardProduct 
-                        key = {e.id}
-                        title={e.title}
-                        sport={e.sport}    
-                        Image={e.Image||e.image}
-                    />)}
-            </div>
-        </div> */
     )
 }
