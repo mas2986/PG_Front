@@ -96,6 +96,21 @@ let products = [
     {"id":95, "title": "bike shirts for kids cycling short sleeve", "brand": "", "image": "https://res.cloudinary.com/demogorgonn/image/upload/v1661407586/Pgrupal/s-l500_ikeabw.jpg", "descripcion": "Diseñados para ciclistas de pista o mountain de diferentes niveles","price": "1-99000","discount": "0%-100%", "status": "true","stock": "1-999", "genre":"Kids", "sport": "Ciclism"}
 ]
 
+
+// let genres = products.map( el => el.genre).flat(1)
+// allGenres = new Set(genres)
+// console.log(allGenres)
+
+// let brands = products.map( el => el.brand).flat(1)
+// allBrands = new Set(brands)
+// console.log(allBrands)
+
+// let sports = products.map( el => el.sport).flat(1)
+// allSports = new Set(sports)
+// console.log(allSports)
+
+
+
 module.exports = {
     products
 }
