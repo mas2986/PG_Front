@@ -1,0 +1,43 @@
+.appbar {
+  height: 50px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logo-container {
+  margin-bottom: 0.4rem;
+}
+
+.options-container {
+  display: flex;
+}
+
+.options {
+  margin: 0 1rem;
+  /* padding-bottom: 0.3rem; */
+  border-bottom: 4px solid transparent;
+  transition: all 1s;
+}
+
+.options-dropdown {
+  display: none;
+}
+
+.options:hover {
+  border-bottom: 4px solid #000;
+  cursor: pointer;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem 1.3rem;
+}
+
+.options-menu {
+  display: none;
+  margin-top: 10rem;
+}
