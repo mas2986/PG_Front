@@ -24,7 +24,7 @@ export default function Home(){
                     width: 1440,
                     height: 1024,
                     backgroundImage: `url(${Image})`,
-                    //borderRadius: 50            
+                    borderRadius: '0px 0px 50px 50px'
                 }}            
             />        
             <Typography variant="h1" component="h2" sx={{
@@ -46,7 +46,7 @@ export default function Home(){
             }}>
                 Sports Apparel · Footwear ·
             </Typography>
-            <Container maxWidth="md" sx={{margin:2}}>
+            <Container maxWidth="md" sx={{margin:'0 auto'}}>
                 <Box
                     sx={{ 
                         margin:1,
@@ -64,19 +64,5 @@ export default function Home(){
                 </Box>
             </Container>
         </>
-
-
-/*         <div className="backGround">
-            <h2>Sports Apparel · Footwear · </h2>
-            <div>
-                {products.length>0&&products.map(e=>
-                    <CardProduct 
-                        key = {e.id}
-                        title={e.title}
-                        sport={e.sport}    
-                        Image={e.Image||e.image}
-                    />)}
-            </div>
-        </div> */
     )
 }
