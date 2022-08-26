@@ -45,26 +45,74 @@ export default function Nav(props) {
                 </Typography>
               </Box>
               <Box className={n["options-container"]}>
-                <Typography variant="h6" color="primary" className={n.options}>
-                  Women
-                </Typography>
-                <div className={n["options-dropdown"]}>
-                  <ul>
-                    <li>Shirts</li>
-                    <li>Jeans</li>
-                    <li>Skirts</li>
-                    <li>Sneakers</li>
-                  </ul>
+                <div style={{ position: "relative" }}>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    className={n["options-women"]}
+                  >
+                    Women
+                  </Typography>
+                  <div className={n["options-dropdown-women"]}>
+                    <ul>
+                      <li>Shirts</li>
+                      <li>Jeans</li>
+                      <li>Skirts</li>
+                      <li>Sneakers</li>
+                    </ul>
+                  </div>
                 </div>
-                <Typography color="primary" variant="h6" className={n.options}>
-                  Men
-                </Typography>
-                <Typography color="primary" variant="h6" className={n.options}>
-                  Children
-                </Typography>
-                <Typography color="primary" variant="h6" className={n.options}>
-                  Other
-                </Typography>
+                <div style={{ position: "relative" }}>
+                  <Typography
+                    color="primary"
+                    variant="h6"
+                    className={n["options-men"]}
+                  >
+                    Men
+                  </Typography>
+                  <div className={n["options-dropdown-men"]}>
+                    <ul>
+                      <li>Shirts</li>
+                      <li>Jeans</li>
+                      <li>Skirts</li>
+                      <li>Sneakers</li>
+                    </ul>
+                  </div>
+                </div>
+                <div style={{ position: "relative" }}>
+                  <Typography
+                    color="primary"
+                    variant="h6"
+                    className={n["options-children"]}
+                  >
+                    Children
+                  </Typography>
+                  <div className={n["options-dropdown-children"]}>
+                    <ul>
+                      <li>Shirts</li>
+                      <li>Jeans</li>
+                      <li>Skirts</li>
+                      <li>Sneakers</li>
+                    </ul>
+                  </div>
+                </div>
+                <div style={{ position: "relative" }}>
+                  <Typography
+                    color="primary"
+                    variant="h6"
+                    className={n["options-other"]}
+                  >
+                    Other
+                  </Typography>
+                  <div className={n["options-dropdown-other"]}>
+                    <ul>
+                      <li>Shirts</li>
+                      <li>Jeans</li>
+                      <li>Skirts</li>
+                      <li>Sneakers</li>
+                    </ul>
+                  </div>
+                </div>
               </Box>
               <Box display="flex">
                 <SearchBar />
