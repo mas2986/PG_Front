@@ -1,23 +1,31 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
-import Button from "@mui/material/Button/Button";
-import "../components/SearchBar.css";
-import lupa from "../lupa.png";
+import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button/Button"
+import "../Style/SearchBar.css"
+import { searchProduct } from "../redux/action";
+
+
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
+
+
+
 
   function handleInput(e) {
+
     setInput(e.target.value);
     console.log(e.target.value);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // dispatch(searchRecipes(recipe));
-    setInput("");
-  }
+
+    function handleSubmit(e) {
+    e.preventDefault()
+    dispatch(searchProduct(input));
+    setInput('')
+}
+ 
   return (
     <div>
       <section>
@@ -28,7 +36,7 @@ export default function SearchBar() {
         <input
           className="input-detail"
           type="text"
-          placeholder="Search"
+          placeholder="¿Buscás un producto?"
           onChange={(e) => handleInput(e)}
         ></input>
 
@@ -45,4 +53,5 @@ export default function SearchBar() {
       </section>
     </div>
   );
+
 }
