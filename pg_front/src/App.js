@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom';
 import Landing from './componentes/Landing';
 import Login from './componentes/Login';
 import Detail from './componentes/Detail';
-import Products from './componentes/Products';
+import Home from './componentes/Home';
 import CreateProduct from './componentes/CreateProduct';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <header className="App-header">
         <Route exact path='/' component={Landing}/>
         <Route exact path='/login' component={Login}/>
-        <Route exact path='/home' component={Products}/>
+        <Route exact path='/home' component={Home}/>
         <Route exact path='/detail/:id' render={({match})=><Detail match={match}/>}/>
         <Route exact path='/create' component={CreateProduct}/>
       </header>

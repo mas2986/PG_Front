@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Swal from 'sweetalert2'
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -18,13 +19,15 @@ import {useDispatch} from 'react-redux';
 import { signUp } from '../redux/action';
 
 
-function validate(input){
+/* function validate(input){
     let errors = {};
-    //if (.test(input.password)) errors.password('Formato de clave incorrecto')
+    console.log('En funcion validate')
+    let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    if (!regexEmail.test(input.email)) errors.email = 'Email no válido'
 
-
+    console.log(errors);
     return errors;
-}
+} */
 
 
 
@@ -44,13 +47,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const [input, setInput] = useState({
-      firstName: '',
-      lastName: '',
+  const [input, setInput] = useState({      
       email: '',
       password: ''
   })
-  const [errors, setErrors] = useState({})
 
   const dispatch = useDispatch();
 
@@ -61,24 +61,23 @@ export default function SignUp() {
       setInput({
           ...input,
           [e.target.name]:e.target.value
-      })
-      let errorsValidate = validate({...input, [e.target.name]:e.target.value})
-      setErrors(errorsValidate)
+      })      
 
   }
   const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    /* const data = new FormData(event.currentTarget);
-    let body = {
-        email: data.get('email'),
-        password: data.get('password')
-    } */
-    console.log({
-        input
-    });
-    dispatch(signUp(input))
-
+    event.preventDefault();   
+    if(input.email&&input.password){
+      console.log({
+          input
+      });
+      return dispatch(signUp(input))
+    }
+    Swal.fire({
+      title: 'Error!',
+      text: 'Complete password and email',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    })
   };
 
   return (
@@ -96,9 +95,9 @@ export default function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          {/* <Typography component="h1" variant="h5">
             Login
-          </Typography>
+          </Typography> */}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
 {/*               <Grid item xs={12} sm={6}>
@@ -151,12 +150,12 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
