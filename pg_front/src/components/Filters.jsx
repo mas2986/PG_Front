@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterByGenre, filterBySport, filterByBrand } from "../redux/action";
 
@@ -7,21 +7,18 @@ export default function Filters() {
 
 const dispatch = useDispatch();
     
-
+const [input, setInput] = useState('')
 
 function handleFilteredGenres(e){
     e.preventDefault()
-    console.log(e.target.value)
     dispatch(filterByGenre(e.target.value));        
 }
 function handleFilteredSports(e){
     e.preventDefault()
-    console.log(e.target.value)
     dispatch(filterBySport(e.target.value));        
 }
 function handleFilteredBrands(e){
     e.preventDefault()
-    console.log(e.target.value)
     dispatch(filterByBrand(e.target.value));        
 }
 
@@ -29,7 +26,7 @@ function handleFilteredBrands(e){
         <section>
             <div >
                 <h3>GÉNEROS</h3>
-                <select className="select-detail" onClick={(e) => {handleFilteredGenres(e)}}>
+                <select className="select-detail" onChange={(e) => {handleFilteredGenres(e)}}>
                 <option value="All">Todos</option>
                 <option value="Male">Hombre</option>
                 <option value="Female">Mujer</option>
@@ -40,11 +37,11 @@ function handleFilteredBrands(e){
                 <option value="Adults">Adultos</option>
                 <option value="None">Sin género</option>
                 <option value="">No binario</option>
-            </select>
+            SELECT</select>
         </div>
         <div >
            <h3>MARCAS</h3>
-           <select className="select-detail" onClick={(e) => {handleFilteredBrands(e)}}>
+           <select className="select-detail" onChange={(e) => {handleFilteredBrands(e)}}>
                <option value="All">Todas</option>
                <option value="Nike">Nike</option>
                <option value="Adidas">Adidas</option>
@@ -61,7 +58,7 @@ function handleFilteredBrands(e){
             </div>
             <div>
                 <h3>DEPORTES</h3>
-                <select className="select-detail" onClick={(e) => handleFilteredSports(e)}>
+                <select className="select-detail" onChange={(e) => handleFilteredSports(e)}>
                 <option value="All">Todos</option>
                 <option value="Futbol">Fútbol</option>
                 <option value="Rugby">Rugby</option>

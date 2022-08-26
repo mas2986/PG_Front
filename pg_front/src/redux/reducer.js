@@ -29,11 +29,10 @@ export const rootReducer = (state = initialState, action) =>{
         case FILTER_SPORT:
                     const allProducts = state.altProducts
                     const filteredSports = action.payload === 'All'? allProducts : allProducts.filter(p => p.sport.includes(action.payload));
-                    console.log(filteredSports)
-                    return {
+                     return {
                         ...state,
                         products: filteredSports //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
-                }            
+                    };        
         case FILTER_BRAND:
                     const allBrands = state.altProducts
                     const filteredBrands = action.payload === 'All'? allBrands : allBrands.filter(p => p.brand.includes(action.payload));

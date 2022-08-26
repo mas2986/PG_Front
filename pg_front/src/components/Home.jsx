@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { filterByGenre, filterBySport, filterByBrand } from "../redux/action";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -17,7 +16,7 @@ export default function Home(){
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getProduct(products))
+    if (products.length === 0) dispatch(getProduct(products))
     }, [dispatch])
     
 
@@ -56,7 +55,7 @@ export default function Home(){
             <Container maxWidth="md" sx={{margin:2}}>
                 <Box
                     sx={{ 
-                        margin:1,
+                        margin: 1,
                         display: 'grid', 
                         gridTemplateColumns: 'repeat(3, 1fr)'
                     }}

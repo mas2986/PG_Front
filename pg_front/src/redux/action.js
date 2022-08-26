@@ -49,7 +49,7 @@ export  function searchProduct(payload){
 }
 
 export function filterBySport(payload) {
-
+    console.log(payload)
     return {
         type: FILTER_SPORT,
         payload, //Acá llegaría el tipo de deporte
@@ -57,6 +57,7 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
+    console.log(payload)
     return {
         type: FILTER_GENRE,
         payload, //Acá llegaría el tipo de genero
@@ -64,6 +65,7 @@ export function filterByGenre(payload) {
 }
 
 export function filterByBrand(payload) {
+    console.log(payload)
     return {
         type: FILTER_BRAND,
         payload, //Acá llegaría el tipo de genero
