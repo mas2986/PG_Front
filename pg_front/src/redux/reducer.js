@@ -49,6 +49,23 @@ export const rootReducer = (state = initialState, action) =>{
                             ...state,
                             products: filteredGenres //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
                 } 
+        case 'ORDER_BY':
+                    let filterProducts = state.altProducts;
+                    if (filterProducts.length > 0) {
+                        let sortProduct = action.payload === 'asc' ?  state.filterProducts.sort((a, b) => {if(a.name > b.name){return 1;} if(a.name < b.name){return -1;} return 0;}) : state.filterProducts.sort((a, b) =>  {if(a.name > b.name){return -1;} if(a.name < b.name){return 1;} return 0;});
+                        return {
+                            ...state,
+                            filterProducts: sortProduct,
+                            
+                        }
+                        
+                    }
+                    let sortProduct = action.payload === 'asc' ?  state.products.sort((a, b) => {if(a.name > b.name){return 1;} if(a.name < b.name){return -1;} return 0;}) : state.products.sort((a, b) =>  {if(a.name > b.name){return -1;} if(a.name < b.name){return 1;} return 0;});
+                    return {
+                        ...state,
+                        products: sortProduct,
+                        
+                    }        
         
         
         default: return {...state}

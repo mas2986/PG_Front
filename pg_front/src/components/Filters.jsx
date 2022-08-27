@@ -22,6 +22,13 @@ function handleFilteredBrands(e){
     dispatch(filterByBrand(e.target.value));        
 }
 
+    
+function handleOrderBy(e){
+    e.preventDefault();
+    dispatch(orderBy(e.target.value));
+    setInput(`Ordenado por: ${e.target.value}`); // setea el orden de los games desde la pagina 1, es CLAVE: setOrder
+}
+
     return (
         <section>
             <div >
@@ -38,6 +45,12 @@ function handleFilteredBrands(e){
                 <option value="None">Sin género</option>
                 <option value="">No binario</option>
             SELECT</select>
+        </div>
+        <div>
+            <select onChange={e => handleOrderBy(e)}>
+            <option value="asc"> A-Z</option>
+            <option value="desc"> Z-A</option>
+             </select>
         </div>
         <div >
            <h3>MARCAS</h3>

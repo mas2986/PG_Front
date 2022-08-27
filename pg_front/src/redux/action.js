@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
 
 
-const URL = 'http://localhost:4000';
+const URL = 'http://localhost:3000';
 
 export function signUp(body){
     return async function(dispatch){ 
@@ -69,5 +69,12 @@ export function filterByBrand(payload) {
     return {
         type: FILTER_BRAND,
         payload, //Acá llegaría el tipo de genero
+    }
+}
+
+export function orderBy(payload) {
+    return {
+        type: 'ORDER_BY',
+        payload: payload // Deberia llegar el array con los obj para ordenar. 
     }
 }
