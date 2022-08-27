@@ -1,0 +1,108 @@
+.appbar {
+    height: 50px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .logo-container {
+    margin-bottom: 0.4rem;
+  }
+  
+  .options-container {
+    display: flex;
+  }
+  
+  .options-women,
+  .options-men,
+  .options-children,
+  .options-other {
+    margin: 0 1rem;
+    /* padding-bottom: 0.3rem; */
+    border-bottom: 4px solid transparent;
+    transition: all 1s;
+  }
+  
+  .options-dropdown-children,
+  .options-dropdown-women,
+  .options-dropdown-men,
+  .options-dropdown-other {
+    display: none;
+    position: absolute;
+    top: 2rem;
+    color: #000;
+    transition: all 3s;
+  }
+  
+  .options-dropdown-children ul,
+  .options-dropdown-women ul,
+  .options-dropdown-men ul,
+  .options-dropdown-other ul {
+    display: block;
+    list-style: none;
+    /* border: 1px solid red; */
+    background-color: #fdffff;
+    padding: 2rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .options-dropdown-children ul li,
+  .options-dropdown-women ul li,
+  .options-dropdown-men ul li,
+  .options-dropdown-other ul li {
+    padding: 0.5rem;
+    border-bottom: transparent 1px solid;
+  }
+  
+  .options-dropdown-children ul li:hover,
+  .options-dropdown-women ul li:hover,
+  .options-dropdown-men ul li:hover,
+  .options-dropdown-other ul li:hover {
+    border-bottom: #000 1px solid;
+    cursor: pointer;
+  }
+  .options-dropdown-women:hover {
+    display: block;
+  }
+  .options-dropdown-men:hover {
+    display: block;
+  }
+  .options-dropdown-children:hover {
+    display: block;
+  }
+  .options-dropdown-other:hover {
+    display: block;
+  }
+  
+  .options-women:hover + .options-dropdown-women {
+    display: block;
+  }
+  .options-men:hover + .options-dropdown-men {
+    display: block;
+  }
+  .options-children:hover + .options-dropdown-children {
+    display: block;
+  }
+  .options-other:hover + .options-dropdown-other {
+    display: block;
+  }
+  .options-women:hover,
+  .options-men:hover,
+  .options-children:hover,
+  .options-other:hover {
+    border-bottom: 4px solid #000;
+    cursor: pointer;
+  }
+  
+  .login-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 1rem 1.3rem;
+  }
+  
+  .login-container img:hover {
+    cursor: pointer;
+  }
