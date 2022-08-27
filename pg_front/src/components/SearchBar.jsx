@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import Button from "@mui/material/Button/Button"
-import "../Style/SearchBar.css"
-import { searchProduct } from "../redux/action";
 
+// import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button/Button";
+import s from "./SearchBar.module.css";
+import lupa from "../lupa.png";
+import SearchIcon from "@mui/icons-material/Search";
 
 
 export default function SearchBar() {
@@ -28,27 +29,23 @@ export default function SearchBar() {
  
   return (
     <div>
-      <section>
-        {/* <a onClick={(e) => {
-            handleSubmit(e);}}>
-          <img src={lupa} className="mag-glass" />
-        </a> */}
+      <section className={s["search-container"]}>
         <input
-          className="input-detail"
+          className={s["input-detail"]}
           type="text"
           placeholder="¿Buscás un producto?"
           onChange={(e) => handleInput(e)}
         ></input>
 
         <Button
-          className="input-button"
-          variant="contained"
+          className={s["input-btn"]}
           size="small"
           onClick={(e) => {
             handleSubmit(e);
           }}
+          style={{ background: "transparent" }}
         >
-          Click
+          <SearchIcon fontSize="large" className={s["search-icon"]} />
         </Button>
       </section>
     </div>
