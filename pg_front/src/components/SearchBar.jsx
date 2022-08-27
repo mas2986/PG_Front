@@ -1,55 +1,50 @@
 import React, { useState } from "react";
-
+import { searchProduct } from "../redux/action";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button/Button";
-import s from "../Style/SearchBar.module.css";
-import lupa from "../asset/lupa.png";
+import s from "./SearchBar.module.css";
+import lupa from "../lupa.png";
 import SearchIcon from "@mui/icons-material/Search";
-import {searchProduct} from '../redux/action'
-
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
-  const dispatch = useDispatch()
-
-
-
+  const dispatch = useDispatch();
 
   function handleInput(e) {
-
     setInput(e.target.value);
     console.log(e.target.value);
   }
 
-
-    function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("e   " + e);
     dispatch(searchProduct(input));
-    setInput('')
-}
- 
+    setInput("");
+  }
+
   return (
     <div>
       <section className={s["search-container"]}>
-        <input
-          className={s["input-detail"]}
-          type="text"
-          placeholder="¿Buscás un producto?"
-          onChange={(e) => handleInput(e)}
-        ></input>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input
+            className={s["input-detail"]}
+            type="text"
+            placeholder="Search"
+            onChange={(e) => handleInput(e)}
+          ></input>
 
-        <Button
-          className={s["input-btn"]}
-          size="small"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-          style={{ background: "transparent" }}
-        >
-          <SearchIcon fontSize="large" className={s["search-icon"]} />
-        </Button>
+          <Button
+            className={s["input-btn"]}
+            size="small"
+            // onClick={(e) => {
+            //   handleSubmit(e);
+            // }}
+            style={{ background: "transparent" }}
+          >
+            <SearchIcon fontSize="large" className={s["search-icon"]} />
+          </Button>
+        </form>
       </section>
     </div>
   );
-
 }

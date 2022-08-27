@@ -1,22 +1,33 @@
+
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import {SIGN_UP, GET_PRODUCTS, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
+import {
+    GET_PRODUCTS,
+    SIGN_UP,
+    SEARCH_PRODUCT,
+    FILTER_SPORT,
+    FILTER_GENRE,
+    FILTER_BRAND,
+    FILTER_NAV_GENDER,
+  } from "./const";
+
 const URL = 'http://localhost:4000';
 
 
 export function signUp(body){
     return async function(dispatch){ 
         try{
-            let res = await axios.post(`${URL}/api/login`,body);
+            let user = await axios.post(`${URL}/api/login`,body);
+            localStorage.setItem('userDetails',JSON.stringify(user.data))
             return dispatch({
                 type: SIGN_UP,
-                payload: res.data
+                payload: user.data
             })
         }  
         catch(e){
             Swal.fire({
                 title: 'Error!',
-                text: 'Error'/*e.msg*/,
+                text: e.msg,
                 icon: 'error',
                 confirmButtonText: 'OK'
               })
@@ -40,7 +51,7 @@ export function getProduct(){
 export  function searchProduct(payload){
     return async function (dispatch) {
         try {
-            var product = await axios.get(`${URL}/products?name=${payload}`, {})
+            var product = await axios.get(`${URL}/api/products?title=${payload}`, {})
             return dispatch({
                 type: SEARCH_PRODUCT,
                 payload: product.data
@@ -74,3 +85,10 @@ export function filterByBrand(payload) {
         payload, //Acá llegaría el tipo de genero
     }
 }
+
+export function filterByGenderInNav(payload) {
+    return {
+      type: FILTER_NAV_GENDER,
+      payload,
+    };
+  }

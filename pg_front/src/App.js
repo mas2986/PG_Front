@@ -1,7 +1,7 @@
 //import logo from './logo.svg';
 //import './App.css';
 
-import { Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import Home from './components/Home';
 import CreateProduct from './components/CreateProduct';
 import Landing from "./components/Landing";

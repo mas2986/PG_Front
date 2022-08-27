@@ -16,31 +16,27 @@ export default function Home(){
 
     useEffect(()=>{
         dispatch(getProduct())
-    })
+    },[])
 
     return(
         <>
             <Box
                 sx={{
-                    position:'absolute',
+                    position:'relative',
                     top:'10px',
                     width: '100vw',
-                    height: 1024,
+                    height: '100vh',
                     backgroundImage: `url(${Image})`,
                     borderRadius: '0px 0px 50px 50px'
                 }}            
-            />    
-            <Filters/>    
-            <Box sx={{
-                display: 'flex',
-                margin:'0 auto'
-            }}>
+            > 
                 <Typography variant="h1" component="h2" sx={{
                     width: 1440,
                     height: 185,
                     position:'absolute',
-                    left: -359,
-                    top:711,
+                    left: '50%',
+                    top:'50%',
+                    transform: 'traslate(50%,50%)',
                     fontFamily: 'Roboto',
                     fontStyle: 'italic',
                     fontWeight: 900,
@@ -54,7 +50,8 @@ export default function Home(){
                 }}>
                     Sports Apparel · Footwear ·
                 </Typography>
-            </Box>
+            </Box>  
+            <Filters/>                            
             <Container component="main" maxWidth="md" sx={{
                 position:'absolute',
                 top:'1050px'

@@ -23,7 +23,7 @@ function handleFilteredBrands(e){
 }
 
     return (
-        <section>
+        <section style={{display: "flex",margin:"0 auto"}}>
             <div >
                 <h3>GÉNEROS</h3>
                 <select className="select-detail" onChange={(e) => {handleFilteredGenres(e)}}>

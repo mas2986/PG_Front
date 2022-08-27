@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Swal from 'sweetalert2'
-
+import {Redirect} from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,6 +31,8 @@ import { signUp } from '../redux/action';
 
 
 function Copyright(props) {
+
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -64,7 +66,9 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();   
     if(input.email&&input.password){      
-      return dispatch(signUp(input))
+      dispatch(signUp(input));
+      const token = localStorage.getItem("token");
+      console.log(token);
     }
     Swal.fire({
       title: 'Error!',
