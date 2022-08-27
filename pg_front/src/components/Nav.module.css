@@ -31,7 +31,7 @@
 .options-dropdown-other {
   display: none;
   position: absolute;
-  top: 2rem;
+  top: 1.4rem;
   color: #000;
   transition: all 3s;
 }
@@ -49,18 +49,21 @@
   line-height: 1.5;
 }
 
-.options-dropdown-children ul li,
-.options-dropdown-women ul li,
-.options-dropdown-men ul li,
-.options-dropdown-other ul li {
+.options-dropdown-children ul button,
+.options-dropdown-women ul button,
+.options-dropdown-men ul button,
+.options-dropdown-other ul button {
   padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+  font-family: "Roboto";
   border-bottom: transparent 1px solid;
 }
 
-.options-dropdown-children ul li:hover,
-.options-dropdown-women ul li:hover,
-.options-dropdown-men ul li:hover,
-.options-dropdown-other ul li:hover {
+.options-dropdown-children ul button:hover,
+.options-dropdown-women ul button:hover,
+.options-dropdown-men ul button:hover,
+.options-dropdown-other ul button:hover {
   border-bottom: #000 1px solid;
   cursor: pointer;
 }
