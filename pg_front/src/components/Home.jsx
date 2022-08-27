@@ -54,6 +54,7 @@ export default function Home() {
       >
         {/* Sports Apparel · Footwear · */}
       </Typography>
+      <div id="scrollDiv"></div>
       <Container maxWidth="md" sx={{ margin: 2 }}>
         <Box
           sx={{

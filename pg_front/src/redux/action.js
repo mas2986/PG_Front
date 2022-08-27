@@ -8,6 +8,7 @@ import {
   FILTER_SPORT,
   FILTER_GENRE,
   FILTER_BRAND,
+  FILTER_NAV_GENDER,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -49,10 +50,10 @@ export function searchProduct(payload) {
       });
     } catch (error) {
       Swal.fire({
-        title: "¡No se encontró tu producto!",
-        text: "Revisá tu búsqueda",
+        title: "Product not found!",
+        text: "Please try with another product",
         icon: "Error",
-        confirmButtonText: "Volver",
+        confirmButtonText: "Back",
       });
     }
   };
@@ -79,5 +80,12 @@ export function filterByBrand(payload) {
   return {
     type: FILTER_BRAND,
     payload, //Acá llegaría el tipo de genero
+  };
+}
+
+export function filterByGenderInNav(payload) {
+  return {
+    type: FILTER_NAV_GENDER,
+    payload,
   };
 }

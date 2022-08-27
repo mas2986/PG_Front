@@ -16,7 +16,8 @@ export default function SearchBar() {
   }
 
   function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
+    console.log("e   " + e);
     dispatch(searchProduct(input));
     setInput("");
   }
@@ -24,23 +25,25 @@ export default function SearchBar() {
   return (
     <div>
       <section className={s["search-container"]}>
-        <input
-          className={s["input-detail"]}
-          type="text"
-          placeholder="Search"
-          onChange={(e) => handleInput(e)}
-        ></input>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input
+            className={s["input-detail"]}
+            type="text"
+            placeholder="Search"
+            onChange={(e) => handleInput(e)}
+          ></input>
 
-        <Button
-          className={s["input-btn"]}
-          size="small"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-          style={{ background: "transparent" }}
-        >
-          <SearchIcon fontSize="large" className={s["search-icon"]} />
-        </Button>
+          <Button
+            className={s["input-btn"]}
+            size="small"
+            // onClick={(e) => {
+            //   handleSubmit(e);
+            // }}
+            style={{ background: "transparent" }}
+          >
+            <SearchIcon fontSize="large" className={s["search-icon"]} />
+          </Button>
+        </form>
       </section>
     </div>
   );

@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
 import n from "./Nav.module.css";
+import { useDispatch } from "react-redux";
+import { filterByGenderInNav } from "../redux/action";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -28,6 +30,13 @@ function HideOnScroll(props) {
 }
 
 export default function Nav(props) {
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    console.log(e.target.value);
+    dispatch(filterByGenderInNav(e.target.value));
+  };
+
   return (
     <>
       <StyledEngineProvider injectFirst>
@@ -55,10 +64,26 @@ export default function Nav(props) {
                   </Typography>
                   <div className={n["options-dropdown-women"]}>
                     <ul>
-                      <li>Shirts</li>
-                      <li>Jeans</li>
-                      <li>Skirts</li>
-                      <li>Sneakers</li>
+                      <a href="#scrollDiv">
+                        <button value="women-jersey" onClick={handleClick}>
+                          Jerseys
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="women-shorts" onClick={handleClick}>
+                          Shorts
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="women-boots" onClick={handleClick}>
+                          Boots
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="women-more" onClick={handleClick}>
+                          More
+                        </button>
+                      </a>
                     </ul>
                   </div>
                 </div>
@@ -72,10 +97,26 @@ export default function Nav(props) {
                   </Typography>
                   <div className={n["options-dropdown-men"]}>
                     <ul>
-                      <li>Shirts</li>
-                      <li>Jeans</li>
-                      <li>Skirts</li>
-                      <li>Sneakers</li>
+                      <a href="#scrollDiv">
+                        <button value="men-jerseys" onClick={handleClick}>
+                          Jerseys
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="men-shorts" onClick={handleClick}>
+                          Shorts
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="men-boots" onClick={handleClick}>
+                          Boots
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="men-more" onClick={handleClick}>
+                          More
+                        </button>
+                      </a>
                     </ul>
                   </div>
                 </div>
@@ -89,10 +130,26 @@ export default function Nav(props) {
                   </Typography>
                   <div className={n["options-dropdown-children"]}>
                     <ul>
-                      <li>Shirts</li>
-                      <li>Jeans</li>
-                      <li>Skirts</li>
-                      <li>Sneakers</li>
+                      <a href="#scrollDiv">
+                        <button value="kids-jerseys" onClick={handleClick}>
+                          Jerseys
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="kids-shorts" onClick={handleClick}>
+                          Shorts
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="kids-boots" onClick={handleClick}>
+                          Boots
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="kids-more" onClick={handleClick}>
+                          More
+                        </button>
+                      </a>
                     </ul>
                   </div>
                 </div>
@@ -102,14 +159,30 @@ export default function Nav(props) {
                     variant="h6"
                     className={n["options-other"]}
                   >
-                    Other
+                    Sports
                   </Typography>
                   <div className={n["options-dropdown-other"]}>
                     <ul>
-                      <li>Shirts</li>
-                      <li>Jeans</li>
-                      <li>Skirts</li>
-                      <li>Sneakers</li>
+                      <a href="#scrollDiv">
+                        <button value="sports-soccer" onClick={handleClick}>
+                          Soccer
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="sports-basketball" onClick={handleClick}>
+                          Basketball
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="sports-tennis" onClick={handleClick}>
+                          Tennis
+                        </button>
+                      </a>
+                      <a href="#scrollDiv">
+                        <button value="sports-others" onClick={handleClick}>
+                          Others
+                        </button>
+                      </a>
                     </ul>
                   </div>
                 </div>
@@ -119,15 +192,15 @@ export default function Nav(props) {
                 <Box className={n["login-container"]}>
                   <img
                     src={carrito}
-                    style={{ width: "25px", height: "25px" }}
+                    style={{ width: "27px", height: "27px" }}
                   />
                   <Link to="/login">
                     <img
                       src={login}
                       style={{
-                        width: "25px",
-                        height: "25px",
-                        marginLeft: "1rem",
+                        width: "28px",
+                        height: "28px",
+                        margin: "0.5rem 0 0 1.2rem",
                       }}
                     />
                   </Link>
