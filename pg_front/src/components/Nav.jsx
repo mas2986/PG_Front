@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import logo from "../logo.png";
 import carrito from "../carrito.png";
 import login from "../login.png";
-import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
 import n from "./Nav.module.css";
@@ -85,7 +85,7 @@ export default function Nav(props) {
                     variant="h6"
                     className={n["options-children"]}
                   >
-                    Children
+                    Kids
                   </Typography>
                   <div className={n["options-dropdown-children"]}>
                     <ul>
@@ -121,14 +121,16 @@ export default function Nav(props) {
                     src={carrito}
                     style={{ width: "25px", height: "25px" }}
                   />
-                  <img
-                    src={login}
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      marginLeft: "1rem",
-                    }}
-                  />
+                  <Link to="/login">
+                    <img
+                      src={login}
+                      style={{
+                        width: "25px",
+                        height: "25px",
+                        marginLeft: "1rem",
+                      }}
+                    />
+                  </Link>
                 </Box>
               </Box>
             </Toolbar>
