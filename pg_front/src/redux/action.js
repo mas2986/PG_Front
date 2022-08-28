@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import {DETAIL_PRODUCT, GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
+import {DETAIL_PRODUCT,GET_PAGINATED_PRODUCTS, GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
 const URL = 'http://localhost:4000';
 
 
@@ -103,4 +103,20 @@ export function detailProduct(id){
             console.log(error)
         }
     }
+}
+
+export function getPaginatedProduct({from,to}) {
+
+  const data = products.slice(from,to)
+
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: GET_PAGINATED_PRODUCTS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
