@@ -1,6 +1,8 @@
 //import logo from './logo.svg';
 //import './App.css';
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkLogin } from "./redux/action";
 import { Route } from "react-router-dom";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
