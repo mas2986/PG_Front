@@ -1,9 +1,10 @@
-import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_BRAND, FILTER_GENRE} from './const';
+import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_BRAND, FILTER_GENRE, DETAIL_PRODUCT} from './const';
 
 const initialState = {
     products:[],
     altProducts: [],
-    user:[]
+    user:[],
+    detail: []
 }
 
 export const rootReducer = (state = initialState, action) =>{
@@ -49,7 +50,12 @@ export const rootReducer = (state = initialState, action) =>{
                             ...state,
                             products: filteredGenres //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
                 } 
-        
+        case DETAIL_PRODUCT:
+            console.log(action.payload)
+                    return {
+                        ...state,
+                        detail: action.payload
+                    }
         
         default: return {...state}
     }
