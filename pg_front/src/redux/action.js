@@ -10,6 +10,7 @@ import {
   FILTER_GENRE,
   FILTER_BRAND,
   FILTER_NAV_GENDER,
+  CHECK_LOGIN,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -17,13 +18,20 @@ const URL = "http://localhost:4000";
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let res = await axios.post(`${URL}/api/login`, body);
+      let user = await axios.post(`${URL}/api/login,body`);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      localStorage.setItem("userDetails", JSON.stringify(user.data));
       return dispatch({
         type: SIGN_UP,
-        payload: res.data,
+        payload: user.data,
       });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "Error!",
+        text: "Error /e.msg/",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 }
@@ -41,9 +49,8 @@ export function getProduct() {
   };
 }
 
-export function getPaginatedProduct({from,to}) {
-
-  const data = products.slice(from,to)
+export function getPaginatedProduct({ from, to }) {
+  const data = products.slice(from, to);
 
   return async function (dispatch) {
     try {
@@ -103,6 +110,13 @@ export function filterByBrand(payload) {
 export function filterByGenderInNav(payload) {
   return {
     type: FILTER_NAV_GENDER,
+    payload,
+  };
+}
+
+export function checkLogin(payload) {
+  return {
+    type: CHECK_LOGIN,
     payload,
   };
 }
