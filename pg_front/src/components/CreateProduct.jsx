@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 export default function CardProduct(props) {
+
+
   return (
     <Card sx={{ 
       margin:0.5,
@@ -33,6 +35,8 @@ export default function CardProduct(props) {
       <CardActions>
         <Button size="small">BUY</Button>
         <Button size="small">ADD TO CART</Button>
+        <Button href={`/detail/${props.id}`} size="small" >DETAIL</Button>
+        {/* target="_blank" */}
       </CardActions>
     </Card>
   );
