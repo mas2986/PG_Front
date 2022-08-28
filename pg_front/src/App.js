@@ -1,27 +1,23 @@
-//import logo from './logo.svg';
-//import './App.css';
-
-import {Route} from 'react-router-dom';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Detail from './components/Detail';
-import CreateProduct from './components/CreateProduct';
 import Home from './components/Home';
+import { Route, Switch } from "react-router-dom";
+import CreateProduct from './components/CreateProduct';
+
 
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header">        
+        <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/login" component={Login} />
+        <Route path="/detail/:id" render={({ match }) => <Detail match={match} />}/>
         <Route exact path="/home" component={Home} />
-        <Route
-          exact
-          path="/detail/:id"
-          render={({ match }) => <Detail match={match} />}
-        />
         <Route exact path="/create" component={CreateProduct} />
+        </Switch>
 
       </header>
     </div>
