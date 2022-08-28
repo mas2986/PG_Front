@@ -1,10 +1,8 @@
-import {products} from '../asset/products'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
-
-
+import {DETAIL_PRODUCT, GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_GENRE, FILTER_BRAND} from './const';
 const URL = 'http://localhost:4000';
+
 
 export function signUp(body){
     return async function(dispatch){ 
@@ -15,29 +13,47 @@ export function signUp(body){
                 payload: res.data
             })
         }  
-        catch(e){console.log(e)}     
+        catch(e){
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error'/*e.msg*/,
+                icon: 'error',
+                confirmButtonText: 'OK'
+              })
+        }     
     }
 }
 
 export function getProduct(){
-
-    return async function (dispatch) {
-        try {
+    return async function(dispatch){
+        try{
+            let products = await axios.get(`${URL}/api/product`)
             return dispatch({
                 type: GET_PRODUCTS,
-                payload: products
-            })
-        } catch (error) {
-            console.log(error)
+                payload:products.data
+            }) 
         }
+        catch(e){console.log('Sin errores')}            
     }
+
+    // return async function (dispatch) {
+    //     try {
+    //         return dispatch({
+    //             type: GET_PRODUCTS,
+    //             payload: products
+    //         })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 }
 
 
 export  function searchProduct(payload){
     return async function (dispatch) {
         try {
-            var product = await axios.get(`${URL}/products?name=${payload}`, {})
+            var product = await axios.get(`${URL}/api/products?title=${payload}`, {})
+            console.log(product)
             return dispatch({
                 type: SEARCH_PRODUCT,
                 payload: product.data
@@ -69,5 +85,22 @@ export function filterByBrand(payload) {
     return {
         type: FILTER_BRAND,
         payload, //Acá llegaría el tipo de genero
+    }
+
+}
+
+export function detailProduct(id){
+    console.log(id)
+    return async function (dispatch) {
+        try {
+            var product = await axios.get(`${URL}/api/product/${id}`);
+            console.log(product)
+            return dispatch({
+                type: DETAIL_PRODUCT,
+                payload: product.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
