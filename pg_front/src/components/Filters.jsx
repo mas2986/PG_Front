@@ -25,24 +25,24 @@ function handleFilteredBrands(e){
     return (
         <section>
             <div >
-                <h3>GÉNEROS</h3>
+                <h3>GENDERS</h3>
                 <select className="select-detail" onChange={(e) => {handleFilteredGenres(e)}}>
-                <option value="All">Todos</option>
-                <option value="Male">Hombre</option>
-                <option value="Female">Mujer</option>
-                <option value="Kids">Niños</option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="kids">Bebés</option>
-                <option value="Adults">Adultos</option>
-                <option value="None">Sin género</option>
+                <option value="All">All genres</option>
+                <option value="Male">Hen</option>
+                <option value="Female">Woman</option>
+                <option value="Kids">Kids</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="kids">Newly born</option>
+                <option value="Adults">Adults</option>
+                <option value="None">No gender</option>
                 <option value="">No binario</option>
             SELECT</select>
         </div>
         <div >
-           <h3>MARCAS</h3>
+           <h3>BRANDS</h3>
            <select className="select-detail" onChange={(e) => {handleFilteredBrands(e)}}>
-               <option value="All">Todas</option>
+               <option value="All">All brands</option>
                <option value="Nike">Nike</option>
                <option value="Adidas">Adidas</option>
                <option value="Gilbert">Gilbert</option>
@@ -57,18 +57,18 @@ function handleFilteredBrands(e){
                  </select>
             </div>
             <div>
-                <h3>DEPORTES</h3>
+                <h3>SPORTS</h3>
                 <select className="select-detail" onChange={(e) => handleFilteredSports(e)}>
-                <option value="All">Todos</option>
-                <option value="Futbol">Fútbol</option>
+                <option value="All">All Sports</option>
+                <option value="Futbol">Football</option>
                 <option value="Rugby">Rugby</option>
-                <option value="Basketball">Basquet</option>
-                <option value="Tennis">Tenis</option>
-                <option value="Boxeo">Boxeo</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Boxeo">Boxing</option>
                 <option value="Paddle">Paddle</option>
-                <option value="swimming">Natación</option>
+                <option value="swimming">Swimming</option>
                 <option value="Hockey">Hockey </option>
-                <option value="Ciclism">Ciclismo</option>
+                <option value="Ciclism">Cycling</option>
 
             </select>
         </div>
