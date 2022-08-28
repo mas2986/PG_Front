@@ -1,6 +1,7 @@
 import { SliderValueLabelUnstyled } from "@mui/base";
 import {
   GET_PRODUCTS,
+  GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   SEARCH_PRODUCT,
   FILTER_SPORT,
@@ -29,6 +30,13 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
         altProducts: action.payload,
       };
+
+    case GET_PAGINATED_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+        altProducts:action.payload
+      }
 
     case SEARCH_PRODUCT:
       return {

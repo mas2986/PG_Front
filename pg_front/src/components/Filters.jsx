@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterByGenre, filterBySport, filterByBrand } from "../redux/action";
+import style from "./Filters.module.css"
 
 
 export default function Filters() {
@@ -23,7 +24,7 @@ function handleFilteredBrands(e){
 }
 
     return (
-        <section>
+        <section className={style.box}>
             <div >
                 <h3>GÉNEROS</h3>
                 <select className="select-detail" onChange={(e) => {handleFilteredGenres(e)}}>

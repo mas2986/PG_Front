@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import {
   GET_PRODUCTS,
+  GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   SEARCH_PRODUCT,
   FILTER_SPORT,
@@ -33,6 +34,22 @@ export function getProduct() {
       return dispatch({
         type: GET_PRODUCTS,
         payload: products,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getPaginatedProduct({from,to}) {
+
+  const data = products.slice(from,to)
+
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: GET_PAGINATED_PRODUCTS,
+        payload: data,
       });
     } catch (error) {
       console.log(error);

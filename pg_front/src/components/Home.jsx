@@ -8,23 +8,24 @@ import { getProduct } from "../redux/action";
 import Nav from "./Nav";
 import Filters from "./Filters";
 import Image from "../asset/home.png";
+import Pagination from "./Pagination";
 import "../Style/Home.css";
 
 export default function Home() {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (products.length === 0) dispatch(getProduct(products));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (products.length === 0) dispatch(getProduct(products));
+  // }, [dispatch]);
 
   return (
     <>
       <Nav />
       <Box
         sx={{
-          width: 1440,
-          height: 1024,
+          width: "100%",
+          height: "auto",
           backgroundImage: `url(${Image})`,
           //borderRadius: 50
         }}
@@ -55,6 +56,7 @@ export default function Home() {
         {/* Sports Apparel · Footwear · */}
       </Typography>
       <div id="scrollDiv"></div>
+      <Pagination/>
       <Container maxWidth="md" sx={{ margin: 2 }}>
         <Box
           sx={{
