@@ -14,6 +14,7 @@ import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
 import n from "./Nav.module.css";
 import { useDispatch } from "react-redux";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { filterByGenderInNav } from "../redux/action";
 
 function HideOnScroll(props) {
@@ -195,12 +196,13 @@ export default function Nav(props) {
                     style={{ width: "27px", height: "27px" }}
                   />
                   <Link to="/login">
-                    <img
-                      src={login}
-                      style={{
-                        width: "28px",
-                        height: "28px",
+                    <AccountCircleIcon
+                      sx={{
+                        fontSize: "large",
+                        color: "#888787",
                         margin: "0.5rem 0 0 1.2rem",
+                        width: "29px",
+                        height: "29px",
                       }}
                     />
                   </Link>
