@@ -66,6 +66,7 @@ export default function Home(){
                             title={e.title}
                             sport={e.sport}    
                             Image={e.Image||e.image}
+                            id = {e.id}
                     />)}
                 </Box>
             </Container>
