@@ -5,11 +5,10 @@ import {Link} from 'react-router-dom';
 export default function Landing(){
     return(
         <>
-            <Link to='/login'>
-                <Button variant="contained" href="#contained-buttons">
+                <Button variant="contained" href="http://localhost:3000/login">
                     LOGIN
                 </Button>
-            </Link>
+            
         </>
     )
 }
