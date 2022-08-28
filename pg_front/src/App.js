@@ -1,21 +1,29 @@
 //import logo from './logo.svg';
 //import './App.css';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkLogin } from "./redux/action";
 import { Route } from "react-router-dom";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Detail from "./components/Detail";
-import Products from "./components/Products";
 import CreateProduct from "./components/CreateProduct";
-import Nav from "./components/Nav";
+import Home from "./components/Home";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("Chequeo Login");
+    dispatch(checkLogin());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <Nav />
-        <Route exact path="/" component={Landing} />
+        {/* <Route exact path="/" component={Landing} /> */}
         <Route exact path="/login" component={Login} />
-        <Route exact path="/home" component={Products} />
+        <Route exact path="/" component={Home} />
         <Route
           exact
           path="/detail/:id"

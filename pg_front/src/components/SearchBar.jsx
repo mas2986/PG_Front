@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { searchProduct } from "../redux/action";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button/Button";
-import "../components/SearchBar.css";
+import s from "./SearchBar.module.css";
 import lupa from "../lupa.png";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -15,33 +17,33 @@ export default function SearchBar() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // dispatch(searchRecipes(recipe));
+    dispatch(searchProduct(input));
     setInput("");
   }
+
   return (
     <div>
-      <section>
-        {/* <a onClick={(e) => {
-            handleSubmit(e);}}>
-          <img src={lupa} className="mag-glass" />
-        </a> */}
-        <input
-          className="input-detail"
-          type="text"
-          placeholder="Search"
-          onChange={(e) => handleInput(e)}
-        ></input>
+      <section className={s["search-container"]}>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input
+            className={s["input-detail"]}
+            type="text"
+            placeholder="Search"
+            value={input}
+            onChange={(e) => handleInput(e)}
+          ></input>
 
-        <Button
-          className="input-button"
-          variant="contained"
-          size="small"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          Click
-        </Button>
+          <Button
+            className={s["input-btn"]}
+            size="small"
+            // onClick={(e) => {
+            //   handleSubmit(e);
+            // }}
+            style={{ background: "transparent" }}
+          >
+            <SearchIcon fontSize="large" className={s["search-icon"]} />
+          </Button>
+        </form>
       </section>
     </div>
   );
