@@ -65,7 +65,7 @@ export default function Home(){
                     {products.length>0 && products.map (e=>
                         <CardProduct 
                             key = {e.id}
-                            title={e.title}
+                            title={e.title[0].toUpperCase()+ e.title.substring(1)}
                             sport={e.sport}    
                             Image={e.Image||e.image}
                     />)}

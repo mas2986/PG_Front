@@ -51,7 +51,7 @@ export const rootReducer = (state = initialState, action) =>{
                 } 
                 case ORDER_BY:
                     let stateProduct = state.products
-                    let sortProduct = action.payload === 'asc' ?[...stateProduct].sort((a, b) => {if(a.title > b.title){return 1;} if(a.title < b.title){return -1;} return 0;}) : [...stateProduct].sort((a, b) =>  {if(a.title > b.title){return -1;} if(a.title < b.title){return 1;} return 0;});
+                    let sortProduct = action.payload === 'asc' ?[...stateProduct].sort((a, b) => {if(a.title.toLowerCase() > b.title.toLowerCase()){return 1;} if(a.title.toLowerCase() < b.title.toLowerCase()){return -1;} return 0;}) : [...stateProduct].sort((a, b) =>  {if(a.title.toLowerCase() > b.title.toLowerCase()){return -1;} if(a.title.toLowerCase() < b.title.toLowerCase()){return 1;} return 0;});
                    
                     return {
                         ...state,

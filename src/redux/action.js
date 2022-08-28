@@ -23,9 +23,10 @@ export function getProduct(){
 
     return async function (dispatch) {
         try {
+            let res = await axios.get(`${URL}/api/product`);
             return dispatch({
                 type: GET_PRODUCTS,
-                payload: products
+                payload: res.data
             })
         } catch (error) {
             console.log(error)
