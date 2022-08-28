@@ -24,8 +24,8 @@ export default function Home() {
       <Nav />
       <Box
         sx={{
-          width: 1440,
-          height: 1024,
+          width: "100%",
+          height: "auto",
           backgroundImage: `url(${Image})`,
           //borderRadius: 50
         }}

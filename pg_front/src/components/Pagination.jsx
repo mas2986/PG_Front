@@ -18,9 +18,11 @@ export default function Pagination(){
     })
 
     useEffect(()=>{
+        
         dispatch(getPaginatedProduct({from: pagination.from, to: pagination.to}))
         console.log(products.length)
         setPagination({...pagination, count: pr.length})
+        
     },[pagination.from, pagination.to])
 
     
