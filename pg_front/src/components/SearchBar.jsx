@@ -5,6 +5,9 @@ import "../Style/SearchBar.css"
 import { searchProduct } from "../redux/action";
 
 
+// import { useDispatch } from "react-redux";
+import "../Style/SearchBar.css";
+import lupa from "../asset/lupa.png";
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
@@ -36,7 +39,7 @@ export default function SearchBar() {
         <input
           className="input-detail"
           type="text"
-          placeholder="¿Buscás un producto?"
+          placeholder="Search..."
           onChange={(e) => handleInput(e)}
         ></input>
 
