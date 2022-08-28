@@ -1,4 +1,4 @@
-import {GET_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_BRAND, FILTER_GENRE, DETAIL_PRODUCT} from './const';
+import {GET_PRODUCTS,GET_PAGINATED_PRODUCTS, SIGN_UP, SEARCH_PRODUCT, FILTER_SPORT, FILTER_BRAND, FILTER_GENRE, DETAIL_PRODUCT} from './const';
 
 const initialState = {
     products:[],
@@ -55,6 +55,12 @@ export const rootReducer = (state = initialState, action) =>{
                     return {
                         ...state,
                         detail: action.payload
+                    }
+         case GET_PAGINATED_PRODUCTS:
+                    return {
+                        ...state,
+                        products: action.payload,
+                        altProducts:action.payload
                     }
         
         default: return {...state}
