@@ -17,7 +17,6 @@ export default function SearchBar() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("e   " + e);
     dispatch(searchProduct(input));
     setInput("");
   }
@@ -30,6 +29,7 @@ export default function SearchBar() {
             className={s["input-detail"]}
             type="text"
             placeholder="Search"
+            value={input}
             onChange={(e) => handleInput(e)}
           ></input>
 
