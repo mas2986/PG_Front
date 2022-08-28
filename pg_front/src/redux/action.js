@@ -1,4 +1,4 @@
-import { products } from "../asset/products";
+// import { products } from "../asset/products";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -11,6 +11,8 @@ import {
   FILTER_BRAND,
   FILTER_NAV_GENDER,
   CHECK_LOGIN,
+  ORDER_BY,
+  ORDER_BY_PRICE,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -39,9 +41,10 @@ export function signUp(body) {
 export function getProduct() {
   return async function (dispatch) {
     try {
+      let res = await axios.get(`${URL}/api/products`);
       return dispatch({
         type: GET_PRODUCTS,
-        payload: products,
+        payload: res.data,
       });
     } catch (error) {
       console.log(error);
@@ -50,13 +53,12 @@ export function getProduct() {
 }
 
 export function getPaginatedProduct({ from, to }) {
-  const data = products.slice(from, to);
-
   return async function (dispatch) {
     try {
+      let res = await axios.get(`${URL}/api/products`);
       return dispatch({
         type: GET_PAGINATED_PRODUCTS,
-        payload: data,
+        payload: res.data,
       });
     } catch (error) {
       console.log(error);
@@ -114,6 +116,21 @@ export function filterByGenderInNav(payload) {
   };
 }
 
+export function orderBy(payload) {
+  return {
+    type: ORDER_BY,
+    payload: payload, // Deberia llegar el array con los obj para ordenar.
+  };
+}
+
+export function orderByPrice(payload) {
+  return {
+    type: ORDER_BY_PRICE,
+    payload: payload, // Deberia llegar el array con los obj para ordenar.
+  };
+}
+
+//CHECK LOGIN ACTION CREATOR
 export function checkLogin(payload) {
   return {
     type: CHECK_LOGIN,

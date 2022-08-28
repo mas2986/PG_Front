@@ -10,6 +10,7 @@ import Filters from "./Filters";
 import Image from "../asset/home.png";
 import Pagination from "./Pagination";
 import "../Style/Home.css";
+import Footer from "./Footer";
 
 export default function Home() {
   const products = useSelector((state) => state.products);
@@ -56,7 +57,7 @@ export default function Home() {
         {/* Sports Apparel · Footwear · */}
       </Typography>
       <div id="scrollDiv"></div>
-      <Pagination/>
+      <Pagination />
       <Container maxWidth="md" sx={{ margin: 2 }}>
         <Box
           sx={{
@@ -76,6 +77,7 @@ export default function Home() {
             ))}
         </Box>
       </Container>
+      <Footer />
     </>
   );
 }

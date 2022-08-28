@@ -8,6 +8,8 @@ import {
   FILTER_BRAND,
   FILTER_GENRE,
   FILTER_NAV_GENDER,
+  ORDER_BY,
+  ORDER_BY_PRICE,
 } from "./const";
 
 const initialState = {
@@ -32,11 +34,13 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case GET_PAGINATED_PRODUCTS:
+      const data = action.payload;
+      // data = products.slice(from, to);
       return {
         ...state,
-        products: action.payload,
-        altProducts:action.payload
-      }
+        products: data,
+        altProducts: data,
+      };
 
     case SEARCH_PRODUCT:
       return {
@@ -74,6 +78,61 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+      };
+    case ORDER_BY:
+      let stateProduct = state.products;
+      let sortProduct =
+        action.payload === "asc"
+          ? [...stateProduct].sort((a, b) => {
+              if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                return 1;
+              }
+              if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                return -1;
+              }
+              return 0;
+            })
+          : [...stateProduct].sort((a, b) => {
+              if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                return -1;
+              }
+              if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                return 1;
+              }
+              return 0;
+            });
+
+      return {
+        ...state,
+        products: sortProduct,
+      };
+
+    case ORDER_BY_PRICE:
+      let statePrice = state.products;
+      let sortPrice =
+        action.payload === "asc"
+          ? [...statePrice].sort((a, b) => {
+              if (a.price > b.price) {
+                return 1;
+              }
+              if (a.price < b.price) {
+                return -1;
+              }
+              return 0;
+            })
+          : [...statePrice].sort((a, b) => {
+              if (a.price > b.price) {
+                return -1;
+              }
+              if (a.price < b.price) {
+                return 1;
+              }
+              return 0;
+            });
+
+      return {
+        ...state,
+        products: sortPrice,
       };
 
     case FILTER_NAV_GENDER:
