@@ -20,19 +20,19 @@ const URL = "http://localhost:4000";
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/login,body`);
+      let user = await axios.post(`${URL}/api/login`,body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
-      localStorage.setItem("userDetails", JSON.stringify(user.data));
+      localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
         type: SIGN_UP,
-        payload: user.data,
+        payload: user.data.data,
       });
     } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Error /e.msg/",
-        icon: "error",
-        confirmButtonText: "OK",
+        Swal.fire({
+          title: "Error!",
+          text: "Email or password invalid",
+          icon: "error",
+          confirmButtonText: "GO HOME",
       });
     }
   };
@@ -42,22 +42,9 @@ export function getProduct() {
   return async function (dispatch) {
     try {
       let res = await axios.get(`${URL}/api/products`);
+      console.log('Products',res.data)
       return dispatch({
         type: GET_PRODUCTS,
-        payload: res.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function getPaginatedProduct({ from, to }) {
-  return async function (dispatch) {
-    try {
-      let res = await axios.get(`${URL}/api/products`);
-      return dispatch({
-        type: GET_PAGINATED_PRODUCTS,
         payload: res.data,
       });
     } catch (error) {
@@ -131,9 +118,22 @@ export function orderByPrice(payload) {
 }
 
 //CHECK LOGIN ACTION CREATOR
-export function checkLogin(payload) {
-  return {
-    type: CHECK_LOGIN,
-    payload,
-  };
+export function checkLogin(token,id) {
+
+  return async function(dispatch){
+    try{
+        let user = await axios.get(`${URL}/api/user/${id}`,{
+          headers:{
+             Authorization: `Bearer ${token}` 
+          }        
+        })
+        return dispatch({
+          type: CHECK_LOGIN,
+          payload: user.data
+        })      
+    }
+    catch(e){console.log(e)}
+  }
 }
+
+ 

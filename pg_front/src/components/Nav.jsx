@@ -1,4 +1,5 @@
 import * as React from "react";
+import Tooltip from '@mui/material/Tooltip';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -13,7 +14,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
 import n from "./Nav.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { filterByGenderInNav } from "../redux/action";
 
@@ -32,7 +33,8 @@ function HideOnScroll(props) {
 
 export default function Nav(props) {
   const dispatch = useDispatch();
-
+  const user = useSelector((state)=>state.user);
+  console.log('user',user);
   const handleClick = (e) => {
     console.log(e.target.value);
     dispatch(filterByGenderInNav(e.target.value));
@@ -195,16 +197,18 @@ export default function Nav(props) {
                     src={carrito}
                     style={{ width: "27px", height: "27px" }}
                   />
-                  <Link to="/login">
-                    <AccountCircleIcon
-                      sx={{
-                        fontSize: "large",
-                        color: "#888787",
-                        margin: "0.5rem 0 0 1.2rem",
-                        width: "29px",
-                        height: "29px",
-                      }}
-                    />
+                  <Link to="/login"> 
+                    <Tooltip title={`${Object.keys(user).length!==0?`Logged as ${user.name}`:'Go Login'}`} >                 
+                      <AccountCircleIcon
+                        sx={{
+                          fontSize: "large",
+                          color: `${Object.keys(user).length!==0?'#0000FF':'#888787'}`,
+                          margin: "0.5rem 0 0 1.2rem",
+                          width: "29px",
+                          height: "29px",
+                        }}
+                      />
+                    </Tooltip>
                   </Link>
                 </Box>
               </Box>
