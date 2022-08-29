@@ -63,15 +63,15 @@ export default function Filters() {
         >
           {/* RENDER FROM ARRAY  */}
           <option value="All">All</option>
-          <option value="Male">Male</option>
-          <option value="Female">Mujer</option>
-          <option value="Kids">Niños</option>
-          <option value="male">Masculino</option>
-          <option value="female">Femenino</option>
-          <option value="kids">Bebés</option>
-          <option value="Adults">Adultos</option>
-          <option value="None">Sin género</option>
-          <option value="">No binario</option>
+          <option value="Male">Men</option>
+          <option value="Female">Women</option>
+          <option value="Kids">Kids</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="kids">Bebies</option>
+          <option value="Adults">Adults</option>
+          <option value="None">Genderless</option>
+          <option value="">Non binary</option>
           SELECT
         </select>
       </div>
@@ -83,7 +83,7 @@ export default function Filters() {
             handleFilteredBrands(e);
           }}
         >
-          <option value="All">Todas</option>
+          <option value="All">All</option>
           <option value="Nike">Nike</option>
           <option value="Adidas">Adidas</option>
           <option value="Gilbert">Gilbert</option>
@@ -107,7 +107,7 @@ export default function Filters() {
           <option value="Rugby">Rugby</option>
           <option value="Basketball">Basquet</option>
           <option value="Tennis">Tenis</option>
-          <option value="Boxeo">Boxeo</option>
+          <option value="Boxing">Boxeo</option>
           <option value="Paddle">Paddle</option>
           <option value="swimming">Natación</option>
           <option value="Hockey">Hockey </option>
