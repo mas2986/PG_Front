@@ -1,0 +1,32 @@
+.admin_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    background-color: lightgray;
+    /*background-image: url('../../img/PRODDET.png');*/
+    height: 25rem;
+    width: 30rem;
+    margin: auto;
+    margin-top: 3rem;
+    border-radius: 1rem;
+    color: white;
+}
+
+.admin_item{
+    margin: 2rem;
+    font-size: 2rem;
+    outline: none;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.admin_item:hover{
+    transition: 0.3s;
+    
+    transform: translateY(-3px);
+}
+
+.admin_item:link{
+    color: white
+}
