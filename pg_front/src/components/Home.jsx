@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,13 +13,29 @@ import "../Style/Home.css";
 import Footer from "./Footer";
 
 export default function Home() {
-  const productsPage = useSelector((state) => state.productsPage);
-  const products = useSelector((state)=>state.products);
+  const allProducts = useSelector((state)=>state.products);
   const dispatch = useDispatch();
 
+  const pageSize = 6;
+  const [pagination, setPagination] = useState({
+    count: 0,
+    from: 0,
+    currentPage:1,
+    to: pageSize
+})
+
+  const products = allProducts.slice(pagination.from, pagination.to);
+
   useEffect(() => {
-     if (products.length === 0) dispatch(getProduct());
-  }, [dispatch]);
+     if (allProducts.length === 0) dispatch(getProduct());
+     setPagination({
+       ...pagination,
+       count:allProducts.length,
+       from:0,
+       to:pageSize,
+       currentPage:1})
+     console.log(pagination.from);console.log(pagination.to);
+  }, [dispatch,allProducts.length]);
 
   return (
     <>
@@ -58,7 +74,10 @@ export default function Home() {
         {/* Sports Apparel · Footwear · */}
       </Typography>
       <div id="scrollDiv"></div>
-      <Pagination />
+      <Pagination 
+        products={products} 
+        pagination={pagination}
+        setPagination={setPagination}/>
       <Container maxWidth="md" sx={{ margin: 2 }}>
         <Box
           sx={{
@@ -67,8 +86,8 @@ export default function Home() {
             gridTemplateColumns: "repeat(3, 1fr)",
           }}
         >
-          {productsPage.length > 0 &&
-            productsPage.map((e) => (
+          {products?.length > 0 &&
+            products.map((e) => (
               <CardProduct
                 key={e.id}
                 title={e.title}

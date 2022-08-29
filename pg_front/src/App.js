@@ -14,8 +14,13 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Chequeo Login");
-    dispatch(checkLogin());
+    const tokenJSON = JSON.parse(localStorage.getItem('userDetails'));
+    if(tokenJSON){
+      const { token } = tokenJSON;
+      const { id } = tokenJSON.data.user;
+      console.log("Chequeo Login");
+      dispatch(checkLogin(token,id));
+    }
   }, [dispatch]);
 
   return (

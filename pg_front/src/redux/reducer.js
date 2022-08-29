@@ -1,8 +1,9 @@
-import { SliderValueLabelUnstyled } from "@mui/base";
 import {
   GET_PRODUCTS,
   GET_PAGINATED_PRODUCTS,
   SIGN_UP,
+  CHECK_LOGIN,
+  ERROR_LOGIN,
   SEARCH_PRODUCT,
   FILTER_SPORT,
   FILTER_BRAND,
@@ -14,9 +15,9 @@ import {
 
 const initialState = {
   products: [],
-  productsPage:[],
   altProducts: [],
-  user: [],
+  user: {},
+  errorLogin: ''
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -24,23 +25,20 @@ export const rootReducer = (state = initialState, action) => {
     case SIGN_UP:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
       };
-
+    
+    case CHECK_LOGIN:
+      return {
+        ...state,
+        user: action.payload
+      }    
     case GET_PRODUCTS:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload,        
         altProducts: action.payload,
-      };
-
-    case GET_PAGINATED_PRODUCTS:
-      const { from, to } = action.payload;
-      const data = state.altProducts.slice(from, to);
-      return {
-        ...state,
-        productsPage: data,
-      };
+      };      
 
     case SEARCH_PRODUCT:
       return {

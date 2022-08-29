@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
 
 /* function validate(input){
@@ -27,6 +28,7 @@ import { signUp } from "../redux/action";
 } */
 
 function Copyright(props) {
+  
   return (
     <Typography
       variant="body2"
@@ -53,7 +55,8 @@ export default function SignUp() {
   });
 
   const dispatch = useDispatch();
-
+  const error = useSelector((state)=>state.errorLogin);
+  const history = useHistory();
   const handleChange = (e) => {
     e.preventDefault();
     setInput({
@@ -63,8 +66,12 @@ export default function SignUp() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (input.email && input.password) {
-      return dispatch(signUp(input));
+    if (input.email && input.password) {      
+      dispatch(signUp(input));
+      if(error!==''){
+        
+      }
+      return history.push('/')
     }
     Swal.fire({
       title: "Error!",
@@ -122,15 +129,15 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
-              //href = '/home'
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Login
-            </Button>
+              <Button
+                //href = '/home'
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
