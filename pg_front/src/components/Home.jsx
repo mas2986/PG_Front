@@ -11,31 +11,34 @@ import Image from "../asset/home.png";
 import Pagination from "./Pagination";
 import "../Style/Home.css";
 import Footer from "./Footer";
+import home from "../asset/home.png";
 
 export default function Home() {
-  const allProducts = useSelector((state)=>state.products);
+  const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const pageSize = 6;
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
-    currentPage:1,
-    to: pageSize
-})
+    currentPage: 1,
+    to: pageSize,
+  });
 
   const products = allProducts.slice(pagination.from, pagination.to);
 
   useEffect(() => {
-     if (allProducts.length === 0) dispatch(getProduct());
-     setPagination({
-       ...pagination,
-       count:allProducts.length,
-       from:0,
-       to:pageSize,
-       currentPage:1})
-     console.log(pagination.from);console.log(pagination.to);
-  }, [dispatch,allProducts.length]);
+    if (allProducts.length === 0) dispatch(getProduct());
+    setPagination({
+      ...pagination,
+      count: allProducts.length,
+      from: 0,
+      to: pageSize,
+      currentPage: 1,
+    });
+    console.log(pagination.from);
+    console.log(pagination.to);
+  }, [dispatch, allProducts.length]);
 
   return (
     <>
@@ -48,7 +51,10 @@ export default function Home() {
           //borderRadius: 50
         }}
       />
-      {/* <Filters/>  */}
+      <img
+        src={home}
+        style={{ width: "100vw", height: "100vh", marginTop: "-1rem" }}
+      />
       <Filters />
       <Typography
         variant="h1"
@@ -73,12 +79,13 @@ export default function Home() {
       >
         {/* Sports Apparel · Footwear · */}
       </Typography>
-      <div id="scrollDiv"></div>
-      <Pagination 
-        products={products} 
+      <Pagination
+        products={products}
         pagination={pagination}
-        setPagination={setPagination}/>
-      <Container maxWidth="md" sx={{ margin: 2 }}>
+        setPagination={setPagination}
+      />
+      <div id="scrollDiv"></div>
+      <Container maxWidth="md">
         <Box
           sx={{
             margin: 1,
