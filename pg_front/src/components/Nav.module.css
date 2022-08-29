@@ -109,3 +109,7 @@
 .login-container img:hover {
   cursor: pointer;
 }
+
+.reset:hover {
+  cursor: pointer;
+}
