@@ -9,6 +9,7 @@ const GET_PAGINATED_PRODUCTS = "GET_PAGINATED_PRODUCTS";
 const CHECK_LOGIN = "CHECK_LOGIN";
 const ORDER_BY = "ORDER_BY";
 const ORDER_BY_PRICE = "ORDER_BY_PRICE";
+const DETAIL_PRODUCT = "DETAIL_PRODUCT";
 
 module.exports = {
   SIGN_UP,
@@ -22,4 +23,5 @@ module.exports = {
   CHECK_LOGIN,
   ORDER_BY,
   ORDER_BY_PRICE,
+  DETAIL_PRODUCT,
 };

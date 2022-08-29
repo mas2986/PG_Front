@@ -10,6 +10,7 @@ import {
   FILTER_GENRE,
   FILTER_NAV_GENDER,
   ORDER_BY,
+  DETAIL_PRODUCT,
   ORDER_BY_PRICE,
 } from "./const";
 
@@ -17,7 +18,7 @@ const initialState = {
   products: [],
   altProducts: [],
   user: {},
-  errorLogin: ''
+  errorLogin: "",
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -27,18 +28,18 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-    
+
     case CHECK_LOGIN:
       return {
         ...state,
-        user: action.payload
-      }    
+        user: action.payload,
+      };
     case GET_PRODUCTS:
       return {
         ...state,
-        products: action.payload,        
+        products: action.payload,
         altProducts: action.payload,
-      };      
+      };
 
     case SEARCH_PRODUCT:
       return {
@@ -131,6 +132,13 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
+      };
+
+    case DETAIL_PRODUCT:
+      console.log(action.payload);
+      return {
+        ...state,
+        detail: action.payload,
       };
 
     case FILTER_NAV_GENDER:

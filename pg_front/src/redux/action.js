@@ -13,6 +13,7 @@ import {
   CHECK_LOGIN,
   ORDER_BY,
   ORDER_BY_PRICE,
+  DETAIL_PRODUCT,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -20,7 +21,7 @@ const URL = "http://localhost:4000";
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/login`,body);
+      let user = await axios.post(`${URL}/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -28,11 +29,11 @@ export function signUp(body) {
         payload: user.data.data,
       });
     } catch (e) {
-        Swal.fire({
-          title: "Error!",
-          text: "Email or password invalid",
-          icon: "error",
-          confirmButtonText: "GO HOME",
+      Swal.fire({
+        title: "Error!",
+        text: "Email or password invalid",
+        icon: "error",
+        confirmButtonText: "GO HOME",
       });
     }
   };
@@ -42,7 +43,7 @@ export function getProduct() {
   return async function (dispatch) {
     try {
       let res = await axios.get(`${URL}/api/products`);
-      console.log('Products',res.data)
+      console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
         payload: res.data,
@@ -117,23 +118,37 @@ export function orderByPrice(payload) {
   };
 }
 
-//CHECK LOGIN ACTION CREATOR
-export function checkLogin(token,id) {
-
-  return async function(dispatch){
-    try{
-        let user = await axios.get(`${URL}/api/user/${id}`,{
-          headers:{
-             Authorization: `Bearer ${token}` 
-          }        
-        })
-        return dispatch({
-          type: CHECK_LOGIN,
-          payload: user.data
-        })      
+export function detailProduct(id) {
+  console.log(id);
+  return async function (dispatch) {
+    try {
+      var product = await axios.get(`${URL}/api/product/${id}`);
+      console.log(product);
+      return dispatch({
+        type: DETAIL_PRODUCT,
+        payload: product.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-    catch(e){console.log(e)}
-  }
+  };
 }
 
- 
+//CHECK LOGIN ACTION CREATOR
+export function checkLogin(token, id) {
+  return async function (dispatch) {
+    try {
+      let user = await axios.get(`${URL}/api/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return dispatch({
+        type: CHECK_LOGIN,
+        payload: user.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}

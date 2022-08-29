@@ -15,12 +15,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const tokenJSON = JSON.parse(localStorage.getItem('userDetails'));
-    if(tokenJSON){
+    const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+    if (tokenJSON) {
       const { token } = tokenJSON;
       const { id } = tokenJSON.data.user;
       console.log("Chequeo Login");
-      dispatch(checkLogin(token,id));
+      dispatch(checkLogin(token, id));
     }
   }, [dispatch]);
 
@@ -29,14 +29,14 @@ function App() {
       <header className="App-header">
         {/* <Route exact path="/" component={Landing} /> */}
         <Route exact path="/login" component={Login} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/home" component={Home} />
         <Route
           exact
           path="/detail/:id"
           render={({ match }) => <Detail match={match} />}
         />
         <Route exact path="/create" component={CreateProduct} />
-        <Route exact path="/admin" component={Admin}/>
+        <Route exact path="/admin" component={Admin} />
       </header>
     </div>
   );
