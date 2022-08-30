@@ -1,22 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+//import logo from './logo.svg';
+//import './App.css';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkLogin } from "./redux/action";
+import { Route } from "react-router-dom";
+import Landing from "./components/Landing";
+import Login from "./components/Login";
+import Detail from "./components/Detail";
+import CreateProduct from "./components/CreateProduct";
+import Home from "./components/Home";
+import Admin from "./components/Admin";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+    if (tokenJSON) {
+      const { token } = tokenJSON;
+      const { id } = tokenJSON.data.user;
+      console.log("Chequeo Login");
+      dispatch(checkLogin(token, id));
+    }
+  }, [dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {/* <Route exact path="/" component={Landing} /> */}
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/home" component={Home} />
+        <Route
+          exact
+          path="/detail/:id"
+          render={({ match }) => <Detail match={match} />}
+        />
+        <Route exact path="/create" component={CreateProduct} />
+        <Route exact path="/admin" component={Admin} />
       </header>
     </div>
   );
