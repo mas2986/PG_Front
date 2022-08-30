@@ -7,19 +7,29 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import h from "./Home.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/action";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
+  const items = useSelector((state) => state.cartItems);
+  const dispatch = useDispatch();
+
   const styles = {
     position: "relative",
     top: "-1.5rem",
     left: "0.5rem",
     background: "#fff",
     display: "inline-block",
-    width: "2rem",
+    width: "3.2rem",
     transition: "all 0.5s",
     transform: translate,
   };
+
+  function addCart() {
+    dispatch(addToCart(props));
+  }
+
   return (
     <Card
       className={h.cards}
@@ -42,7 +52,7 @@ export default function CardProduct(props) {
         sx={{ position: "relative" }}
       />
       <Typography className={h.price} sx={styles}>
-        ${props.price}
+        ${props.price}.99
       </Typography>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -58,7 +68,7 @@ export default function CardProduct(props) {
         <Button href={"/entrega"} size="small">
           BUY
         </Button>
-        <Button href={"/entrega"} size="small">
+        <Button size="small" onClick={(e) => addCart(e)}>
           ADD TO CART
         </Button>
         <Button href={`/detail/${props.id}`} size="small">
