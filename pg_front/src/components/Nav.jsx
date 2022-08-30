@@ -17,6 +17,7 @@ import n from "./Nav.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { filterByGenderInNav, getProduct } from "../redux/action";
+import Cart from "./Cart";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -204,10 +205,11 @@ export default function Nav(props) {
               <Box display="flex">
                 <SearchBar />
                 <Box className={n["login-container"]}>
-                  <img
+                  {/* <img
                     src={carrito}
                     style={{ width: "27px", height: "27px", display: "none" }}
-                  />
+                  /> */}
+                  <Cart />
                   <Link to="/login">
                     <Tooltip
                       title={`${

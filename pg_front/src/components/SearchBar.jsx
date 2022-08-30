@@ -36,9 +36,9 @@ export default function SearchBar() {
           <Button
             className={s["input-btn"]}
             size="small"
-            // onClick={(e) => {
-            //   handleSubmit(e);
-            // }}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
             style={{ background: "transparent" }}
           >
             <SearchIcon fontSize="large" className={s["search-icon"]} />
