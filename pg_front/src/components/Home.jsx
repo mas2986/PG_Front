@@ -12,6 +12,7 @@ import Pagination from "./Pagination";
 import "../Style/Home.css";
 import Footer from "./Footer";
 import home from "../asset/home.png";
+import h from "./Home.module.css";
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
@@ -101,6 +102,7 @@ export default function Home() {
                 sport={e.sport}
                 Image={e.Image || e.image}
                 id={e.id}
+                price={e.price}
               />
             ))}
         </Box>
