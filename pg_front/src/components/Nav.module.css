@@ -113,3 +113,7 @@
 .reset:hover {
   cursor: pointer;
 }
+
+.shopping-cart:hover {
+  cursor: pointer;
+}
