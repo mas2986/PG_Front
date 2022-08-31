@@ -35,7 +35,7 @@ function App() {
           path="/detail/:id"
           render={({ match }) => <Detail match={match} />}
         />
-        <Route exact path="/create" component={CreateProduct} />
+        <Route exact path="/create" component={FormProduct} />
         <Route exact path="/admin" component={Admin} />
       </header>
     </div>
