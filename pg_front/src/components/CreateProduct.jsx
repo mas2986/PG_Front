@@ -28,9 +28,12 @@ export default function CardProduct(props) {
     transform: translate,
   };
 
+
   function addCart() {
     dispatch(addToCart(props.id));
   }
+
+
 
   return (
     <Card
