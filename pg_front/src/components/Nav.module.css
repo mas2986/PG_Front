@@ -103,7 +103,7 @@
 .login-container {
   display: flex;
   align-items: center;
-  margin: 0 0 1rem 1.3rem;
+  margin: 0 0rem 1rem 1.3rem;
 }
 
 .login-container img:hover {
@@ -114,6 +114,9 @@
   cursor: pointer;
 }
 
+.shopping-cart {
+  margin-right: 1.5rem;
+}
 .shopping-cart:hover {
   cursor: pointer;
 }

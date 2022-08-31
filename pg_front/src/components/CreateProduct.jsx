@@ -8,11 +8,13 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/action";
+import { addToCart, detailProduct } from "../redux/action";
+import { useParams } from "react-router-dom";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
   const items = useSelector((state) => state.cartItems);
+  const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const styles = {
@@ -26,9 +28,12 @@ export default function CardProduct(props) {
     transform: translate,
   };
 
-  // function addCart() {
-  //   dispatch(addToCart(props));
-  // }
+
+  function addCart() {
+    dispatch(addToCart(props.id));
+  }
+
+
 
   return (
     <Card
