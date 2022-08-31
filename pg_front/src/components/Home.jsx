@@ -9,7 +9,7 @@ import Nav from "./Nav";
 import Filters from "./Filters";
 import Image from "../asset/home.png";
 import Pagination from "./Pagination";
-import "../Style/Home.css";
+// import "../Style/Home.css";
 import Footer from "./Footer";
 import home from "../asset/home.png";
 import h from "./Home.module.css";
@@ -54,7 +54,7 @@ export default function Home() {
       />
       <img
         src={home}
-        style={{ width: "100vw", height: "100vh", marginTop: "-1rem" }}
+        style={{ width: "100%", height: "100%", marginTop: "-1rem" }}
       />
       <Filters />
       <Typography

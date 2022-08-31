@@ -10,6 +10,16 @@
   width: 165px;
   height: 33px;
 }
+/* 
+.input-detail {
+  background-color: #d9d9d9;
+  padding: 4px;
+  padding-right: 50px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  margin-top: 25px;
+  margin-left: 20px;
+} */
 
 .search-container {
   display: flex;

@@ -144,12 +144,12 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART:
-      const allProds = state.products;
+      const allProds = state.altProducts;
       const id = action.payload;
       const item = allProds.filter((i) => i.id === id);
       return {
         ...state,
-        cartItems: [...state.cartItems, item],
+        cartItems: [...state.cartItems, item].flat(),
       };
 
     case FILTER_NAV_GENDER:

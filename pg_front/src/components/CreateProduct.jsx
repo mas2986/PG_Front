@@ -8,8 +8,7 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, detailProduct } from "../redux/action";
-import { useParams } from "react-router-dom";
+import { addToCart } from "../redux/action";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
@@ -28,12 +27,9 @@ export default function CardProduct(props) {
     transform: translate,
   };
 
-
   function addCart() {
     dispatch(addToCart(props.id));
   }
-
-
 
   return (
     <Card
@@ -57,7 +53,7 @@ export default function CardProduct(props) {
         sx={{ position: "relative" }}
       />
       <Typography className={h.price} sx={styles}>
-        ${props.price}.99
+        ${props.price}.00
       </Typography>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -73,7 +69,7 @@ export default function CardProduct(props) {
         <Button href={"/entrega"} size="small">
           BUY
         </Button>
-        <Button size="small" onClick={(e) => addCart(e)}>
+        <Button size="small" onClick={addCart}>
           ADD TO CART
         </Button>
         <Button href={`/detail/${props.id}`} size="small">
