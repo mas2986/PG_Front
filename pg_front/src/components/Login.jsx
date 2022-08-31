@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
+import LoginGoogle from "./LoginGoogle";
 
 function validate(input){
     let errors = {};
@@ -70,8 +71,11 @@ export default function SignUp() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (input.email && input.password && Object.keys(errors).length===0) {      
+    if (input.email && input.password) {      
       dispatch(signUp(input));
+      // if(error!==''){
+        
+      // }
       return history.push('/')
     }
     Swal.fire({
@@ -81,6 +85,8 @@ export default function SignUp() {
       confirmButtonText: "OK",
     });
   };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -144,6 +150,7 @@ export default function SignUp() {
               >
                 Login
               </Button>
+              <LoginGoogle />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">

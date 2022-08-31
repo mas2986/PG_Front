@@ -2,4 +2,16 @@
     display: flex;
     justify-content: space-evenly;
     margin: 20px;
+    background-color: rgb(247, 242, 242);
+    border-radius: 10px;
+}
+
+select {
+    padding: 7px;
+    border-radius: 5px;
+    margin: 0 auto 2em;
+}
+
+h3 {
+    font-family:var(--gl-heading-font-set-family-standard-14),var(--gl-font-family-fallback)
 }
