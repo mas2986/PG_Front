@@ -14,6 +14,7 @@ import {
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
+  ADD_TO_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -150,5 +151,12 @@ export function checkLogin(token, id) {
     } catch (e) {
       console.log(e);
     }
+  };
+}
+
+export function addToCart(payload) {
+  return {
+    type: ADD_TO_CART,
+    payload,
   };
 }
