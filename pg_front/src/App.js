@@ -10,6 +10,7 @@ import Detail from "./components/Detail";
 import CreateProduct from "./components/CreateProduct";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
+import FormProduct from "./components/FormProduct"
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
           path="/detail/:id"
           render={({ match }) => <Detail match={match} />}
         />
-        <Route exact path="/create" component={CreateProduct} />
+        <Route exact path="/create" component={FormProduct} />
         <Route exact path="/admin" component={Admin} />
       </header>
     </div>
