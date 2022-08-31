@@ -12,6 +12,7 @@ import {
   ORDER_BY,
   DETAIL_PRODUCT,
   ORDER_BY_PRICE,
+  ADD_TO_CART,
 } from "./const";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   altProducts: [],
   user: {},
   errorLogin: "",
+  cartItems: [],
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -139,6 +141,15 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         detail: action.payload,
+      };
+
+    case ADD_TO_CART:
+      const allProds = state.altProducts;
+      const id = action.payload;
+      const item = allProds.filter((i) => i.id === id);
+      return {
+        ...state,
+        cartItems: [...state.cartItems, item].flat(),
       };
 
     case FILTER_NAV_GENDER:

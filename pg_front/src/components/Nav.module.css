@@ -103,7 +103,7 @@
 .login-container {
   display: flex;
   align-items: center;
-  margin: 0 0 1rem 1.3rem;
+  margin: 0 0rem 1rem 1.3rem;
 }
 
 .login-container img:hover {
@@ -114,6 +114,34 @@
   cursor: pointer;
 }
 
+.shopping-cart {
+  margin-right: 1.5rem;
+}
 .shopping-cart:hover {
   cursor: pointer;
+}
+
+.cart-container {
+  background-color: rgba(253, 255, 255, 0.9);
+  color: #000;
+  top: 3.5rem;
+  position: absolute;
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+.cart-items-list {
+  margin: 0;
+  padding-inline-start: 0;
+}
+
+.cart-btn-add {
+  height: 1.5rem;
+  width: 1.5rem;
+  background: rgb(78, 132, 71);
+  border: none;
+  border-radius: 50%;
+  margin: 0.5rem 0;
+}
+.cart-btn-sub {
 }

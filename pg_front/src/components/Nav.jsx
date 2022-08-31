@@ -202,13 +202,15 @@ export default function Nav(props) {
                   </div>
                 </div>
               </Box>
-              <Box display="flex">
-                <SearchBar />
-                <Box className={n["login-container"]}>
-                  {/* <img
-                    src={carrito}
-                    style={{ width: "27px", height: "27px", display: "none" }}
-                  /> */}
+              <Box display="flex" sx={{ alignItems: "center" }}>
+                <Box display="flex">
+                  <SearchBar />
+                </Box>
+                <Box
+                  className={n["login-container"]}
+                  display="flex"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                >
                   <Cart />
                   <Link to="/login">
                     <Tooltip
@@ -226,9 +228,9 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          margin: "0.5rem 0 0 1.2rem",
-                          width: "29px",
-                          height: "29px",
+                          marginTop: "0.5rem",
+                          width: "30px",
+                          height: "30px",
                         }}
                       />
                     </Tooltip>

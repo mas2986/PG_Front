@@ -14,6 +14,7 @@ import {
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
+  ADD_TO_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -29,12 +30,13 @@ export function signUp(body) {
         payload: user.data.data,
       });
     } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password invalid",
-        icon: "error",
-        confirmButtonText: "GO HOME",
-      });
+      // Swal.fire({
+      //   title: "Error!",
+      //   text: "Email or password invalid",
+      //   icon: "error",
+      //   confirmButtonText: "GO HOME",
+      // });
+      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
     }
   };
 }
@@ -150,5 +152,12 @@ export function checkLogin(token, id) {
     } catch (e) {
       console.log(e);
     }
+  };
+}
+
+export function addToCart(payload) {
+  return {
+    type: ADD_TO_CART,
+    payload,
   };
 }
