@@ -102,16 +102,16 @@ export default function Filters() {
           className="select-detail"
           onChange={(e) => handleFilteredSports(e)}
         >
-          <option value="All">Todos</option>
-          <option value="Futbol">Fútbol</option>
+          <option value="All">All</option>
+          <option value="Futbol">Football</option>
           <option value="Rugby">Rugby</option>
-          <option value="Basketball">Basquet</option>
-          <option value="Tennis">Tenis</option>
-          <option value="Boxing">Boxeo</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Tennis">Tennis</option>
+          <option value="Boxing">Boxing</option>
           <option value="Paddle">Paddle</option>
-          <option value="swimming">Natación</option>
+          <option value="swimming">Swimming</option>
           <option value="Hockey">Hockey </option>
-          <option value="Ciclism">Ciclismo</option>
+          <option value="Ciclism">Cycling</option>
         </select>
       </div>
     </section>

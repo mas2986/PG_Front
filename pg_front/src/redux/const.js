@@ -10,6 +10,7 @@ const CHECK_LOGIN = "CHECK_LOGIN";
 const ORDER_BY = "ORDER_BY";
 const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 const DETAIL_PRODUCT = "DETAIL_PRODUCT";
+const ADD_TO_CART = "ADD_TO_CART";
 
 module.exports = {
   SIGN_UP,
@@ -24,4 +25,5 @@ module.exports = {
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
+  ADD_TO_CART,
 };

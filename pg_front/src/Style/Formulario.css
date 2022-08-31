@@ -1,0 +1,11 @@
+
+.colour {
+    color: rgb(236, 39, 39);
+    font-family: "Verdana";
+    border-color: 1px solid #1a0b0b;
+    border-radius: 20px;
+}
+
+.btn-form {
+    margin: 20px;
+}
