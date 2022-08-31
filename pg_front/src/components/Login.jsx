@@ -66,19 +66,20 @@ export default function SignUp() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (input.email && input.password) {      
+    // if (input.email && input.password) {      
       dispatch(signUp(input));
-      if(error!==''){
+      // if(error!==''){
         
-      }
-      return history.push('/')
-    }
-    Swal.fire({
-      title: "Error!",
-      text: "Complete password and email",
-      icon: "error",
-      confirmButtonText: "OK",
-    });
+      // }
+      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
+      history.push('/home')
+    // }
+    // Swal.fire({
+    //   title: "Error!",
+    //   text: "Complete password and email",
+    //   icon: "error",
+    //   confirmButtonText: "OK",
+    // });
   };
 
   return (

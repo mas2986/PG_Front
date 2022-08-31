@@ -28,7 +28,7 @@ export default function SearchBar() {
           <input
             className={s["input-detail"]}
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
             value={input}
             onChange={(e) => handleInput(e)}
           ></input>
@@ -36,9 +36,9 @@ export default function SearchBar() {
           <Button
             className={s["input-btn"]}
             size="small"
-            // onClick={(e) => {
-            //   handleSubmit(e);
-            // }}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
             style={{ background: "transparent" }}
           >
             <SearchIcon fontSize="large" className={s["search-icon"]} />
