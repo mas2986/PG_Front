@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Alert from '@mui/material/Alert';
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
@@ -17,15 +18,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
 
-/* function validate(input){
+function validate(input){
     let errors = {};
     console.log('En funcion validate')
     let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (!regexEmail.test(input.email)) errors.email = 'Email no válido'
+    if (!regexEmail.test(input.email)) errors.email = 'Invalid email'
 
     console.log(errors);
     return errors;
-} */
+} 
 
 function Copyright(props) {
   
@@ -53,6 +54,7 @@ export default function SignUp() {
     email: "",
     password: "",
   });
+  const [errors,setErrors] = useState({})
 
   const dispatch = useDispatch();
   const error = useSelector((state)=>state.errorLogin);
@@ -63,23 +65,24 @@ export default function SignUp() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    let errorsValidate = validate({...input,[e.target.name]:e.target.value})
+    setErrors(()=>errorsValidate);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    // if (input.email && input.password) {      
+    if (input.email && input.password) {      
       dispatch(signUp(input));
-      // if(error!==''){
+      if(error!==''){
         
-      // }
-      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
-      history.push('/home')
-    // }
-    // Swal.fire({
-    //   title: "Error!",
-    //   text: "Complete password and email",
-    //   icon: "error",
-    //   confirmButtonText: "OK",
-    // });
+      }
+      return history.push('/')
+    }
+    Swal.fire({
+      title: "Error!",
+      text: "Complete password and email",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
   };
 
   return (
@@ -115,6 +118,11 @@ export default function SignUp() {
                   onChange={handleChange}
                   autoComplete="email"
                 />
+                {errors.email
+                  ?
+                    <Alert severity="error">{errors.email}</Alert>
+                  :
+                    null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
