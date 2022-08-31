@@ -30,12 +30,13 @@ export function signUp(body) {
         payload: user.data.data,
       });
     } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password invalid",
-        icon: "error",
-        confirmButtonText: "GO HOME",
-      });
+      // Swal.fire({
+      //   title: "Error!",
+      //   text: "Email or password invalid",
+      //   icon: "error",
+      //   confirmButtonText: "GO HOME",
+      // });
+      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
     }
   };
 }
