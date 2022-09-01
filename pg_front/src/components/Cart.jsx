@@ -6,10 +6,10 @@ import { Box } from "@mui/system";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
-import { green } from "@mui/material/colors";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
-import { deleteFromCart } from "../redux/action";
+import { deleteFromCart, deleteAllFromCart } from "../redux/action";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -44,6 +44,10 @@ function Cart() {
     console.log(times);
   }
 
+  function deleteAll() {
+    dispatch(deleteAllFromCart());
+  }
+
   return (
     <>
       <div className={n["shopping-cart"]}>
@@ -68,14 +72,34 @@ function Cart() {
               flexDirection: "column",
             }}
           >
-            <Typography
-              align="left"
-              variant="h5"
-              color="primary"
-              sx={{ marginBottom: "0.5rem" }}
-            >
-              My Cart
-            </Typography>
+            {items.length ? (
+              <Box display="flex" sx={{ alignItems: "center" }}>
+                <Typography
+                  align="left"
+                  variant="h5"
+                  color="primary"
+                  flexGrow={1}
+                  // sx={{ marginBottom: "0.5rem" }}
+                >
+                  My Cart
+                </Typography>
+                <DeleteForeverIcon
+                  sx={{ color: "red", fontSize: "3rem" }}
+                  className={n["cart-delete-all-icon"]}
+                  onClick={deleteAll}
+                />
+              </Box>
+            ) : (
+              <Typography
+                align="left"
+                variant="h5"
+                color="primary"
+                flexGrow={1}
+                // sx={{ marginBottom: "0.5rem" }}
+              >
+                My Cart
+              </Typography>
+            )}
             {items.length ? (
               <Box>
                 <Box

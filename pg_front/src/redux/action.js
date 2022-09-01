@@ -16,6 +16,7 @@ import {
   DETAIL_PRODUCT,
   ADD_TO_CART,
   DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -170,5 +171,11 @@ export function deleteFromCart(payload) {
   return {
     type: DELETE_FROM_CART,
     payload,
+  };
+}
+
+export function deleteAllFromCart() {
+  return {
+    type: DELETE_ALL_FROM_CART,
   };
 }
