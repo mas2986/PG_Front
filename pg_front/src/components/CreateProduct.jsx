@@ -1,14 +1,15 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import CardContent from "@mui/material/CardContent";
 import { addToCart } from "../redux/action";
+import plop from "../asset/plop.mp3";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
@@ -28,6 +29,7 @@ export default function CardProduct(props) {
   };
 
   function addCart() {
+    new Audio(plop).play();
     dispatch(addToCart(props.id));
   }
 

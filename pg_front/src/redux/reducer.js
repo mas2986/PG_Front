@@ -14,6 +14,7 @@ import {
   ORDER_BY_PRICE,
   ADD_TO_CART,
   DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const initialState = {
@@ -162,6 +163,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: item2,
+      };
+
+    case DELETE_ALL_FROM_CART:
+      return {
+        ...state,
+        cartItems: [],
       };
 
     case FILTER_NAV_GENDER:

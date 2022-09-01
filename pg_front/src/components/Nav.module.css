@@ -139,8 +139,15 @@
 .cart-delete-icon {
   transition: all 0.3s;
 }
-
 .cart-delete-icon:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+}
+
+.cart-delete-all-icon {
+  transition: all 0.3s;
+}
+.cart-delete-all-icon:hover {
   cursor: pointer;
   transform: scale(1.1, 1.1);
 }
