@@ -106,6 +106,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortProduct,
+        altProducts: sortProduct
       };
 
     case ORDER_BY_PRICE:
@@ -134,6 +135,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
+        altProducts: sortPrice
       };
 
     case DETAIL_PRODUCT:
