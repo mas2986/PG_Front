@@ -15,6 +15,8 @@ import {
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
   ADD_TO_CART,
+  DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -36,7 +38,10 @@ export function signUp(body) {
       //   icon: "error",
       //   confirmButtonText: "GO HOME",
       // });
-      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
+      Swal.fire(
+        "¡User created successfully!",
+        "¡Thank you for visiting our website!"
+      );
     }
   };
 }
@@ -75,6 +80,30 @@ export function searchProduct(payload) {
   };
 }
 
+export function createProduct(body){
+  body.price = parseInt(body.price);
+  body.discount = parseInt(body.discount);
+  body.stock = parseInt(body.stock);
+  return async function(dispatch){
+    try{
+      let newProduct = await axios.post(`${URL}/api/product`,body)
+      console.log(newProduct.data);
+      return dispatch({
+        type:CREATE_PRODUCT,
+        payload:newProduct.data
+      })
+    }
+    catch(e){ 
+      console.log(e)
+    Swal.fire({
+      title: "Error creating product!",
+      text: "Please try again",
+      icon: "Error",
+      confirmButtonText: "Back",
+    });
+  }
+} 
+}
 export function filterBySport(payload) {
   console.log(payload);
   return {
@@ -159,5 +188,18 @@ export function addToCart(payload) {
   return {
     type: ADD_TO_CART,
     payload,
+  };
+}
+
+export function deleteFromCart(payload) {
+  return {
+    type: DELETE_FROM_CART,
+    payload,
+  };
+}
+
+export function deleteAllFromCart() {
+  return {
+    type: DELETE_ALL_FROM_CART,
   };
 }

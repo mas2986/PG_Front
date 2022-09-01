@@ -13,6 +13,8 @@ import {
   DETAIL_PRODUCT,
   ORDER_BY_PRICE,
   ADD_TO_CART,
+  DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const initialState = {
@@ -106,7 +108,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortProduct,
-        altProducts: sortProduct
+        altProducts: sortProduct,
       };
 
     case ORDER_BY_PRICE:
@@ -135,7 +137,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
-        altProducts: sortPrice
+        altProducts: sortPrice,
       };
 
     case DETAIL_PRODUCT:
@@ -152,6 +154,21 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: [...state.cartItems, item].flat(),
+      };
+
+    case DELETE_FROM_CART:
+      const allItems = state.cartItems;
+      const index = action.payload;
+      const item2 = allItems.filter((e, idx) => idx !== index);
+      return {
+        ...state,
+        cartItems: item2,
+      };
+
+    case DELETE_ALL_FROM_CART:
+      return {
+        ...state,
+        cartItems: [],
       };
 
     case FILTER_NAV_GENDER:
