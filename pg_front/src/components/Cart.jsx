@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import n from "./Nav.module.css";
 import { Box } from "@mui/system";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Link } from "react-router-dom";
+import { deleteFromCart } from "../redux/action";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -21,6 +22,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function Cart() {
   const items = useSelector((state) => state.cartItems);
   const [cartDisplay, setCartDisplay] = useState(false);
+  const dispatch = useDispatch();
+  let idRemoval = 0;
+  let times = 0;
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
@@ -30,10 +34,15 @@ function Cart() {
     setCartDisplay(true);
   }
 
-  //   const deleteItem = () => {
-  //     items = items.filter(i => i.id !== )
+  function deleteItem(idRemoval) {
+    console.log(idRemoval);
+    dispatch(deleteFromCart(idRemoval));
+  }
 
-  // };
+  function itemNum(e) {
+    times = e.target.value;
+    console.log(times);
+  }
 
   return (
     <>
@@ -51,6 +60,7 @@ function Cart() {
           className={n["cart-container"]}
           onMouseEnter={keepIn}
           onMouseLeave={toggle}
+          sx={{ marginRight: "4rem" }}
         >
           <Box
             sx={{
@@ -75,9 +85,10 @@ function Cart() {
                     marginBottom: "0.5rem",
                   }}
                 >
-                  {items.map((i) => {
+                  {items.map((i, idx) => {
                     return (
                       <Box
+                        key={idx}
                         sx={{
                           padding: "1rem",
                           width: "20rem",
@@ -100,7 +111,7 @@ function Cart() {
                           <DeleteOutlineIcon
                             sx={{ color: "red" }}
                             className={n["cart-delete-icon"]}
-                            onClick={deleteItem}
+                            onClick={() => deleteItem(idx)}
                           />
                         </Box>
                         <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -119,12 +130,12 @@ function Cart() {
                             <Typography sx={{ fontStyle: "italic" }}>
                               {i.description}
                             </Typography>
-                            <select>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                            <select onClick={(e) => itemNum(e)}>
+                              <option value={1}>1</option>
+                              <option value={2}>2</option>
+                              <option value={3}>3</option>
+                              <option value={4}>4</option>
+                              <option value={5}>5</option>
                             </select>
                           </Box>
                           <Typography
