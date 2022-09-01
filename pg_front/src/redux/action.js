@@ -84,10 +84,10 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
-  console.log(payload);
+
   return {
     type: FILTER_GENRE,
-    payload, //Acá llegaría el tipo de genero
+    payload //Acá llegaría el tipo de genero
   };
 }
 

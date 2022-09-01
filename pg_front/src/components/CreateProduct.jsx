@@ -36,8 +36,8 @@ export default function CardProduct(props) {
       className={h.cards}
       sx={{
         margin: 0.5,
-        width: 320,
-        height: 300,
+        width: 300,
+        height: 450,
         background: "#FFFFFF",
         // boxShadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
         boxShadow: 2,
@@ -47,7 +47,7 @@ export default function CardProduct(props) {
     >
       <CardMedia
         component="img"
-        height="140"
+        height="250"
         image={props.Image}
         alt={props.title}
         sx={{ position: "relative" }}
