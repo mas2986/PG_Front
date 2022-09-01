@@ -190,48 +190,6 @@ function Cart() {
               <Typography>There are no items in the cart</Typography>
             )}
           </Box>
-          {/* <Typography variant="h6" color="primary">
-              Item
-            </Typography>
-            <Typography variant="h6" color="primary">
-              Price
-            </Typography>
-            <ul style={{ paddingInlineStart: 0 }}>
-              {items.map((i) => {
-                return (
-                  <Box display="flex" sx={{ flexDirection: "row" }}>
-                    <li
-                      style={{
-                        listStyle: "none",
-                        padding: "0 1rem 1rem 0",
-                      }}
-                    >
-                      {i.title[0].toUpperCase() + i.title.substring(1)}
-                    </li>
-                    <Box display="flex" sx={{ flexDirection: "column" }}>
-                      <button className={n["cart-btn-add"]}>+</button>
-                      <button className={n["cart-btn-sub"]}>-</button>
-                    </Box>
-                  </Box>
-                );
-              })}
-            </ul>
-            <ul style={{ paddingInlineStart: 0 }}>
-              {items.map((i) => {
-                return (
-                  <li style={{ listStyle: "none", padding: "0 1rem 1rem 0" }}>
-                    ${i.price}.00
-                  </li>
-                );
-              })}
-            </ul>
-            <Typography variant="h6" color="primary">
-              Total
-            </Typography>
-            <Typography>
-              ${items.reduce((prev, curr) => prev + curr.price, 0)}.00
-            </Typography>
-            <Button>Checkout</Button>*/}
         </Box>
       )}
     </>

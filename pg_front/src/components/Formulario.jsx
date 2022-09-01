@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 import f from "./Formulario.module.css";
+import Nav2 from "./Nav2.jsx";
 
 function validateForm(input) {
   const errors = {};
@@ -87,6 +88,7 @@ export default function FormPropsTextFields() {
 
   return (
     <div>
+      <Nav2 />
       <center>
         <Box
           component="form"
