@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { detailProduct } from "../redux/action";
 import Button from "@mui/material/Button";
 import d from "./Detail.module.css";
+import Nav2 from "./Nav2.jsx";
 
 export default function Detail({ match }) {
   const { id } = useParams();
@@ -18,6 +19,7 @@ export default function Detail({ match }) {
 
   return (
     <center>
+      <Nav2 />
       <div>
         {console.log(detail)}
         {detail ? (
