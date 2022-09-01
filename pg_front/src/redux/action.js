@@ -15,6 +15,7 @@ import {
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
   ADD_TO_CART,
+  DELETE_FROM_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -36,7 +37,10 @@ export function signUp(body) {
       //   icon: "error",
       //   confirmButtonText: "GO HOME",
       // });
-      Swal.fire('¡User created successfully!', '¡Thank you for visiting our website!')
+      Swal.fire(
+        "¡User created successfully!",
+        "¡Thank you for visiting our website!"
+      );
     }
   };
 }
@@ -158,6 +162,13 @@ export function checkLogin(token, id) {
 export function addToCart(payload) {
   return {
     type: ADD_TO_CART,
+    payload,
+  };
+}
+
+export function deleteFromCart(payload) {
+  return {
+    type: DELETE_FROM_CART,
     payload,
   };
 }
