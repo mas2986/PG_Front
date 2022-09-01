@@ -72,12 +72,12 @@ export const rootReducer = (state = initialState, action) => {
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.altProducts;
+      const allGenres = state.products;
       const filteredGenres =
         action.payload === "All"
           ? allGenres
           : allGenres.filter((g) => g.genre.includes(action.payload));
-      console.log(filteredGenres);
+        console.log(action.payload)
       return {
         ...state,
         products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info

@@ -10,7 +10,7 @@ import Filters from "./Filters";
 import Image from "../asset/home.png";
 import Pagination from "./Pagination";
 // import "../Style/Home.css";
-import Footer from "./Footer";
+
 import home from "../asset/home.png";
 import h from "./Home.module.css";
 
@@ -107,7 +107,7 @@ export default function Home() {
             ))}
         </Box>
       </Container>
-      <Footer />
+      
     </>
   );
 }
