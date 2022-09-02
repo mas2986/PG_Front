@@ -119,7 +119,7 @@ export default function FormProduct({ match }) {
     setErrors(() => errorsValidate);
   };
 
-  const handleChangeSelect = (event: SelectChangeEvent) => {
+  const handleChangeSelect = (event) => {
     event.preventDefault();
     setInput({
       ...input,

@@ -1,0 +1,23 @@
+.btn-form {
+  margin-top: 5px;
+  align-items: center;
+}
+
+.checkbox {
+  align-items: center;
+  margin-bottom: 30px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.body {
+  background-color: #9999;
+  height: 550px;
+}
+
+.formDetail {
+  margin-top: 50px;
+  width: 480px;
+  height: 550px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+}
