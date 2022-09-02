@@ -1,9 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Alert from '@mui/material/Alert';
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Select from '@mui/material/Select';
@@ -21,7 +20,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct/* ,getProductId */ } from "../redux/action";
+import { createProduct } from "../redux/action";
 
 function validate(input) {
   let errors = {};
@@ -74,11 +73,10 @@ const theme = createTheme();
 
 
 
-export default function FormProduct({ match }) {
-  
-  const { id } = useParams();
-  const product = useSelector((state)=>state.product);
-  
+export default function FormProduct() {
+   
+  const allProducts = useSelector((state) => state.products);
+  console.log(allProducts);
   const [input, setInput] = useState({
                               title: "",
                               brand: "",
@@ -91,20 +89,14 @@ export default function FormProduct({ match }) {
                               genre: "",
                               sport: ""
                             })
+                           
                             
-
-
   const [errors, setErrors] = useState({})
 
   const genre = ['Male','Female','Kids','Other'];
   const sport = ['Soccer','Rugby','Tennis','Basketball','Boxing','Swimming','Ciclism','Paddle','Hockey' ]
   const dispatch = useDispatch();
   const history = useHistory();
-
-  useEffect(()=>{
-    if(id)
-      dispatch(getProductId(id))      
-  },[id])
 
   console.log(input);
   const handleChange = (e) => {
@@ -137,10 +129,12 @@ export default function FormProduct({ match }) {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm" sx={{
-        boxShadow: '2px 2px 2px -1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 3px rgba(0, 0, 0, 0.12)',
+        boxShadow: '10px -10px 5px 0px rgba(0,0,0,0.75)',
+        //-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75)
+        //-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
         paddingLeft: "20px"
       }}>
-        <CssBaseline />
+        <CssBaseline />        
         <Box
           sx={{
             marginTop: 8,
@@ -152,7 +146,7 @@ export default function FormProduct({ match }) {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             {/* <LockOutlinedIcon /> */}
           </Avatar>
-          <Typography variant="h3">CREATE NEW PRODUCT</Typography>
+          <Typography variant="h4">CREATE NEW PRODUCT</Typography>
           <Box
             component="form"
             noValidate
@@ -166,11 +160,12 @@ export default function FormProduct({ match }) {
                   fullWidth
                   value={input?.title}
                   name="title"
+                  error={!!errors.title}
+                  helperText={errors.title}
                   onChange={handleChange}
                   type="text"
                   label="Title"
                 />
-                {errors.title ? <Alert severity="error">{errors.title}</Alert> : null}
               </Grid>
               <Grid item sm={12}>
                 <TextField
@@ -181,9 +176,10 @@ export default function FormProduct({ match }) {
                   onChange={handleChange}
                   label="Image"
                   type="text"
+                  //error={!!errors.image}
+                  //helperText={errors.image}
                   id="image"
                 />
-                {/* {errors.image ? <Alert severity="error">{errors.image}</Alert> : null} */}
               </Grid>
               <Box maxWidth="sm" sx={{
                 display: "flex",
@@ -200,9 +196,10 @@ export default function FormProduct({ match }) {
                     onChange={handleChange}
                     label="Stock"
                     type="number"
+                    error={!!errors.stock}
+                    helperText={errors.stock}
                     id="stock"
                   />
-                  {errors.stock ? <Alert severity="error">{errors.stock}</Alert> : null}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -214,8 +211,9 @@ export default function FormProduct({ match }) {
                     label="Price"
                     type="number"
                     id="price"
+                    error={!!errors.price}
+                    helperText={errors.price}
                   />
-                  {errors.price ? <Alert severity="error">{errors.price}</Alert> : null}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -225,9 +223,10 @@ export default function FormProduct({ match }) {
                     onChange={handleChange}
                     label="Discount"
                     type="number"
+                    error={!!errors.discount}
+                    helperText={errors.discount}
                     id="discount"
                   />
-                  {errors.discount ? <Alert severity="error">{errors.discount}</Alert> : null}
                 </Grid>
               </Box>
               <Box maxWidth="sm"
@@ -240,9 +239,10 @@ export default function FormProduct({ match }) {
                 }}
               >
                 <Grid item sm={12}>
-                  <Select
+                  <TextField
                     required
                     fullWidth
+                    select={true}
                     label="Genre"
                     name="genre"
                     value={input?.genre}
@@ -250,20 +250,21 @@ export default function FormProduct({ match }) {
                     id="genre"
                   >
                     {genre.map(e=><MenuItem key = {e} value={e}>{e}</MenuItem>)}                   
-                 </Select>                  
+                 </TextField>                  
                 </Grid>
                 <Grid item sm={12}>
-                  <Select
+                  <TextField
                     required
                     fullWidth
                     label="Sport"
                     name="sport"
+                    select={true}
                     value={input?.sport}
                     onChange={handleChangeSelect}
                     id="sport"
                   >
                     {sport.map(e=><MenuItem key = {e} value={e}>{e}</MenuItem>)}                   
-                 </Select>                  
+                 </TextField>                  
                 </Grid>
                 
                 <Grid item sm={12}>
@@ -289,6 +290,8 @@ export default function FormProduct({ match }) {
                   onChange={handleChange}
                   label="Description"
                   type="text"
+                  error={!!errors.description}
+                  helperText={errors.description}
                   id="description"
                 />
               </Grid>
