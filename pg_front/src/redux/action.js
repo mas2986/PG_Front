@@ -17,6 +17,8 @@ import {
   ADD_TO_CART,
   DELETE_FROM_CART,
   DELETE_ALL_FROM_CART,
+  UPDATE_ITEM_NUM,
+  REMOVE_DUPLICATES_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -177,5 +179,19 @@ export function deleteFromCart(payload) {
 export function deleteAllFromCart() {
   return {
     type: DELETE_ALL_FROM_CART,
+  };
+}
+
+export function updateItemNum(payload) {
+  return {
+    type: UPDATE_ITEM_NUM,
+    payload,
+  };
+}
+
+export function removeDupsCart(payload) {
+  return {
+    type: REMOVE_DUPLICATES_CART,
+    payload,
   };
 }

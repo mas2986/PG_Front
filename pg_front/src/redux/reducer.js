@@ -1,3 +1,4 @@
+import { updateItemNum } from "./action";
 import {
   GET_PRODUCTS,
   GET_PAGINATED_PRODUCTS,
@@ -15,6 +16,8 @@ import {
   ADD_TO_CART,
   DELETE_FROM_CART,
   DELETE_ALL_FROM_CART,
+  UPDATE_ITEM_NUM,
+  REMOVE_DUPLICATES_CART,
 } from "./const";
 
 const initialState = {
@@ -23,6 +26,7 @@ const initialState = {
   user: {},
   errorLogin: "",
   cartItems: [],
+  // qty: 1,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -149,11 +153,24 @@ export const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       const allProds = state.altProducts;
+      // const qty = state.alt;
+      const cart = state.cartItems;
       const id = action.payload;
       const item = allProds.filter((i) => i.id === id);
+      let finalItem = item.map(
+        (i) => (i.qty = cart.some((c) => c.id == id) ? i.qty + 1 : 1)
+      );
       return {
         ...state,
         cartItems: [...state.cartItems, item].flat(),
+      };
+
+    case UPDATE_ITEM_NUM:
+      const itemQty = action.payload;
+
+      return {
+        ...state,
+        cartItems: [...state.cartItems, itemQty].flat(),
       };
 
     case DELETE_FROM_CART:
@@ -169,6 +186,15 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: [],
+      };
+
+    case REMOVE_DUPLICATES_CART:
+      const dupsFree = state.cartItems.filter(
+        (v, i, a) => a.findIndex((v2) => v2.id === v.id) === i
+      );
+      return {
+        ...state,
+        cartItems: dupsFree,
       };
 
     case FILTER_NAV_GENDER:
@@ -270,7 +296,9 @@ export const rootReducer = (state = initialState, action) => {
           filteredProduct = filteredGender.filter(
             (prods) =>
               !prods.title.includes("soccer") &&
+              !prods.title.includes("Soccer") &&
               !prods.title.includes("tennis") &&
+              !prods.title.includes("Tennis") &&
               !prods.title.includes("basketball")
           );
         }

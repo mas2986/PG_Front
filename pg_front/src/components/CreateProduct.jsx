@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CardContent from "@mui/material/CardContent";
-import { addToCart } from "../redux/action";
+import { addToCart, removeDupsCart } from "../redux/action";
 import plop from "../asset/plop.mp3";
 
 export default function CardProduct(props) {
@@ -30,6 +30,7 @@ export default function CardProduct(props) {
 
   function addCart() {
     new Audio(plop).play();
+    dispatch(removeDupsCart(props.id));
     dispatch(addToCart(props.id));
   }
 
