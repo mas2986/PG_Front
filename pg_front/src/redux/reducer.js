@@ -14,6 +14,7 @@ import {
   ORDER_BY_PRICE,
   ADD_TO_CART,
   DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const initialState = {
@@ -65,18 +66,18 @@ export const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? allBrands
           : allBrands.filter((p) => p.brand.includes(action.payload));
-      console.log(filteredBrands);
+      console.log(action.payload);
       return {
         ...state,
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.altProducts;
+      const allGenres = state.products;
       const filteredGenres =
         action.payload === "All"
           ? allGenres
           : allGenres.filter((g) => g.genre.includes(action.payload));
-      console.log(filteredGenres);
+        console.log(action.payload)
       return {
         ...state,
         products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
@@ -162,6 +163,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: item2,
+      };
+
+    case DELETE_ALL_FROM_CART:
+      return {
+        ...state,
+        cartItems: [],
       };
 
     case FILTER_NAV_GENDER:

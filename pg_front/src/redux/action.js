@@ -16,6 +16,7 @@ import {
   DETAIL_PRODUCT,
   ADD_TO_CART,
   DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
 } from "./const";
 
 const URL = "http://localhost:4000";
@@ -112,10 +113,10 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
-  console.log(payload);
+
   return {
     type: FILTER_GENRE,
-    payload, //Acá llegaría el tipo de genero
+    payload //Acá llegaría el tipo de genero
   };
 }
 
@@ -194,5 +195,11 @@ export function deleteFromCart(payload) {
   return {
     type: DELETE_FROM_CART,
     payload,
+  };
+}
+
+export function deleteAllFromCart() {
+  return {
+    type: DELETE_ALL_FROM_CART,
   };
 }

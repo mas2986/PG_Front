@@ -6,10 +6,10 @@ import { Box } from "@mui/system";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
-import { green } from "@mui/material/colors";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
-import { deleteFromCart } from "../redux/action";
+import { deleteFromCart, deleteAllFromCart } from "../redux/action";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -44,6 +44,10 @@ function Cart() {
     console.log(times);
   }
 
+  function deleteAll() {
+    dispatch(deleteAllFromCart());
+  }
+
   return (
     <>
       <div className={n["shopping-cart"]}>
@@ -68,14 +72,34 @@ function Cart() {
               flexDirection: "column",
             }}
           >
-            <Typography
-              align="left"
-              variant="h5"
-              color="primary"
-              sx={{ marginBottom: "0.5rem" }}
-            >
-              My Cart
-            </Typography>
+            {items.length ? (
+              <Box display="flex" sx={{ alignItems: "center" }}>
+                <Typography
+                  align="left"
+                  variant="h5"
+                  color="primary"
+                  flexGrow={1}
+                  // sx={{ marginBottom: "0.5rem" }}
+                >
+                  My Cart
+                </Typography>
+                <DeleteForeverIcon
+                  sx={{ color: "red", fontSize: "3rem" }}
+                  className={n["cart-delete-all-icon"]}
+                  onClick={deleteAll}
+                />
+              </Box>
+            ) : (
+              <Typography
+                align="left"
+                variant="h5"
+                color="primary"
+                flexGrow={1}
+                // sx={{ marginBottom: "0.5rem" }}
+              >
+                My Cart
+              </Typography>
+            )}
             {items.length ? (
               <Box>
                 <Box
@@ -166,48 +190,6 @@ function Cart() {
               <Typography>There are no items in the cart</Typography>
             )}
           </Box>
-          {/* <Typography variant="h6" color="primary">
-              Item
-            </Typography>
-            <Typography variant="h6" color="primary">
-              Price
-            </Typography>
-            <ul style={{ paddingInlineStart: 0 }}>
-              {items.map((i) => {
-                return (
-                  <Box display="flex" sx={{ flexDirection: "row" }}>
-                    <li
-                      style={{
-                        listStyle: "none",
-                        padding: "0 1rem 1rem 0",
-                      }}
-                    >
-                      {i.title[0].toUpperCase() + i.title.substring(1)}
-                    </li>
-                    <Box display="flex" sx={{ flexDirection: "column" }}>
-                      <button className={n["cart-btn-add"]}>+</button>
-                      <button className={n["cart-btn-sub"]}>-</button>
-                    </Box>
-                  </Box>
-                );
-              })}
-            </ul>
-            <ul style={{ paddingInlineStart: 0 }}>
-              {items.map((i) => {
-                return (
-                  <li style={{ listStyle: "none", padding: "0 1rem 1rem 0" }}>
-                    ${i.price}.00
-                  </li>
-                );
-              })}
-            </ul>
-            <Typography variant="h6" color="primary">
-              Total
-            </Typography>
-            <Typography>
-              ${items.reduce((prev, curr) => prev + curr.price, 0)}.00
-            </Typography>
-            <Button>Checkout</Button>*/}
         </Box>
       )}
     </>
