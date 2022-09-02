@@ -10,8 +10,10 @@ import Login from "./components/Login";
 import Detail from "./components/Detail";
 import CreateProduct from "./components/CreateProduct";
 import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
 import Admin from "./components/Admin";
 import FormProduct from "./components/FormProduct";
+import EditProduct from "./components/EditProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,8 +40,13 @@ function App() {
           render={({ match }) => <Detail match={match} />}
         />
         <Route exact path="/entrega" component={Formulario} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/admin/create" component={FormProduct} />
+        <PrivateRoute exact path="/admin/dashboard" component={Admin} />
+        <PrivateRoute exact path="/admin/create" component={FormProduct} />
+        <PrivateRoute
+          exact
+          path="/admin/edit/:id"
+          render={({ match }) => <EditProduct match={match} />}
+        />
       </header>
     </div>
   );
