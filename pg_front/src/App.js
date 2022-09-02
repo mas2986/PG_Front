@@ -13,6 +13,7 @@ import CreateUser from "./components/CreateUser.jsx"
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 import FormProduct from "./components/FormProduct";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,8 +42,9 @@ function App() {
         <Route exact path="/entrega" component={Formulario} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/create" component={FormProduct} />
-        <Route exact path="/user" component={CreateUser} />
+
       </header>
+      <Footer/>
     </div>
   );
 }
