@@ -66,7 +66,7 @@ export const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? allBrands
           : allBrands.filter((p) => p.brand.includes(action.payload));
-      console.log(filteredBrands);
+      console.log(action.payload);
       return {
         ...state,
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
