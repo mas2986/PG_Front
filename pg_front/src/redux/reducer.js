@@ -81,7 +81,7 @@ export const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? allGenres
           : allGenres.filter((g) => g.genre.includes(action.payload));
-        console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
         products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
@@ -165,13 +165,12 @@ export const rootReducer = (state = initialState, action) => {
         cartItems: [...state.cartItems, item].flat(),
       };
 
-    case UPDATE_ITEM_NUM:
-      const itemQty = action.payload;
-
-      return {
-        ...state,
-        cartItems: [...state.cartItems, itemQty].flat(),
-      };
+    // case UPDATE_ITEM_NUM:
+    //   const itemQty = action.payload
+    //   return {
+    //     ...state,
+    //     cartItems: [...state.cartItems, itemQty].flat(),
+    //   };
 
     case DELETE_FROM_CART:
       const allItems = state.cartItems;

@@ -43,15 +43,6 @@ function Cart() {
     dispatch(deleteFromCart(idxRemoval));
   }
 
-  const sendItemNum = (e) => {
-    // dispatch(updateItemNum(i));
-    setQty((prev) => ({
-      ...prev,
-      qty: e.target.value,
-    }));
-    console.log(qty);
-  };
-
   function deleteAll() {
     dispatch(deleteAllFromCart());
   }
@@ -165,8 +156,11 @@ function Cart() {
                               {i.description}
                             </Typography>
                             <select
-                              defaultValue={qty}
-                              onChange={(e) => sendItemNum(e)}
+                              value={i.qty}
+                              onChange={(e) => {
+                                i.qty = e.target.value;
+                                setQty((prev) => prev + 1);
+                              }}
                             >
                               <option value={1}>1</option>
                               <option value={2}>2</option>
