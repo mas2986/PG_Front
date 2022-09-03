@@ -9,7 +9,12 @@ import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
-import { deleteFromCart, deleteAllFromCart } from "../redux/action";
+import {
+  deleteFromCart,
+  deleteAllFromCart,
+  updateItemNum,
+  removeDupsCart,
+} from "../redux/action";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -22,9 +27,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function Cart() {
   const items = useSelector((state) => state.cartItems);
   const [cartDisplay, setCartDisplay] = useState(false);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
-  let idRemoval = 0;
-  let times = 0;
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
@@ -34,15 +38,19 @@ function Cart() {
     setCartDisplay(true);
   }
 
-  function deleteItem(idRemoval) {
-    console.log(idRemoval);
-    dispatch(deleteFromCart(idRemoval));
+  function deleteItem(idxRemoval) {
+    console.log(idxRemoval);
+    dispatch(deleteFromCart(idxRemoval));
   }
 
-  function itemNum(e) {
-    times = e.target.value;
-    console.log(times);
-  }
+  const sendItemNum = (e) => {
+    // dispatch(updateItemNum(i));
+    setQty((prev) => ({
+      ...prev,
+      qty: e.target.value,
+    }));
+    console.log(qty);
+  };
 
   function deleteAll() {
     dispatch(deleteAllFromCart());
@@ -84,7 +92,7 @@ function Cart() {
                   My Cart
                 </Typography>
                 <DeleteForeverIcon
-                  sx={{ color: "red", fontSize: "3rem" }}
+                  sx={{ color: "#a52a2a", fontSize: "3rem" }}
                   className={n["cart-delete-all-icon"]}
                   onClick={deleteAll}
                 />
@@ -133,7 +141,7 @@ function Cart() {
                             {i.title[0].toUpperCase() + i.title.substring(1)}
                           </Typography>
                           <DeleteOutlineIcon
-                            sx={{ color: "red" }}
+                            sx={{ color: "#a52a2a" }}
                             className={n["cart-delete-icon"]}
                             onClick={() => deleteItem(idx)}
                           />
@@ -151,10 +159,15 @@ function Cart() {
                             <Typography sx={{ textDecoration: "underline" }}>
                               {i.brand}
                             </Typography>
-                            <Typography sx={{ fontStyle: "italic" }}>
+                            <Typography
+                              sx={{ fontStyle: "italic", whiteSpace: "nowrap" }}
+                            >
                               {i.description}
                             </Typography>
-                            <select onClick={(e) => itemNum(e)}>
+                            <select
+                              defaultValue={qty}
+                              onChange={(e) => sendItemNum(e)}
+                            >
                               <option value={1}>1</option>
                               <option value={2}>2</option>
                               <option value={3}>3</option>
@@ -165,7 +178,7 @@ function Cart() {
                           <Typography
                             sx={{ margin: "5rem 3rem 0 0", fontSize: "1.2rem" }}
                           >
-                            ${i.price}.00
+                            ${i.price * i.qty}.00
                           </Typography>
                         </Box>
                       </Box>
@@ -177,11 +190,19 @@ function Cart() {
                     Total
                   </Typography>
                   <Typography variant="h6" color="primary">
-                    ${items.reduce((prev, curr) => prev + curr.price, 0)}
+                    $
+                    {items.reduce(
+                      (prev, curr) => prev + curr.price * curr.qty,
+                      0
+                    )}
+                    .00
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
-                  <Button sx={{ margin: "0.5rem", border: "1px solid #000" }}>
+                  <Button
+                    // href="/entrega"
+                    sx={{ margin: "0.5rem", border: "1px solid #000" }}
+                  >
                     Checkout
                   </Button>
                 </Box>

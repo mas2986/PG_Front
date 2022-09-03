@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { detailProduct } from "../redux/action";
 import Button from "@mui/material/Button";
 import d from "./Detail.module.css";
@@ -40,15 +40,16 @@ export default function Detail({ match }) {
         ) : (
           <>Loading...</>
         )}
-
-        <Button
-          href={`http://localhost:3000/home`}
-          variant="contained"
-          color="primary"
-          size="small"
-        >
-          BACK HOME
-        </Button>
+        <Link to="/home">
+          <Button
+            //   href={`http://localhost:3000/home`} cambio a routing por link para que no se pierda el carrito
+            variant="contained"
+            color="primary"
+            size="small"
+          >
+            BACK HOME
+          </Button>
+        </Link>
       </div>
     </center>
   );
