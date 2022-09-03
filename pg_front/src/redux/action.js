@@ -82,29 +82,28 @@ export function searchProduct(payload) {
   };
 }
 
-export function createProduct(body){
+export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function(dispatch){
-    try{
-      let newProduct = await axios.post(`${URL}/api/product`,body)
+  return async function (dispatch) {
+    try {
+      let newProduct = await axios.post(`${URL}/api/product`, body);
       console.log(newProduct.data);
       return dispatch({
-        type:CREATE_PRODUCT,
-        payload:newProduct.data
-      })
+        type: CREATE_PRODUCT,
+        payload: newProduct.data,
+      });
+    } catch (e) {
+      console.log(e);
+      Swal.fire({
+        title: "Error creating product!",
+        text: "Please try again",
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
     }
-    catch(e){ 
-      console.log(e)
-    Swal.fire({
-      title: "Error creating product!",
-      text: "Please try again",
-      icon: "Error",
-      confirmButtonText: "Back",
-    });
-  }
-} 
+  };
 }
 export function filterBySport(payload) {
   console.log(payload);
@@ -115,10 +114,9 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
-
   return {
     type: FILTER_GENRE,
-    payload //Acá llegaría el tipo de genero
+    payload, //Acá llegaría el tipo de genero
   };
 }
 

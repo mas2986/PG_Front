@@ -30,8 +30,8 @@ export default function CardProduct(props) {
 
   function addCart() {
     new Audio(plop).play();
-    dispatch(removeDupsCart(props.id));
     dispatch(addToCart(props.id));
+    dispatch(removeDupsCart(props.id));
   }
 
   return (
@@ -54,6 +54,7 @@ export default function CardProduct(props) {
         image={props.Image}
         alt={props.title}
         sx={{ position: "relative" }}
+        className={h.cardmedia}
       />
       <Typography className={h.price} sx={styles}>
         ${props.price}.00

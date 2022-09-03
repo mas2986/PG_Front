@@ -27,7 +27,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function Cart() {
   const items = useSelector((state) => state.cartItems);
   const [cartDisplay, setCartDisplay] = useState(false);
-  const [selected, setSelected] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
 
   function toggle() {
@@ -43,8 +43,13 @@ function Cart() {
     dispatch(deleteFromCart(idxRemoval));
   }
 
-  const sendItemNum = (i) => {
-    dispatch(updateItemNum(i));
+  const sendItemNum = (e) => {
+    // dispatch(updateItemNum(i));
+    setQty((prev) => ({
+      ...prev,
+      qty: e.target.value,
+    }));
+    console.log(qty);
   };
 
   function deleteAll() {
@@ -154,15 +159,14 @@ function Cart() {
                             <Typography sx={{ textDecoration: "underline" }}>
                               {i.brand}
                             </Typography>
-                            <Typography sx={{ fontStyle: "italic" }}>
+                            <Typography
+                              sx={{ fontStyle: "italic", whiteSpace: "nowrap" }}
+                            >
                               {i.description}
                             </Typography>
                             <select
-                              defaultValue={i.qty}
-                              onChange={(e) => {
-                                i.qty = e.target.value;
-                                sendItemNum(i);
-                              }}
+                              defaultValue={qty}
+                              onChange={(e) => sendItemNum(e)}
                             >
                               <option value={1}>1</option>
                               <option value={2}>2</option>
@@ -186,7 +190,12 @@ function Cart() {
                     Total
                   </Typography>
                   <Typography variant="h6" color="primary">
-                    ${items.reduce((prev, curr) => prev + curr.price, 0)}.00
+                    $
+                    {items.reduce(
+                      (prev, curr) => prev + curr.price * curr.qty,
+                      0
+                    )}
+                    .00
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
