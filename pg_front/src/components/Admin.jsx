@@ -91,6 +91,17 @@ function DashboardContent() {
   };
 
   const listProducts = useSelector(state=>state.products);
+
+  React.useEffect(()=>{
+    const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+    if (tokenJSON) {
+      const { token } = tokenJSON;
+      const { rol } = tokenJSON.data.user;
+      if(token&&rol==="user") return history.push("/login")
+    }
+    if(!tokenJSON) return history.push("/login")
+  },[])
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
