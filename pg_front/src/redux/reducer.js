@@ -1,4 +1,4 @@
-import { updateItemNum } from "./action";
+import Swal from "sweetalert2";
 import {
   GET_PRODUCTS,
   GET_PAGINATED_PRODUCTS,
@@ -26,7 +26,7 @@ const initialState = {
   user: {},
   errorLogin: "",
   cartItems: [],
-  // qty: 1,
+  qty: 1,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -153,24 +153,28 @@ export const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       const allProds = state.altProducts;
-      // const qty = state.alt;
       const cart = state.cartItems;
       const id = action.payload;
+      if (cart.some((c) => c.id === id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "Please change the quantity to order from the cart",
+          icon: "Error",
+          confirmButtonText: "Back",
+        });
+        return {
+          ...state,
+        };
+      }
       const item = allProds.filter((i) => i.id === id);
       let finalItem = item.map(
-        (i) => (i.qty = cart.some((c) => c.id == id) ? i.qty + 1 : 1)
+        (i) =>
+          (i.qty = cart.some((c) => c.id == id) ? parseInt(state.qty) + 1 : 1)
       );
       return {
         ...state,
         cartItems: [...state.cartItems, item].flat(),
       };
-
-    // case UPDATE_ITEM_NUM:
-    //   const itemQty = action.payload
-    //   return {
-    //     ...state,
-    //     cartItems: [...state.cartItems, itemQty].flat(),
-    //   };
 
     case DELETE_FROM_CART:
       const allItems = state.cartItems;
@@ -194,6 +198,18 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: dupsFree,
+      };
+
+    case UPDATE_ITEM_NUM:
+      // let [itemId, itemQty] = action.payload;
+      // if (state.cartItems.some((i) => i.id == itemId)) {
+      //   let updatedQty = cartItems
+      //     .filter((c) => c.id === itemId)
+      //     .map((i) => (i.qty = itemQty));
+      // }
+      return {
+        ...state,
+        qty: action.payload,
       };
 
     case FILTER_NAV_GENDER:

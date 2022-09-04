@@ -217,3 +217,10 @@ export function removeDupsCart(payload) {
     payload,
   };
 }
+
+export function sendItemNum(payload) {
+  return {
+    type: UPDATE_ITEM_NUM,
+    payload,
+  };
+}

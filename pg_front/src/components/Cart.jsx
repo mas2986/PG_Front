@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import {
   deleteFromCart,
   deleteAllFromCart,
-  updateItemNum,
+  sendItemNum,
   removeDupsCart,
 } from "../redux/action";
 
@@ -159,6 +159,7 @@ function Cart() {
                               value={i.qty}
                               onChange={(e) => {
                                 i.qty = e.target.value;
+                                dispatch(sendItemNum(e.target.value));
                                 setQty((prev) => prev + 1);
                               }}
                             >
