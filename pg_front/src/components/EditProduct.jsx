@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams, Link as LinkRouter } from 'react-router-dom';
+import React, { useState,useEffect } from "react";
+import { useHistory, useParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Alert from '@mui/material/Alert';
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Select from '@mui/material/Select';
@@ -12,15 +13,15 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../redux/action";
+import { editProduct } from "../redux/action";
 
 function validate(input) {
   let errors = {};
@@ -41,7 +42,7 @@ function validate(input) {
 
   if (input.price < 0) errors.price = "Price can't be smaller than 0";
 
-  if(input.description.length > 250)errors.description = "Description very long";
+  if(input.description?.length > 250)errors.description = "Description very long";
 
 
   console.log(errors);
@@ -73,45 +74,22 @@ const theme = createTheme();
 
 
 
-export default function FormProduct() {
-  const user = useSelector((state)=>state.user);
-  const allProducts = useSelector((state) => state.products);
-  console.log(allProducts);
-  const [input, setInput] = useState({
-                              title: "",
-                              brand: "",
-                              image: "",
-                              description: "",
-                              price: 0,
-                              discount: 0,
-                              //status: "",
-                              stock: 0,
-                              genre: "",
-                              sport: ""
-                            })
-                           
-                            
+export default function EditProduct({ match }) {
+  
+  const { id } = useParams();
+  console.log('id',id)
+  const dispatch = useDispatch();
+
+
+  const product = useSelector((state) => state.products);  
+  const [input, setInput] = useState(product.filter(e=>e.id===id)[0]);
+  console.log(input)
   const [errors, setErrors] = useState({})
 
   const genre = ['Male','Female','Kids','Other'];
   const sport = ['Soccer','Rugby','Tennis','Basketball','Boxing','Swimming','Ciclism','Paddle','Hockey' ]
-  const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(input);
-  const handleChange = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    console.log(e.target.name);    
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    let errorsValidate = validate({ ...input, [e.target.name]: e.target.value })
-    setErrors(() => errorsValidate);
-  };
-
-  const handleChangeSelect = (event) => {
 
   useEffect(()=>{
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -123,10 +101,21 @@ export default function FormProduct() {
     if(!tokenJSON) return history.push("/login")
   },[])
 
-  const handleChangeSelect = (event: SelectChangeEvent) => {
+  const handleChange = (e) => {
+    e.preventDefault();    
+    setInput
+    ({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    let errorsValidate = validate({ ...input, [e.target.name]: e.target.value })
+    setErrors(() => errorsValidate);
+  };
 
-    event.preventDefault();
-    setInput({
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    event.preventDefault();  
+    setInput  
+    ({
       ...input,
       [event.target.name]: event.target.value
     });
@@ -134,20 +123,17 @@ export default function FormProduct() {
 
   const handleSubmit = (event) => {
     event.preventDefault();    
-    dispatch(createProduct(input))
+    console.log('despachando accion')
+    dispatch(editProduct(id,input))
   };
-
-
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm" sx={{
-        boxShadow: '10px -10px 5px 0px rgba(0,0,0,0.75)',
-        //-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75)
-        //-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        boxShadow: '2px 2px 2px -1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.14), 2px 2px 3px rgba(0, 0, 0, 0.12)',
         paddingLeft: "20px"
       }}>
-        <CssBaseline />        
+        <CssBaseline />                  
         <Box
           sx={{
             marginTop: 8,
@@ -156,11 +142,11 @@ export default function FormProduct() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
-          <Typography variant="h4">CREATE NEW PRODUCT</Typography>
-          <Box
+{/*           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            {detail.image}
+          </Avatar>  */}
+          <Typography variant="h4">MODIFY PRODUCT</Typography>          
+            <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
@@ -172,12 +158,12 @@ export default function FormProduct() {
                   required
                   fullWidth
                   value={input?.title}
-                  name="title"
                   error={!!errors.title}
-                  helperText={errors.title}
+                  name="title"
                   onChange={handleChange}
                   type="text"
                   label="Title"
+                  helperText={errors.title}
                 />
               </Grid>
               <Grid item sm={12}>
@@ -186,12 +172,12 @@ export default function FormProduct() {
                   fullWidth
                   name="image"
                   value={input?.image}
+                  error={!!errors.image}
                   onChange={handleChange}
                   label="Image"
                   type="text"
-                  //error={!!errors.image}
-                  //helperText={errors.image}
                   id="image"
+                  //helperText={errors.image}
                 />
               </Grid>
               <Box maxWidth="sm" sx={{
@@ -205,13 +191,13 @@ export default function FormProduct() {
                     required
                     fullWidth
                     name="stock"
+                    error={!!errors.stock}
                     value={input?.stock}
                     onChange={handleChange}
                     label="Stock"
                     type="number"
-                    error={!!errors.stock}
-                    helperText={errors.stock}
                     id="stock"
+                    helperText={errors.stock}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -219,12 +205,12 @@ export default function FormProduct() {
                     required
                     fullWidth
                     name="price"
+                    error={!!errors.price}
                     value={input?.price}
                     onChange={handleChange}
                     label="Price"
                     type="number"
                     id="price"
-                    error={!!errors.price}
                     helperText={errors.price}
                   />
                 </Grid>
@@ -232,13 +218,13 @@ export default function FormProduct() {
                   <TextField
                     fullWidth
                     name="discount"
+                    error={!!errors.discount}
                     value={input?.discount}
                     onChange={handleChange}
                     label="Discount"
                     type="number"
-                    error={!!errors.discount}
-                    helperText={errors.discount}
                     id="discount"
+                    helperText={errors.discount}
                   />
                 </Grid>
               </Box>
@@ -251,27 +237,28 @@ export default function FormProduct() {
                   paddingTop: "32px"
                 }}
               >
-                <Grid item sm={12}>
+                <Grid item sm={12}>                
                   <TextField
+                    label='Genre'
+                    select={true}
+                    value={input?.genre}
                     required
                     fullWidth
-                    select={true}
-                    label="Genre"
                     name="genre"
-                    value={input?.genre}
                     onChange={handleChangeSelect}
                     id="genre"
                   >
+                    <MenuItem value="" disabled>Genre</MenuItem>
                     {genre.map(e=><MenuItem key = {e} value={e}>{e}</MenuItem>)}                   
-                 </TextField>                  
+                 </TextField> 
                 </Grid>
                 <Grid item sm={12}>
                   <TextField
                     required
                     fullWidth
+                    select={true}
                     label="Sport"
                     name="sport"
-                    select={true}
                     value={input?.sport}
                     onChange={handleChangeSelect}
                     id="sport"
@@ -300,12 +287,12 @@ export default function FormProduct() {
                   fullWidth
                   name="description"
                   value={input?.description}
+                  error={!!errors.description}
                   onChange={handleChange}
                   label="Description"
                   type="text"
-                  error={!!errors.description}
-                  helperText={errors.description}
                   id="description"
+                  helperText={errors.description}
                 />
               </Grid>
               {/*               <Grid item xs={12}>
@@ -321,38 +308,27 @@ export default function FormProduct() {
                 />
               </Grid> */}
             </Grid>  
-            <Box sx={{display:'flex'}}>
-              <Button
-                  //href = '/home'
-                  disabled = { Object.keys(errors)?.length!==0 ||
-                    input.title === ''||
-                    input.stock === ''||
-                    input.brand === ''||
-                    input.genre === ''||
-                    input.price === ''||
-                    input.sport === ''||
-                    input.description === ''
-                  }
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Create Product
-              </Button>
-              <LinkRouter to='/admin/dashboard'>
-                <Button                    
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Cancel
+            <Button
+                //href = '/home'
+                disabled = { Object.keys(errors)?.length!==0 ||
+                  input?.title === ''||
+                  input?.stock === ''||
+                  input?.brand === ''||
+                  input?.genre === ''||
+                  input?.price === ''||
+                  input?.sport === ''||
+                  input?.description === ''
+                }
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Modify Product
                 </Button>
-              </LinkRouter>           
-            </Box>
-          </Box>
+          </Box>                        
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright sx={{ mt: 5 }} />       
       </Container>
     </ThemeProvider>
   );

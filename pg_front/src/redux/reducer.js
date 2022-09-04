@@ -1,6 +1,8 @@
 import { updateItemNum } from "./action";
 import {
   GET_PRODUCTS,
+  CREATE_PRODUCT,
+  EDIT_PRODUCT,
   GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   CHECK_LOGIN,
@@ -37,7 +39,16 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-
+      case CREATE_PRODUCT:
+      return{
+        ...state,
+        products:[...state.products,action.payload]
+      }
+    case EDIT_PRODUCT:
+      return{
+        ...state,
+        products:[...state.products,action.payload]
+      }
     case CHECK_LOGIN:
       return {
         ...state,

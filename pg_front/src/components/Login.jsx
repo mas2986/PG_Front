@@ -58,7 +58,7 @@ export default function SignUp() {
   const [errors,setErrors] = useState({})
 
   const dispatch = useDispatch();
-  const error = useSelector((state)=>state.errorLogin);
+  const user = useSelector((state)=>state.user);
   const history = useHistory();
   const handleChange = (e) => {
     e.preventDefault();
@@ -73,19 +73,23 @@ export default function SignUp() {
     event.preventDefault();
     if (input.email && input.password) {      
       dispatch(signUp(input));
-      // if(error!==''){
-        
+      // if(error!==''){        
       // }
-      return history.push('/')
-    }
-    Swal.fire({
-      title: "Error!",
-      text: "Complete password and email",
-      icon: "error",
-      confirmButtonText: "OK",
-    });
-  };
+      //return history.push('/')
+    }else{
+      Swal.fire({
+        title: "Error!",
+        text: "Complete password and email",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    };      
+  }
 
+  if(user!=={}){
+    if(user.rol==='admin') return history.push('/admin');
+    if(user.rol==='user') return history.push('/home');
+  }
 
 
   return (
