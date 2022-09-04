@@ -1,23 +1,39 @@
 .btn-form {
-  margin-top: 5px;
   align-items: center;
+  padding: 10px;
 }
 
-.checkbox {
+.btn-user {
   align-items: center;
-  margin-bottom: 30px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  padding: 10px;
+  cursor: pointer;
+  color: aliceblue;
+  background-color: rgb(55, 44, 116);
+  border-radius: 2px;
+  width: 100px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
 }
 
 .body {
-  background-color: #9999;
-  height: 550px;
+  height: 750px
 }
 
 .formDetail {
-  margin-top: 50px;
+  margin: 40px;
   width: 480px;
-  height: 550px;
+  height: 530px;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
+  outline: solid;
+}
+
+.icon {
+  right: 85%;
+  margin-top: 25px;
+  color: rgb(94, 212, 185);
+}
+.iconRed{
+  right: 85%;
+  margin-top: 25px;
+  color: red
 }

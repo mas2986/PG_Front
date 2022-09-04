@@ -42,7 +42,7 @@ function App() {
         <Route exact path="/entrega" component={Formulario} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/create" component={FormProduct} />
-
+        <Route exact path="/user" component={CreateUser}/>
       </header>
       <Footer/>
     </div>

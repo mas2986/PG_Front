@@ -18,6 +18,7 @@ import {
   DELETE_ALL_FROM_CART,
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
+  CREATE_USER,
 } from "./const";
 
 const initialState = {
@@ -38,6 +39,13 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case CHECK_LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case CREATE_USER:
+      console.log(action.payload)
       return {
         ...state,
         user: action.payload,
