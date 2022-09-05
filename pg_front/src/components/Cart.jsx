@@ -17,6 +17,7 @@ import {
   fetchCartItems,
 } from "../redux/action";
 
+//custom style for shopping cart icon
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -25,12 +26,17 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     padding: "0 4px",
   },
 }));
+
 function Cart() {
+  //local state for toggling cart items list
   const [cartDisplay, setCartDisplay] = useState(false);
+  //local state for forcing a re-render of the price
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
 
+  //bring in the global state.cartItems
   let items = useSelector((state) => state.cartItems);
+  //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
   if (items.length == 0) {
     items =
       JSON.parse(localStorage.getItem("items")) == null
@@ -43,10 +49,12 @@ function Cart() {
     setCartDisplay((prevState) => !prevState);
   }
 
+  //keep cart visible while mouse is hovering over it
   function keepIn() {
     setCartDisplay(true);
   }
 
+  //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
     console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
@@ -55,10 +63,13 @@ function Cart() {
     }
   }
 
+  //setting the items array as an empty array (removing all items from cart).
   function deleteAll() {
     dispatch(deleteAllFromCart());
     localStorage.removeItem("items");
   }
+
+  //saving items in local storage
   useEffect(() => {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
@@ -176,10 +187,13 @@ function Cart() {
                             </Typography>
                             <select
                               value={i.qty}
+                              //declaring the handler fn here as i need to use the map method current item (i)
                               onChange={(e) => {
                                 i.qty = e.target.value;
                                 dispatch(sendItemNum(e.target.value));
+                                //changing state to force re render of price
                                 setQty((prev) => prev + 1);
+                                //saving item with updated qty
                                 localStorage.setItem(
                                   "items",
                                   JSON.stringify(items)
@@ -217,10 +231,15 @@ function Cart() {
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
-                  <Link to="/entrega">
+                  <Link
+                    to="/entrega"
+                    style={{ textDecoration: "none", fontStyle: "none" }}
+                  >
                     <Button
-                      // href="/entrega"
-                      sx={{ margin: "0.5rem", border: "1px solid #000" }}
+                      sx={{
+                        margin: "0.5rem",
+                        border: "1px solid #000",
+                      }}
                     >
                       Checkout
                     </Button>
