@@ -32,10 +32,6 @@ function HideOnScroll(props) {
 export default function Nav(props) {
   const user = useSelector((state) => state.user);
 
-  const goHome = () => {
-    <Link to={"/home"} />;
-  };
-
   return (
     <>
       <StyledEngineProvider injectFirst>
@@ -45,7 +41,7 @@ export default function Nav(props) {
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
                 <Link
-                  to="/home"
+                  to="/"
                   className={n["logo-link"]}
                   style={{
                     display: "flex",

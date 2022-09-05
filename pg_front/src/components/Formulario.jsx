@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
+import { Link } from "react-router-dom";
 
 function validateForm(input) {
   const errors = {};
@@ -288,14 +289,16 @@ export default function FormPropsTextFields() {
           )}
         </Box>
         <div className="btn-form">
-          <Button
-            href="/home"
-            variant="contained"
-            className="btn-form"
-            color="primary"
-          >
-            BACK HOME
-          </Button>
+          <Link to="/" style={{ TextDecoration: "none" }}>
+            <Button
+              // href="/"
+              variant="contained"
+              className="btn-form"
+              color="primary"
+            >
+              BACK HOME
+            </Button>
+          </Link>
         </div>
       </center>
     </div>

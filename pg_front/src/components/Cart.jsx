@@ -14,6 +14,7 @@ import {
   deleteAllFromCart,
   sendItemNum,
   removeDupsCart,
+  fetchCartItems,
 } from "../redux/action";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -25,10 +26,18 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 function Cart() {
-  const items = useSelector((state) => state.cartItems);
   const [cartDisplay, setCartDisplay] = useState(false);
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
+
+  let items = useSelector((state) => state.cartItems);
+  if (items.length == 0) {
+    items =
+      JSON.parse(localStorage.getItem("items")) == null
+        ? []
+        : JSON.parse(localStorage.getItem("items"));
+    console.log("getting items: " + items);
+  }
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
@@ -41,11 +50,21 @@ function Cart() {
   function deleteItem(idxRemoval) {
     console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
+    if (items.length == 1) {
+      localStorage.removeItem("items");
+    }
   }
 
   function deleteAll() {
     dispatch(deleteAllFromCart());
+    localStorage.removeItem("items");
   }
+  useEffect(() => {
+    if (items.length) {
+      localStorage.setItem("items", JSON.stringify(items));
+      console.log("setting items: " + items + localStorage.items[0]);
+    }
+  }, [items]);
 
   return (
     <>
@@ -161,6 +180,10 @@ function Cart() {
                                 i.qty = e.target.value;
                                 dispatch(sendItemNum(e.target.value));
                                 setQty((prev) => prev + 1);
+                                localStorage.setItem(
+                                  "items",
+                                  JSON.stringify(items)
+                                );
                               }}
                             >
                               <option value={1}>1</option>
@@ -194,12 +217,14 @@ function Cart() {
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
-                  <Button
-                    // href="/entrega"
-                    sx={{ margin: "0.5rem", border: "1px solid #000" }}
-                  >
-                    Checkout
-                  </Button>
+                  <Link to="/entrega">
+                    <Button
+                      // href="/entrega"
+                      sx={{ margin: "0.5rem", border: "1px solid #000" }}
+                    >
+                      Checkout
+                    </Button>
+                  </Link>
                 </Box>
               </Box>
             ) : (

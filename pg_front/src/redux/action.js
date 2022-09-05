@@ -19,12 +19,11 @@ import {
   DELETE_ALL_FROM_CART,
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
-  CREATE_USER
+  CREATE_USER,
   CREATE_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  FETCH_SAVED_ITEMS,
 } from "./const";
-
-
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -51,76 +50,71 @@ export function signUp(body) {
   };
 }
 
-
 export function createUser(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`${URL}/api/user`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      console.log(user.data.data.user)
+      console.log(user.data.data.user);
       return dispatch({
         type: CREATE_USER,
         payload: user.data.data.user,
       });
     } catch (e) {
-      console.log(e)
-      
+      console.log(e);
     }
   };
 }
 
-
-export function createProduct(body){
+export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function(dispatch){
-    try{
-      console.log(CREATE_PRODUCT)
-      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
-      let newProduct = await axios.post(`/api/product`,body,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      })
-      console.log(newProduct.data);
-      return dispatch({
-        type:CREATE_PRODUCT,
-        payload:newProduct.data
-      })
-    }
-    catch(e){ 
-      console.log(e)
-    Swal.fire({
-      title: "Error creating product!",
-      text: "Please try again",
-      icon: "Error",
-      confirmButtonText: "Back",
-    });
-  }
-} 
-}
-
-export function editProduct(id,body){
-  return async function(dispatch){
-    try{
+  return async function (dispatch) {
+    try {
+      console.log(CREATE_PRODUCT);
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      console.log(body)
-      let putProduct = await axios.put(`/api/product/${id}`,body,{
+      let newProduct = await axios.post(`/api/product`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
-      })
-      console.log(putProduct.data);
-      return{
-        type:EDIT_PRODUCT,
-        payload:putProduct.data
-      }
+        },
+      });
+      console.log(newProduct.data);
+      return dispatch({
+        type: CREATE_PRODUCT,
+        payload: newProduct.data,
+      });
+    } catch (e) {
+      console.log(e);
+      Swal.fire({
+        title: "Error creating product!",
+        text: "Please try again",
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
     }
-    catch(e){
+  };
+}
+
+export function editProduct(id, body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;
+      console.log(body);
+      let putProduct = await axios.put(`/api/product/${id}`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(putProduct.data);
+      return {
+        type: EDIT_PRODUCT,
+        payload: putProduct.data,
+      };
+    } catch (e) {
       Swal.fire({
         title: "Error updating product!",
         text: e.msg,
@@ -128,9 +122,8 @@ export function editProduct(id,body){
         confirmButtonText: "Back",
       });
     }
-  }
+  };
 }
-
 
 export function getProduct() {
   return async function (dispatch) {
@@ -165,7 +158,6 @@ export function searchProduct(payload) {
     }
   };
 }
-
 
 export function filterBySport(payload) {
   console.log(payload);
@@ -283,6 +275,13 @@ export function removeDupsCart(payload) {
 export function sendItemNum(payload) {
   return {
     type: UPDATE_ITEM_NUM,
+    payload,
+  };
+}
+
+export function fetchCartItems(payload) {
+  return {
+    type: FETCH_SAVED_ITEMS,
     payload,
   };
 }
