@@ -47,7 +47,7 @@ export default function CreateUser() {
     console.log(texto)
     dispatch(createUser(texto))
     Swal.fire({
-      title: "User created successfully.!",
+      title: "User created successfully!",
       text: "Check your email to validate your account.",
       icon: "success",
     })

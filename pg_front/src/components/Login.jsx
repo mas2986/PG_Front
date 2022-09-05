@@ -80,7 +80,7 @@ export default function SignUp() {
     }
     Swal.fire({
       title: "Error!",
-      text: "Complete password and email",
+      text: "¡Complete password and email!",
       icon: "error",
       confirmButtonText: "OK",
     });
