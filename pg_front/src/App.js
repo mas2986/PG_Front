@@ -2,7 +2,7 @@
 //import './App.css';
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { checkLogin } from "./redux/action";
+//import { checkLogin } from "./redux/action";
 import { Route } from "react-router-dom";
 import Landing from "./components/Landing";
 import Formulario from './components/Formulario'
@@ -24,7 +24,7 @@ function App() {
       const { token } = tokenJSON;
       const { id } = tokenJSON.data.user;
       console.log("Chequeo Login");
-      dispatch(checkLogin(token, id));
+      //dispatch(checkLogin(token, id));
     }
   }, [dispatch]);
 

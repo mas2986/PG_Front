@@ -23,9 +23,10 @@ import {
   EDIT_PRODUCT
 } from "./const";
 
-const URL = "http://localhost:4000";
+//const URL = "http://localhost:4000";
+const URL = "https://pg-sports.herokuapp.com"
 
-export function signUp(body) {
+ export function signUp(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`${URL}/api/login`, body);
@@ -48,7 +49,7 @@ export function signUp(body) {
       );
     }
   };
-}
+} 
 
 export function createProduct(body){
   body.price = parseInt(body.price);
@@ -82,8 +83,9 @@ export function createProduct(body){
 } 
 }
 
-export function editProduct(id,body){
+export function editProduct(body){
   return async function(dispatch){
+    let { id } = body;
     try{
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
@@ -206,7 +208,7 @@ export function detailProduct(id) {
 }
 
 //CHECK LOGIN ACTION CREATOR
-export function checkLogin(token, id) {
+/* export function checkLogin(token, id) {
   return async function (dispatch) {
     try {
       let user = await axios.get(`${URL}/api/user/${id}`, {
@@ -222,7 +224,7 @@ export function checkLogin(token, id) {
       console.log(e);
     }
   };
-}
+} */
 
 export function addToCart(payload) {
   return {

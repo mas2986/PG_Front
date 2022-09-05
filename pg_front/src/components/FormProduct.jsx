@@ -136,27 +136,7 @@ export default function FormProduct() {
 
 
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="sm" sx={{
-        boxShadow: '10px -10px 5px 0px rgba(0,0,0,0.75)',
-        //-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75)
-        //-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-        paddingLeft: "20px"
-      }}>
-        <CssBaseline />        
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
-          <Typography variant="h4">CREATE NEW PRODUCT</Typography>
+  return (           
           <Box
             component="form"
             noValidate
@@ -317,40 +297,7 @@ export default function FormProduct() {
                   id="status"
                 />
               </Grid> */}
-            </Grid>  
-            <Box sx={{display:'flex'}}>
-              <Button
-                  //href = '/home'
-                  disabled = { Object.keys(errors)?.length!==0 ||
-                    input.title === ''||
-                    input.stock === ''||
-                    input.brand === ''||
-                    input.genre === ''||
-                    input.price === ''||
-                    input.sport === ''||
-                    input.description === ''
-                  }
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Create Product
-              </Button>
-              <LinkRouter to='/admin/dashboard'>
-                <Button                    
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Cancel
-                </Button>
-              </LinkRouter>           
-            </Box>
+            </Grid>              
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
   );
 }
