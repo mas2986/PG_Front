@@ -111,6 +111,8 @@ export default function FormProduct() {
     setErrors(() => errorsValidate);
   };
 
+  const handleChangeSelect = (event) => {
+
   useEffect(()=>{
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
     if (tokenJSON) {
@@ -122,6 +124,7 @@ export default function FormProduct() {
   },[])
 
   const handleChangeSelect = (event: SelectChangeEvent) => {
+
     event.preventDefault();
     setInput({
       ...input,

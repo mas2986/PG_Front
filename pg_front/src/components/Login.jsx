@@ -150,9 +150,19 @@ export default function SignUp() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 2, mb: 0 }}
               >
                 Login
+              </Button>
+              <Button
+                //href = '/home'
+                type="submit"
+                fullWidth
+                variant="contained"
+                href="/user"
+                sx={{ mt: 1, mb: 2 }}
+              >
+                Register
               </Button>
               <LoginGoogle />
             <Grid container justifyContent="flex-end">

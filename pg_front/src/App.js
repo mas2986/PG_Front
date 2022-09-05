@@ -9,6 +9,7 @@ import Formulario from './components/Formulario'
 import Login from "./components/Login";
 import Detail from "./components/Detail";
 import CreateProduct from "./components/CreateProduct";
+import CreateUser from "./components/CreateUser.jsx"
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 import FormProduct from "./components/FormProduct";
@@ -42,11 +43,15 @@ function App() {
         <Route exact path="/entrega" component={Formulario} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/create" component={FormProduct} />
+
+        <Route exact path="/user" component={CreateUser}/>
+
         <Route 
           exact
           path="/admin/edit/:id" 
           render={({match})=><EditProduct match={match}/>}
         />
+
       </header>
       <Footer/>
     </div>

@@ -19,6 +19,7 @@ import {
   DELETE_ALL_FROM_CART,
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
+  CREATE_USER
   CREATE_PRODUCT,
   EDIT_PRODUCT
 } from "./const";
@@ -49,6 +50,26 @@ export function signUp(body) {
     }
   };
 }
+
+
+export function createUser(body) {
+  return async function (dispatch) {
+    try {
+      let user = await axios.post(`${URL}/api/user`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      console.log(user.data.data.user)
+      return dispatch({
+        type: CREATE_USER,
+        payload: user.data.data.user,
+      });
+    } catch (e) {
+      console.log(e)
+      
+    }
+  };
+}
+
 
 export function createProduct(body){
   body.price = parseInt(body.price);
@@ -109,6 +130,7 @@ export function editProduct(id,body){
     }
   }
 }
+
 
 export function getProduct() {
   return async function (dispatch) {
