@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
@@ -19,18 +19,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
 import LoginGoogle from "./LoginGoogle";
 
-function validate(input){
-    let errors = {};
-    console.log('En funcion validate')
-    let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (!regexEmail.test(input.email)) errors.email = 'Invalid email'
+function validate(input) {
+  let errors = {};
+  console.log("En funcion validate");
+  let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  if (!regexEmail.test(input.email)) errors.email = "Invalid email";
 
-    console.log(errors);
-    return errors;
-} 
+  console.log(errors);
+  return errors;
+}
 
 function Copyright(props) {
-  
   return (
     <Typography
       variant="body2"
@@ -55,10 +54,10 @@ export default function SignUp() {
     email: "",
     password: "",
   });
-  const [errors,setErrors] = useState({})
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const user = useSelector((state)=>state.user);
+  const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleChange = (e) => {
     e.preventDefault();
@@ -66,31 +65,33 @@ export default function SignUp() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    let errorsValidate = validate({...input,[e.target.name]:e.target.value})
-    setErrors(()=>errorsValidate);
+    let errorsValidate = validate({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(() => errorsValidate);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (input.email && input.password) {      
+    if (input.email && input.password) {
       dispatch(signUp(input));
-      // if(error!==''){        
+      // if(error!==''){
       // }
       //return history.push('/')
-    }else{
+    } else {
       Swal.fire({
         title: "Error!",
         text: "Complete password and email",
         icon: "error",
         confirmButtonText: "OK",
       });
-    };      
-  }
+    }
+  };
 
-  if(user!=={}){
-    if(user.rol==='admin') return history.push('/admin');
-    if(user.rol==='user') return history.push('/home');
+  if (user !== {}) {
+    if (user.rol === "admin") return history.push("/admin");
+    if (user.rol === "user") return history.push("/home");
   }
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -125,11 +126,9 @@ export default function SignUp() {
                   onChange={handleChange}
                   autoComplete="email"
                 />
-                {errors.email
-                  ?
-                    <Alert severity="error">{errors.email}</Alert>
-                  :
-                    null}
+                {errors.email ? (
+                  <Alert severity="error">{errors.email}</Alert>
+                ) : null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -145,33 +144,28 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-              <Button
-                //href = '/home'
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 2, mb: 0 }}
-              >
-                Login
-              </Button>
-              <Button
-                //href = '/home'
-                type="submit"
-                fullWidth
-                variant="contained"
-                href="/user"
-                sx={{ mt: 1, mb: 2 }}
-              >
-                Register
-              </Button>
+            <Button
+              //href = '/home'
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2, mb: 0 }}
+            >
+              Login
+            </Button>
+            <Button
+              //href = '/home'
+              type="submit"
+              fullWidth
+              variant="contained"
+              href="/user"
+              sx={{ mt: 1, mb: 2 }}
+            >
+              Register
+            </Button>
+            <Box display="flex" sx={{ justifyContent: "center" }}>
               <LoginGoogle />
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

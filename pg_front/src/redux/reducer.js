@@ -21,6 +21,7 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
+  FETCH_SAVED_ITEMS,
 } from "./const";
 
 const initialState = {
@@ -39,16 +40,16 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-      case CREATE_PRODUCT:
-      return{
+    case CREATE_PRODUCT:
+      return {
         ...state,
-        products:[...state.products,action.payload]
-      }
+        products: [...state.products, action.payload],
+      };
     case EDIT_PRODUCT:
-      return{
+      return {
         ...state,
-        products:[...state.products,action.payload]
-      }
+        products: [...state.products, action.payload],
+      };
     case CHECK_LOGIN:
       return {
         ...state,
@@ -56,7 +57,7 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case CREATE_USER:
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
         user: action.payload,
@@ -177,8 +178,8 @@ export const rootReducer = (state = initialState, action) => {
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
-          text: "Please change the quantity to order from the cart",
-          icon: "Error",
+          text: "You can choose the quantity of an item by selecting the number in the cart ",
+          icon: "error",
           confirmButtonText: "Back",
         });
         return {
@@ -198,6 +199,7 @@ export const rootReducer = (state = initialState, action) => {
     case DELETE_FROM_CART:
       const allItems = state.cartItems;
       const index = action.payload;
+      // localStorage.setItem("items", JSON.stringify(state.cartItems));
       const item2 = allItems.filter((e, idx) => idx !== index);
       return {
         ...state,
@@ -229,6 +231,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         qty: action.payload,
+      };
+
+    case FETCH_SAVED_ITEMS:
+      return {
+        ...state,
+        cartItems: action.payload,
       };
 
     case FILTER_NAV_GENDER:
