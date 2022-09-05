@@ -7,6 +7,9 @@ import { BrowserRouter } from "react-router-dom";
 import store from "./redux/index";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createTheme } from "@mui/material";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_API;
 
 const theme = createTheme({
   palette: {

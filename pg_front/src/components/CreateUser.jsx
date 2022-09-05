@@ -51,7 +51,7 @@ export default function CreateUser() {
       text: "Check your email to validate your account.",
       icon: "success",
     })
-    history.push('/home')
+    history.push('/')
   }
 
   return (
