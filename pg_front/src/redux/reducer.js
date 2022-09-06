@@ -76,6 +76,7 @@ export const rootReducer = (state = initialState, action) => {
       };
     case FILTER_SPORT:
       const allProducts = state.products;
+            
       const filteredSports = allProducts.filter((p) => p.sport.includes(action.payload)); 
       
       return {
@@ -84,10 +85,10 @@ export const rootReducer = (state = initialState, action) => {
       };
     case FILTER_BRAND:
       const allBrands = state.products;
-      const filteredBrands = allBrands.filter((p) => p.brand.includes(action.payload));
+      const filteredBrands = state.altProducts.filter((p) => p.brand.includes(action.payload));
     return {
         ...state,
-        products: action.payload === "All" ? state.altProducts : filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ? allBrands : filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
       const allGenres = state.products
