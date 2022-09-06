@@ -53,7 +53,7 @@ export function signUp(body) {
 export function createUser(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/user`, body);
+      let user = await axios.post(`/api/user`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
