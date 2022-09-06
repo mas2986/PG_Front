@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams, Link as LinkRouter } from 'react-router-dom';
+import { useHistory, useParams, Link as LinkRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
+import Select from "@mui/material/Select";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import Checkbox from "@mui/material/Checkbox";
+import DialogActions from "@mui/material/DialogActions";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -24,11 +25,11 @@ import { createProduct } from "../redux/action";
 
 function validate(input) {
   let errors = {};
-  console.log('En funcion validate')
+  console.log("En funcion validate");
   console.log(input);
-  if (!input.title) errors.title = 'Required Field';
+  if (!input.title) errors.title = "Required Field";
 
-  if(input.title.length > 50) errors.title = 'Title very long'
+  if (input.title.length > 50) errors.title = "Title very long";
 
   //let extensionImage = input.image.split('.')?.length
   //if(input.image.split('.')[extensionImage-1]!=='jpg') errors.image = 'Invalid image format'
@@ -37,21 +38,19 @@ function validate(input) {
 
   if (input.discount < 0) errors.discount = "Discount can't be smaller than 0";
 
-  if (input.discount > 100) errors.discount = "Discount can't be larger than 100"
+  if (input.discount > 100)
+    errors.discount = "Discount can't be larger than 100";
 
   if (input.price < 0) errors.price = "Price can't be smaller than 0";
 
-  if(input.description.length > 250)errors.description = "Description very long";
-
+  if (input.description.length > 250)
+    errors.description = "Description very long";
 
   console.log(errors);
   return errors;
 }
 
-
-
 function Copyright(props) {
-
   return (
     <Typography
       variant="body2"
@@ -60,7 +59,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">{/* Cambiar href por nuestra URL */}
+      <Link color="inherit" href="https://mui.com/">
+        {/* Cambiar href por nuestra URL */}
         Athens
       </Link>{" "}
       {new Date().getFullYear()}
@@ -71,30 +71,37 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-
-
-export default function FormProduct() {
-  const user = useSelector((state)=>state.user);
+export default function FormProduct({onClose}) {
+  const user = useSelector((state) => state.user);
   const allProducts = useSelector((state) => state.products);
   console.log(allProducts);
   const [input, setInput] = useState({
-                              title: "",
-                              brand: "",
-                              image: "",
-                              description: "",
-                              price: 0,
-                              discount: 0,
-                              //status: "",
-                              stock: 0,
-                              genre: "",
-                              sport: ""
-                            })
-                           
-                            
-  const [errors, setErrors] = useState({})
+    title: "",
+    brand: "",
+    image: "",
+    description: "",
+    price: 0,
+    discount: 0,
+    //status: "",
+    stock: 0,
+    genre: "",
+    sport: "",
+  });
 
-  const genre = ['Male','Female','Kids','Other'];
-  const sport = ['Soccer','Rugby','Tennis','Basketball','Boxing','Swimming','Ciclism','Paddle','Hockey' ]
+  const [errors, setErrors] = useState({});
+
+  const genre = ["Male", "Female", "Kids", "Other"];
+  const sport = [
+    "Soccer",
+    "Rugby",
+    "Tennis",
+    "Basketball",
+    "Boxing",
+    "Swimming",
+    "Ciclism",
+    "Paddle",
+    "Hockey",
+  ];
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -102,41 +109,43 @@ export default function FormProduct() {
   const handleChange = (e) => {
     e.preventDefault();
     console.log(e.target.value);
-    console.log(e.target.name);    
+    console.log(e.target.name);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    let errorsValidate = validate({ ...input, [e.target.name]: e.target.value })
+    let errorsValidate = validate({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
     setErrors(() => errorsValidate);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
     if (tokenJSON) {
       const { token } = tokenJSON;
       const { rol } = tokenJSON.data.user;
-      if(token&&rol==="user") return history.push("/login")
+      if (token && rol === "user") return history.push("/login");
     }
-    if(!tokenJSON) return history.push("/login")
-  },[])
+    if (!tokenJSON) return history.push("/login");
+  }, []);
 
-  const handleChangeSelect = (event: SelectChangeEvent) => {
+  const handleChangeSelect = (event) => {
     event.preventDefault();
     setInput({
       ...input,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();    
-    dispatch(createProduct(input))
+    event.preventDefault();
+    dispatch(createProduct(input));
+    onClose();
   };
 
-
-
-  return (           
+  return (
           <Box
             component="form"
             noValidate
@@ -171,12 +180,15 @@ export default function FormProduct() {
                   id="image"
                 />
               </Grid>
-              <Box maxWidth="sm" sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                paddingTop: "32px",
-                paddingLeft: "32px"
-              }}>
+              <Box
+                maxWidth="sm"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingTop: "32px",
+                  paddingLeft: "32px",
+                }}
+              >
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -219,13 +231,13 @@ export default function FormProduct() {
                   />
                 </Grid>
               </Box>
-              <Box maxWidth="sm"
-
+              <Box
+                maxWidth="sm"
                 sx={{
                   width: "100%",
                   display: "flex",
                   paddingLeft: "32px",
-                  paddingTop: "32px"
+                  paddingTop: "32px",
                 }}
               >
                 <Grid item sm={12}>
@@ -239,8 +251,12 @@ export default function FormProduct() {
                     onChange={handleChangeSelect}
                     id="genre"
                   >
-                    {genre.map(e=><MenuItem key = {e} value={e}>{e}</MenuItem>)}                   
-                 </TextField>                  
+                    {genre.map((e) => (
+                      <MenuItem key={e} value={e}>
+                        {e}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
                 <Grid item sm={12}>
                   <TextField
@@ -253,10 +269,14 @@ export default function FormProduct() {
                     onChange={handleChangeSelect}
                     id="sport"
                   >
-                    {sport.map(e=><MenuItem key = {e} value={e}>{e}</MenuItem>)}                   
-                 </TextField>                  
+                    {sport.map((e) => (
+                      <MenuItem key={e} value={e}>
+                        {e}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
-                
+
                 <Grid item sm={12}>
                   <TextField
                     required
@@ -269,7 +289,6 @@ export default function FormProduct() {
                     id="brand"
                   />
                 </Grid>
-
               </Box>
               <Grid item sm={12}>
                 <TextField
@@ -297,7 +316,24 @@ export default function FormProduct() {
                   id="status"
                 />
               </Grid> */}
-            </Grid>              
-          </Box>
+            </Grid>
+            <DialogActions sx={{ p: '1.25rem' }}>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button color="secondary" onClick={handleSubmit} 
+          disabled = { Object.keys(errors)?.length!==0 ||
+          input.title === ''||
+          input.stock === ''||
+          input.brand === ''||
+          input.genre === ''||
+          input.price === ''||
+          input.sport === ''||
+          input.description === ''
+        }
+
+        variant="contained">
+          Create New Product
+        </Button>
+      </DialogActions>         
+       </Box>
   );
 }

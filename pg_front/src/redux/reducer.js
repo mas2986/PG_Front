@@ -1,4 +1,4 @@
-import { updateItemNum } from "./action";
+import Swal from "sweetalert2";
 import {
   GET_PRODUCTS,
   CREATE_PRODUCT,
@@ -20,6 +20,8 @@ import {
   DELETE_ALL_FROM_CART,
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
+  CREATE_USER,
+  FETCH_SAVED_ITEMS,
 } from "./const";
 
 const initialState = {
@@ -28,7 +30,7 @@ const initialState = {
   user: {},
   errorLogin: "",
   cartItems: [],
-  // qty: 1,
+  qty: 1,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -38,17 +40,24 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-      case CREATE_PRODUCT:
-      return{
+    case CREATE_PRODUCT:
+      return {
         ...state,
-        products:[...state.products,action.payload]
-      }
+        products: [...state.products, action.payload],
+      };
     case EDIT_PRODUCT:
-      return{
+      return {
         ...state,
-        products:[...state.products,action.payload]
-      }
+        products: [...state.products, action.payload],
+      };
     case CHECK_LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case CREATE_USER:
+      console.log(action.payload);
       return {
         ...state,
         user: action.payload,
@@ -164,28 +173,33 @@ export const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       const allProds = state.altProducts;
-      // const qty = state.alt;
       const cart = state.cartItems;
       const id = action.payload;
+      if (cart.some((c) => c.id === id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "You can choose the quantity of an item by selecting the number in the cart ",
+          icon: "error",
+          confirmButtonText: "Back",
+        });
+        return {
+          ...state,
+        };
+      }
       const item = allProds.filter((i) => i.id === id);
       let finalItem = item.map(
-        (i) => (i.qty = cart.some((c) => c.id == id) ? i.qty + 1 : 1)
+        (i) =>
+          (i.qty = cart.some((c) => c.id == id) ? parseInt(state.qty) + 1 : 1)
       );
       return {
         ...state,
         cartItems: [...state.cartItems, item].flat(),
       };
 
-    // case UPDATE_ITEM_NUM:
-    //   const itemQty = action.payload
-    //   return {
-    //     ...state,
-    //     cartItems: [...state.cartItems, itemQty].flat(),
-    //   };
-
     case DELETE_FROM_CART:
       const allItems = state.cartItems;
       const index = action.payload;
+      // localStorage.setItem("items", JSON.stringify(state.cartItems));
       const item2 = allItems.filter((e, idx) => idx !== index);
       return {
         ...state,
@@ -205,6 +219,24 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: dupsFree,
+      };
+
+    case UPDATE_ITEM_NUM:
+      // let [itemId, itemQty] = action.payload;
+      // if (state.cartItems.some((i) => i.id == itemId)) {
+      //   let updatedQty = cartItems
+      //     .filter((c) => c.id === itemId)
+      //     .map((i) => (i.qty = itemQty));
+      // }
+      return {
+        ...state,
+        qty: action.payload,
+      };
+
+    case FETCH_SAVED_ITEMS:
+      return {
+        ...state,
+        cartItems: action.payload,
       };
 
     case FILTER_NAV_GENDER:

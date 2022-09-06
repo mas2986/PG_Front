@@ -19,14 +19,15 @@ import {
   DELETE_ALL_FROM_CART,
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
+  CREATE_USER,
   CREATE_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  DELETE_PRODUCT,
+  FETCH_SAVED_ITEMS,
 } from "./const";
 
-//const URL = "http://localhost:4000";
 const URL = "https://pg-sports.herokuapp.com"
-
- export function signUp(body) {
+export function signUp(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`${URL}/api/login`, body);
@@ -51,7 +52,24 @@ const URL = "https://pg-sports.herokuapp.com"
   };
 } 
 
-export function createProduct(body){
+export function createUser(body) {
+  return async function (dispatch) {
+    try {
+      let user = await axios.post(`${URL}/api/user`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      console.log(user.data.data.user);
+      return dispatch({
+        type: CREATE_USER,
+        payload: user.data.data.user,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
@@ -83,25 +101,23 @@ export function createProduct(body){
 } 
 }
 
-export function editProduct(body){
-  return async function(dispatch){
-    let { id } = body;
-    try{
+export function editProduct(id, body) {
+  return async function (dispatch) {
+    try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      console.log(body)
-      let putProduct = await axios.put(`${URL}/api/product/${id}`,body,{
+      console.log(body);
+      let putProduct = await axios.put(`${URL}/api/product/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
-      })
+        },
+      });
       console.log(putProduct.data);
-      return{
-        type:EDIT_PRODUCT,
-        payload:putProduct.data
-      }
-    }
-    catch(e){
+      return dispatch({
+        type: EDIT_PRODUCT,
+        payload: putProduct.data,
+      });
+    } catch (e) {
       Swal.fire({
         title: "Error updating product!",
         text: e.msg,
@@ -109,7 +125,33 @@ export function editProduct(body){
         confirmButtonText: "Back",
       });
     }
-  }
+  };
+}
+
+export function deleteProduct(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;
+      let deleteProduct = await axios.delete(`${URL}/api/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(deleteProduct.data);
+      return dispatch({
+        type: DELETE_PRODUCT,
+        payload: id,
+      });
+    } catch (e) {
+      Swal.fire({
+        title: "Error deleting product!",
+        text: e.msg,
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
+    }
+  };
 }
 
 export function getProduct() {
@@ -130,7 +172,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`${URL}/api/products?title=${payload}`, {});
+      var product = await axios.get(`/api/product?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
@@ -145,7 +187,6 @@ export function searchProduct(payload) {
     }
   };
 }
-
 
 export function filterBySport(payload) {
   console.log(payload);
@@ -195,7 +236,7 @@ export function detailProduct(id) {
   console.log(id);
   return async function (dispatch) {
     try {
-      var product = await axios.get(`${URL}/api/product/${id}`);
+      var product = await axios.get(`/api/product/${id}`);
       console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
@@ -208,24 +249,20 @@ export function detailProduct(id) {
 }
 
 //CHECK LOGIN ACTION CREATOR
-/* export function checkLogin(token, id) {
-  return async function (dispatch) {
-    try {
-      let user = await axios.get(`${URL}/api/user/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return dispatch({
-        type: CHECK_LOGIN,
-        payload: user.data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-} */
-
+export function checkLogin(id,token) {
+  console.log(id);
+  return async function(dispatch){
+    let user = await axios.get(`${URL}/api/user/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return dispatch({
+      type:CHECK_LOGIN,
+      payload: user.data,
+    })
+} 
+}
 export function addToCart(payload) {
   return {
     type: ADD_TO_CART,
@@ -256,6 +293,20 @@ export function updateItemNum(payload) {
 export function removeDupsCart(payload) {
   return {
     type: REMOVE_DUPLICATES_CART,
+    payload,
+  };
+}
+
+export function sendItemNum(payload) {
+  return {
+    type: UPDATE_ITEM_NUM,
+    payload,
+  };
+}
+
+export function fetchCartItems(payload) {
+  return {
+    type: FETCH_SAVED_ITEMS,
     payload,
   };
 }

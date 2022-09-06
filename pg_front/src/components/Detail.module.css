@@ -1,0 +1,56 @@
+
+
+.detailPage{
+    display: block;
+    width: 100%;
+    height: 600px;
+    max-width: 1400px;
+    max-height: 1200px;
+    width: 100%;
+    margin: 40px auto;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.detailCard{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 30px 0;
+}
+.title{
+    font-size: 60px;
+}
+.detailCard .bigImage{
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+    display: block;
+    object-fit: cover;
+}
+
+.detailCard .productDetail{
+    height: min-content;
+    max-width: 500px;
+    min-width: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+}
+
+.detailCard .productDetail h1{
+    font-size: 40px;
+    width: max-content;
+}
+
+.detailCard .productDetail .price{
+    font-size: 35px;
+}
+
+.detailCard .productDetail .description{
+    font-size: 25px;
+    flex-shrink:5;
+}
+
+.detailCard .productDetail .buyButton{
+    margin:2px;
+}
