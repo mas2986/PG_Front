@@ -38,13 +38,13 @@ export default function Filters() {
 
   return (
     <section className={style.box}>
-      <div>
+      {/* <div>
         <h3>ORDER</h3>
         <select onChange={(e) => handleOrderBy(e)}>
           <option value="asc"> A-Z</option>
           <option value="desc"> Z-A</option>
         </select>
-      </div>
+      </div> */}
       <div>
         <h3>ORDER BY PRICE</h3>
         <select onChange={(e) => handleOrderByPrice(e)}>
