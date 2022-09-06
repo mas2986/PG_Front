@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -41,9 +42,19 @@ export default function Nav(props) {
     dispatch(filterByGenderInNav(e.target.value));
   };
 
+  const [log, setLog] = useState(true)
+
   const resetFilters = () => {
     dispatch(getProduct());
   };
+
+  function handleSubmit() {
+    console.log(user)
+    if (Object.keys(user).length > 0) {
+      addEventListener.location.reload()
+      history.push('/home')
+    }
+  }
 
   return (
     <>
@@ -220,7 +231,9 @@ export default function Nav(props) {
                           : "Go Login"
                       }`}
                     >
+                      
                       <AccountCircleIcon
+                        onClick={(e)=> handleSubmit(e)}
                         sx={{
                           fontSize: "large",
                           color: `${
@@ -231,8 +244,10 @@ export default function Nav(props) {
                           marginTop: "0.5rem",
                           width: "30px",
                           height: "30px",
+                          
                         }}
                       />
+                      
                     </Tooltip>
                   </Link>
                 </Box>
