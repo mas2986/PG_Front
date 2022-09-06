@@ -4,9 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
+import HomeIcon from '@mui/icons-material/Home';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Tooltip from "@mui/material/Tooltip";
+import { Link as LinkRouter } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -149,6 +151,17 @@ function DashboardContent() {
               <IconButton color="inherit">
                 <Badge color="secondary">
                   <AccountCircleIcon/>
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              title="Home"
+            >
+              <IconButton color="inherit">
+                <Badge color="secondary">
+                <LinkRouter to="/">
+                  <HomeIcon/>                
+                </LinkRouter>
                 </Badge>
               </IconButton>
             </Tooltip>
