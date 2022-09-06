@@ -6,10 +6,12 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import Tooltip from "@mui/material/Tooltip";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -85,18 +87,20 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   
+  const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+  const { name } = tokenJSON?tokenJSON.data.user:null;
 
   React.useEffect(()=>{
-    const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
     if (tokenJSON) {
       const { token } = tokenJSON;
       const { rol } = tokenJSON.data.user;
+      console.log(name);
       if(token&&rol==="user") return history.push("/login")
     }
     if(!tokenJSON) return history.push("/login")
@@ -134,10 +138,20 @@ function DashboardContent() {
               Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge /* badgeContent={4} */ color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            {console.log(name)}
+            <Tooltip
+              title={`Logged as ${name}`}
+            >
+              <IconButton color="inherit">
+                <Badge color="secondary">
+                  <AccountCircleIcon/>
+                </Badge>
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
