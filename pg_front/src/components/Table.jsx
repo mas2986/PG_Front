@@ -17,7 +17,7 @@ import {
 import { Delete, Edit } from '@mui/icons-material';
 // import { data } from './data';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProduct,editProduct,getProduct } from '../redux/action'
+import { createProduct, editProduct, getProduct, deleteProduct } from '../redux/action'
 import FormProduct from './FormProduct';
 
 function validate(input) {
@@ -46,9 +46,12 @@ function validate(input) {
 
 
 const Example = () => {
+  const listProducts = useSelector((state)=>state.products);
   const dispatch = useDispatch();
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [tableData, setTableData] = useState(() => data);
+  const [tableData, setTableData] = useState(() => listProducts)
+                                    
+  const [edit, setEdit ] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
   const handleCreateNewRow = (values) => {
@@ -56,15 +59,17 @@ const Example = () => {
     setTableData([...tableData]);
   };
 
-  const listProducts = useSelector((state)=>state.products);
+
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       tableData[row.index] = values;
       //send/receive api updates here, then refetch or update local table data for re-render
       console.log(values)
+      setEdit(()=>true);
       setTableData([...tableData]);
-      dispatch(editProduct(values));
+      const { id,...body } = values;      
+      dispatch(editProduct(id,body));
       exitEditingMode(); //required to exit editing mode and close modal
     }
   };
@@ -72,13 +77,17 @@ const Example = () => {
   const handleDeleteRow = useCallback(
     (row) => {
       if (
-        !confirm(`Are you sure you want to delete ${row.getValue('firstName')}`)
+        !confirm(`Are you sure you want to delete ${row.getValue('title')}`)
       ) {
         return;
       }
       //send api delete request here, then refetch or update local table data for re-render
-      tableData.splice(row.index, 1);
+      tableData.splice(row.index, 1);      
       setTableData([...tableData]);
+      const id = row.getValue("id")
+      console.log(id);
+      dispatch(deleteProduct(id));
+      setEdit(()=>true);
     },
     [tableData],
   );
@@ -89,7 +98,7 @@ const Example = () => {
       return {
         error: !!validationErrors[cell.id],
         helperText: validationErrors[cell.id],
-        onBlur: (event) => {
+       /*  onBlur: (event) => {
           const isValid = 
              cell.column.id === 'email'
               ? validateEmail(event.target.value)
@@ -109,7 +118,7 @@ const Example = () => {
               ...validationErrors,
             });
           }
-        },
+        }, */
       };
     },
     [validationErrors],
@@ -122,7 +131,7 @@ const Example = () => {
         header: 'ID',
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
-        enableSorting: false,
+        enableSorting: true,
         size: 40,
       }, 
       {
@@ -239,9 +248,10 @@ const Example = () => {
   );
 
   useEffect(() => {
-    if (listProducts.length === 0) 
-      dispatch(getProduct())
-    },[]);
+    if (listProducts.length === 0||edit) 
+      dispatch(getProduct());
+      setEdit(false);
+    },[edit]);
 
   return (
     <>
@@ -345,27 +355,10 @@ export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
               gap: '1.5rem',
             }}
           >
-            <FormProduct/>
+            <FormProduct onClose={onClose}/>
           </Stack>
         </form>
-      </DialogContent>
-      <DialogActions sx={{ p: '1.25rem' }}>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button color="secondary" onClick={handleSubmit} 
-          disabled = { Object.keys(error)?.length!==0 ||
-          values.title === ''||
-          values.stock === ''||
-          values.brand === ''||
-          values.genre === ''||
-          values.price === ''||
-          values.sport === ''||
-          values.description === ''
-        }
-
-        variant="contained">
-          Create New Account
-        </Button>
-      </DialogActions>
+      </DialogContent>      
     </Dialog>
   );
 };

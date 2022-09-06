@@ -22,10 +22,12 @@ function App() {
   useEffect(() => {
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
     if (tokenJSON) {
-      const { token } = tokenJSON;
       const { id } = tokenJSON.data.user;
+      const { token } = tokenJSON;
       console.log("Chequeo Login");
-      dispatch(checkLogin(token, id));
+      console.log(id);
+      console.log(token);
+      dispatch(checkLogin(id,token));
     }
   }, [dispatch]);
 
