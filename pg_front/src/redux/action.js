@@ -24,7 +24,7 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
-  ADD_TO_CART_DETAIL
+  ADD_TO_CART_DETAIL,
 } from "./const";
 
 export function signUp(body) {
@@ -51,7 +51,7 @@ export function signUp(body) {
       // console.log(e)
     }
   };
-} 
+}
 
 export function createUser(body) {
   return async function (dispatch) {
@@ -74,32 +74,31 @@ export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function(dispatch){
-    try{
-      console.log(CREATE_PRODUCT)
+  return async function (dispatch) {
+    try {
+      console.log(CREATE_PRODUCT);
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
-      let newProduct = await axios.post(`/api/product`,body,{
+      const { token } = tokenJSON;
+      let newProduct = await axios.post(`/api/product`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
-      })
+        },
+      });
       console.log(newProduct.data);
       return dispatch({
-        type:CREATE_PRODUCT,
-        payload:newProduct.data
-      })
+        type: CREATE_PRODUCT,
+        payload: newProduct.data,
+      });
+    } catch (e) {
+      console.log(e);
+      Swal.fire({
+        title: "Error creating product!",
+        text: "Please try again",
+        icon: "error",
+        confirmButtonText: "Back",
+      });
     }
-    catch(e){ 
-      console.log(e)
-    Swal.fire({
-      title: "Error creating product!",
-      text: "Please try again",
-      icon: "Error",
-      confirmButtonText: "Back",
-    });
-  }
-} 
+  };
 }
 
 export function editProduct(id, body) {
@@ -122,7 +121,7 @@ export function editProduct(id, body) {
       Swal.fire({
         title: "Error updating product!",
         text: e.msg,
-        icon: "Error",
+        icon: "error",
         confirmButtonText: "Back",
       });
     }
@@ -148,7 +147,7 @@ export function deleteProduct(id) {
       Swal.fire({
         title: "Error deleting product!",
         text: e.msg,
-        icon: "Error",
+        icon: "error",
         confirmButtonText: "Back",
       });
     }
@@ -182,7 +181,7 @@ export function searchProduct(payload) {
       Swal.fire({
         title: "Product not found!",
         text: "Please try with another product",
-        icon: "Error",
+        icon: "error",
         confirmButtonText: "Back",
       });
     }
@@ -250,19 +249,19 @@ export function detailProduct(id) {
 }
 
 //CHECK LOGIN ACTION CREATOR
-export function checkLogin(id,token) {
+export function checkLogin(id, token) {
   console.log(id);
-  return async function(dispatch){
-    let user = await axios.get(`/api/user/${id}`,{
+  return async function (dispatch) {
+    let user = await axios.get(`/api/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      }
-    })
+      },
+    });
     return dispatch({
-      type:CHECK_LOGIN,
+      type: CHECK_LOGIN,
       payload: user.data,
-    })
-} 
+    });
+  };
 }
 export function addToCart(payload) {
   return {
@@ -271,11 +270,11 @@ export function addToCart(payload) {
   };
 }
 
-export function addToCartDetail(payload){
+export function addToCartDetail(payload) {
   return {
     type: ADD_TO_CART_DETAIL,
-    payload
-  }
+    payload,
+  };
 }
 
 export function deleteFromCart(payload) {
