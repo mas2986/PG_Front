@@ -259,13 +259,6 @@ export function deleteAllFromCart() {
   };
 }
 
-export function updateItemNum(payload) {
-  return {
-    type: UPDATE_ITEM_NUM,
-    payload,
-  };
-}
-
 export function removeDupsCart(payload) {
   return {
     type: REMOVE_DUPLICATES_CART,
