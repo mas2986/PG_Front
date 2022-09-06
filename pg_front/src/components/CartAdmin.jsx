@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import n from "./Nav.module.css";
 import { Box } from "@mui/system";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -12,12 +13,9 @@ import { Link } from "react-router-dom";
 import {
   deleteFromCart,
   deleteAllFromCart,
-  sendItemNum,
   removeDupsCart,
-  fetchCartItems,
 } from "../redux/action";
 
-//custom style for shopping cart icon
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -26,63 +24,51 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     padding: "0 4px",
   },
 }));
-
-function Cart() {
-  //local state for toggling cart items list
+function CartAdmin() {
+  const items = useSelector((state) => state.cartItems);
   const [cartDisplay, setCartDisplay] = useState(false);
-  //local state for forcing a re-render of the price
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(0);
   const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.products);
 
-  //bring in the global state.cartItems
-  let items = useSelector((state) => state.cartItems);
-  let detail = useSelector((state) => state.detail);
-  //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
-  if (items.length == 0) {
-    items =
-      JSON.parse(localStorage.getItem("items")) == null
-        ? []
-        : JSON.parse(localStorage.getItem("items"));
-    console.log("getting items: " + items);
-  }
+ 
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
   }
 
-  //keep cart visible while mouse is hovering over it
   function keepIn() {
     setCartDisplay(true);
   }
 
-  //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
     console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
-    if (items.length == 1) {
-      localStorage.removeItem("items");
-    }
   }
 
-  //setting the items array as an empty array (removing all items from cart).
   function deleteAll() {
     dispatch(deleteAllFromCart());
-    localStorage.removeItem("items");
   }
 
-  //saving items in local storage
-  useEffect(() => {
-    if (items.length) {
-      localStorage.setItem("items", JSON.stringify(items));
-      console.log("setting items: " + items + localStorage.items[0]);
-    }
-  }, [items]);
 
+for (let index = 0; index < allProducts.length; index++) {
+    for (let j = 0; j < items.length; j++) {
+  
+  if(allProducts[index].id === items[j].id)
+      items[j] = allProducts[index]  
+    
+  }  
+    
+}
+console.log(allProducts)
+console.log(items)
+
+    
   return (
     <>
       <div className={n["shopping-cart"]}>
         <StyledBadge badgeContent={items.length} color="error">
-          <ShoppingCartOutlinedIcon
+          <AdminPanelSettingsIcon
             sx={{ fontSize: "29px", color: "#888787" }}
             onMouseEnter={keepIn}
             // onMouseOut={toggle}
@@ -111,7 +97,7 @@ function Cart() {
                   flexGrow={1}
                   // sx={{ marginBottom: "0.5rem" }}
                 >
-                  My Cart
+                  Cart Edit
                 </Typography>
                 <DeleteForeverIcon
                   sx={{ color: "#a52a2a", fontSize: "3rem" }}
@@ -127,7 +113,7 @@ function Cart() {
                 flexGrow={1}
                 // sx={{ marginBottom: "0.5rem" }}
               >
-                My Cart
+                Cart Edit
               </Typography>
             )}
             {items.length ? (
@@ -186,19 +172,11 @@ function Cart() {
                             >
                               {i.description}
                             </Typography>
-                            <select
+                            {/* <select
                               value={i.qty}
-                              //declaring the handler fn here as i need to use the map method current item (i)
                               onChange={(e) => {
                                 i.qty = e.target.value;
-                                dispatch(sendItemNum(e.target.value));
-                                //changing state to force re render of price
                                 setQty((prev) => prev + 1);
-                                //saving item with updated qty
-                                localStorage.setItem(
-                                  "items",
-                                  JSON.stringify(items)
-                                );
                               }}
                             >
                               <option value={1}>1</option>
@@ -206,12 +184,27 @@ function Cart() {
                               <option value={3}>3</option>
                               <option value={4}>4</option>
                               <option value={5}>5</option>
-                            </select>
+                            </select> */}
+                            
+                            <Button value={qty} onClick={(e) => {
+                                
+                                setQty(i.stock = Number(e.target.value))
+                            }
+                              }>Edit Stock
+                            <input type="text" defaultValue={i.stock} />
+                            </Button>
+                            <Button value={qty} onClick={(e) => {
+                                
+                                setQty(i.price = Number(e.target.value))
+                            }
+                              }>Edit Price
+                            <input type="text" defaultValue={i.price} />
+                            </Button>
                           </Box>
                           <Typography
                             sx={{ margin: "5rem 3rem 0 0", fontSize: "1.2rem" }}
                           >
-                            ${i.price * i.qty || detail?.price}.00
+                            ${i.price * i.qty}.00
                           </Typography>
                         </Box>
                       </Box>
@@ -227,32 +220,21 @@ function Cart() {
                     {items.reduce(
                       (prev, curr) => prev + curr.price * curr.qty,
                       0
-                    ) ||
-                      items.reduce(
-                        (prev, curr) => prev + detail?.price * curr.qty,
-                        0
-                      )}
+                    )}
                     .00
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
-                  <Link
-                    to="/entrega"
-                    style={{ textDecoration: "none", fontStyle: "none" }}
+                  <Button
+                    // href="/entrega"
+                    sx={{ margin: "0.5rem", border: "1px solid #000" }}
                   >
-                    <Button
-                      sx={{
-                        margin: "0.5rem",
-                        border: "1px solid #000",
-                      }}
-                    >
-                      Proceed to checkout
-                    </Button>
-                  </Link>
+                    Checkout
+                  </Button>
                 </Box>
               </Box>
             ) : (
-              <Typography>There are no items in the cart</Typography>
+              <Typography>There are no items to edit</Typography>
             )}
           </Box>
         </Box>
@@ -261,4 +243,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default CartAdmin;

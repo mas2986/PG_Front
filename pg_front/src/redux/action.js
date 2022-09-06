@@ -173,7 +173,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/product?title=${payload}`, {});
+      var product = await axios.get(`/api/products?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
