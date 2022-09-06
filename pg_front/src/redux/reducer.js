@@ -97,15 +97,15 @@ export const rootReducer = (state = initialState, action) => {
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.altProducts
-      const filteredGenres = action.payload === "All" ? allGenres
-          : state.products.filter((g) => g.genre.includes(action.payload));
-      console.log(action.payload);
+      const allGenres = state.products
+      const filteredGenres = 
+           state.products.filter((g) => g.genre.includes(action.payload));
+      
       const women = state.altProducts.filter((g) => g.genre.includes(action.payload));
       return {
         ...state,
-        products: filteredGenres,
-        products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ?  state.altProducts : filteredGenres
+        //products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
       let stateProduct = state.products;
