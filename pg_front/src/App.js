@@ -53,7 +53,7 @@ function App() {
           path="/admin/edit/:id" 
           render={({match})=><EditProduct match={match}/>}
         />
-
+       
       <Footer/>
       </header>
     </div>
