@@ -26,11 +26,10 @@ import {
   FETCH_SAVED_ITEMS,
 } from "./const";
 
-const URL = "https://pg-sports.herokuapp.com"
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/login`, body);
+      let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -79,7 +78,7 @@ export function createProduct(body) {
       console.log(CREATE_PRODUCT)
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON; 
-      let newProduct = await axios.post(`${URL}/api/product`,body,{
+      let newProduct = await axios.post(`/api/product`,body,{
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -108,7 +107,7 @@ export function editProduct(id, body) {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       console.log(body);
-      let putProduct = await axios.put(`${URL}/api/product/${id}`, body, {
+      let putProduct = await axios.put(`/api/product/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -134,7 +133,7 @@ export function deleteProduct(id) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let deleteProduct = await axios.delete(`${URL}/api/product/${id}`, {
+      let deleteProduct = await axios.delete(`/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -158,7 +157,7 @@ export function deleteProduct(id) {
 export function getProduct() {
   return async function (dispatch) {
     try {
-      let res = await axios.get(`${URL}/api/products`);
+      let res = await axios.get(`/api/products`);
       console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
@@ -253,7 +252,7 @@ export function detailProduct(id) {
 export function checkLogin(id,token) {
   console.log(id);
   return async function(dispatch){
-    let user = await axios.get(`${URL}/api/user/${id}`,{
+    let user = await axios.get(`/api/user/${id}`,{
       headers: {
         Authorization: `Bearer ${token}`,
       }
