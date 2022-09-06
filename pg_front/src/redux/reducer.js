@@ -21,7 +21,7 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
-  FETCH_SAVED_ITEMS,
+  ADD_TO_CART_DETAIL
 } from "./const";
 
 const initialState = {
@@ -40,16 +40,16 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-    case CREATE_PRODUCT:
-      return {
+      case CREATE_PRODUCT:
+      return{
         ...state,
-        products: [...state.products, action.payload],
-      };
+        products:[...state.products,action.payload]
+      }
     case EDIT_PRODUCT:
-      return {
+      return{
         ...state,
-        products: [...state.products, action.payload],
-      };
+        products:[...state.products,action.payload]
+      }
     case CHECK_LOGIN:
       return {
         ...state,
@@ -57,7 +57,7 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case CREATE_USER:
-      console.log(action.payload);
+      console.log(action.payload)
       return {
         ...state,
         user: action.payload,
@@ -178,8 +178,8 @@ export const rootReducer = (state = initialState, action) => {
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
-          text: "You can choose the quantity of an item by selecting the number in the cart ",
-          icon: "error",
+          text: "Please change the quantity to order from the cart",
+          icon: "Error",
           confirmButtonText: "Back",
         });
         return {
@@ -196,10 +196,16 @@ export const rootReducer = (state = initialState, action) => {
         cartItems: [...state.cartItems, item].flat(),
       };
 
+    case ADD_TO_CART_DETAIL:
+      const detail = state.detail;
+      return {
+        ...state,
+        cartItems: [...state.cartItems, detail].flat()
+      }
+
     case DELETE_FROM_CART:
       const allItems = state.cartItems;
       const index = action.payload;
-      // localStorage.setItem("items", JSON.stringify(state.cartItems));
       const item2 = allItems.filter((e, idx) => idx !== index);
       return {
         ...state,
@@ -231,12 +237,6 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         qty: action.payload,
-      };
-
-    case FETCH_SAVED_ITEMS:
-      return {
-        ...state,
-        cartItems: action.payload,
       };
 
     case FILTER_NAV_GENDER:

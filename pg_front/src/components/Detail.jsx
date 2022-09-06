@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart } from "../redux/action";
+import { detailProduct, addToCart, removeDupsCart, addToCartDetail } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
-
+import plop from "../asset/plop.mp3";
 
 export default function Detail() {
+  const items = useSelector((state) => state.cartItems);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -20,9 +21,11 @@ export default function Detail() {
 
   function addCart() {
     new Audio(plop).play();
-    dispatch(addToCart(props.id));
-    dispatch(removeDupsCart(props.id));
+    dispatch(addToCartDetail(id));
+    //dispatch(removeDupsCart(id));
   }
+
+  console.log(id)
 
   return (
     <center>
@@ -31,7 +34,7 @@ export default function Detail() {
         {/*console.log(detail)*/}
         {detail ? (
           <div className={d.detailCard}>
-            <div classname={d.bigImage}>
+            <div className={d.bigImage}>
               <img
                 src={detail.img ? detail.img : detail.image}
                 alt="Image not found"
