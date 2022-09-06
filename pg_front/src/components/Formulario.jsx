@@ -12,31 +12,31 @@ import { Link } from "react-router-dom";
 function validateForm(input) {
   const errors = {};
   if (!input.name) {
-    errors.name = "¿Cómo es tu nombre?";
+    errors.name = "Please Enter Your Name";
   }
   if (!input.apellido) {
-    errors.apellido = "¿Cómo es tu apellido?";
+    errors.apellido = "Please Enter Your Last Name";
   }
   if (!input.calle) {
-    errors.calle = "¿Cual es tu domicilio?";
+    errors.calle = "Please Enter Your Street Address";
   }
   if (!input.numero) {
-    errors.numero = "¿Cual es el número?";
+    errors.numero = "Please Enter Your Street Number";
   }
   if (!input.provincia) {
-    errors.provincia = "¡Aclará tu provincia!";
+    errors.provincia = "Please Enter The Province";
   }
   if (!input.localidad) {
-    errors.localidad = "¡La localidad es obligatoria!";
+    errors.localidad = "Please Enter The Name Of Your City";
   }
   if (!input.telefono) {
-    errors.telefono = "¿Un teléfono donde ubicarte?";
+    errors.telefono = "Please Enter Your Phone Number";
   }
   if (!input.email) {
-    errors.email = "¡Tu email es importante!";
+    errors.email = "Please Enter Your Email Address";
   }
   if (!input.cp) {
-    errors.cp = "¡Completá tu Código Postal!";
+    errors.cp = "Please Enter Your Postal Code";
   }
 
   return errors;
@@ -54,11 +54,12 @@ export default function FormPropsTextFields() {
   };
 
   const handleButton = (event) => {
-    Swal.fire(
-      "¡Your payment was successful!",
-      "You will receive an email with your purchase information shortly."
-    );
-    history.push("/home");
+    // Swal.fire(
+    //   "¡Your payment was successful!",
+    //   "You will receive an email with your purchase information shortly."
+    // );
+    Swal.fire("Coming Soon!!");
+    history.push("/");
   };
 
   const [texto, setTexto] = React.useState({
@@ -108,7 +109,7 @@ export default function FormPropsTextFields() {
           autoComplete="off"
         >
           <center>
-            <h2>INFORMACIÓN DE COMPRA</h2>
+            <h2>PURCHASE INFORMATION</h2>
           </center>
           <div>
             <div>
@@ -116,7 +117,7 @@ export default function FormPropsTextFields() {
                 onChange={(e) => {
                   stateInput(e);
                 }}
-                label="Nombre"
+                label="Name"
                 helperText={
                   errors.name && <p className={f.colour}>{errors.name}</p>
                 }
@@ -134,7 +135,7 @@ export default function FormPropsTextFields() {
                 errors.apellido && <p className={f.colour}>{errors.apellido}</p>
               }
               id="outlined-required"
-              label="Apellido"
+              label="Last Name"
               name="apellido"
               value={texto.apellido}
               //   defaultValue="Hello World"
@@ -148,7 +149,7 @@ export default function FormPropsTextFields() {
                 errors.calle && <p className={f.colour}>{errors.calle}</p>
               }
               id="outlined-required"
-              label="Calle"
+              label="Street"
               name="calle"
               value={texto.calle}
               //   defaultValue="Hello World"
@@ -159,7 +160,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Número"
+              label="Number"
               helperText={
                 errors.numero && <p className={f.colour}>{errors.numero}</p>
               }
@@ -169,12 +170,12 @@ export default function FormPropsTextFields() {
             />
             <TextField
               id="outlined-required"
-              label="Piso"
+              label="Floor"
               //   defaultValue="Hello World"
             />
             <TextField
               id="outlined-required"
-              label="Departamento"
+              label="Apartment n°"
               type="number"
               //   defaultValue="Hello World"
             />
@@ -184,7 +185,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Código Postal"
+              label="Postal Code"
               type="number"
               helperText={errors.cp && <p className={f.colour}>{errors.cp}</p>}
               name="cp"
@@ -197,7 +198,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Provincia"
+              label="Province"
               helperText={
                 errors.provincia && (
                   <p className={f.colour}>{errors.provincia}</p>
@@ -213,7 +214,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Localidad"
+              label="City"
               helperText={
                 errors.localidad && (
                   <p className={f.colour}>{errors.localidad}</p>
@@ -226,7 +227,7 @@ export default function FormPropsTextFields() {
           </div>
           <div>
             <center>
-              <h2>INFORMACIÓN DE CONTACTO</h2>
+              <h2>CONTACT INFORMATION</h2>
             </center>
             <TextField
               onChange={(e) => {
@@ -234,7 +235,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Teléfono"
+              label="Phone Number"
               helperText={
                 errors.telefono && <p className={f.colour}>{errors.telefono}</p>
               }
@@ -248,7 +249,7 @@ export default function FormPropsTextFields() {
               }}
               required
               id="outlined-required"
-              label="Correo electrónico"
+              label="Email"
               helperText={
                 errors.email && <p className={f.colour}>{errors.email}</p>
               }
@@ -258,7 +259,7 @@ export default function FormPropsTextFields() {
             />
             <TextField
               id="outlined-required"
-              label="DNI"
+              label="ID"
               //      defaultValue="Hello World"
             />
           </div>
@@ -266,6 +267,7 @@ export default function FormPropsTextFields() {
             defaultChecked
             color="primary"
             inputProps={{ "aria-label": "secondary checkbox" }}
+            sx={{ visibility: "hidden" }}
           />
           {errors.name ||
           errors.apellido ||
@@ -275,7 +277,7 @@ export default function FormPropsTextFields() {
           errors.localidad ||
           errors.telefono ||
           errors.email ? (
-            <h3 className={f.colour}>FALTAN CAMPOS OBLIGATORIOS</h3>
+            <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
           ) : (
             <Button
               variant="contained"
@@ -284,7 +286,7 @@ export default function FormPropsTextFields() {
               onClick={(e) => handleButton(e)}
               disableElevation
             >
-              CONTINUAR CON EL PAGO
+              PROCEED TO CHECKOUT
             </Button>
           )}
         </Box>
@@ -296,7 +298,7 @@ export default function FormPropsTextFields() {
               className="btn-form"
               color="primary"
             >
-              BACK HOME
+              HOME
             </Button>
           </Link>
         </div>
