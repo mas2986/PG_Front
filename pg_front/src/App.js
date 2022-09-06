@@ -54,7 +54,7 @@ function App() {
           render={({match})=><EditProduct match={match}/>}
         />
        
-      <Route exact path={["/", "/login"]} component={Footer}/>
+      <Route exact path={["/", "/login","/admin"]} component={Footer}/>
       </header>
     </div>
   );
