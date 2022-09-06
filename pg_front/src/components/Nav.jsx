@@ -42,17 +42,17 @@ export default function Nav(props) {
     dispatch(filterByGenderInNav(e.target.value));
   };
 
-  const [log, setLog] = useState(true)
+  const [log, setLog] = useState(true);
 
   const resetFilters = () => {
     dispatch(getProduct());
   };
 
   function handleSubmit() {
-    console.log(user)
+    console.log(user);
     if (Object.keys(user).length > 0) {
-      addEventListener.location.reload()
-      history.push('/home')
+      addEventListener.location.reload();
+      history.push("/home");
     }
   }
 
@@ -64,20 +64,24 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <img
-                  src={logo}
-                  alt=""
-                  onClick={resetFilters}
-                  className={n.reset}
-                />
-                <Typography
-                  variant="h4"
-                  style={{ color: "#000", marginLeft: "1rem" }}
-                  onClick={resetFilters}
-                  className={n.reset}
-                >
-                  Athens
-                </Typography>
+                <Tooltip title={"Refresh filters"}>
+                  <img
+                    src={logo}
+                    alt=""
+                    onClick={resetFilters}
+                    className={n.reset}
+                  />
+                </Tooltip>
+                <Tooltip title={"Refresh filters"}>
+                  <Typography
+                    variant="h4"
+                    style={{ color: "#000", marginLeft: "1rem" }}
+                    onClick={resetFilters}
+                    className={n.reset}
+                  >
+                    Athens
+                  </Typography>
+                </Tooltip>
               </Box>
               <Box className={n["options-container"]}>
                 <div style={{ position: "relative" }}>
@@ -231,9 +235,8 @@ export default function Nav(props) {
                           : "Go Login"
                       }`}
                     >
-                      
                       <AccountCircleIcon
-                        onClick={(e)=> handleSubmit(e)}
+                        onClick={(e) => handleSubmit(e)}
                         sx={{
                           fontSize: "large",
                           color: `${
@@ -244,10 +247,8 @@ export default function Nav(props) {
                           marginTop: "0.5rem",
                           width: "30px",
                           height: "30px",
-                          
                         }}
                       />
-                      
                     </Tooltip>
                   </Link>
                 </Box>
