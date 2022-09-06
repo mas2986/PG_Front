@@ -54,8 +54,8 @@ function App() {
           render={({match})=><EditProduct match={match}/>}
         />
 
-      </header>
       <Footer/>
+      </header>
     </div>
   );
 }
