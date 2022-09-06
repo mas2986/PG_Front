@@ -14,14 +14,23 @@ import {
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
+  ADD_TO_CART,
+  DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
+  UPDATE_ITEM_NUM,
+  REMOVE_DUPLICATES_CART,
+  CREATE_USER,
+  CREATE_PRODUCT,
+  EDIT_PRODUCT,
+  DELETE_PRODUCT,
+  FETCH_SAVED_ITEMS,
+  ADD_TO_CART_DETAIL
 } from "./const";
-
-const URL = "http://localhost:4000";
 
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/login`, body);
+      let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -35,6 +44,113 @@ export function signUp(body) {
         icon: "error",
         confirmButtonText: "GO HOME",
       });
+      // Swal.fire(
+      //   "¡User created successfully!",
+      //   "¡Thank you for visiting our website!"
+      // );
+      // console.log(e)
+    }
+  };
+} 
+
+export function createUser(body) {
+  return async function (dispatch) {
+    try {
+      let user = await axios.post(`/api/user`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      console.log(user.data.data.user);
+      return dispatch({
+        type: CREATE_USER,
+        payload: user.data.data.user,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function createProduct(body) {
+  body.price = parseInt(body.price);
+  body.discount = parseInt(body.discount);
+  body.stock = parseInt(body.stock);
+  return async function(dispatch){
+    try{
+      console.log(CREATE_PRODUCT)
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let newProduct = await axios.post(`/api/product`,body,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      console.log(newProduct.data);
+      return dispatch({
+        type:CREATE_PRODUCT,
+        payload:newProduct.data
+      })
+    }
+    catch(e){ 
+      console.log(e)
+    Swal.fire({
+      title: "Error creating product!",
+      text: "Please try again",
+      icon: "Error",
+      confirmButtonText: "Back",
+    });
+  }
+} 
+}
+
+export function editProduct(id, body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;
+      console.log(body);
+      let putProduct = await axios.put(`/api/product/${id}`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(putProduct.data);
+      return dispatch({
+        type: EDIT_PRODUCT,
+        payload: putProduct.data,
+      });
+    } catch (e) {
+      Swal.fire({
+        title: "Error updating product!",
+        text: e.msg,
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
+    }
+  };
+}
+
+export function deleteProduct(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;
+      let deleteProduct = await axios.delete(`/api/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(deleteProduct.data);
+      return dispatch({
+        type: DELETE_PRODUCT,
+        payload: id,
+      });
+    } catch (e) {
+      Swal.fire({
+        title: "Error deleting product!",
+        text: e.msg,
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
     }
   };
 }
@@ -42,7 +158,7 @@ export function signUp(body) {
 export function getProduct() {
   return async function (dispatch) {
     try {
-      let res = await axios.get(`${URL}/api/products`);
+      let res = await axios.get(`/api/products`);
       console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
@@ -57,7 +173,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`${URL}/api/products?title=${payload}`, {});
+      var product = await axios.get(`/api/product?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
@@ -82,7 +198,6 @@ export function filterBySport(payload) {
 }
 
 export function filterByGenre(payload) {
-  console.log(payload);
   return {
     type: FILTER_GENRE,
     payload, //Acá llegaría el tipo de genero
@@ -122,7 +237,7 @@ export function detailProduct(id) {
   console.log(id);
   return async function (dispatch) {
     try {
-      var product = await axios.get(`${URL}/api/product/${id}`);
+      var product = await axios.get(`/api/product/${id}`);
       console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
@@ -135,20 +250,64 @@ export function detailProduct(id) {
 }
 
 //CHECK LOGIN ACTION CREATOR
-export function checkLogin(token, id) {
-  return async function (dispatch) {
-    try {
-      let user = await axios.get(`${URL}/api/user/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return dispatch({
-        type: CHECK_LOGIN,
-        payload: user.data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
+export function checkLogin(id,token) {
+  console.log(id);
+  return async function(dispatch){
+    let user = await axios.get(`/api/user/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return dispatch({
+      type:CHECK_LOGIN,
+      payload: user.data,
+    })
+} 
+}
+export function addToCart(payload) {
+  return {
+    type: ADD_TO_CART,
+    payload,
+  };
+}
+
+export function addToCartDetail(payload){
+  return {
+    type: ADD_TO_CART_DETAIL,
+    payload
+  }
+}
+
+export function deleteFromCart(payload) {
+  return {
+    type: DELETE_FROM_CART,
+    payload,
+  };
+}
+
+export function deleteAllFromCart() {
+  return {
+    type: DELETE_ALL_FROM_CART,
+  };
+}
+
+export function removeDupsCart(payload) {
+  return {
+    type: REMOVE_DUPLICATES_CART,
+    payload,
+  };
+}
+
+export function sendItemNum(payload) {
+  return {
+    type: UPDATE_ITEM_NUM,
+    payload,
+  };
+}
+
+export function fetchCartItems(payload) {
+  return {
+    type: FETCH_SAVED_ITEMS,
+    payload,
   };
 }

@@ -18,7 +18,7 @@ export default function Footer() {
               </Box>
               <Box>
                 <Link href="/" color="inherit" underline="none">
-                  Support
+                  Home
                 </Link>
               </Box>
               <Box>

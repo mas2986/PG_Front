@@ -1,5 +1,8 @@
+import Swal from "sweetalert2";
 import {
   GET_PRODUCTS,
+  CREATE_PRODUCT,
+  EDIT_PRODUCT,
   GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   CHECK_LOGIN,
@@ -12,6 +15,13 @@ import {
   ORDER_BY,
   DETAIL_PRODUCT,
   ORDER_BY_PRICE,
+  ADD_TO_CART,
+  DELETE_FROM_CART,
+  DELETE_ALL_FROM_CART,
+  UPDATE_ITEM_NUM,
+  REMOVE_DUPLICATES_CART,
+  CREATE_USER,
+  ADD_TO_CART_DETAIL
 } from "./const";
 
 const initialState = {
@@ -19,6 +29,8 @@ const initialState = {
   altProducts: [],
   user: {},
   errorLogin: "",
+  cartItems: [],
+  qty: 1,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -28,8 +40,24 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
       };
-
+      case CREATE_PRODUCT:
+      return{
+        ...state,
+        products:[...state.products,action.payload]
+      }
+    case EDIT_PRODUCT:
+      return{
+        ...state,
+        products:[...state.products,action.payload]
+      }
     case CHECK_LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case CREATE_USER:
+      console.log(action.payload)
       return {
         ...state,
         user: action.payload,
@@ -47,36 +75,37 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
       };
     case FILTER_SPORT:
-      const allProducts = state.altProducts;
+      const allProducts = state.products;
+      console.log(state.products)
       const filteredSports =
         action.payload === "All"
           ? allProducts
-          : allProducts.filter((p) => p.sport.includes(action.payload));
+          : state.products.filter((p) => p.sport.includes(action.payload));
       return {
         ...state,
         products: filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_BRAND:
-      const allBrands = state.altProducts;
+      const allBrands = state.products;
       const filteredBrands =
         action.payload === "All"
           ? allBrands
           : allBrands.filter((p) => p.brand.includes(action.payload));
-      console.log(filteredBrands);
+      console.log(action.payload);
       return {
         ...state,
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.altProducts;
-      const filteredGenres =
-        action.payload === "All"
-          ? allGenres
-          : allGenres.filter((g) => g.genre.includes(action.payload));
-      console.log(filteredGenres);
+      const allGenres = state.altProducts
+      const filteredGenres = action.payload === "All" ? allGenres
+          : state.products.filter((g) => g.genre.includes(action.payload));
+      console.log(action.payload);
+      const women = state.altProducts.filter((g) => g.genre.includes(action.payload));
       return {
         ...state,
-        products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: filteredGenres,
+        products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
       let stateProduct = state.products;
@@ -104,6 +133,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortProduct,
+        // altProducts: sortProduct,
       };
 
     case ORDER_BY_PRICE:
@@ -132,6 +162,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
+        // altProducts: sortPrice,
       };
 
     case DETAIL_PRODUCT:
@@ -139,6 +170,86 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         detail: action.payload,
+      };
+
+    case ADD_TO_CART:
+      const allProds = state.altProducts;
+      const cart = state.cartItems;
+      const id = action.payload;
+      console.log(state.cartItems)
+      if (cart.some((c) => c.id === id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "Please change the quantity to order from the cart",
+          icon: "Error",
+          confirmButtonText: "Back",
+        });
+        return {
+          ...state,
+        };
+      }
+      const item = allProds.filter((i) => i.id === id);
+      let finalItem = item.map(
+        (i) =>
+          (i.qty = cart.some((c) => c.id == id) ? parseInt(state.qty) + 1 : 1)
+      );
+      return {
+        ...state,
+        cartItems: [...state.cartItems, item].flat(),
+      };
+
+    case ADD_TO_CART_DETAIL:
+      const detail = state.detail;
+      const cartI = state.cartItems;
+      //console.log(state.cartItems)
+      if (cartI.some((c) => c.id === detail.id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "Please change the quantity to order from the cart",
+          icon: "error",
+          confirmButtonText: "Back",
+        });
+      }
+      
+      return {
+        ...state,
+        cartItems: [...cartI].concat(detail)
+      }
+
+    case DELETE_FROM_CART:
+      const allItems = state.cartItems;
+      const index = action.payload;
+      const item2 = allItems.filter((e, idx) => idx !== index);
+      return {
+        ...state,
+        cartItems: item2,
+      };
+
+    case DELETE_ALL_FROM_CART:
+      return {
+        ...state,
+        cartItems: [],
+      };
+
+    case REMOVE_DUPLICATES_CART:
+      const dupsFree = state.cartItems.filter(
+        (v, i, a) => a.findIndex((v2) => v2.id === v.id) === i
+      );
+      return {
+        ...state,
+        cartItems: dupsFree,
+      };
+
+    case UPDATE_ITEM_NUM:
+      // let [itemId, itemQty] = action.payload;
+      // if (state.cartItems.some((i) => i.id == itemId)) {
+      //   let updatedQty = cartItems
+      //     .filter((c) => c.id === itemId)
+      //     .map((i) => (i.qty = itemQty));
+      // }
+      return {
+        ...state,
+        qty: action.payload,
       };
 
     case FILTER_NAV_GENDER:
@@ -240,7 +351,9 @@ export const rootReducer = (state = initialState, action) => {
           filteredProduct = filteredGender.filter(
             (prods) =>
               !prods.title.includes("soccer") &&
+              !prods.title.includes("Soccer") &&
               !prods.title.includes("tennis") &&
+              !prods.title.includes("Tennis") &&
               !prods.title.includes("basketball")
           );
         }

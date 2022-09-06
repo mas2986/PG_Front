@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -41,9 +42,19 @@ export default function Nav(props) {
     dispatch(filterByGenderInNav(e.target.value));
   };
 
+  const [log, setLog] = useState(true);
+
   const resetFilters = () => {
     dispatch(getProduct());
   };
+
+  function handleSubmit() {
+    console.log(user);
+    if (Object.keys(user).length > 0) {
+      addEventListener.location.reload();
+      history.push("/home");
+    }
+  }
 
   return (
     <>
@@ -53,20 +64,24 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <img
-                  src={logo}
-                  alt=""
-                  onClick={resetFilters}
-                  className={n.reset}
-                />
-                <Typography
-                  variant="h4"
-                  style={{ color: "#000", marginLeft: "1rem" }}
-                  onClick={resetFilters}
-                  className={n.reset}
-                >
-                  Athens
-                </Typography>
+                <Tooltip title={"Refresh filters"}>
+                  <img
+                    src={logo}
+                    alt=""
+                    onClick={resetFilters}
+                    className={n.reset}
+                  />
+                </Tooltip>
+                <Tooltip title={"Refresh filters"}>
+                  <Typography
+                    variant="h4"
+                    style={{ color: "#000", marginLeft: "1rem" }}
+                    onClick={resetFilters}
+                    className={n.reset}
+                  >
+                    Athens
+                  </Typography>
+                </Tooltip>
               </Box>
               <Box className={n["options-container"]}>
                 <div style={{ position: "relative" }}>
@@ -202,13 +217,15 @@ export default function Nav(props) {
                   </div>
                 </div>
               </Box>
-              <Box display="flex">
-                <SearchBar />
-                <Box className={n["login-container"]}>
-                  {/* <img
-                    src={carrito}
-                    style={{ width: "27px", height: "27px", display: "none" }}
-                  /> */}
+              <Box display="flex" sx={{ alignItems: "center" }}>
+                <Box display="flex">
+                  <SearchBar />
+                </Box>
+                <Box
+                  className={n["login-container"]}
+                  display="flex"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                >
                   <Cart />
                   <Link to="/login">
                     <Tooltip
@@ -219,6 +236,7 @@ export default function Nav(props) {
                       }`}
                     >
                       <AccountCircleIcon
+                        onClick={(e) => handleSubmit(e)}
                         sx={{
                           fontSize: "large",
                           color: `${
@@ -226,9 +244,9 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          margin: "0.5rem 0 0 1.2rem",
-                          width: "29px",
-                          height: "29px",
+                          marginTop: "0.5rem",
+                          width: "30px",
+                          height: "30px",
                         }}
                       />
                     </Tooltip>

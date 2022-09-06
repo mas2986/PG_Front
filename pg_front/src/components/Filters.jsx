@@ -66,12 +66,12 @@ export default function Filters() {
           <option value="Male">Men</option>
           <option value="Female">Women</option>
           <option value="Kids">Kids</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="kids">Bebies</option>
+          {/* <option value="male">Male</option> */}
+          {/* <option value="female">Female</option> */}
+          {/* <option value="kids">Bebies</option> */}
           <option value="Adults">Adults</option>
           <option value="None">Genderless</option>
-          <option value="">Non binary</option>
+          <option value="Unisex">Unisex</option>
           SELECT
         </select>
       </div>
@@ -102,16 +102,16 @@ export default function Filters() {
           className="select-detail"
           onChange={(e) => handleFilteredSports(e)}
         >
-          <option value="All">Todos</option>
-          <option value="Futbol">Fútbol</option>
+          <option value="All">All</option>
+          <option value="Futbol">Football</option>
           <option value="Rugby">Rugby</option>
-          <option value="Basketball">Basquet</option>
-          <option value="Tennis">Tenis</option>
-          <option value="Boxing">Boxeo</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Tennis">Tennis</option>
+          <option value="Boxing">Boxing</option>
           <option value="Paddle">Paddle</option>
-          <option value="swimming">Natación</option>
+          <option value="swimming">Swimming</option>
           <option value="Hockey">Hockey </option>
-          <option value="Ciclism">Ciclismo</option>
+          <option value="Ciclism">Cycling</option>
         </select>
       </div>
     </section>
