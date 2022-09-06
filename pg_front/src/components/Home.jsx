@@ -29,7 +29,10 @@ export default function Home() {
   const products = allProducts.slice(pagination.from, pagination.to);
 
   useEffect(() => {
-    if (allProducts.length === 0) dispatch(getProduct());
+   dispatch(getProduct());
+  }, [dispatch]);
+
+  useEffect(()=> {
     setPagination({
       ...pagination,
       count: allProducts.length,
@@ -39,7 +42,7 @@ export default function Home() {
     });
     console.log(pagination.from);
     console.log(pagination.to);
-  }, [dispatch, allProducts.length]);
+  }, [allProducts.length])
 
   return (
     <div>
@@ -100,7 +103,7 @@ export default function Home() {
             gridTemplateColumns: "repeat(3, 1fr)",
           }}
         >
-          {products?.length > 0 &&
+          {products?.length ? 
             products.map((e) => (
               <CardProduct
                 key={e.id}
@@ -110,7 +113,7 @@ export default function Home() {
                 id={e.id}
                 price={e.price}
               />
-            ))}
+            )) : <><p>No se encontraron productos para esta búsqueda</p> <button onClick={() => dispatch(getProduct())}>REFRESCAR</button></>}
         </Box>
       </Container>
     </div>
