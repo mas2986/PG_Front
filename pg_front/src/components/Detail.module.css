@@ -14,7 +14,7 @@
 .detailCard{
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap:nowrap;
     padding: 30px 0;
 }
 .title{
@@ -24,6 +24,7 @@
     width: 100%;
     height: 100%;
     max-height: 500px;
+    max-width: 500px;
     display: block;
     object-fit: cover;
 }
@@ -38,8 +39,11 @@
 }
 
 .detailCard .productDetail h1{
+    margin: 0;
+    padding: 0;
     font-size: 40px;
     width: max-content;
+    flex-shrink: 2;
 }
 
 .detailCard .productDetail .price{
@@ -52,5 +56,11 @@
 }
 
 .detailCard .productDetail .buyButton{
-    margin:2px;
+    margin:20px;
+}
+
+.detailCard .productDetail .cartButton{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }

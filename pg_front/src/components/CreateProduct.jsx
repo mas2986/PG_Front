@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardContent from "@mui/material/CardContent";
 import { addToCart, removeDupsCart } from "../redux/action";
 import plop from "../asset/plop.mp3";
+import {Link} from "react-router-dom";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
@@ -76,9 +77,11 @@ export default function CardProduct(props) {
         <Button size="small" onClick={addCart}>
           ADD TO CART
         </Button>
-        <Button href={`/detail/${props.id}`} size="small">
+        <Link to={`/detail/${props.id}`}>
+        <Button size="small">
           DETAIL
         </Button>
+        </Link>
         {/* target="_blank" */}
       </CardActions>
     </Card>

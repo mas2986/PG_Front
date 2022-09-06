@@ -175,6 +175,7 @@ export const rootReducer = (state = initialState, action) => {
       const allProds = state.altProducts;
       const cart = state.cartItems;
       const id = action.payload;
+      console.log(state.cartItems)
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
@@ -198,9 +199,20 @@ export const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART_DETAIL:
       const detail = state.detail;
+      const cartI = state.cartItems;
+      //console.log(state.cartItems)
+      if (cartI.some((c) => c.id === detail.id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "Please change the quantity to order from the cart",
+          icon: "error",
+          confirmButtonText: "Back",
+        });
+      }
+      
       return {
         ...state,
-        cartItems: [...state.cartItems, detail].flat()
+        cartItems: [...cartI].concat(detail)
       }
 
     case DELETE_FROM_CART:
