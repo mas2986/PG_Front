@@ -75,17 +75,18 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
       };
     case FILTER_SPORT:
-      const allProducts = state.altProducts;
+      const allProducts = state.products;
+      console.log(state.products)
       const filteredSports =
         action.payload === "All"
           ? allProducts
-          : allProducts.filter((p) => p.sport.includes(action.payload));
+          : state.products.filter((p) => p.sport.includes(action.payload));
       return {
         ...state,
         products: filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_BRAND:
-      const allBrands = state.altProducts;
+      const allBrands = state.products;
       const filteredBrands =
         action.payload === "All"
           ? allBrands
@@ -96,15 +97,15 @@ export const rootReducer = (state = initialState, action) => {
         products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.products;
-      const filteredGenres =
-        action.payload === "All"
-          ? allGenres
-          : allGenres.filter((g) => g.genre.includes(action.payload));
+      const allGenres = state.altProducts
+      const filteredGenres = action.payload === "All" ? allGenres
+          : state.products.filter((g) => g.genre.includes(action.payload));
       console.log(action.payload);
+      const women = state.altProducts.filter((g) => g.genre.includes(action.payload));
       return {
         ...state,
-        products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: filteredGenres,
+        products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
       let stateProduct = state.products;
@@ -132,7 +133,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortProduct,
-        altProducts: sortProduct,
+        // altProducts: sortProduct,
       };
 
     case ORDER_BY_PRICE:
@@ -161,7 +162,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
-        altProducts: sortPrice,
+        // altProducts: sortPrice,
       };
 
     case DETAIL_PRODUCT:

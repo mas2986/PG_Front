@@ -66,12 +66,12 @@ export default function Filters() {
           <option value="Male">Men</option>
           <option value="Female">Women</option>
           <option value="Kids">Kids</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="kids">Bebies</option>
+          {/* <option value="male">Male</option> */}
+          {/* <option value="female">Female</option> */}
+          {/* <option value="kids">Bebies</option> */}
           <option value="Adults">Adults</option>
           <option value="None">Genderless</option>
-          <option value="">Non binary</option>
+          <option value="Unisex">Unisex</option>
           SELECT
         </select>
       </div>
