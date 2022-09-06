@@ -15,7 +15,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { data } from './data';
+// import { data } from './data';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProduct, editProduct, getProduct, deleteProduct } from '../redux/action'
 import FormProduct from './FormProduct';

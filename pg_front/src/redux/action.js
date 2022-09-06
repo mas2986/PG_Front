@@ -38,16 +38,17 @@ export function signUp(body) {
         payload: user.data.data,
       });
     } catch (e) {
-      // Swal.fire({
-      //   title: "Error!",
-      //   text: "Email or password invalid",
-      //   icon: "error",
-      //   confirmButtonText: "GO HOME",
-      // });
-      Swal.fire(
-        "¡User created successfully!",
-        "¡Thank you for visiting our website!"
-      );
+      Swal.fire({
+        title: "Error!",
+        text: "Email or password invalid",
+        icon: "error",
+        confirmButtonText: "GO HOME",
+      });
+      // Swal.fire(
+      //   "¡User created successfully!",
+      //   "¡Thank you for visiting our website!"
+      // );
+      // console.log(e)
     }
   };
 } 
@@ -55,7 +56,7 @@ export function signUp(body) {
 export function createUser(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/user`, body);
+      let user = await axios.post(`/api/user`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
@@ -280,13 +281,6 @@ export function deleteFromCart(payload) {
 export function deleteAllFromCart() {
   return {
     type: DELETE_ALL_FROM_CART,
-  };
-}
-
-export function updateItemNum(payload) {
-  return {
-    type: UPDATE_ITEM_NUM,
-    payload,
   };
 }
 
