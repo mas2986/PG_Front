@@ -24,6 +24,7 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
+  ADD_TO_CART_DETAIL
 } from "./const";
 
 export function signUp(body) {
@@ -268,6 +269,13 @@ export function addToCart(payload) {
     type: ADD_TO_CART,
     payload,
   };
+}
+
+export function addToCartDetail(payload){
+  return {
+    type: ADD_TO_CART_DETAIL,
+    payload
+  }
 }
 
 export function deleteFromCart(payload) {

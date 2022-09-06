@@ -1,28 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart } from "../redux/action";
+import { detailProduct, addToCart, removeDupsCart, addToCartDetail } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
-
+import { CircularProgress } from "@mui/material";
+import plop from "../asset/plop.mp3";
 
 export default function Detail() {
+  const items = useSelector((state) => state.cartItems);
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
     dispatch(detailProduct(id));
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
-  console.log(detail);
+  //console.log(detail);
 
   function addCart() {
     new Audio(plop).play();
-    dispatch(addToCart(props.id));
-    dispatch(removeDupsCart(props.id));
+    detail.qty = 1;
+    dispatch(addToCartDetail(detail.id));
+    dispatch(removeDupsCart(detail.id));
+    detail.qty(qty)
   }
+
+  console.log(id)
 
   return (
     <center>
@@ -31,7 +38,7 @@ export default function Detail() {
         {/*console.log(detail)*/}
         {detail ? (
           <div className={d.detailCard}>
-            <div classname={d.bigImage}>
+            <div className={d.bigImage}>
               <img
                 src={detail.img ? detail.img : detail.image}
                 alt="Image not found"
@@ -68,7 +75,7 @@ export default function Detail() {
             }} className={d.buyButton}>
               BUY
             </Button>
-            <Button variant="outlined"size="small" onClick={addCart} className={d.cartButton}>
+            <Button variant="outlined" size="small" onClick={addCart} className={d.cartButton}>
               ADD TO CART
             </Button>
 
@@ -91,7 +98,9 @@ export default function Detail() {
           </div>
 
         ) : (
-          <>Loading...</>
+          <CircularProgress color="success" sx={{
+            marginTop:35
+          }}/>
         )}
         
       </div>

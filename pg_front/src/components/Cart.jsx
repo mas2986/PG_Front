@@ -36,6 +36,7 @@ function Cart() {
 
   //bring in the global state.cartItems
   let items = useSelector((state) => state.cartItems);
+  let detail = useSelector((state)=> state.detail)
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
   if (items.length == 0) {
     items =
@@ -59,7 +60,7 @@ function Cart() {
     console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
     if (items.length == 1) {
-      localStorage.removeItem("items");
+     localStorage.removeItem("items");
     }
   }
 
@@ -210,7 +211,7 @@ function Cart() {
                           <Typography
                             sx={{ margin: "5rem 3rem 0 0", fontSize: "1.2rem" }}
                           >
-                            ${i.price * i.qty}.00
+                            ${i.price * i.qty || detail?.price }.00
                           </Typography>
                         </Box>
                       </Box>
@@ -226,7 +227,7 @@ function Cart() {
                     {items.reduce(
                       (prev, curr) => prev + curr.price * curr.qty,
                       0
-                    )}
+                    ) || items.reduce((prev, curr)=> prev + detail?.price * curr.qty,0) }
                     .00
                   </Typography>
                 </Box>
