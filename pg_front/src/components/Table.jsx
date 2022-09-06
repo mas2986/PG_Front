@@ -17,7 +17,7 @@ import {
 import { Delete, Edit } from '@mui/icons-material';
 import { data } from './data';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProduct } from '../redux/action'
+import { createProduct,editProduct,getProduct } from '../redux/action'
 import FormProduct from './FormProduct';
 
 function validate(input) {
@@ -46,6 +46,7 @@ function validate(input) {
 
 
 const Example = () => {
+  const dispatch = useDispatch();
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [tableData, setTableData] = useState(() => data);
   const [validationErrors, setValidationErrors] = useState({});
@@ -63,7 +64,7 @@ const Example = () => {
       //send/receive api updates here, then refetch or update local table data for re-render
       console.log(values)
       setTableData([...tableData]);
-      dispatch(edit(values));
+      dispatch(editProduct(values));
       exitEditingMode(); //required to exit editing mode and close modal
     }
   };
@@ -236,6 +237,11 @@ const Example = () => {
     ],
     [getCommonEditTextFieldProps],
   );
+
+  useEffect(() => {
+    if (listProducts.length === 0) 
+      dispatch(getProduct())
+    },[]);
 
   return (
     <>
