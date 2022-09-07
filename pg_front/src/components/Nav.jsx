@@ -19,6 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { filterByGenderInNav, getProduct } from "../redux/action";
 import Cart from "./Cart";
+import Logout from "./Logout";
+import { useAuth0 } from "@auth0/auth0-react"
+import LoginAuth0 from "./LoginAuth0";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -43,7 +46,7 @@ export default function Nav(props) {
   };
 
   const [log, setLog] = useState(true);
-
+  const { isAuthenticated } = useAuth0();
   const resetFilters = () => {
     dispatch(getProduct());
   };
@@ -225,7 +228,8 @@ export default function Nav(props) {
                   className={n["login-container"]}
                   display="flex"
                   sx={{ alignItems: "center", justifyContent: "center" }}
-                >
+                > 
+                  { isAuthenticated ? <Logout/> : <LoginAuth0/>}
                   <Cart />
                   <Link to="/login">
                     <Tooltip
@@ -234,7 +238,8 @@ export default function Nav(props) {
                           ? `Logged as ${user.name}`
                           : "Go Login"
                       }`}
-                    >
+                    > 
+          
                       <AccountCircleIcon
                         onClick={(e) => handleSubmit(e)}
                         sx={{

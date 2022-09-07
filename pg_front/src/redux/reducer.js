@@ -76,36 +76,30 @@ export const rootReducer = (state = initialState, action) => {
       };
     case FILTER_SPORT:
       const allProducts = state.products;
-      console.log(state.products)
-      const filteredSports =
-        action.payload === "All"
-          ? allProducts
-          : state.products.filter((p) => p.sport.includes(action.payload));
+            
+      const filteredSports = allProducts.filter((p) => p.sport.includes(action.payload)); 
+      
       return {
         ...state,
-        products: filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All"? state.altProducts : filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_BRAND:
       const allBrands = state.products;
-      const filteredBrands =
-        action.payload === "All"
-          ? allBrands
-          : allBrands.filter((p) => p.brand.includes(action.payload));
-      console.log(action.payload);
-      return {
+      const filteredBrands = state.altProducts.filter((p) => p.brand.includes(action.payload));
+    return {
         ...state,
-        products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ? allBrands : filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.altProducts
-      const filteredGenres = action.payload === "All" ? allGenres
-          : state.products.filter((g) => g.genre.includes(action.payload));
-      console.log(action.payload);
+      const allGenres = state.products
+      const filteredGenres = 
+           state.products.filter((g) => g.genre.includes(action.payload));
+      
       const women = state.altProducts.filter((g) => g.genre.includes(action.payload));
       return {
         ...state,
-        products: filteredGenres,
-        products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ?  state.altProducts : filteredGenres
+        //products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
       let stateProduct = state.products;
