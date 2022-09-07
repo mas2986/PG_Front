@@ -17,15 +17,17 @@ export default function Filters() {
   function handleFilteredGenres(e) {
     e.preventDefault();
     dispatch(filterByGenre(e.target.value));
+    
   }
   function handleFilteredSports(e) {
     e.preventDefault();
     dispatch(filterBySport(e.target.value));
+    
   }
   function handleFilteredBrands(e) {
     e.preventDefault();
     dispatch(filterByBrand(e.target.value));
-  }
+ }
 
   function handleOrderBy(e) {
     e.preventDefault();
@@ -34,7 +36,8 @@ export default function Filters() {
   function handleOrderByPrice(e) {
     e.preventDefault();
     dispatch(orderByPrice(e.target.value));
-  }
+}
+  
 
   return (
     <section className={style.box}>
