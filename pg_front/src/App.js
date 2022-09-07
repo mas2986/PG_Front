@@ -15,9 +15,16 @@ import Admin from "./components/Admin";
 import FormProduct from "./components/FormProduct";
 import EditProduct from "./components/EditProduct";
 import Footer from "./components/Footer";
+import { Auth0Provider } from "@auth0/auth0-react"
+import Logout from "./components/Logout";
+import { useAuth0 } from "@auth0/auth0-react"
+import LoginAuth0 from "./components/LoginAuth0";
 
 function App() {
   const dispatch = useDispatch();
+  const domain = process.env.REACT_APP_AUTH0_DOMAIN
+  const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
+  const { isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -30,11 +37,13 @@ function App() {
       dispatch(checkLogin(id,token));
     }
   }, [dispatch]);
+  
 
   return (
-    <div className="App">
+      <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin}>
       <header className="App-header">
         {/* <Route exact path="/" component={Landing} /> */}
+        <center>{ isAuthenticated ? <Logout/> : <LoginAuth0/>  }</center>
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Home} />
         <Route
@@ -55,8 +64,8 @@ function App() {
         />
        
       <Route exact path={["/", "/login"]} component={Footer}/>
-      </header>
-    </div>
+      </header> 
+      </Auth0Provider>
   );
 }
 
