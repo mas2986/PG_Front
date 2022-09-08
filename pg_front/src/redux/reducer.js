@@ -6,6 +6,7 @@ import {
   GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   CHECK_LOGIN,
+  LOGOUT,
   ERROR_LOGIN,
   SEARCH_PRODUCT,
   FILTER_SPORT,
@@ -55,6 +56,13 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case LOGOUT:
+      localStorage.removeItem('userDetails');
+      console.log('LOGOUT')
+      return{
+        ...state,
+        user:{}
+      }
 
     case CREATE_USER:
       console.log(action.payload)
