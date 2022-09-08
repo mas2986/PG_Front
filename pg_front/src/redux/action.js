@@ -11,6 +11,7 @@ import {
   FILTER_BRAND,
   FILTER_NAV_GENDER,
   CHECK_LOGIN,
+  LOGOUT,
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
@@ -27,6 +28,7 @@ import {
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL
 } from "./const";
+
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -248,6 +250,14 @@ export function detailProduct(id) {
       console.log(error);
     }
   };
+}
+
+export function logout(history){
+  history.push('/login')
+  return{
+    type:LOGOUT,
+    
+  }
 }
 
 //CHECK LOGIN ACTION CREATOR
