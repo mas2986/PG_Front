@@ -53,7 +53,7 @@ export function signUp(body) {
 export function createUser(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`${URL}/api/user`, body);
+      let user = await axios.post(`/api/user`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
@@ -128,7 +128,7 @@ export function editProduct(id, body) {
 export function getProduct() {
   return async function (dispatch) {
     try {
-      let res = await axios.get(`/api/product`);
+      let res = await axios.get(`/api/products`);
       console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,

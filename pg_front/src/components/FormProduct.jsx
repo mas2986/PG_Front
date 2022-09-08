@@ -138,6 +138,27 @@ export default function FormProduct() {
     });
   };
 
+  const handleWidget = () =>{
+    console.log('Abrir widget')
+    var myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: 'athensimages', 
+      uploadPreset: 'AthensImages'
+    },
+     (error, result) => { 
+       console.log(error)
+        if (!error && result && result.event === "success") { 
+          console.log('Done! Here is the image info: ', result.info);
+          setInput({
+            ...input,
+            image: result.info.url
+          })
+        }
+      }
+    );
+    myWidget.open()
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(createProduct(input));
@@ -189,18 +210,24 @@ export default function FormProduct() {
                 />
               </Grid>
               <Grid item sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="image"
-                  value={input?.image}
-                  onChange={handleChange}
-                  label="Image"
-                  type="text"
-                  //error={!!errors.image}
-                  //helperText={errors.image}
-                  id="image"
-                />
+              <Box sx={{display:'flex'}}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="image"
+                    value={input?.image}
+                    onChange={handleChange}
+                    label="Image"
+                    type="text"
+                    //error={!!errors.image}
+                    //helperText={errors.image}
+                    id="image"
+                  />
+                  <Button id="upload-widget"
+                    className="cloudinary-button"
+                    onClick = {handleWidget}
+                    >Upload image</Button>
+                </Box>
               </Grid>
               <Box
                 maxWidth="sm"

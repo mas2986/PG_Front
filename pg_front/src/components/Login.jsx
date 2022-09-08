@@ -90,7 +90,7 @@ export default function SignUp() {
 
   if (user !== {}) {
     if (user.rol === "admin") return history.push("/admin");
-    if (user.rol === "user") return history.push("/home");
+    if (user.rol === "user") return history.push("/");
   }
 
   return (

@@ -16,9 +16,7 @@
     "gapi": "0.0.3",
     "gapi-script": "^1.2.0",
     "material-react-table": "^1.0.0-beta.6",
-
     "path-browserify": "^1.0.1",
-
     "react": "^18.2.0",
     "react-admin": "^4.3.1",
     "react-admin-lb4": "^1.0.3",
