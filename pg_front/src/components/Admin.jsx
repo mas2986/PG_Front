@@ -1,8 +1,11 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom'
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MuiAppBar from '@mui/material/AppBar';
 import HomeIcon from '@mui/icons-material/Home';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,14 +18,13 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
 import { mainListItems, secondaryListItems } from './SideBar';
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/action'
 import Table from './Table';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
@@ -89,24 +91,46 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const [anchorElm,setAnchorElm] = React.useState(null);
+  const [openMenu, setOpenMenu] = React.useState(false);
   
-  const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-  const { name } = tokenJSON?tokenJSON.data.user:null;
 
-  React.useEffect(()=>{
+  const handleClick = (e) => {
+    setAnchorElm(e.currentTarget);
+    setOpenMenu(true)
+  }
+
+  const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+  let { name } = tokenJSON ? tokenJSON.data.user : null;
+
+  const handleClose = (e) => {    
+    setOpenMenu(false);
+    const value = e.target.innerText;
+    setAnchorElm(null)
+    if(value==='Logout'){
+      dispatch(logout(history))      
+    }
+  }
+
+  React.useEffect(() => {
     if (tokenJSON) {
       const { token } = tokenJSON;
       const { rol } = tokenJSON.data.user;
       console.log(name);
-      if(token&&rol==="user") return history.push("/login")
+      if (token && rol === "user") return history.push("/login")
     }
-    if(!tokenJSON) return history.push("/login")
-  },[])
+    if (!tokenJSON) return history.push("/login")
+  }, [])
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -143,25 +167,34 @@ function DashboardContent() {
               <Badge /* badgeContent={4} */ color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
-            {console.log(name)}
-            <Tooltip
-              title={`Logged as ${name}`}
-            >
-              <IconButton color="inherit">
-                <Badge color="secondary">
-                  <AccountCircleIcon/>
-                </Badge>
+            </IconButton> 
+            <IconButton color="inherit">
+              <Badge color="secondary">
+                <Tooltip
+                  title={`Logged as ${name}`}
+                >
+                  <AccountCircleIcon                   
+                    onClick={handleClick}
+                  />
+                </Tooltip>                    
+              </Badge>     
               </IconButton>
-            </Tooltip>
+              <Menu anchorEl = {anchorElm} open = {openMenu} onClose = {handleClose}>                
+                <MenuItem onClick = {handleClose}>Profile</MenuItem>
+                <Divider/>
+                <MenuItem name = "balance" onClick = {handleClose}>Balance</MenuItem>                
+                <Divider/>
+                <MenuItem value = "logout" onClick = {handleClose}>Logout</MenuItem>
+              </Menu>
+           
             <Tooltip
               title="Home"
             >
               <IconButton color="inherit">
                 <Badge color="secondary">
-                <LinkRouter to="/">
-                  <HomeIcon/>                
-                </LinkRouter>
+                  <LinkRouter to="/">
+                    <HomeIcon />
+                  </LinkRouter>
                 </Badge>
               </IconButton>
             </Tooltip>
@@ -182,9 +215,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-             {mainListItems}
+            {mainListItems}
             <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+            {secondaryListItems}
           </List>
         </Drawer>
         <Box
@@ -200,7 +233,7 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>            
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Table />
             <Copyright sx={{ pt: 4 }} />
           </Container>
