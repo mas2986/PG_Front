@@ -11,6 +11,7 @@ import {
   FILTER_BRAND,
   FILTER_NAV_GENDER,
   CHECK_LOGIN,
+  LOGOUT,
   ORDER_BY,
   ORDER_BY_PRICE,
   DETAIL_PRODUCT,
@@ -22,8 +23,11 @@ import {
   CREATE_USER,
   CREATE_PRODUCT,
   EDIT_PRODUCT,
+  DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
+  ADD_TO_CART_DETAIL
 } from "./const";
+
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -36,19 +40,20 @@ export function signUp(body) {
         payload: user.data.data,
       });
     } catch (e) {
-      // Swal.fire({
-      //   title: "Error!",
-      //   text: "Email or password invalid",
-      //   icon: "error",
-      //   confirmButtonText: "GO HOME",
-      // });
-      Swal.fire(
-        "¡User created successfully!",
-        "¡Thank you for visiting our website!"
-      );
+      Swal.fire({
+        title: "Error!",
+        text: "Email or password invalid",
+        icon: "error",
+        confirmButtonText: "GO HOME",
+      });
+      // Swal.fire(
+      //   "¡User created successfully!",
+      //   "¡Thank you for visiting our website!"
+      // );
+      // console.log(e)
     }
   };
-}
+} 
 
 export function createUser(body) {
   return async function (dispatch) {
@@ -71,31 +76,32 @@ export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function (dispatch) {
-    try {
-      console.log(CREATE_PRODUCT);
+  return async function(dispatch){
+    try{
+      console.log(CREATE_PRODUCT)
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON;
-      let newProduct = await axios.post(`/api/product`, body, {
+      const { token } = tokenJSON; 
+      let newProduct = await axios.post(`/api/product`,body,{
         headers: {
           Authorization: `Bearer ${token}`,
-        },
-      });
+        }
+      })
       console.log(newProduct.data);
       return dispatch({
-        type: CREATE_PRODUCT,
-        payload: newProduct.data,
-      });
-    } catch (e) {
-      console.log(e);
-      Swal.fire({
-        title: "Error creating product!",
-        text: "Please try again",
-        icon: "Error",
-        confirmButtonText: "Back",
-      });
+        type:CREATE_PRODUCT,
+        payload:newProduct.data
+      })
     }
-  };
+    catch(e){ 
+      console.log(e)
+    Swal.fire({
+      title: "Error creating product!",
+      text: "Please try again",
+      icon: "Error",
+      confirmButtonText: "Back",
+    });
+  }
+} 
 }
 
 export function editProduct(id, body) {
@@ -110,13 +116,39 @@ export function editProduct(id, body) {
         },
       });
       console.log(putProduct.data);
-      return {
+      return dispatch({
         type: EDIT_PRODUCT,
         payload: putProduct.data,
-      };
+      });
     } catch (e) {
       Swal.fire({
         title: "Error updating product!",
+        text: e.msg,
+        icon: "Error",
+        confirmButtonText: "Back",
+      });
+    }
+  };
+}
+
+export function deleteProduct(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;
+      let deleteProduct = await axios.delete(`/api/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(deleteProduct.data);
+      return dispatch({
+        type: DELETE_PRODUCT,
+        payload: id,
+      });
+    } catch (e) {
+      Swal.fire({
+        title: "Error deleting product!",
         text: e.msg,
         icon: "Error",
         confirmButtonText: "Back",
@@ -143,7 +175,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/product?title=${payload}`, {});
+      var product = await axios.get(`/api/products?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
@@ -219,30 +251,41 @@ export function detailProduct(id) {
   };
 }
 
-//CHECK LOGIN ACTION CREATOR
-export function checkLogin(token, id) {
-  return async function (dispatch) {
-    try {
-      let user = await axios.get(`/api/user/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return dispatch({
-        type: CHECK_LOGIN,
-        payload: user.data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export function logout(history){
+  history.push('/login')
+  return{
+    type:LOGOUT,
+    
+  }
 }
 
+//CHECK LOGIN ACTION CREATOR
+export function checkLogin(id,token) {
+  console.log(id);
+  return async function(dispatch){
+    let user = await axios.get(`/api/user/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return dispatch({
+      type:CHECK_LOGIN,
+      payload: user.data,
+    })
+} 
+}
 export function addToCart(payload) {
   return {
     type: ADD_TO_CART,
     payload,
   };
+}
+
+export function addToCartDetail(payload){
+  return {
+    type: ADD_TO_CART_DETAIL,
+    payload
+  }
 }
 
 export function deleteFromCart(payload) {

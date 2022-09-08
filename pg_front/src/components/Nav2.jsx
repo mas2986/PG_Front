@@ -49,14 +49,18 @@ export default function Nav(props) {
                     marginRight: "51rem",
                   }}
                 >
-                  <img src={logo} alt="" className={n.reset} />
-                  <Typography
-                    variant="h4"
-                    style={{ color: "#000", marginLeft: "1rem" }}
-                    className={n.reset}
-                  >
-                    Athens
-                  </Typography>
+                  <Tooltip title={"Home"}>
+                    <img src={logo} alt="" className={n.reset} />
+                  </Tooltip>
+                  <Tooltip title={"Home"}>
+                    <Typography
+                      variant="h4"
+                      style={{ color: "#000", marginLeft: "1rem" }}
+                      className={n.reset}
+                    >
+                      Athens
+                    </Typography>
+                  </Tooltip>
                 </Link>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>

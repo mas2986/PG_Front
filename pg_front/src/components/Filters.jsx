@@ -38,13 +38,13 @@ export default function Filters() {
 
   return (
     <section className={style.box}>
-      <div>
+      {/* <div>
         <h3>ORDER</h3>
         <select onChange={(e) => handleOrderBy(e)}>
           <option value="asc"> A-Z</option>
           <option value="desc"> Z-A</option>
         </select>
-      </div>
+      </div> */}
       <div>
         <h3>ORDER BY PRICE</h3>
         <select onChange={(e) => handleOrderByPrice(e)}>
@@ -66,12 +66,12 @@ export default function Filters() {
           <option value="Male">Men</option>
           <option value="Female">Women</option>
           <option value="Kids">Kids</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="kids">Bebies</option>
+          {/* <option value="male">Male</option> */}
+          {/* <option value="female">Female</option> */}
+          {/* <option value="kids">Bebies</option> */}
           <option value="Adults">Adults</option>
           <option value="None">Genderless</option>
-          <option value="">Non binary</option>
+          <option value="Unisex">Unisex</option>
           SELECT
         </select>
       </div>
