@@ -24,7 +24,7 @@ function App() {
   const dispatch = useDispatch();
   const domain = process.env.REACT_APP_AUTH0_DOMAIN
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, user } = useAuth0();
 
   useEffect(() => {
     const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -43,7 +43,6 @@ function App() {
       <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin}>
       <header className="App-header">
         {/* <Route exact path="/" component={Landing} /> */}
-        <center>{ isAuthenticated ? <Logout/> : <LoginAuth0/>  }</center>
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Home} />
         <Route

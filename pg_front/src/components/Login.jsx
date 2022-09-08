@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuth0 } from "@auth0/auth0-react"
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
-import LoginGoogle from "./LoginGoogle";
+import LoginAuth0 from "./LoginAuth0";
 
 function validate(input) {
   let errors = {};
@@ -55,7 +55,7 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const { loginWithRedirect } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const history = useHistory();
@@ -164,7 +164,7 @@ export default function SignUp() {
               Register
             </Button>
             <Box display="flex" sx={{ justifyContent: "center" }}>
-            <LoginGoogle onClick={()=> loginWithRedirect()}/>
+            <center>{ isAuthenticated ? <LoginAuth0/> : <LoginAuth0/>  }</center>
             </Box>
           </Box>
         </Box>

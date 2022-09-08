@@ -1,0 +1,21 @@
+
+.btn-login {
+    padding: 10px;
+    /* padding: 10px; */
+}
+
+.iconGoogle {
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+.hide {
+    display: none;
+  }
+
+      
+  .myDIV:hover + .hide {
+    display: block;
+    color: rgb(78, 77, 77);
+  }
+

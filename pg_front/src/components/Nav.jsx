@@ -38,22 +38,22 @@ function HideOnScroll(props) {
 
 export default function Nav(props) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  console.log("user", user);
+  const user1 = useSelector((state) => state.user);
+  const [log, setLog] = useState(true);
+  const { isAuthenticated, user } = useAuth0();
+  console.log(user)
+  console.log("user", user1);
   const handleClick = (e) => {
     console.log(e.target.value);
     dispatch(filterByGenderInNav(e.target.value));
   };
-
-  const [log, setLog] = useState(true);
-  const { isAuthenticated } = useAuth0();
   const resetFilters = () => {
     dispatch(getProduct());
   };
 
   function handleSubmit() {
-    console.log(user);
-    if (Object.keys(user).length > 0) {
+    console.log(user1);
+    if (Object.keys(user1).length > 0) {
       addEventListener.location.reload();
       history.push("/home");
     }
@@ -234,18 +234,23 @@ export default function Nav(props) {
                   <Link to="/login">
                     <Tooltip
                       title={`${
+                        Object.keys(user1).length !== 0
+                          ? `Logged as ${user1.name}`
+                          : "Go Login"
+                      }`}> 
+                      {/* <Tooltip
+                      title={`${
                         Object.keys(user).length !== 0
                           ? `Logged as ${user.name}`
                           : "Go Login"
-                      }`}
-                    > 
+                      }`}/> */}
           
                       <AccountCircleIcon
                         onClick={(e) => handleSubmit(e)}
                         sx={{
                           fontSize: "large",
                           color: `${
-                            Object.keys(user).length !== 0
+                            Object.keys(user1).length !== 0
                               ? "#0000FF"
                               : "#888787"
                           }`,
