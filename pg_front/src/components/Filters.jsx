@@ -58,14 +58,15 @@ export default function Filters() {
 
       <div>
         <h3>GENDER</h3>
-        <select value="All"
+        <select value="Start" 
           className="select-detail"
           onChange={(e) => {
             handleFilteredGenres(e);
           }}
         >
           {/* RENDER FROM ARRAY  */}
-          <option value="All" selected>All</option>
+          <option value="Start"  >Start</option>
+          <option value="All" >All</option>
           <option value="Male">Men</option>
           <option value="Female">Women</option>
           <option value="Kids">Kids</option>
@@ -80,13 +81,14 @@ export default function Filters() {
       </div>
       <div>
         <h3>BRANDS</h3>
-        <select value="All"
+        <select value="Start"
           className="select-detail"
           onChange={(e) => {
             handleFilteredBrands(e);
           }}
         >
-          <option value="All" selected>All</option>
+          <option value="Start"  >Start</option>
+          <option value="All" >All</option>
           <option value="Nike">Nike</option>
           <option value="Adidas">Adidas</option>
           <option value="Gilbert">Gilbert</option>
@@ -101,10 +103,11 @@ export default function Filters() {
       </div>
       <div>
         <h3>SPORTS</h3>
-        <select value="All"
+        <select value="Start"
           className="select-detail"
           onChange={(e) => handleFilteredSports(e)}
         >
+          <option value="Start"  >Start</option>
           <option value="All"  >All</option>
           <option value="Futbol">Football</option>
           <option value="Rugby">Rugby</option>
