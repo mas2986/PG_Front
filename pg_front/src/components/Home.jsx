@@ -43,6 +43,8 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
+
+
   return (
     <div>
       <Nav />
