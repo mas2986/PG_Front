@@ -9,7 +9,7 @@ import Speedo from "../img brands/speedo2.png";
 import Wilson from "../img brands/Wilson.png";
 import Troy from "../img brands/troy.png";
 import Everlast from "../img brands/Everlast.png";
-import { filterByBrand } from "../redux/action";
+import { filterByCarousel } from "../redux/action";
 import { useDispatch } from "react-redux";
 import h from "./Home.module.css";
 
@@ -30,7 +30,7 @@ function CarouselBrands() {
 
   function handleBrands(e) {
     e.preventDefault();
-    dispatch(filterByBrand(e.target.title));
+    dispatch(filterByCarousel(e.target.title));
     console.log(e);
   }
 

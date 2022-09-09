@@ -45,6 +45,8 @@ export default function Home() {
     console.log(pagination.to);
   }, [allProducts.length]);
 
+
+
   return (
     <div>
       <Nav />
