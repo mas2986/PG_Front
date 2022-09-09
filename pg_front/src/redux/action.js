@@ -25,7 +25,8 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
-  ADD_TO_CART_DETAIL
+  ADD_TO_CART_DETAIL,
+  FILTER_BRAND_CAROUSEL
 } from "./const";
 
 
@@ -319,5 +320,13 @@ export function fetchCartItems(payload) {
   return {
     type: FETCH_SAVED_ITEMS,
     payload,
+  };
+}
+
+export function filterByCarousel(payload) {
+  console.log(payload);
+  return {
+    type: FILTER_BRAND_CAROUSEL,
+    payload, //Acá llegaría el tipo de genero
   };
 }
