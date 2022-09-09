@@ -12,6 +12,9 @@ import Everlast from "../img brands/Everlast.png";
 import { filterByBrand } from "../redux/action";
 import { useDispatch } from "react-redux";
 import h from "./Home.module.css";
+import { useHistory } from "react-router-dom";
+
+
 
 function CarouselBrands() {
   const imgbrands = [
@@ -27,9 +30,11 @@ function CarouselBrands() {
   ];
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   function handleBrands(e) {
     e.preventDefault();
+    history.push("/products");
     dispatch(filterByBrand(e.target.title));
     console.log(e);
   }
