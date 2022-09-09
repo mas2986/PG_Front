@@ -45,8 +45,6 @@ export default function Home() {
     console.log(pagination.to);
   }, [allProducts.length]);
 
-
-
   return (
     <div>
       <Nav />
@@ -63,7 +61,7 @@ export default function Home() {
         style={{
           width: "100vw",
           height: "100%",
-          marginTop: "-1rem",
+          marginTop: "-2.5rem",
           marginBottom: "1rem",
         }}
       />
