@@ -18,6 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
 import LoginAuth0 from "./LoginAuth0";
+import "../styles/Login.css"
 
 function validate(input) {
   let errors = {};
@@ -93,6 +94,11 @@ export default function SignUp() {
     if (user.rol === "user") return history.push("/");
   }
 
+  function rememberPassword(e) {
+    e.preventDefault();
+    history.push("/password")
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -112,15 +118,14 @@ export default function SignUp() {
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{ mt: 3, borderRadius: "20px" }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   value={input.email}
                   name="email"
                   onChange={handleChange}
@@ -132,7 +137,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="password"
                   value={input.password}
@@ -144,6 +148,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            <Link><button type="button" onClick={(e) => rememberPassword(e)} className="olvidarPassword">I forgot my password</button></Link>
             <Button
               //href = '/home'
               type="submit"

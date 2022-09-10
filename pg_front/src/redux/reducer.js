@@ -22,7 +22,8 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
-  ADD_TO_CART_DETAIL
+  ADD_TO_CART_DETAIL,
+  REMEMBER_PASSWORD
 } from "./const";
 
 const initialState = {
@@ -32,10 +33,17 @@ const initialState = {
   errorLogin: "",
   cartItems: [],
   qty: 1,
+  password: {}
 };
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    
+    case REMEMBER_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      }
     case SIGN_UP:
       return {
         ...state,
