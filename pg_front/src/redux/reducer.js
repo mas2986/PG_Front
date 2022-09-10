@@ -33,13 +33,9 @@ const initialState = {
   errorLogin: "",
   cartItems: [],
   qty: 1,
-<<<<<<< HEAD
-  password: {}
-=======
+  password: {},
   backup:[]
   
-
->>>>>>> 4729e606d710074c07448654b1abb7bc38b94841
 };
 
 export const rootReducer = (state = initialState, action) => {
