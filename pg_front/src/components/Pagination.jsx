@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Pagination as Pag } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-const pageSize = 6;
+const pageSize = 21;
 
 export default function Pagination({products,pagination,setPagination}) {
 

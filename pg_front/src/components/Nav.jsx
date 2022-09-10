@@ -22,6 +22,7 @@ import Cart from "./Cart";
 import Logout from "./Logout";
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginAuth0 from "./LoginAuth0";
+import { useHistory } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -37,6 +38,7 @@ function HideOnScroll(props) {
 }
 
 export default function Nav(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log("user", user);
@@ -59,6 +61,10 @@ export default function Nav(props) {
     }
   }
 
+  const goHome=()=>{
+    history.push("/")
+  }
+
   return (
     <>
       <StyledEngineProvider injectFirst>
@@ -67,11 +73,11 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <Tooltip title={"Refresh filters"}>
+                <Tooltip title={"Go Home"}>
                   <img
                     src={logo}
                     alt=""
-                    onClick={resetFilters}
+                    onClick={goHome}
                     className={n.reset}
                   />
                 </Tooltip>

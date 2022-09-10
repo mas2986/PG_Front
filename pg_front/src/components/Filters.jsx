@@ -49,7 +49,8 @@ export default function Filters() {
         </select>
       </div> */}
       <div>
-        <h3>ORDER BY PRICE</h3>
+        <h3>ORDER BY :</h3>
+        <h3>PRICE</h3>
         <select onChange={(e) => handleOrderByPrice(e)}>
           <option value="asc"> Low to High</option>
           <option value="desc"> High to Low</option>
