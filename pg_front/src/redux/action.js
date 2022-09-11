@@ -28,7 +28,8 @@ import {
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO
 } from "./const";
 
 
@@ -58,13 +59,27 @@ export function signUp(body) {
   };
 } 
 
+export function mercadoPago(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`https://pg-athen.herokuapp.com/api/crear-orden`, body);
+      console.log(order.data.url)
+      return dispatch({
+        type: ORDER_MERCADOPAGO,
+        payload: order.data.url
+      });
+    } catch (e) { 
+      console.log(e);
+    }
+  };
+}
+
+
 
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
       let password = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-password`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(password);
       return dispatch({
         type: REMEMBER_PASSWORD,
@@ -80,8 +95,6 @@ export function resetPassword(body) {
   return async function (dispatch) {
     try {
       let newPassword = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-passwords`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
       return dispatch({
         type: RESET_PASSWORD,
@@ -98,8 +111,6 @@ export function createUser(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`/api/user`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
       return dispatch({
         type: CREATE_USER,
