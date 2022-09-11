@@ -10,43 +10,45 @@ import Swal from 'sweetalert2';
 import {Button} from '@mui/material';
 import Nav from './Nav2';
 import { useDispatch } from 'react-redux';
-import { passwordRemember } from '../redux/action';
+import { resetPassword } from '../redux/action';
 import { useHistory } from 'react-router-dom';
 
-export default function Password() {
+
+export default function ResetPassword() {
 
   const dispatch = useDispatch();
   const history = useHistory();
 
 
   const [texto, setTexto] = React.useState({
-    email: "",
+    password: "",
+    clave: ""
     });
 
   function handleInput(e) {
       setTexto({
         //Al ser un objeto debemos pasarle el obj y no solo los inputs
         ...texto,
-       email: e.target.value,
+        [e.target.name]: e.target.value
       });
       console.log(e.target.value)
     }
 
   function handleClick (e) {
       e.preventDefault();
-      if (texto.email.length < 8  ) {
-        return Swal.fire({title:'¡Email is required!', text:'Ups! We know how cumbersome this tends to be.', icon: "error"})
+      if (texto.password.length === 0  ) {
+        return Swal.fire({title:'Password is required!', text:'Ups! We know how cumbersome this tends to be.', icon: "error"})
       }
-      if (!texto.email.includes("@")) {
-        return Swal.fire({title:'¡There was an error in the email!', text:"The email should be for example: ..@mail.com.ar", icon: "error"})
+      if (texto.password.length <= 8  ) {
+        return Swal.fire({title:'New password must contain at least 8 characters!', text:'Ups! We know how cumbersome this tends to be.', icon: "error"})
       }
-      dispatch(passwordRemember(texto));
+      dispatch(resetPassword(texto));
       Swal.fire({
-        title: "Ready! Check your email!",
-        text: "We have sent you the instructions to the email to reset your password.",
+        title: "Your password was successfully updated!",
+        text: "Have a great experience in Athens.",
         icon: "success",
       })
-      history.push('/token')
+      history.push('/login')
     }
 
   return (
@@ -65,22 +67,38 @@ export default function Password() {
         <div className='container'>
         <h1 className="recover">ATHENS</h1>
         <center><img src={logo} alt="Logo not found." /></center>
-        <p className="classPassword">Write your email so that we can send you an email to create a new password.</p>
-        <p className="classPassword">At the time of receiving it, we recommend that you check your Junk or Spam inbox.</p>
+        <p className="classPassword">We send you a token to the email you gave us.</p>
+        <p className="classPassword">Then complete the fields to acquire or update your password.</p>
       <div>
        <Grid>
        <TextField
           onChange={(e) => handleInput(e)}
-          label="Email"
+          label="New password"
           helperText="It must contain at least 8 characters." 
         //   defaultValue="Email"
           size="small"
           className="classPassword"
-          name="email"
-          value={texto.email}
+          name="password"
+          value={texto.password}
+          type="password"
         />
         
-        { (texto.email.includes("@") && texto.email.length > 8 ? <VerifiedIcon item xs={8} className='icon-email'/> : <VerifiedIcon item xs={8} className='icon-email-red'/>) }
+        { (texto.password.length  >= 8 ? <VerifiedIcon item xs={8} className='icon-email'/> : <VerifiedIcon item xs={8} className='icon-email-red'/>) }
+       </Grid>
+       <Grid>
+       <TextField
+          onChange={(e) => handleInput(e)}
+          label="Token"
+          helperText="Enter your token." 
+        //   defaultValue="Email"
+          size="small"
+          className="classPassword"
+          name="clave"
+          value={texto.clave}
+          type="password"
+        />
+        
+        { (texto.clave && texto.clave.length > 8 ? <VerifiedIcon item xs={8} className='icon-email'/> : <VerifiedIcon item xs={8} className='icon-email-red'/>) }
        </Grid>
         
       </div>

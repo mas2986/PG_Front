@@ -23,7 +23,9 @@ import {
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
   ADD_TO_CART_DETAIL, 
-  FILTER_BRAND_CAROUSEL
+  FILTER_BRAND_CAROUSEL,
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD
 } from "./const";
 
 const initialState = {
@@ -46,11 +48,16 @@ export const rootReducer = (state = initialState, action) => {
   }
   switch (action.type) {
     
-    case REMEMBER_PASSWORD:
+    case RESET_PASSWORD:
       return {
         ...state,
         password: action.payload,
       }
+      case REMEMBER_PASSWORD:
+        return {
+          ...state,
+          password: action.payload,
+        }
     case SIGN_UP:
       return {
         ...state,

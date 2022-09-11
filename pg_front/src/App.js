@@ -20,6 +20,7 @@ import Logout from "./components/Logout";
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginAuth0 from "./components/LoginAuth0";
 import Password from "./components/Password";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
         {/* <Route exact path="/" component={Landing} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/password" component={Password} />
+        <Route exact path="/token" component={ResetPassword} />
         <Route exact path="/" component={Home} />
         <Route
           exact
