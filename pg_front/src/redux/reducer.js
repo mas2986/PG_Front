@@ -108,7 +108,7 @@ export const rootReducer = (state = initialState, action) => {
       return{
         ...state        
       }
-    case CHANGE_ROLE_USER:
+    case DELETE_USER:
       console.log(action.payload);
       return{
         ...state        
