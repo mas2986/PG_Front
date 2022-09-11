@@ -47,6 +47,7 @@ export default function Nav(props) {
   console.log("user", user1);
   const handleClick = (e) => {
     console.log(e.target.value);
+    history.push("/products")
     dispatch(filterByGenderInNav(e.target.value));
   };
   const resetFilters = () => {
@@ -227,16 +228,14 @@ export default function Nav(props) {
                 </div>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Box display="flex">
+                <Box>
                   <SearchBar />
                 </Box>
+                <Cart/>
                 <Box
                   className={n["login-container"]}
                   display="flex"
-                  sx={{ alignItems: "center", justifyContent: "center" }}
                 > 
-                  { isAuthenticated ? <Logout/> : <LoginAuth0/>}
-                  <Cart />
                   <Link to="/login">
                     <Tooltip
                       title={`${
@@ -260,13 +259,15 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          marginTop: "0.5rem",
+                          marginBottom:"0.5rem",
                           width: "30px",
                           height: "30px",
+                          marginRight:"1rem",
                         }}
                       />
                     </Tooltip>
                   </Link>
+                  { isAuthenticated ? <Logout className={n.google}/> : <LoginAuth0 className={n.google}/>}
                 </Box>
               </Box>
             </Toolbar>

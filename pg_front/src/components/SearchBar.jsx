@@ -5,6 +5,7 @@ import Button from "@mui/material/Button/Button";
 import s from "./SearchBar.module.css";
 import lupa from "../lupa.png";
 import SearchIcon from "@mui/icons-material/Search";
+import { Tooltip } from "@mui/material";
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
@@ -32,17 +33,18 @@ export default function SearchBar() {
             value={input}
             onChange={(e) => handleInput(e)}
           ></input>
-
-          <Button
-            className={s["input-btn"]}
-            size="small"
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-            style={{ background: "transparent" }}
-          >
-            <SearchIcon fontSize="large" className={s["search-icon"]} />
-          </Button>
+          <Tooltip title={"Search item"}>
+            <Button
+              className={s["input-btn"]}
+              size="small"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+              style={{ background: "transparent" }}
+            >
+              <SearchIcon fontSize="large" className={s["search-icon"]} />
+            </Button>
+          </Tooltip>
         </form>
       </section>
     </div>
