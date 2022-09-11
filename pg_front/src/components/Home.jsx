@@ -13,6 +13,7 @@ import Pagination from "./Pagination";
 import home from "../asset/home.png";
 import Section from "./Section";
 import h from "./Home.module.css";
+import HomePictures from "./HomePictures";
 
 import CarouselBrands from "./CarouselBrands";
 
@@ -54,6 +55,7 @@ export default function Home() {
           width: "100%",
           height: "auto",
           backgroundImage: `url(${Image})`,
+          
           //borderRadius: 50
         }}
       />
@@ -64,12 +66,15 @@ export default function Home() {
           height: "100%",
           marginTop: "-1rem",
           marginBottom: "1rem",
+          borderBottomLeftRadius:"40px",
+          borderBottomRightRadius:"40px"
         }}
       />
       <CarouselBrands />
 
       <center><Section/></center>
-      <Filters />
+
+      <HomePictures/>
 
       <Typography
         variant="h1"
@@ -78,21 +83,22 @@ export default function Home() {
           width: 2401,
           height: 185,
           position: "absolute",
-          left: -359,
-          top: 711,
+          
+          top: 511,
           fontFamily: "Roboto",
           fontStyle: "italic",
           fontWeight: 900,
-          fontSize: 140,
+          fontSize: 120,
           lineHeight: 24,
           display: "flex",
           alignItems: "center",
           textAlign: "center",
           letterSpacing: 0.15,
           color: "#40F99B",
+          
         }}
       >
-        {/* Sports Apparel · Footwear · */}
+        Sports Apparel · Footwear · Accesories
       </Typography>
     </div>
   );

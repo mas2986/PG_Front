@@ -51,16 +51,20 @@ export default function Filters() {
       <div>
         <h3>ORDER BY :</h3>
         <h3>PRICE</h3>
-        <select onChange={(e) => handleOrderByPrice(e)}>
+        <select  
+          className={style.selectDetail} 
+          onChange={(e) => handleOrderByPrice(e)}>
+
           <option value="asc"> Low to High</option>
           <option value="desc"> High to Low</option>
+          
         </select>
       </div>
 
       <div>
         <h3 className="genres-section">GENDER</h3>
         <select value="Start" 
-          className="select-detail"
+          className={style.selectDetail}
           onChange={(e) => {
             handleFilteredGenres(e);
           }}
@@ -83,7 +87,7 @@ export default function Filters() {
       <div>
         <h3>BRANDS</h3>
         <select value="Start"
-          className="select-detail"
+          className={style.selectDetail}
           onChange={(e) => {
             handleFilteredBrands(e);
           }}
@@ -105,7 +109,7 @@ export default function Filters() {
       <div>
         <h3>SPORTS</h3>
         <select value="Start"
-          className="select-detail"
+          className={style.selectDetail}
           onChange={(e) => handleFilteredSports(e)}
         >
           <option value="Start"  >Start</option>
