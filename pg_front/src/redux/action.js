@@ -21,6 +21,9 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
+  GET_ALL_USERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
   CREATE_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
@@ -28,11 +31,12 @@ import {
   ADD_TO_CART_DETAIL
 } from "./const";
 
+const URL = "https://pg-athen.herokuapp.com"
 
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`/api/login`, body);
+      let user = await axios.post(`${URL}/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -58,13 +62,82 @@ export function signUp(body) {
 export function createUser(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`/api/user`, body);
+      let user = await axios.post(`${URL}/api/user`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
       return dispatch({
         type: CREATE_USER,
         payload: user.data.data.user,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function getAllUsers(body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let users = await axios.get(`${URL}/api/user`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: users.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function changeRoleUser(id,body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userChange = await axios.put(`${URL}/api/user/${id}`,body,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: CHANGE_ROLE_USER,
+        payload: userChange.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userDelete = await axios.delete(`${URL}/api/user/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: DELETE_USER,
+        payload: userDelete.data
       });
     } catch (e) {
       console.log(e);
@@ -81,7 +154,7 @@ export function createProduct(body) {
       console.log(CREATE_PRODUCT)
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON; 
-      let newProduct = await axios.post(`/api/product`,body,{
+      let newProduct = await axios.post(`${URL}/api/product`,body,{
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -110,7 +183,7 @@ export function editProduct(id, body) {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       console.log(body);
-      let putProduct = await axios.put(`/api/product/${id}`, body, {
+      let putProduct = await axios.put(`${URL}/api/product/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -136,7 +209,7 @@ export function deleteProduct(id) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let deleteProduct = await axios.delete(`/api/product/${id}`, {
+      let deleteProduct = await axios.delete(`${URL}/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -150,7 +223,7 @@ export function deleteProduct(id) {
       Swal.fire({
         title: "Error deleting product!",
         text: e.msg,
-        icon: "Error",
+        icon: "error",
         confirmButtonText: "Back",
       });
     }
@@ -160,7 +233,7 @@ export function deleteProduct(id) {
 export function getProduct() {
   return async function (dispatch) {
     try {
-      let res = await axios.get(`/api/products`);
+      let res = await axios.get(`${URL}/api/products`);
       console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
@@ -175,7 +248,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/products?title=${payload}`, {});
+      var product = await axios.get(`${URL}/api/products?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
@@ -239,7 +312,7 @@ export function detailProduct(id) {
   console.log(id);
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/product/${id}`);
+      var product = await axios.get(`${URL}/api/product/${id}`);
       console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
@@ -263,7 +336,7 @@ export function logout(history){
 export function checkLogin(id,token) {
   console.log(id);
   return async function(dispatch){
-    let user = await axios.get(`/api/user/${id}`,{
+    let user = await axios.get(`${URL}/api/user/${id}`,{
       headers: {
         Authorization: `Bearer ${token}`,
       }
