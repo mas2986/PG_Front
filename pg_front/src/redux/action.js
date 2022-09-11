@@ -28,7 +28,10 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
-  ADD_TO_CART_DETAIL
+  ADD_TO_CART_DETAIL,
+  FILTER_BRAND_CAROUSEL,
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -58,6 +61,42 @@ export function signUp(body) {
     }
   };
 } 
+
+
+export function passwordRemember(body) {
+  return async function (dispatch) {
+    try {
+      let password = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-password`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      console.log(password);
+      return dispatch({
+        type: REMEMBER_PASSWORD,
+        payload: password
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function resetPassword(body) {
+  return async function (dispatch) {
+    try {
+      let newPassword = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-passwords`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      console.log(newPassword);
+      return dispatch({
+        type: RESET_PASSWORD,
+        payload: newPassword
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
 
 export function createUser(body) {
   return async function (dispatch) {
@@ -392,5 +431,13 @@ export function fetchCartItems(payload) {
   return {
     type: FETCH_SAVED_ITEMS,
     payload,
+  };
+}
+
+export function filterByCarousel(payload) {
+  console.log(payload);
+  return {
+    type: FILTER_BRAND_CAROUSEL,
+    payload, //Acá llegaría el tipo de genero
   };
 }
