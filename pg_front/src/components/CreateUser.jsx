@@ -172,10 +172,11 @@ export default function CreateUser() {
             variant="contained"
             color='primary'
             onClick={(e) => {handleChange(e)}}
-            >¡Register!</button>
+            >REGISTER </button>
+            <img src={logo} alt="logo not found" />
      <center></center>
      <br />
-     <img src={logo} alt="logo not found" />
+     
      </Box>
      </center>
      </div>

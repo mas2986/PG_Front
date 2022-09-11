@@ -7,6 +7,7 @@ import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
 import plop from "../asset/plop.mp3";
+import Section from "./Section";
 
 export default function Detail() {
   const items = useSelector((state) => state.cartItems);
@@ -34,6 +35,7 @@ export default function Detail() {
   return (
     <center>
       <Nav2 />
+      <Section/>
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
         {detail ? (

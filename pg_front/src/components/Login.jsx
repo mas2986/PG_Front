@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
 import LoginAuth0 from "./LoginAuth0";
 import "../styles/Login.css"
+import logo from "../../src/logo.png"
 
 function validate(input) {
   let errors = {};
@@ -109,11 +110,12 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          }}>
+          <h1>ATHENS</h1>
+          <img src={logo}/>
+          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Box
             component="form"
             noValidate

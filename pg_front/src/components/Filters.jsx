@@ -57,7 +57,7 @@ export default function Filters() {
       </div>
 
       <div>
-        <h3>GENDER</h3>
+        <h3 className="genres-section">GENDER</h3>
         <select value="Start" 
           className="select-detail"
           onChange={(e) => {
