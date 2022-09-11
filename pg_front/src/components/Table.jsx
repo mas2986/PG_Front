@@ -181,9 +181,9 @@ const Example = () => {
           <Box
             sx={(theme) => ({
               backgroundColor:
-                cell.getValue() < 50_000
+                cell.getValue() < 15
                   ? theme.palette.error.dark
-                  : cell.getValue() >= 50_000 && cell.getValue() < 75_000
+                  : cell.getValue() >= 15 && cell.getValue() < 50
                   ? theme.palette.warning.dark
                   : theme.palette.success.dark,
               borderRadius: '0.25rem',
@@ -266,6 +266,7 @@ const Example = () => {
         }}
         columns={columns}
         data={listProducts}
+        initialState={{ columnVisibility: { id: false } }}
         editingMode="modal" //default
         enableColumnOrdering
         enableEditing
