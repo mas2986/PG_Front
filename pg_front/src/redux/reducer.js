@@ -23,7 +23,9 @@ import {
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
   ADD_TO_CART_DETAIL, 
-  FILTER_BRAND_CAROUSEL
+  FILTER_BRAND_CAROUSEL,
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD
 } from "./const";
 
 const initialState = {
@@ -33,9 +35,9 @@ const initialState = {
   errorLogin: "",
   cartItems: [],
   qty: 1,
+  password: {},
   backup:[]
   
-
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -45,6 +47,17 @@ export const rootReducer = (state = initialState, action) => {
     console.log(productsAll)
   }
   switch (action.type) {
+    
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      }
+      case REMEMBER_PASSWORD:
+        return {
+          ...state,
+          password: action.payload,
+        }
     case SIGN_UP:
       return {
         ...state,

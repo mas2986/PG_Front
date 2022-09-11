@@ -11,6 +11,7 @@ import Filters from "./Filters";
 import Image from "../asset/home.png";
 import Pagination from "./Pagination";
 import home from "../asset/home.png";
+import Section from "./Section";
 import h from "./Home.module.css";
 
 import CarouselBrands from "./CarouselBrands";
@@ -66,6 +67,10 @@ export default function Home() {
         }}
       />
       <CarouselBrands />
+
+      <center><Section/></center>
+      <Filters />
+
       <Typography
         variant="h1"
         component="h2"

@@ -11,20 +11,31 @@
   background-color: rgb(55, 44, 116);
   border-radius: 2px;
   width: 100px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .body {
-  height: 750px
+  height: 800px;
 }
 
+h1 {
+  font-family: Roboto,sans-serif;
+}
+
+p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 25;
+}
 .formDetail {
   margin: 40px;
   width: 480px;
   height: 530px;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
-  outline: solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  justify-items: justify;
+
 }
 
 .icon {
