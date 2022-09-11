@@ -21,6 +21,9 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
+  GET_ALL_USERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
   CREATE_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
@@ -32,6 +35,7 @@ import {
   ORDER_MERCADOPAGO
 } from "./const";
 
+//const URL = "https://pg-athen.herokuapp.com"
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -122,6 +126,75 @@ export function createUser(body) {
   };
 }
 
+export function getAllUsers(body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let users = await axios.get(`/api/user`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: users.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function changeRoleUser(id,body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userChange = await axios.put(`/api/user/${id}`,body,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: CHANGE_ROLE_USER,
+        payload: userChange.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userDelete = await axios.delete(`/api/user/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: DELETE_USER,
+        payload: userDelete.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
 export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
@@ -200,7 +273,7 @@ export function deleteProduct(id) {
       Swal.fire({
         title: "Error deleting product!",
         text: e.msg,
-        icon: "Error",
+        icon: "error",
         confirmButtonText: "Back",
       });
     }

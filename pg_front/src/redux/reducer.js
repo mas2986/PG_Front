@@ -22,7 +22,10 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
-  ADD_TO_CART_DETAIL, 
+  GET_ALL_USERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
+  ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
@@ -33,6 +36,7 @@ const initialState = {
   products: [],
   altProducts: [],
   user: {},
+  users:[],
   errorLogin: "",
   cartItems: [],
   qty: 1,
@@ -99,6 +103,23 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+
+    case GET_ALL_USERS:
+      return{
+        ...state,
+        users: action.payload
+      }
+
+    case CHANGE_ROLE_USER:
+      console.log(action.payload);
+      return{
+        ...state        
+      }
+    case CHANGE_ROLE_USER:
+      console.log(action.payload);
+      return{
+        ...state        
+      }
     case GET_PRODUCTS:
       return {
         ...state,

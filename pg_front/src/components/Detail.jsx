@@ -93,7 +93,7 @@ export default function Detail() {
               ADD TO CART
             </Button>
 
-            <Link to="/">
+            <Link to="/products">
               <Button
                 //   href={`http://localhost:3000/home`} cambio a routing por link para que no se pierda el carrito
                 variant="contained"
@@ -101,7 +101,7 @@ export default function Detail() {
                 size="small"
                 className={d.homeButton}
               >
-                BACK HOME
+                GO BACK
               </Button>
             </Link>
             

@@ -22,6 +22,7 @@ import Cart from "./Cart";
 import Logout from "./Logout";
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginAuth0 from "./LoginAuth0";
+import { useHistory } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -37,6 +38,7 @@ function HideOnScroll(props) {
 }
 
 export default function Nav(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = useState(true);
@@ -45,6 +47,7 @@ export default function Nav(props) {
   console.log("user", user1);
   const handleClick = (e) => {
     console.log(e.target.value);
+    history.push("/products")
     dispatch(filterByGenderInNav(e.target.value));
   };
   const resetFilters = () => {
@@ -59,6 +62,10 @@ export default function Nav(props) {
     }
   }
 
+  const goHome=()=>{
+    history.push("/")
+  }
+
   return (
     <>
       <StyledEngineProvider injectFirst>
@@ -67,11 +74,11 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <Tooltip title={"Refresh filters"}>
+                <Tooltip title={"Go Home"}>
                   <img
                     src={logo}
                     alt=""
-                    onClick={resetFilters}
+                    onClick={goHome}
                     className={n.reset}
                   />
                 </Tooltip>
@@ -221,16 +228,14 @@ export default function Nav(props) {
                 </div>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Box display="flex">
+                <Box>
                   <SearchBar />
                 </Box>
+                <Cart/>
                 <Box
                   className={n["login-container"]}
                   display="flex"
-                  sx={{ alignItems: "center", justifyContent: "center" }}
                 > 
-                  { isAuthenticated ? <Logout/> : <LoginAuth0/>}
-                  <Cart />
                   <Link to="/login">
                     <Tooltip
                       title={`${
@@ -254,13 +259,15 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          marginTop: "0.5rem",
+                          marginBottom:"0.5rem",
                           width: "30px",
                           height: "30px",
+                          marginRight:"1rem",
                         }}
                       />
                     </Tooltip>
                   </Link>
+                  { isAuthenticated ? <Logout className={n.google}/> : <LoginAuth0 className={n.google}/>}
                 </Box>
               </Box>
             </Toolbar>
