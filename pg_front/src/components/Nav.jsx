@@ -22,6 +22,7 @@ import Cart from "./Cart";
 import Logout from "./Logout";
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginAuth0 from "./LoginAuth0";
+import { useHistory } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -37,26 +38,32 @@ function HideOnScroll(props) {
 }
 
 export default function Nav(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  console.log("user", user);
+  const user1 = useSelector((state) => state.user);
+  const [log, setLog] = useState(true);
+  const { isAuthenticated, user } = useAuth0();
+  console.log(user)
+  console.log("user", user1);
   const handleClick = (e) => {
     console.log(e.target.value);
+    history.push("/products")
     dispatch(filterByGenderInNav(e.target.value));
   };
-
-  const [log, setLog] = useState(true);
-  const { isAuthenticated } = useAuth0();
   const resetFilters = () => {
     dispatch(getProduct());
   };
 
   function handleSubmit() {
-    console.log(user);
-    if (Object.keys(user).length > 0) {
+    console.log(user1);
+    if (Object.keys(user1).length > 0) {
       addEventListener.location.reload();
       history.push("/home");
     }
+  }
+
+  const goHome=()=>{
+    history.push("/")
   }
 
   return (
@@ -67,11 +74,11 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <Tooltip title={"Refresh filters"}>
+                <Tooltip title={"Go Home"}>
                   <img
                     src={logo}
                     alt=""
-                    onClick={resetFilters}
+                    onClick={goHome}
                     className={n.reset}
                   />
                 </Tooltip>
@@ -221,41 +228,46 @@ export default function Nav(props) {
                 </div>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Box display="flex">
+                <Box>
                   <SearchBar />
                 </Box>
+                <Cart/>
                 <Box
                   className={n["login-container"]}
                   display="flex"
-                  sx={{ alignItems: "center", justifyContent: "center" }}
                 > 
-                  { isAuthenticated ? <Logout/> : <LoginAuth0/>}
-                  <Cart />
                   <Link to="/login">
                     <Tooltip
+                      title={`${
+                        Object.keys(user1).length !== 0
+                          ? `Logged as ${user1.name}`
+                          : "Go Login"
+                      }`}> 
+                      {/* <Tooltip
                       title={`${
                         Object.keys(user).length !== 0
                           ? `Logged as ${user.name}`
                           : "Go Login"
-                      }`}
-                    > 
+                      }`}/> */}
           
                       <AccountCircleIcon
                         onClick={(e) => handleSubmit(e)}
                         sx={{
                           fontSize: "large",
                           color: `${
-                            Object.keys(user).length !== 0
+                            Object.keys(user1).length !== 0
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          marginTop: "0.5rem",
+                          marginBottom:"0.5rem",
                           width: "30px",
                           height: "30px",
+                          marginRight:"1rem",
                         }}
                       />
                     </Tooltip>
                   </Link>
+                  { isAuthenticated ? <Logout className={n.google}/> : <LoginAuth0 className={n.google}/>}
                 </Box>
               </Box>
             </Toolbar>

@@ -22,7 +22,9 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './SideBar';
+import SideBar from './SideBar';
+import Users from './Users';
+import Orders from './Orders';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/action'
 import Table from './Table';
@@ -102,6 +104,7 @@ function DashboardContent() {
 
   const [anchorElm,setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
+  const [view, setView] = React.useState('products')
   
 
   const handleClick = (e) => {
@@ -215,9 +218,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <SideBar setView={setView}/>
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+             {/* {secondaryListItems}  */}
           </List>
         </Drawer>
         <Box
@@ -234,7 +237,17 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Table />
+            {
+              view==='products'
+              ?
+              <Table />
+              :
+              view === 'users'
+              ?
+              <Users/>
+              :
+              <Orders/>
+            }
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
