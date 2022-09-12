@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
@@ -47,6 +48,7 @@ export default function FormPropsTextFields() {
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
+  const url = useSelector((state) => state.url);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -58,8 +60,8 @@ export default function FormPropsTextFields() {
     //   "¡Your payment was successful!",
     //   "You will receive an email with your purchase information shortly."
     // );
-    Swal.fire("Coming Soon!!");
-    history.push("/");
+    // Swal.fire("Coming Soon!!");
+    window.location.replace(url)
   };
 
   const [texto, setTexto] = React.useState({

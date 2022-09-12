@@ -31,7 +31,8 @@ import {
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -61,6 +62,22 @@ export function signUp(body) {
     }
   };
 } 
+
+export function mercadoPago(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`https://pg-athen.herokuapp.com/api/crear-orden`, body);
+      console.log(order.data.url)
+      return dispatch({
+        type: ORDER_MERCADOPAGO,
+        payload: order.data.url
+      });
+    } catch (e) { 
+      console.log(e);
+    }
+  };
+}
+
 
 
 export function passwordRemember(body) {
@@ -102,8 +119,6 @@ export function createUser(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`/api/user`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
       return dispatch({
         type: CREATE_USER,
