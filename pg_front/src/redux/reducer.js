@@ -83,11 +83,12 @@ export const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case LOGOUT:
-      localStorage.removeItem('userDetails');
+      localStorage.clear();
       console.log('LOGOUT')
       return{
         ...state,
-        user:{}
+        user:{},
+        cartItems:[]
       }
 
     case CREATE_USER:
