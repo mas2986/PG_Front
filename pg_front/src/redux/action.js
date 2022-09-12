@@ -21,14 +21,27 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
+  GET_ALL_USERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
   CREATE_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   FETCH_SAVED_ITEMS,
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
+<<<<<<< HEAD
 } from "./const";
 
+=======
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO
+} from "./const";
+
+//const URL = "https://pg-athen.herokuapp.com"
+
+>>>>>>> 07717400044a50327d58f9458d94a8afa19bf647
 export function signUp(body) {
   return async function (dispatch) {
     try {
@@ -55,16 +68,131 @@ export function signUp(body) {
   };
 }
 
+export function mercadoPago(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`https://pg-athen.herokuapp.com/api/crear-orden`, body);
+      console.log(order.data.url)
+      return dispatch({
+        type: ORDER_MERCADOPAGO,
+        payload: order.data.url
+      });
+    } catch (e) { 
+      console.log(e);
+    }
+  };
+}
+
+
+
+export function passwordRemember(body) {
+  return async function (dispatch) {
+    try {
+      let password = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-password`, body);
+      console.log(password);
+      return dispatch({
+        type: REMEMBER_PASSWORD,
+        payload: password
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function resetPassword(body) {
+  return async function (dispatch) {
+    try {
+      let newPassword = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-passwords`, body);
+      console.log(newPassword);
+      return dispatch({
+        type: RESET_PASSWORD,
+        payload: newPassword
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+
 export function createUser(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`/api/user`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(user.data.data.user);
       return dispatch({
         type: CREATE_USER,
         payload: user.data.data.user,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function getAllUsers(body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let users = await axios.get(`/api/user`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: users.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function changeRoleUser(id,body) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userChange = await axios.put(`/api/user/${id}`,body,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: CHANGE_ROLE_USER,
+        payload: userChange.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    try {
+      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON; 
+      let userDelete = await axios.delete(`/api/user/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      //console.log(user.data.data.user);
+      return dispatch({
+        type: DELETE_USER,
+        payload: userDelete.data
       });
     } catch (e) {
       console.log(e);

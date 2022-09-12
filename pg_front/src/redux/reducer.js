@@ -22,20 +22,28 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
-  ADD_TO_CART_DETAIL, 
-  FILTER_BRAND_CAROUSEL
+  GET_ALL_USERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
+  ADD_TO_CART_DETAIL,
+  FILTER_BRAND_CAROUSEL,
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO
 } from "./const";
 
 const initialState = {
   products: [],
   altProducts: [],
   user: {},
+  users:[],
   errorLogin: "",
   cartItems: [],
   qty: 1,
-  backup:[]
+  password: {},
+  backup:[],
+  url: ""
   
-
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -45,6 +53,22 @@ export const rootReducer = (state = initialState, action) => {
     console.log(productsAll)
   }
   switch (action.type) {
+      
+      case ORDER_MERCADOPAGO:
+        return {
+          ...state,
+          url: action.payload,
+      }
+      case RESET_PASSWORD:
+          return {
+          ...state,
+          password: action.payload,
+      }
+      case REMEMBER_PASSWORD:
+        return {
+          ...state,
+          password: action.payload,
+        }
     case SIGN_UP:
       return {
         ...state,
@@ -79,6 +103,23 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+
+    case GET_ALL_USERS:
+      return{
+        ...state,
+        users: action.payload
+      }
+
+    case CHANGE_ROLE_USER:
+      console.log(action.payload);
+      return{
+        ...state        
+      }
+    case CHANGE_ROLE_USER:
+      console.log(action.payload);
+      return{
+        ...state        
+      }
     case GET_PRODUCTS:
       return {
         ...state,

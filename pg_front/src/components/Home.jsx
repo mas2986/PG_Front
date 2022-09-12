@@ -11,7 +11,9 @@ import Filters from "./Filters";
 import Image from "../asset/home.png";
 import Pagination from "./Pagination";
 import home from "../asset/home.png";
+import Section from "./Section";
 import h from "./Home.module.css";
+import HomePictures from "./HomePictures";
 
 import CarouselBrands from "./CarouselBrands";
 
@@ -19,7 +21,7 @@ export default function Home() {
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
-  const pageSize = 6;
+  const pageSize = 12;
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
@@ -41,8 +43,6 @@ export default function Home() {
       to: pageSize,
       currentPage: 1,
     });
-    console.log(pagination.from);
-    console.log(pagination.to);
   }, [allProducts.length]);
 
   return (
@@ -53,6 +53,7 @@ export default function Home() {
           width: "100%",
           height: "auto",
           backgroundImage: `url(${Image})`,
+          
           //borderRadius: 50
         }}
       />
@@ -63,10 +64,16 @@ export default function Home() {
           height: "100%",
           marginTop: "-2.5rem",
           marginBottom: "1rem",
+          borderBottomLeftRadius:"40px",
+          borderBottomRightRadius:"40px"
         }}
       />
       <CarouselBrands />
-      <Filters />
+
+      <center><Section/></center>
+
+      <HomePictures/>
+
       <Typography
         variant="h1"
         component="h2"
@@ -74,80 +81,23 @@ export default function Home() {
           width: 2401,
           height: 185,
           position: "absolute",
-          left: -359,
-          top: 711,
+          
+          top: 511,
           fontFamily: "Roboto",
           fontStyle: "italic",
           fontWeight: 900,
-          fontSize: 140,
+          fontSize: 120,
           lineHeight: 24,
           display: "flex",
           alignItems: "center",
           textAlign: "center",
           letterSpacing: 0.15,
           color: "#40F99B",
+          
         }}
       >
-        {/* Sports Apparel · Footwear · */}
+        Sports Apparel · Footwear · Accesories
       </Typography>
-      <Pagination
-        products={products}
-        pagination={pagination}
-        setPagination={setPagination}
-      />
-      <div id="scrollDiv"></div>
-      <Container maxWidth="md">
-        <Box
-          sx={{
-            margin: 1,
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
-        >
-          {products?.length ? (
-            products.map((e) => (
-              <CardProduct
-                key={e.id}
-                title={e.title[0].toUpperCase() + e.title.substring(1)}
-                sport={e.sport}
-                Image={e.Image || e.image}
-                id={e.id}
-                price={e.price}
-              />
-            ))
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "10rem 0 10rem 2rem",
-              }}
-            >
-              <Typography
-                variant="h4"
-                sx={{ whiteSpace: "nowrap", margin: "5rem 0 2rem 0" }}
-              >
-                No products were found matching your selection
-              </Typography>{" "}
-              <Button
-                color="primary"
-                onClick={() => dispatch(getProduct())}
-                sx={{
-                  display: "block",
-                  margin: "5rem 0 2rem 0",
-                  padding: "0.5rem 1rem",
-                  fontSize: "1rem",
-                  border: "1px solid #000",
-                }}
-              >
-                Refresh
-              </Button>
-            </Box>
-          )}
-        </Box>
-      </Container>
     </div>
   );
 }

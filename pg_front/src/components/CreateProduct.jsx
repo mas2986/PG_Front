@@ -8,15 +8,16 @@ import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CardContent from "@mui/material/CardContent";
-import { addToCart, removeDupsCart } from "../redux/action";
+import { addToCart, removeDupsCart, mercadoPago } from "../redux/action";
 import plop from "../asset/plop.mp3";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
   const items = useSelector((state) => state.cartItems);
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const styles = {
     position: "relative",
@@ -34,6 +35,12 @@ export default function CardProduct(props) {
     dispatch(addToCart(props.id));
     dispatch(removeDupsCart(props.id));
   }
+
+  async function handlePay(e) {
+    e.preventDefault();
+    dispatch(mercadoPago({price: props.price}));
+    history.push('/entrega')
+}
 
   return (
     <Card
@@ -71,7 +78,7 @@ export default function CardProduct(props) {
         </Box>
       </CardContent>
       <CardActions>
-        <Button href={"/entrega"} size="small">
+        <Button onClick={(e)=> handlePay(e)} href={"/entrega"} size="small">
           BUY
         </Button>
         <Button size="small" onClick={addCart}>
