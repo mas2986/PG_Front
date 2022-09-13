@@ -20,7 +20,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { filterByGenderInNav, getProduct } from "../redux/action";
 import Cart from "./Cart";
 import Logout from "./Logout";
-import { useAuth0 } from "@auth0/auth0-react"
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./LoginAuth0";
 import { useHistory } from "react-router-dom";
 
@@ -43,11 +43,8 @@ export default function Nav(props) {
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = useState(true);
   const { isAuthenticated, user } = useAuth0();
-  console.log(user)
-  console.log("user", user1);
   const handleClick = (e) => {
-    console.log(e.target.value);
-    history.push("/products")
+    history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
   };
   const resetFilters = () => {
@@ -55,16 +52,15 @@ export default function Nav(props) {
   };
 
   function handleSubmit() {
-    console.log(user1);
     if (Object.keys(user1).length > 0) {
       addEventListener.location.reload();
       history.push("/home");
     }
   }
 
-  const goHome=()=>{
-    history.push("/")
-  }
+  const goHome = () => {
+    history.push("/");
+  };
 
   return (
     <>
@@ -75,12 +71,7 @@ export default function Nav(props) {
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
                 <Tooltip title={"Go Home"}>
-                  <img
-                    src={logo}
-                    alt=""
-                    onClick={goHome}
-                    className={n.reset}
-                  />
+                  <img src={logo} alt="" onClick={goHome} className={n.reset} />
                 </Tooltip>
                 <Tooltip title={"Refresh filters"}>
                   <Typography
@@ -231,25 +222,23 @@ export default function Nav(props) {
                 <Box>
                   <SearchBar />
                 </Box>
-                <Cart/>
-                <Box
-                  className={n["login-container"]}
-                  display="flex"
-                > 
+                <Cart />
+                <Box className={n["login-container"]} display="flex">
                   <Link to="/login">
                     <Tooltip
                       title={`${
                         Object.keys(user1).length !== 0
                           ? `Logged as ${user1.name}`
                           : "Go Login"
-                      }`}> 
+                      }`}
+                    >
                       {/* <Tooltip
                       title={`${
                         Object.keys(user).length !== 0
                           ? `Logged as ${user.name}`
                           : "Go Login"
                       }`}/> */}
-          
+
                       <AccountCircleIcon
                         onClick={(e) => handleSubmit(e)}
                         sx={{
@@ -259,15 +248,19 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          marginBottom:"0.5rem",
+                          marginBottom: "0.5rem",
                           width: "30px",
                           height: "30px",
-                          marginRight:"1rem",
+                          marginRight: "1rem",
                         }}
                       />
                     </Tooltip>
                   </Link>
-                  { isAuthenticated ? <Logout className={n.google}/> : <LoginAuth0 className={n.google}/>}
+                  {isAuthenticated ? (
+                    <Logout className={n.google} />
+                  ) : (
+                    <LoginAuth0 className={n.google} />
+                  )}
                 </Box>
               </Box>
             </Toolbar>

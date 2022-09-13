@@ -48,15 +48,6 @@ export default function Home() {
   return (
     <div>
       <Nav />
-      <Box
-        sx={{
-          width: "100%",
-          height: "auto",
-          backgroundImage: `url(${Image})`,
-          
-          //borderRadius: 50
-        }}
-      />
       <img
         src={home}
         style={{
@@ -64,16 +55,10 @@ export default function Home() {
           height: "100%",
           marginTop: "-2.5rem",
           marginBottom: "1rem",
-          borderBottomLeftRadius:"40px",
-          borderBottomRightRadius:"40px"
+          borderBottomLeftRadius: "40px",
+          borderBottomRightRadius: "40px",
         }}
       />
-      <CarouselBrands />
-
-      <center><Section/></center>
-
-      <HomePictures/>
-
       <Typography
         variant="h1"
         component="h2"
@@ -81,7 +66,7 @@ export default function Home() {
           width: 2401,
           height: 185,
           position: "absolute",
-          
+
           top: 511,
           fontFamily: "Roboto",
           fontStyle: "italic",
@@ -93,11 +78,17 @@ export default function Home() {
           textAlign: "center",
           letterSpacing: 0.15,
           color: "#40F99B",
-          
         }}
       >
         Sports Apparel · Footwear · Accesories
       </Typography>
+      <CarouselBrands />
+
+      <center>
+        <Section />
+      </center>
+
+      <HomePictures />
     </div>
   );
 }

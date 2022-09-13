@@ -30,18 +30,13 @@ import {
   FETCH_SAVED_ITEMS,
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
-<<<<<<< HEAD
-} from "./const";
-
-=======
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
-  ORDER_MERCADOPAGO
+  ORDER_MERCADOPAGO,
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
 
->>>>>>> 07717400044a50327d58f9458d94a8afa19bf647
 export function signUp(body) {
   return async function (dispatch) {
     try {
@@ -71,28 +66,32 @@ export function signUp(body) {
 export function mercadoPago(body) {
   return async function (dispatch) {
     try {
-      let order = await axios.post(`https://pg-athen.herokuapp.com/api/crear-orden`, body);
-      console.log(order.data.url)
+      let order = await axios.post(
+        `https://pg-athen.herokuapp.com/api/crear-orden`,
+        body
+      );
+      console.log(order.data.url);
       return dispatch({
         type: ORDER_MERCADOPAGO,
-        payload: order.data.url
+        payload: order.data.url,
       });
-    } catch (e) { 
+    } catch (e) {
       console.log(e);
     }
   };
 }
 
-
-
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
-      let password = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-password`, body);
+      let password = await axios.post(
+        `https://pg-athen.herokuapp.com/api/olvide-password`,
+        body
+      );
       console.log(password);
       return dispatch({
         type: REMEMBER_PASSWORD,
-        payload: password
+        payload: password,
       });
     } catch (e) {
       console.log(e);
@@ -103,18 +102,20 @@ export function passwordRemember(body) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-passwords`, body);
+      let newPassword = await axios.post(
+        `https://pg-athen.herokuapp.com/api/olvide-passwords`,
+        body
+      );
       console.log(newPassword);
       return dispatch({
         type: RESET_PASSWORD,
-        payload: newPassword
+        payload: newPassword,
       });
     } catch (e) {
       console.log(e);
     }
   };
 }
-
 
 export function createUser(body) {
   return async function (dispatch) {
@@ -135,11 +136,11 @@ export function getAllUsers(body) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
-      let users = await axios.get(`/api/user`,{
+      const { token } = tokenJSON;
+      let users = await axios.get(`/api/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       });
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -154,22 +155,22 @@ export function getAllUsers(body) {
   };
 }
 
-export function changeRoleUser(id,body) {
+export function changeRoleUser(id, body) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
-      let userChange = await axios.put(`/api/user/${id}`,body,{
+      const { token } = tokenJSON;
+      let userChange = await axios.put(`/api/user/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       });
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
       return dispatch({
         type: CHANGE_ROLE_USER,
-        payload: userChange.data
+        payload: userChange.data,
       });
     } catch (e) {
       console.log(e);
@@ -181,18 +182,18 @@ export function deleteUser(id) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
-      let userDelete = await axios.delete(`/api/user/${id}`,{
+      const { token } = tokenJSON;
+      let userDelete = await axios.delete(`/api/user/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       });
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
       return dispatch({
         type: DELETE_USER,
-        payload: userDelete.data
+        payload: userDelete.data,
       });
     } catch (e) {
       console.log(e);
