@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CardProduct from "./CreateProduct";
 import { getProduct } from "../redux/action";
 import Nav from "./Nav";
-import Filters from "./Filters";
-import Image from "../asset/home.png";
-import Pagination from "./Pagination";
 import home from "../asset/home.png";
 import Section from "./Section";
-import h from "./Home.module.css";
 import HomePictures from "./HomePictures";
-
 import CarouselBrands from "./CarouselBrands";
+import $ from "jquery";
+import h from "./Home.module.css";
+import { useHistory } from "react-router-dom";
+window.jquery = window.$ = $;
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const pageSize = 12;
   const [pagination, setPagination] = useState({
     count: 0,
@@ -30,6 +26,16 @@ export default function Home() {
   });
 
   const products = allProducts.slice(pagination.from, pagination.to);
+
+  const jQueryCode = () => {
+    $(document).on("scroll", function () {
+      $("h1").css("left", Math.max(40 - 0.2 * window.scrollY, -53) + "vw");
+    });
+  };
+
+  useEffect(() => {
+    jQueryCode();
+  }, []);
 
   useEffect(() => {
     dispatch(getProduct());
@@ -45,6 +51,9 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
+  const handleButtonClick = () => {
+    history.push("/products");
+  };
   return (
     <div>
       <Nav />
@@ -59,29 +68,34 @@ export default function Home() {
           borderBottomRightRadius: "40px",
         }}
       />
-      <Typography
-        variant="h1"
-        component="h2"
-        sx={{
-          width: 2401,
-          height: 185,
-          position: "absolute",
+      <button className={h.button} onClick={handleButtonClick}>
+        Start Shopping
+      </button>
+      <div className="scrollingText">
+        <h1
+        // style={{
+        //   width: 2401,
+        //   height: 185,
+        //   position: "absolute",
 
-          top: 511,
-          fontFamily: "Roboto",
-          fontStyle: "italic",
-          fontWeight: 900,
-          fontSize: 120,
-          lineHeight: 24,
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          letterSpacing: 0.15,
-          color: "#40F99B",
-        }}
-      >
-        Sports Apparel · Footwear · Accesories
-      </Typography>
+        //   top: 511,
+        //   fontFamily: "Roboto",
+        //   fontStyle: "italic",
+        //   fontWeight: 900,
+        //   fontSize: 120,
+        //   lineHeight: 24,
+        //   display: "flex",
+        //   alignItems: "center",
+        //   textAlign: "center",
+        //   letterSpacing: 0.15,
+        //   ,
+
+        // }}
+        >
+          Sports Apparel · Footwear · Accesories
+        </h1>
+      </div>
+
       <CarouselBrands />
 
       <center>

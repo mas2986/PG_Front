@@ -33,6 +33,7 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
+  GET_REVIEWS,
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -84,10 +85,9 @@ export function mercadoPago(body) {
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
-      let password = await axios.post(
-        `https://pg-athen.herokuapp.com/api/olvide-password`,
-        body
-      );
+      let password = await axios.post(`/api/olvide-password`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(password);
       return dispatch({
         type: REMEMBER_PASSWORD,
@@ -102,10 +102,9 @@ export function passwordRemember(body) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(
-        `https://pg-athen.herokuapp.com/api/olvide-passwords`,
-        body
-      );
+      let newPassword = await axios.post(`/api/olvide-passwords`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
       return dispatch({
         type: RESET_PASSWORD,
@@ -380,7 +379,8 @@ export function detailProduct(id) {
 }
 
 export function logout(history) {
-  history.push("/login");
+  history.push("/");
+  console.log("En action logout");
   return {
     type: LOGOUT,
   };
@@ -450,9 +450,20 @@ export function fetchCartItems(payload) {
 }
 
 export function filterByCarousel(payload) {
-  console.log(payload);
+  // console.log(payload);
   return {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
+  };
+}
+
+export function getReviews() {
+  return async function (dispatch) {
+    const resp = await axios.get(`/api/review`);
+    const data = resp.data;
+    console.log(resp);
+    if (resp) {
+      return dispatch({ type: GET_REVIEWS, payload: data });
+    }
   };
 }

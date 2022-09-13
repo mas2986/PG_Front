@@ -49,29 +49,6 @@ export default function Products(){
       <div>
         <Nav />
         <Filters className={p.filters}/>
-        <Typography
-          variant="h1"
-          component="h2"
-          sx={{
-            width: 2401,
-            height: 185,
-            position: "absolute",
-            left: -359,
-            top: 711,
-            fontFamily: "Roboto",
-            fontStyle: "italic",
-            fontWeight: 900,
-            fontSize: 140,
-            lineHeight: 24,
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-            letterSpacing: 0.15,
-            color: "#40F99B",
-          }}
-        >
-          {/* Sports Apparel · Footwear · */}
-        </Typography>
         <Pagination
           products={products}
           pagination={pagination}

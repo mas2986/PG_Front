@@ -29,7 +29,8 @@ import {
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
-  ORDER_MERCADOPAGO
+  ORDER_MERCADOPAGO,
+  GET_REVIEWS
 } from "./const";
 
 const initialState = {
@@ -42,7 +43,8 @@ const initialState = {
   qty: 1,
   password: {},
   backup:[],
-  url: ""
+  url: "",
+  reviews:[],
   
 };
 
@@ -90,11 +92,12 @@ export const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case LOGOUT:
-      localStorage.removeItem('userDetails');
+      localStorage.clear();
       console.log('LOGOUT')
       return{
         ...state,
-        user:{}
+        user:{},
+        cartItems:[]
       }
 
     case CREATE_USER:
@@ -115,7 +118,7 @@ export const rootReducer = (state = initialState, action) => {
       return{
         ...state        
       }
-    case CHANGE_ROLE_USER:
+    case DELETE_USER:
       console.log(action.payload);
       return{
         ...state        
@@ -433,6 +436,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         products: carouselBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
+
+      case GET_REVIEWS:
+        return{
+              ...state,
+              reviews: action.payload,
+   };
     default:
       return { ...state };
   }
