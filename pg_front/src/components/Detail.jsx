@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago } from "../redux/action";
+import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago, getReviews } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
@@ -9,7 +9,7 @@ import { CircularProgress } from "@mui/material";
 import plop from "../asset/plop.mp3";
 import Section from "./Section";
 import { useHistory } from "react-router-dom";
-
+import RatingProm from "./RatingProm"
 
 
 export default function Detail() {
@@ -19,8 +19,11 @@ export default function Detail() {
   const [qty, setQty] = useState(1);
   const history = useHistory();
 
+  const review = useSelector((state) => state.reviews);
+
   useEffect(() => {
     dispatch(detailProduct(id));
+    dispatch(getReviews())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
@@ -83,6 +86,8 @@ export default function Detail() {
               <p className={d.price}>
                 Price: ${detail.price && detail.price},00
               </p>
+
+              <RatingProm id={id} reviews={review}/>
 
             <Button onClick={(e)=> handlePay(e)} variant="contained" size="small" sx={{
              padding:2

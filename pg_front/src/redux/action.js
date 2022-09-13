@@ -32,7 +32,8 @@ import {
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
-  ORDER_MERCADOPAGO
+  ORDER_MERCADOPAGO,
+  GET_REVIEWS
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -455,5 +456,17 @@ export function filterByCarousel(payload) {
   return {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
+  };
+}
+
+
+export function getReviews() {
+  return async function (dispatch) {
+    const resp = await axios.get(`/api/review`);
+    const data = resp.data
+    console.log(resp)
+    if (resp) {
+    return  dispatch({ type: GET_REVIEWS, payload: data });
+    }
   };
 }

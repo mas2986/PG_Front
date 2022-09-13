@@ -29,7 +29,8 @@ import {
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
-  ORDER_MERCADOPAGO
+  ORDER_MERCADOPAGO,
+  GET_REVIEWS
 } from "./const";
 
 const initialState = {
@@ -42,7 +43,8 @@ const initialState = {
   qty: 1,
   password: {},
   backup:[],
-  url: ""
+  url: "",
+  reviews:[],
   
 };
 
@@ -434,6 +436,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         products: carouselBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
+
+      case GET_REVIEWS:
+        return{
+              ...state,
+              reviews: action.payload,
+   };
     default:
       return { ...state };
   }
