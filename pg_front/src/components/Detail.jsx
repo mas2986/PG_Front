@@ -1,36 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart, addToCartDetail } from "../redux/action";
+import { Link, Redirect, useParams } from "react-router-dom";
+import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
 import { CircularProgress } from "@mui/material";
 import plop from "../asset/plop.mp3";
 import Section from "./Section";
+import { useHistory } from "react-router-dom";
+
+
 
 export default function Detail() {
   const items = useSelector((state) => state.cartItems);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(detailProduct(id));
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
-  //console.log(detail);
+
 
   function addCart() {
     new Audio(plop).play();
     detail.qty = 1;
-    dispatch(addToCartDetail(detail.id));
+    dispatch(addToCartDetail(detail.id)); 
     dispatch(removeDupsCart(detail.id));
     detail.qty(qty)
   }
+   
+   async function handlePay(e) {
+        e.preventDefault();
+        dispatch(mercadoPago({price: detail.price}));
+        history.push('/entrega')
+    }
 
-  console.log(id)
+    
+
+  
 
   return (
     <center>
@@ -72,7 +84,7 @@ export default function Detail() {
                 Price: ${detail.price && detail.price},00
               </p>
 
-            <Button variant="contained"href={"/entrega"} size="small" sx={{
+            <Button onClick={(e)=> handlePay(e)} variant="contained" size="small" sx={{
              padding:2
             }} className={d.buyButton}>
               BUY
