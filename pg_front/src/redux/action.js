@@ -83,7 +83,9 @@ export function mercadoPago(body) {
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
-      let password = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-password`, body);
+      let password = await axios.post(`/api/olvide-password`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(password);
       return dispatch({
         type: REMEMBER_PASSWORD,
@@ -98,7 +100,9 @@ export function passwordRemember(body) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(`https://pg-athen.herokuapp.com/api/olvide-passwords`, body);
+      let newPassword = await axios.post(`/api/olvide-passwords`, body);
+      //user.data.expire = new(new Date().getTime() + user.data.expire)
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
       return dispatch({
         type: RESET_PASSWORD,
@@ -375,7 +379,8 @@ export function detailProduct(id) {
 }
 
 export function logout(history){
-  history.push('/login')
+  history.push('/')
+  console.log('En action logout')
   return{
     type:LOGOUT,
     

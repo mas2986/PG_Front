@@ -3,6 +3,7 @@ import { Grid, TextField, Box} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import MailIcon from '@mui/icons-material/Mail';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +22,7 @@ export default function CreateUser() {
     name: "",
     lastName: "",
     email: "",
+    image:"",
     password: "",
     passConfirmation: ""
   })
@@ -53,6 +55,27 @@ export default function CreateUser() {
       icon: "success",
     })
     history.push('/')
+  }
+
+  const handleWidget = () =>{
+    console.log('Abrir widget')
+    var myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: 'athensimages', 
+      uploadPreset: 'AthensImages'
+    },
+     (error, result) => { 
+       console.log(error)
+        if (!error && result && result.event === "success") { 
+          console.log('Done! Here is the image info: ', result.info);
+          setTexto({
+            ...texto,
+            image: result.info.url
+          })
+        }
+      }
+    );
+    myWidget.open()
   }
 
   return (
@@ -122,6 +145,19 @@ export default function CreateUser() {
                 value={texto.email}  
               />
               { (texto.email.includes("@") ? <VerifiedIcon item xs={8} className='icon'/> : <VerifiedIcon item xs={8} className='iconRed'/>) }
+        </Grid>
+        <Grid item md={20}>
+          <AddAPhotoIcon onClick = {handleWidget}/>
+          <TextField
+            disabled                
+            label="Image"
+            name="image"
+            value={texto.image}            
+            //error={!!errors.image}
+            //helperText={errors.image}
+            id="image"
+            />       
+            { (texto.image ? <VerifiedIcon item xs={8} className='icon'/> : <VerifiedIcon item xs={8} className='iconRed'/>) }
         </Grid>
         <Grid item md={12}>
         <PasswordIcon/>
