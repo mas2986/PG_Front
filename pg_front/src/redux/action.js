@@ -452,7 +452,7 @@ export function fetchCartItems(payload) {
 }
 
 export function filterByCarousel(payload) {
-  console.log(payload);
+  // console.log(payload);
   return {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
