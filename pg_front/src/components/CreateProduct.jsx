@@ -18,6 +18,7 @@ export default function CardProduct(props) {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const history = useHistory();
+  let official = 149;
 
   const styles = {
     position: "relative",
@@ -38,7 +39,7 @@ export default function CardProduct(props) {
 
   async function handlePay(e) {
     e.preventDefault();
-    dispatch(mercadoPago({price: props.price}));
+    dispatch(mercadoPago({price: props.price * official}));
     history.push('/entrega')
 }
 
