@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import {useState} from 'react'
+import d from "./Detail.module.css";
 
 
 
@@ -31,13 +32,22 @@ export default function RatingProm(props) {
   let comments = ""
   let user = ""
   let render =[]
+  let users = props.users
+  
+  
   for (let i = 0; i < review.length; i++) {
       if(review[i].productId === Number(id)) {
           array.push(review[i])
           quantity += 1;
           comments = (review[i].comment + " ")
-          user = (review[i].userId + " ")
-         render += [user +":"+ comments +"," ] 
+           users.forEach(element => { if(element.id === review[i].userId) user = element.name       
+          });
+          render[i] = {user: user,
+                      comments:comments } 
+        
+        
+          
+         
       } else{
           array
       }
@@ -67,22 +77,22 @@ return (
       <br/>
       <br/>
 
-       <Button variant="contained" color="primary" onClick={openPopover}>
+       <Button variant="contained" color="primary"  onClick={openPopover}>
           Comments
       </Button>
       <Popover 
       open={Boolean(anchor)}
       anchorEl={anchor}
       anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right"
+          vertical: "top",
+          horizontal: "left"
       }}
       transformOrigin={{
-          vertical: "top",
-          horizontal: "right"
+          vertical: "bottom",
+          horizontal: "left"
       }}
       onClose={() =>setAnchor(null)}>
-      <Typography variant="legend"> {render}    </Typography> 
+      <Typography variant="legend"> <ul> {render.map(el => <li><div className={d.Prueba}><p>{el.user+":  "}</p><p>{el.comments}</p></div></li>)} </ul>    </Typography> 
 
       </Popover>
     </Box>
@@ -90,3 +100,4 @@ return (
 );
 
 }
+

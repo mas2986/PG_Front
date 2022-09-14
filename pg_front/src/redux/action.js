@@ -134,13 +134,17 @@ export function createUser(body) {
 export function getAllUsers(body) {
   return async function (dispatch) {
     try {
-      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON;
-      let users = await axios.get(`/api/user`, {
+
+      // const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      // const { token } = tokenJSON; 
+      let users = await axios.get(`/api/user`,
+      {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+          Authorization: `Bearer 23k4!jhisd&jhf8*asfdasdf$dsf45%&`,
+        }
+      }
+      );
+
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
