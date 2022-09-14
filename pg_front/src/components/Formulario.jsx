@@ -9,15 +9,14 @@ import { useSelector } from "react-redux";
 import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
-
-
+import { useEffect } from "react";
 
 export default function FormPropsTextFields() {
   const [checked, setChecked] = React.useState(true);
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
-  const items = useSelector( (state)=> state.cartItems)
+  let items = useSelector((state) => state.cartItems);
   const url = useSelector((state) => state.url);
   const history = useHistory();
 
@@ -26,21 +25,71 @@ export default function FormPropsTextFields() {
   };
 
   const handleButton = (event) => {
-    if (texto.name.length < 3 || texto.name.length > 10) { return Swal.fire({ title: "Check the name!" ,text: "It must contain from 3 to 10 characters.", icon: "error"})}
-    if (texto.apellido.length < 3) { return Swal.fire({ title: "Check the lastname!" ,text: "The last name is required.", icon: "error"})}
-    if (texto.calle.length < 3) { return Swal.fire({ title: "Check the address!" ,text: "An address is required.", icon: "error"})}
-    if (!texto.numero) { return Swal.fire({ title: "Check the number!" ,text: "Number is required.", icon: "error"})}
-    if (!texto.cp) { return Swal.fire({ title: "Check the CP!" ,text: "Enter your zip code.", icon: "error"})}
-    if (texto.provincia.length < 3) { return Swal.fire({ title: "Check your province or state!" ,text: "Enter your province or state.", icon: "error"})}
-    if (texto.localidad.length < 3)  { return Swal.fire({ title: "Check your city!", icon: "error"})}
-    if (!texto.telefono || texto.telefono.length < 5)  { return Swal.fire({ title: "Check your cell phone!", text: "It must contain at least 5 characters.", icon: "error"})};
-    if (!texto.email || !texto.email.includes("@") || texto.email.length < 5)  { return Swal.fire({ title: "Check your mail!", text: "Enter a valid email containing at least 8 characters.", icon: "error"})}
+    if (texto.name.length < 3 || texto.name.length > 10) {
+      return Swal.fire({
+        title: "Check the name!",
+        text: "It must contain from 3 to 10 characters.",
+        icon: "error",
+      });
+    }
+    if (texto.apellido.length < 3) {
+      return Swal.fire({
+        title: "Check the lastname!",
+        text: "The last name is required.",
+        icon: "error",
+      });
+    }
+    if (texto.calle.length < 3) {
+      return Swal.fire({
+        title: "Check the address!",
+        text: "An address is required.",
+        icon: "error",
+      });
+    }
+    if (!texto.numero) {
+      return Swal.fire({
+        title: "Check the number!",
+        text: "Number is required.",
+        icon: "error",
+      });
+    }
+    if (!texto.cp) {
+      return Swal.fire({
+        title: "Check the CP!",
+        text: "Enter your zip code.",
+        icon: "error",
+      });
+    }
+    if (texto.provincia.length < 3) {
+      return Swal.fire({
+        title: "Check your province or state!",
+        text: "Enter your province or state.",
+        icon: "error",
+      });
+    }
+    if (texto.localidad.length < 3) {
+      return Swal.fire({ title: "Check your city!", icon: "error" });
+    }
+    if (!texto.telefono || texto.telefono.length < 5) {
+      return Swal.fire({
+        title: "Check your cell phone!",
+        text: "It must contain at least 5 characters.",
+        icon: "error",
+      });
+    }
+    if (!texto.email || !texto.email.includes("@") || texto.email.length < 5) {
+      return Swal.fire({
+        title: "Check your mail!",
+        text: "Enter a valid email containing at least 8 characters.",
+        icon: "error",
+      });
+    }
     // Swal.fire(
     //   "¡Your payment was successful!",
     //   "You will receive an email with your purchase information shortly."
     // );
     // Swal.fire("Coming Soon!!");
-    window.location.replace(url)
+    window.location.replace(url);
   };
 
   const [texto, setTexto] = React.useState({
@@ -63,10 +112,19 @@ export default function FormPropsTextFields() {
     });
   }
 
+  if (items.length == 0) {
+    items =
+      JSON.parse(localStorage.getItem("items")) == null
+        ? []
+        : JSON.parse(localStorage.getItem("items"));
+  }
+
+  console.log(items[0].image);
+
   return (
     <div className={f.form}>
       <Nav2 />
-      
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box
           component="form"
           sx={{
@@ -90,8 +148,7 @@ export default function FormPropsTextFields() {
                   stateInput(e);
                 }}
                 label="Name"
-                helperText={ "Máximo de caracteres 10."
-                }
+                helperText={"Máximo de caracteres 10."}
                 name="name"
                 type={"text"}
                 value={texto.name}
@@ -262,20 +319,36 @@ export default function FormPropsTextFields() {
               PROCEED TO CHECKOUT
             </Button>
           )}
+          <Box>
+            <Box>
+              {items.map((i) => {
+                return (
+                  <div>
+                    <ul>
+                      <li>{i.title}</li>
+                      <li>{i.price}</li>
+                      <li>{i.qty}</li>
+                      <img src={i.image} />
+                    </ul>
+                  </div>
+                );
+              })}
+            </Box>
+          </Box>
         </Box>
-        <div className="btn-form">
-          <Link to="/" style={{ TextDecoration: "none" }}>
-            <Button
-              // href="/"
-              variant="contained"
-              className="btn-form"
-              color="primary"
-            >
-              HOME
-            </Button>
-          </Link>
-        </div>
-      
+      </Box>
+      <div className="btn-form">
+        <Link to="/" style={{ TextDecoration: "none" }}>
+          <Button
+            // href="/"
+            variant="contained"
+            className="btn-form"
+            color="primary"
+          >
+            HOME
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

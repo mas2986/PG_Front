@@ -13,11 +13,9 @@ import {
   deleteFromCart,
   deleteAllFromCart,
   sendItemNum,
-
   mercadoPago,
   removeDupsCart,
   fetchCartItems,
-
 } from "../redux/action";
 
 //custom style for shopping cart icon
@@ -50,20 +48,19 @@ function Cart() {
         : JSON.parse(localStorage.getItem("items"));
   }
 
-   
-   let totalPrice = 0;
-   for (let i = 0; i < items.length; i++) {
-       totalPrice += items[i].price 
-   }
-   console.log(totalPrice )
-     
+  let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    totalPrice += items[i].price;
+  }
+  console.log(totalPrice);
 
-   function handlePay(e) {
+  function handlePay(e) {
     e.preventDefault();
-     dispatch(mercadoPago({ price: totalPrice * official}));
-    console.log(totalPrice)
-    history.push('/entrega')
-    }
+    dispatch(mercadoPago({ price: totalPrice * official }));
+    console.log(totalPrice);
+    history.push("/entrega");
+    localStorage.setItem("itemsForm", JSON.stringify(items));
+  }
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
@@ -256,7 +253,6 @@ function Cart() {
                   <Link
                     // to="/entrega"
                     style={{ textDecoration: "none", fontStyle: "none" }}
-                        
                   >
                     <Button
                       onClick={(e) => handlePay(e)}
