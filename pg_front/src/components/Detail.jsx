@@ -18,7 +18,11 @@ export default function Detail() {
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const history = useHistory();
+
   const users =  useSelector((state) => state.users);
+
+  let official = 149;
+
   const review = useSelector((state) => state.reviews);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function Detail() {
    
    async function handlePay(e) {
         e.preventDefault();
-        dispatch(mercadoPago({price: detail.price}));
+        dispatch(mercadoPago({price: detail.price * official}));
         history.push('/entrega')
     }
 

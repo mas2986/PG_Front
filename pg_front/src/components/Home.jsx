@@ -8,8 +8,8 @@ import home from "../asset/home.png";
 import Section from "./Section";
 import HomePictures from "./HomePictures";
 import CarouselBrands from "./CarouselBrands";
-import $ from 'jquery';
-import h from "./Home.module.css"
+import $ from "jquery";
+import h from "./Home.module.css";
 import { useHistory } from "react-router-dom";
 window.jquery = window.$ = $;
 
@@ -28,15 +28,15 @@ export default function Home() {
   const products = allProducts.slice(pagination.from, pagination.to);
 
   const jQueryCode = () => {
-    $(document).on('scroll', function(){
-      $('h1').css("left", Math.max( 40 - 0.2 * window.scrollY, -53) + "vw");
-    })
-  }
+    $(document).on("scroll", function () {
+      $("h1").css("left", Math.max(40 - 0.2 * window.scrollY, -53) + "vw");
+    });
+  };
 
-  useEffect(()=>{
-    jQueryCode()
-  },[])
-  
+  useEffect(() => {
+    jQueryCode();
+  }, []);
+
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);
@@ -51,9 +51,9 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
-  const handleButtonClick=()=>{
-    history.push("/products")
-  }
+  const handleButtonClick = () => {
+    history.push("/products");
+  };
   return (
     <div>
       <Nav />
@@ -62,20 +62,22 @@ export default function Home() {
         style={{
           width: "100vw",
           height: "100%",
-          marginTop: "-1rem",
+          marginTop: "-2.5rem",
           marginBottom: "1rem",
-          borderBottomLeftRadius:"40px",
-          borderBottomRightRadius:"40px"
+          borderBottomLeftRadius: "40px",
+          borderBottomRightRadius: "40px",
         }}
       />
-      <button className={h.button} onClick={handleButtonClick}>Start Shopping</button>
+      <button className={h.button} onClick={handleButtonClick}>
+        Start Shopping
+      </button>
       <div className="scrollingText">
-      <h1
+        <h1
         // style={{
         //   width: 2401,
         //   height: 185,
         //   position: "absolute",
-          
+
         //   top: 511,
         //   fontFamily: "Roboto",
         //   fontStyle: "italic",
@@ -87,20 +89,20 @@ export default function Home() {
         //   textAlign: "center",
         //   letterSpacing: 0.15,
         //   ,
-          
+
         // }}
-      >
-        Sports Apparel · Footwear · Accesories
-      </h1>
+        >
+          Sports Apparel · Footwear · Accesories
+        </h1>
       </div>
 
       <CarouselBrands />
 
-      <center><Section/></center>
+      <center>
+        <Section />
+      </center>
 
-      <HomePictures/>
-
-      
+      <HomePictures />
     </div>
   );
 }
