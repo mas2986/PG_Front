@@ -13,9 +13,11 @@ import {
   deleteFromCart,
   deleteAllFromCart,
   sendItemNum,
+
   mercadoPago,
   removeDupsCart,
   fetchCartItems,
+
 } from "../redux/action";
 
 //custom style for shopping cart icon
@@ -46,7 +48,6 @@ function Cart() {
       JSON.parse(localStorage.getItem("items")) == null
         ? []
         : JSON.parse(localStorage.getItem("items"));
-    console.log("getting items: " + items);
   }
 
    
@@ -75,7 +76,6 @@ function Cart() {
 
   //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
-    console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
     if (items.length == 1) {
       localStorage.removeItem("items");
@@ -92,7 +92,6 @@ function Cart() {
   useEffect(() => {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
-      console.log("setting items: " + items + localStorage.items[0]);
     }
   }, [items]);
 
