@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   deleteFromCart,
   deleteAllFromCart,
   sendItemNum,
+  mercadoPago,
   removeDupsCart,
   fetchCartItems,
 } from "../redux/action";
@@ -33,9 +34,11 @@ function Cart() {
   //local state for forcing a re-render of the price
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
+  const history = useHistory();
+  let official = 149;
 
   //bring in the global state.cartItems
-  let items = useSelector((state) => state.cartItems);
+  let items = useSelector((state) => state.cartItems); // [{},{}]
   let detail = useSelector((state) => state.detail);
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
   if (items.length == 0) {
@@ -45,6 +48,21 @@ function Cart() {
         : JSON.parse(localStorage.getItem("items"));
     console.log("getting items: " + items);
   }
+
+   
+   let totalPrice = 0;
+   for (let i = 0; i < items.length; i++) {
+       totalPrice += items[i].price 
+   }
+   console.log(totalPrice )
+     
+
+   function handlePay(e) {
+    e.preventDefault();
+     dispatch(mercadoPago({ price: totalPrice * official}));
+    console.log(totalPrice)
+    history.push('/entrega')
+    }
 
   function toggle() {
     setCartDisplay((prevState) => !prevState);
@@ -237,10 +255,12 @@ function Cart() {
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
                   <Link
-                    to="/entrega"
+                    // to="/entrega"
                     style={{ textDecoration: "none", fontStyle: "none" }}
+                        
                   >
                     <Button
+                      onClick={(e) => handlePay(e)}
                       sx={{
                         margin: "0.5rem",
                         border: "1px solid #000",

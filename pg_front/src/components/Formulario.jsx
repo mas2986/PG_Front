@@ -10,44 +10,14 @@ import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
 
-function validateForm(input) {
-  const errors = {};
-  if (!input.name) {
-    errors.name = "Please Enter Your Name";
-  }
-  if (!input.apellido) {
-    errors.apellido = "Please Enter Your Last Name";
-  }
-  if (!input.calle) {
-    errors.calle = "Please Enter Your Street Address";
-  }
-  if (!input.numero) {
-    errors.numero = "Please Enter Your Street Number";
-  }
-  if (!input.provincia) {
-    errors.provincia = "Please Enter The Province";
-  }
-  if (!input.localidad) {
-    errors.localidad = "Please Enter The Name Of Your City";
-  }
-  if (!input.telefono) {
-    errors.telefono = "Please Enter Your Phone Number";
-  }
-  if (!input.email) {
-    errors.email = "Please Enter Your Email Address";
-  }
-  if (!input.cp) {
-    errors.cp = "Please Enter Your Postal Code";
-  }
 
-  return errors;
-}
 
 export default function FormPropsTextFields() {
   const [checked, setChecked] = React.useState(true);
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
+  const items = useSelector( (state)=> state.cartItems)
   const url = useSelector((state) => state.url);
   const history = useHistory();
 
@@ -56,6 +26,15 @@ export default function FormPropsTextFields() {
   };
 
   const handleButton = (event) => {
+    if (texto.name.length < 3 || texto.name.length > 10) { return Swal.fire({ title: "Check the name!" ,text: "It must contain from 3 to 10 characters.", icon: "error"})}
+    if (texto.apellido.length < 3) { return Swal.fire({ title: "Check the lastname!" ,text: "The last name is required.", icon: "error"})}
+    if (texto.calle.length < 3) { return Swal.fire({ title: "Check the address!" ,text: "An address is required.", icon: "error"})}
+    if (!texto.numero) { return Swal.fire({ title: "Check the number!" ,text: "Number is required.", icon: "error"})}
+    if (!texto.cp) { return Swal.fire({ title: "Check the CP!" ,text: "Enter your zip code.", icon: "error"})}
+    if (texto.provincia.length < 3) { return Swal.fire({ title: "Check your province or state!" ,text: "Enter your province or state.", icon: "error"})}
+    if (texto.localidad.length < 3)  { return Swal.fire({ title: "Check your city!", icon: "error"})}
+    if (!texto.telefono || texto.telefono.length < 5)  { return Swal.fire({ title: "Check your cell phone!", text: "It must contain at least 5 characters.", icon: "error"})};
+    if (!texto.email || !texto.email.includes("@") || texto.email.length < 5)  { return Swal.fire({ title: "Check your mail!", text: "Enter a valid email containing at least 8 characters.", icon: "error"})}
     // Swal.fire(
     //   "¡Your payment was successful!",
     //   "You will receive an email with your purchase information shortly."
@@ -82,27 +61,18 @@ export default function FormPropsTextFields() {
       ...texto,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validateForm({
-        ...texto,
-        [e.target.name]: e.target.value,
-      })
-    );
   }
 
   return (
-    <div>
+    <div className={f.form}>
       <Nav2 />
-      <center>
+      
         <Box
           component="form"
           sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
+            "& .MuiTextField-root": { m: 1, width: "25ch", height: "6ch" },
             width: 500,
             maxWidth: "100%",
-            borderRadius: "20px",
-            outline: "solid",
-
             //   max-width: 400px;
             //   background-color: #b1acac;
             //   margin:  auto;
@@ -110,7 +80,7 @@ export default function FormPropsTextFields() {
           noValidate
           autoComplete="off"
         >
-          <center>
+          <center className={f.form}>
             <h2>PURCHASE INFORMATION</h2>
           </center>
           <div>
@@ -120,10 +90,10 @@ export default function FormPropsTextFields() {
                   stateInput(e);
                 }}
                 label="Name"
-                helperText={
-                  errors.name && <p className={f.colour}>{errors.name}</p>
+                helperText={ "Máximo de caracteres 10."
                 }
                 name="name"
+                type={"text"}
                 value={texto.name}
               />
             </div>
@@ -136,6 +106,7 @@ export default function FormPropsTextFields() {
               helperText={
                 errors.apellido && <p className={f.colour}>{errors.apellido}</p>
               }
+              type="text"
               id="outlined-required"
               label="Last Name"
               name="apellido"
@@ -259,11 +230,11 @@ export default function FormPropsTextFields() {
               value={texto.email}
               //      defaultValue="Hello World"
             />
-            <TextField
+            {/* <TextField
               id="outlined-required"
               label="ID"
               //      defaultValue="Hello World"
-            />
+            /> */}
           </div>
           <Checkbox
             defaultChecked
@@ -304,7 +275,7 @@ export default function FormPropsTextFields() {
             </Button>
           </Link>
         </div>
-      </center>
+      
     </div>
   );
 }
