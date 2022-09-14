@@ -119,218 +119,223 @@ export default function FormPropsTextFields() {
         : JSON.parse(localStorage.getItem("items"));
   }
 
-  console.log(items);
+  console.log(items[0].image);
 
   return (
     <div className={f.form}>
       <Nav2 />
-
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch", height: "6ch" },
-          width: 500,
-          maxWidth: "100%",
-          //   max-width: 400px;
-          //   background-color: #b1acac;
-          //   margin:  auto;
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <center className={f.form}>
-          <h2>PURCHASE INFORMATION</h2>
-        </center>
-        <div>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch", height: "6ch" },
+            width: 500,
+            maxWidth: "100%",
+            //   max-width: 400px;
+            //   background-color: #b1acac;
+            //   margin:  auto;
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <center className={f.form}>
+            <h2>PURCHASE INFORMATION</h2>
+          </center>
           <div>
+            <div>
+              <TextField
+                onChange={(e) => {
+                  stateInput(e);
+                }}
+                label="Name"
+                helperText={"Máximo de caracteres 10."}
+                name="name"
+                type={"text"}
+                value={texto.name}
+              />
+            </div>
+
             <TextField
               onChange={(e) => {
                 stateInput(e);
               }}
-              label="Name"
-              helperText={"Máximo de caracteres 10."}
-              name="name"
-              type={"text"}
-              value={texto.name}
+              required
+              helperText={
+                errors.apellido && <p className={f.colour}>{errors.apellido}</p>
+              }
+              type="text"
+              id="outlined-required"
+              label="Last Name"
+              name="apellido"
+              value={texto.apellido}
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              helperText={
+                errors.calle && <p className={f.colour}>{errors.calle}</p>
+              }
+              id="outlined-required"
+              label="Street"
+              name="calle"
+              value={texto.calle}
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Number"
+              helperText={
+                errors.numero && <p className={f.colour}>{errors.numero}</p>
+              }
+              name="numero"
+              value={texto.numero}
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              id="outlined-required"
+              label="Floor"
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              id="outlined-required"
+              label="Apartment n°"
+              type="number"
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Postal Code"
+              type="number"
+              helperText={errors.cp && <p className={f.colour}>{errors.cp}</p>}
+              name="cp"
+              value={texto.cp}
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Province"
+              helperText={
+                errors.provincia && (
+                  <p className={f.colour}>{errors.provincia}</p>
+                )
+              }
+              name="provincia"
+              value={texto.provincia}
+              //   defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="City"
+              helperText={
+                errors.localidad && (
+                  <p className={f.colour}>{errors.localidad}</p>
+                )
+              }
+              name="localidad"
+              value={texto.localidad}
+              //   defaultValue="Hello World"
             />
           </div>
-
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            helperText={
-              errors.apellido && <p className={f.colour}>{errors.apellido}</p>
-            }
-            type="text"
-            id="outlined-required"
-            label="Last Name"
-            name="apellido"
-            value={texto.apellido}
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            helperText={
-              errors.calle && <p className={f.colour}>{errors.calle}</p>
-            }
-            id="outlined-required"
-            label="Street"
-            name="calle"
-            value={texto.calle}
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="Number"
-            helperText={
-              errors.numero && <p className={f.colour}>{errors.numero}</p>
-            }
-            name="numero"
-            value={texto.numero}
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            id="outlined-required"
-            label="Floor"
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            id="outlined-required"
-            label="Apartment n°"
-            type="number"
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="Postal Code"
-            type="number"
-            helperText={errors.cp && <p className={f.colour}>{errors.cp}</p>}
-            name="cp"
-            value={texto.cp}
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="Province"
-            helperText={
-              errors.provincia && <p className={f.colour}>{errors.provincia}</p>
-            }
-            name="provincia"
-            value={texto.provincia}
-            //   defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="City"
-            helperText={
-              errors.localidad && <p className={f.colour}>{errors.localidad}</p>
-            }
-            name="localidad"
-            value={texto.localidad}
-            //   defaultValue="Hello World"
-          />
-        </div>
-        <div>
-          <center>
-            <h2>CONTACT INFORMATION</h2>
-          </center>
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="Phone Number"
-            helperText={
-              errors.telefono && <p className={f.colour}>{errors.telefono}</p>
-            }
-            name="telefono"
-            value={texto.telefono}
-            //      defaultValue="Hello World"
-          />
-          <TextField
-            onChange={(e) => {
-              stateInput(e);
-            }}
-            required
-            id="outlined-required"
-            label="Email"
-            helperText={
-              errors.email && <p className={f.colour}>{errors.email}</p>
-            }
-            name="email"
-            value={texto.email}
-            //      defaultValue="Hello World"
-          />
-          {/* <TextField
+          <div>
+            <center>
+              <h2>CONTACT INFORMATION</h2>
+            </center>
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Phone Number"
+              helperText={
+                errors.telefono && <p className={f.colour}>{errors.telefono}</p>
+              }
+              name="telefono"
+              value={texto.telefono}
+              //      defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Email"
+              helperText={
+                errors.email && <p className={f.colour}>{errors.email}</p>
+              }
+              name="email"
+              value={texto.email}
+              //      defaultValue="Hello World"
+            />
+            {/* <TextField
               id="outlined-required"
               label="ID"
               //      defaultValue="Hello World"
             /> */}
-        </div>
-        <Checkbox
-          defaultChecked
-          color="primary"
-          inputProps={{ "aria-label": "secondary checkbox" }}
-          sx={{ visibility: "hidden" }}
-        />
-        {errors.name ||
-        errors.apellido ||
-        errors.calle ||
-        errors.numero ||
-        errors.provincia ||
-        errors.localidad ||
-        errors.telefono ||
-        errors.email ? (
-          <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-        ) : (
-          <Button
-            variant="contained"
+          </div>
+          <Checkbox
+            defaultChecked
             color="primary"
-            className="btn-form"
-            onClick={(e) => handleButton(e)}
-            disableElevation
-          >
-            PROCEED TO CHECKOUT
-          </Button>
-        )}
-        <aside>
+            inputProps={{ "aria-label": "secondary checkbox" }}
+            sx={{ visibility: "hidden" }}
+          />
+          {errors.name ||
+          errors.apellido ||
+          errors.calle ||
+          errors.numero ||
+          errors.provincia ||
+          errors.localidad ||
+          errors.telefono ||
+          errors.email ? (
+            <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              className="btn-form"
+              onClick={(e) => handleButton(e)}
+              disableElevation
+            >
+              PROCEED TO CHECKOUT
+            </Button>
+          )}
           <Box>
-            {items.map((i) => {
-              return (
-                <div>
-                  <ul>
-                    <li>{i.title}</li>
-                    <li>{i.price}</li>
-                    <li>{i.qty}</li>
-                    <li>{i.img}</li>
-                  </ul>
-                </div>
-              );
-            })}
+            <Box>
+              {items.map((i) => {
+                return (
+                  <div>
+                    <ul>
+                      <li>{i.title}</li>
+                      <li>{i.price}</li>
+                      <li>{i.qty}</li>
+                      <img src={i.image} />
+                    </ul>
+                  </div>
+                );
+              })}
+            </Box>
           </Box>
-        </aside>
+        </Box>
       </Box>
       <div className="btn-form">
         <Link to="/" style={{ TextDecoration: "none" }}>
