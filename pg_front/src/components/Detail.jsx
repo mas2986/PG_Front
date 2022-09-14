@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago, getReviews } from "../redux/action";
+import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
@@ -18,15 +18,18 @@ export default function Detail() {
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const history = useHistory();
-
+  const users =  useSelector((state) => state.users);
   const review = useSelector((state) => state.reviews);
 
   useEffect(() => {
     dispatch(detailProduct(id));
     dispatch(getReviews())
+    dispatch(getAllUsers())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
+
+  console.log(users)
 
 
   function addCart() {
@@ -87,7 +90,7 @@ export default function Detail() {
                 Price: ${detail.price && detail.price},00
               </p>
 
-              <RatingProm id={id} reviews={review}/>
+              <RatingProm id={id} reviews={review} users={users}/>
 
             <Button onClick={(e)=> handlePay(e)} variant="contained" size="small" sx={{
              padding:2
