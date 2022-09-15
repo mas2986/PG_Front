@@ -33,10 +33,12 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
-  GET_REVIEWS,
+  GET_ORDER_BY_ID,
+  GET_REVIEWS
 } from "./const";
 
 const URL = "https://pg-athen.herokuapp.com"
+//const URL = "https://localhost:3001"
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -82,9 +84,28 @@ export function mercadoPago(body) {
   };
 }
 
+export function getOrderById(id){
+  return async function(dispatch){
+    try{      
+      let orderId = await axios.get(`${URL}/api/order/${id}`)
+      
+      return dispatch({
+        type:GET_ORDER_BY_ID,
+        payload: orderId.data
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+
+  }
+}
+
+
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
+      console.log(body);
       let password = await axios.post(`${URL}/api/olvide-password`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -205,9 +226,10 @@ export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function (dispatch) {
-    try {
-      console.log(CREATE_PRODUCT);
+  body.sport = body.sport.join();
+  console.log('body',body)
+  return async function(dispatch){
+    try{
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       let newProduct = await axios.post(`/api/product`, body, {
@@ -228,8 +250,8 @@ export function createProduct(body) {
         icon: "error",
         confirmButtonText: "Back",
       });
-    }
-  };
+    }   
+} 
 }
 
 export function editProduct(id, body) {
