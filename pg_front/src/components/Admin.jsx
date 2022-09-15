@@ -244,7 +244,7 @@ function DashboardContent() {
               :
               view === 'users'
               ?
-              <Users/>
+              <Users setView={setView}/>
               :
               <Orders/>
             }
