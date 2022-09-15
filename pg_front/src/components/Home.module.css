@@ -4,25 +4,40 @@ html {
 .cards {
   border: 1px solid transparent;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  opacity: 1;
+  transition: all 0.5s;
 }
 .cards:hover {
   border: 1px solid #000;
   transform: translateY();
 }
 
+.outOfStock {
+  /* border: 1px solid transparent;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  opacity: 1; */
+  transition: all 0.5s;
+  /* opacity: 1; */
+}
+.outOfStock:hover {
+  /* border: 1px solid #000; */
+  transform: translateY();
+  opacity: 0.3;
+}
+
 .carousel-img:hover {
   cursor: pointer;
 }
 
-.scrollingText{
+.scrollingText {
   margin: 0;
   padding: 0;
   height: 100vw;
   overflow-x: hidden;
 }
 
-h1{
-  color: #40F99B;
+h1 {
+  color: #40f99b;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -33,26 +48,38 @@ h1{
   font-size: 140px;
   left: 40vw;
 }
-.button{
+.button {
   color: black; /* Fallback for older browsers */
 
-  padding:10px;
+  padding: 10px;
   font-size: 50px;
-  position:absolute;
-  top:30%;
+  position: absolute;
+  top: 30%;
   left: 8%;
   border-width: 0;
   outline: none;
   border-radius: 5px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-  
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+
   background-color: #2ecc71;
   color: #ecf0f1;
-
 }
 
-.button:hover, .button:focus {
+.button:hover,
+.button:focus {
   background-color: #27ae60;
+}
+
+.stockNoShow {
+  visibility: hidden;
+}
+
+.buyBtnStock {
+  color: red;
+  margin-left: 2rem;
+  white-space: nowrap;
+  background-color: #fff;
+  font-size: 1.2rem;
 }
 
 /* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
