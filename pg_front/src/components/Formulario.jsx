@@ -136,9 +136,9 @@ export default function FormPropsTextFields() {
           component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "25ch", height: "6ch" },
-            width: 500,
+            width: "50vw",
             maxWidth: "100%",
-            maxWidth: 500,
+            // border: "1px solid #000",
 
             //   max-width: 400px;
             //   background-color: #b1acac;
@@ -150,7 +150,15 @@ export default function FormPropsTextFields() {
           <center className={f.form}>
             <h2>PURCHASE INFORMATION</h2>
           </center>
-          <div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "20% 20%",
+              // justifyContent: "space-evenly",
+              gridGap: "1rem 10rem",
+              marginLeft: "3rem",
+            }}
+          >
             <div>
               <TextField
                 onChange={(e) => {
@@ -268,34 +276,46 @@ export default function FormPropsTextFields() {
             <center>
               <h2>CONTACT INFORMATION</h2>
             </center>
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "20% 20%",
+                // justifyContent: "space-evenly",
+                gridGap: "1rem 10rem",
+                marginLeft: "3rem",
               }}
-              required
-              id="outlined-required"
-              label="Phone Number"
-              helperText={
-                errors.telefono && <p className={f.colour}>{errors.telefono}</p>
-              }
-              name="telefono"
-              value={texto.telefono}
-              //      defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              id="outlined-required"
-              label="Email"
-              helperText={
-                errors.email && <p className={f.colour}>{errors.email}</p>
-              }
-              name="email"
-              value={texto.email}
-              //      defaultValue="Hello World"
-            />
+            >
+              <TextField
+                onChange={(e) => {
+                  stateInput(e);
+                }}
+                required
+                id="outlined-required"
+                label="Phone Number"
+                helperText={
+                  errors.telefono && (
+                    <p className={f.colour}>{errors.telefono}</p>
+                  )
+                }
+                name="telefono"
+                value={texto.telefono}
+                //      defaultValue="Hello World"
+              />
+              <TextField
+                onChange={(e) => {
+                  stateInput(e);
+                }}
+                required
+                id="outlined-required"
+                label="Email"
+                helperText={
+                  errors.email && <p className={f.colour}>{errors.email}</p>
+                }
+                name="email"
+                value={texto.email}
+                //      defaultValue="Hello World"
+              />
+            </div>
             {/* <TextField
               id="outlined-required"
               label="ID"
@@ -324,21 +344,28 @@ export default function FormPropsTextFields() {
               className="btn-form"
               onClick={(e) => handleButton(e)}
               disableElevation
+              sx={{
+                width: "76%",
+                height: "3rem",
+                marginLeft: "12px",
+                marginTop: "2rem",
+              }}
             >
-              PROCEED TO CHECKOUT
+              BUY
             </Button>
           )}
         </Box>
         <Box>
-          <Typography variant="h2" color="primary" align="center">
-            Your Orders
+          <Typography variant="h4" color="primary" align="center">
+            Your Order
           </Typography>
-          <Box>
+          <Box sx={{ marginTop: "2rem" }}>
             {items.map((i) => {
               return (
                 <Box
                   sx={{
                     border: "1px solid #000",
+                    borderRadius: "5px",
                     heigth: "20rem",
                     width: "40rem",
                     display: "flex",
@@ -346,7 +373,10 @@ export default function FormPropsTextFields() {
                     alignItems: "center",
                   }}
                 >
-                  <ul style={{ lineHeight: 1.5 }}>
+                  <ul
+                    style={{ lineHeight: 1.5, listStyle: "none" }}
+                    className={f.cartItemsList}
+                  >
                     <li>{i.title}</li>
                     <li>${i.price * i.qty}.00</li>
                     <li>Number of items: {i.qty}</li>
@@ -359,12 +389,17 @@ export default function FormPropsTextFields() {
         </Box>
       </Box>
       <div className="btn-form">
-        <Link to="/" style={{ TextDecoration: "none" }}>
+        <Link to="/">
           <Button
             // href="/"
             variant="contained"
             className="btn-form"
             color="primary"
+            sx={{
+              margin: "3rem 0 0 4rem",
+              // borderRadius: "50%",
+              height: "3rem",
+            }}
           >
             HOME
           </Button>
