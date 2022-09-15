@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   deleteFromCart,
   deleteAllFromCart,
   sendItemNum,
+  mercadoPago,
   removeDupsCart,
   fetchCartItems,
 } from "../redux/action";
@@ -33,9 +34,11 @@ function Cart() {
   //local state for forcing a re-render of the price
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
+  const history = useHistory();
+  let official = 149;
 
   //bring in the global state.cartItems
-  let items = useSelector((state) => state.cartItems);
+  let items = useSelector((state) => state.cartItems); // [{},{}]
   let detail = useSelector((state) => state.detail);
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
   if (items.length == 0) {
@@ -43,7 +46,19 @@ function Cart() {
       JSON.parse(localStorage.getItem("items")) == null
         ? []
         : JSON.parse(localStorage.getItem("items"));
-    console.log("getting items: " + items);
+  }
+
+  let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    totalPrice += items[i].price;
+  }
+
+  function handlePay(e) {
+    e.preventDefault();
+    dispatch(mercadoPago({ price: totalPrice * official }));
+
+    history.push("/entrega");
+    localStorage.setItem("itemsForm", JSON.stringify(items));
   }
 
   function toggle() {
@@ -57,7 +72,6 @@ function Cart() {
 
   //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
-    console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
     if (items.length == 1) {
       localStorage.removeItem("items");
@@ -74,7 +88,6 @@ function Cart() {
   useEffect(() => {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
-      console.log("setting items: " + items + localStorage.items[0]);
     }
   }, [items]);
 
@@ -237,10 +250,11 @@ function Cart() {
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
                   <Link
-                    to="/entrega"
+                    // to="/entrega"
                     style={{ textDecoration: "none", fontStyle: "none" }}
                   >
                     <Button
+                      onClick={(e) => handlePay(e)}
                       sx={{
                         margin: "0.5rem",
                         border: "1px solid #000",

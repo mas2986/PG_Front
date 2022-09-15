@@ -9,7 +9,7 @@ import Speedo from "../img brands/speedo2.png";
 import Wilson from "../img brands/Wilson.png";
 import Troy from "../img brands/troy.png";
 import Everlast from "../img brands/Everlast.png";
-import { filterByCarousel } from "../redux/action";
+import { filterByBrand } from "../redux/action";
 import { useDispatch } from "react-redux";
 import h from "./Home.module.css";
 import { useHistory } from "react-router-dom";
@@ -34,17 +34,15 @@ function CarouselBrands() {
 
   function handleBrands(e) {
     e.preventDefault();
-    history.push("/products");
     dispatch(filterByBrand(e.target.title));
-
-    dispatch(filterByCarousel(e.target.title));
+    history.push('/products')
     console.log(e);
   }
 
   return (
     <div
       className="carouselbrands"
-      style={{ margin: "1rem 2.5rem 2rem 2.5rem" }}
+      style={{ margin: "1rem 2.5rem 2rem 2.5rem", position:"relative" }}
     >
       <Carousel itemsToShow={4}>
         {imgbrands.map((ea, index) => (
