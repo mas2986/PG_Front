@@ -10,6 +10,7 @@ import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import Typography from "@mui/material/Typography";
 
 export default function FormPropsTextFields() {
   const [checked, setChecked] = React.useState(true);
@@ -124,13 +125,21 @@ export default function FormPropsTextFields() {
   return (
     <div className={f.form}>
       <Nav2 />
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
         <Box
           component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "25ch", height: "6ch" },
             width: 500,
             maxWidth: "100%",
+            maxWidth: 500,
+
             //   max-width: 400px;
             //   background-color: #b1acac;
             //   margin:  auto;
@@ -319,21 +328,33 @@ export default function FormPropsTextFields() {
               PROCEED TO CHECKOUT
             </Button>
           )}
+        </Box>
+        <Box>
+          <Typography variant="h2" color="primary" align="center">
+            Your Orders
+          </Typography>
           <Box>
-            <Box>
-              {items.map((i) => {
-                return (
-                  <div>
-                    <ul>
-                      <li>{i.title}</li>
-                      <li>{i.price}</li>
-                      <li>{i.qty}</li>
-                      <img src={i.image} />
-                    </ul>
-                  </div>
-                );
-              })}
-            </Box>
+            {items.map((i) => {
+              return (
+                <Box
+                  sx={{
+                    border: "1px solid #000",
+                    heigth: "20rem",
+                    width: "40rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <ul style={{ lineHeight: 1.5 }}>
+                    <li>{i.title}</li>
+                    <li>${i.price * i.qty}.00</li>
+                    <li>Number of items: {i.qty}</li>
+                  </ul>
+                  <img src={i.image} width="250px" height="300px" />
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       </Box>

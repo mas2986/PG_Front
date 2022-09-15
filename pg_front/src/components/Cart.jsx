@@ -52,12 +52,11 @@ function Cart() {
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price;
   }
-  console.log(totalPrice);
 
   function handlePay(e) {
     e.preventDefault();
     dispatch(mercadoPago({ price: totalPrice * official }));
-    console.log(totalPrice);
+
     history.push("/entrega");
     localStorage.setItem("itemsForm", JSON.stringify(items));
   }

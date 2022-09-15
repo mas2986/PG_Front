@@ -50,8 +50,7 @@ export default function Nav(props) {
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
-  console.log(user);
-  console.log("user", user1);
+
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -79,7 +78,6 @@ export default function Nav(props) {
     const value = e.target.innerText;
     setAnchorElm(null);
     if (value === "Logout" && Object.keys(user1).length !== 0) {
-      console.log("Email");
       dispatch(logoutEmail(history));
     } else value === "Logout" && isAuthenticated;
   };

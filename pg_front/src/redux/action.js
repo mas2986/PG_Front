@@ -134,16 +134,13 @@ export function createUser(body) {
 export function getAllUsers(body) {
   return async function (dispatch) {
     try {
-
       // const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      // const { token } = tokenJSON; 
-      let users = await axios.get(`/api/user`,
-      {
+      // const { token } = tokenJSON;
+      let users = await axios.get(`/api/user`, {
         headers: {
           Authorization: `Bearer 23k4!jhisd&jhf8*asfdasdf$dsf45%&`,
-        }
-      }
-      );
+        },
+      });
 
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -292,7 +289,7 @@ export function getProduct() {
   return async function (dispatch) {
     try {
       let res = await axios.get(`/api/products`);
-      console.log("Products", res.data);
+      // console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
         payload: res.data,
@@ -392,7 +389,7 @@ export function logout(history) {
 
 //CHECK LOGIN ACTION CREATOR
 export function checkLogin(id, token) {
-  console.log(id);
+  // console.log(id);
   return async function (dispatch) {
     let user = await axios.get(`/api/user/${id}`, {
       headers: {
