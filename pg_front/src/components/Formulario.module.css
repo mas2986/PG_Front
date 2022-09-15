@@ -8,3 +8,11 @@
 .btn-form {
   margin: 20px;
 }
+
+a {
+  text-decoration: none;
+}
+
+.cartItemsList li {
+  font-size: 1rem;
+}
