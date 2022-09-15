@@ -38,7 +38,7 @@ export default function SideBar({setView}) {
     </ListItemButton>
     <ListItemButton onClick={()=>setView('orders')}>
       <ListItemIcon>
-        <Tooltip title="Orders">
+        <Tooltip title="All Orders">
           <BarChartIcon />
         </Tooltip>
       </ListItemIcon>

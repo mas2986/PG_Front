@@ -17,10 +17,10 @@ import {
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, changeRoleUser,deleteUser } from '../redux/action'
+import { getAllUsers, changeRoleUser,deleteUser,getOrderById, passwordRemember } from '../redux/action'
 import { data, role } from './data';
 
-const Users = () => {
+const Users = ({setView}) => {
   //const [createModalOpen, setCreateModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
@@ -58,7 +58,27 @@ const Users = () => {
   }
 
   const handlePassword = (row) => {
-    if (row.original.isAccountLocked) alert('User is user');
+    const {email} = row.original;
+    console.log(email);
+    Swal.fire({
+      title: `Do you want to force password reset to ${row.original.name}?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, password reset user!'
+    }).then((result) => {
+      if (result.isConfirmed) {        
+        dispatch(passwordRemember({email:email}))
+        setEdit(() => true);
+        Swal.fire(
+          'User password reset!',
+          `${row.original.name} was asked to change password`,
+          'success'
+        )
+      }
+    })    
   }
 
   const columns = useMemo(
@@ -208,7 +228,9 @@ const Users = () => {
 
         const handleOrder = () => {
           table.getSelectedRowModel().flatRows.map((row) => {
-            alert('contact ' + row.getValue('name'));
+            const { id } = row.original;
+            dispatch(getOrderById(id));
+            setView('orders')
           });
         };
 

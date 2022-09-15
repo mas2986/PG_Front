@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
@@ -45,7 +46,7 @@ export default function Nav(props) {
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = useState(true);
-  const { isAuthenticated,logout, user } = useAuth0();
+  const { isAuthenticated, logout, user } = useAuth0();
   console.log(user)
   console.log("user", user1);
   const handleClick = (e) => {
@@ -74,12 +75,12 @@ export default function Nav(props) {
   const handleClose = (e) => {
     setOpenMenu(false);
     const value = e.target.innerText;
-    setAnchorElm(null)    
-    if(value==='Logout'&&Object.keys(user1).length!==0){
+    setAnchorElm(null)
+    if (value === 'Logout' && Object.keys(user1).length !== 0) {
       console.log('Email')
-      dispatch(logoutEmail(history))      
-    }   
-    else(value==='Logout'&&isAuthenticated) 
+      dispatch(logoutEmail(history))
+    }
+    else (value === 'Logout' && isAuthenticated)
   }
 
   const goHome = () => {
@@ -266,6 +267,7 @@ export default function Nav(props) {
                     user1.image || isAuthenticated
                       ?
                       <>
+                      {console.log(user1)}
                       <Tooltip title={`Logged as ${user1.name}` || `Logged as ${user.name}`}>
                         <img
                           alt="avatar"
@@ -274,7 +276,7 @@ export default function Nav(props) {
                           src={user1.image || user.image}
                           loading="lazy"
                           style={{ borderRadius: '50%' }}
-                          onClick = {handleSubmit}
+                          onClick={handleSubmit}
                         />
                       </Tooltip>
                       <Menu open={openMenu} anchorEl={anchorElm} onClose={handleClose} >
@@ -285,10 +287,12 @@ export default function Nav(props) {
                       </>
                       :
                       <>
+                      {console.log('AccountCircle',user1.image)}
                       <Tooltip title={`Logged as ${user1.name}` || `Logged as ${user.name}`}>
                         <AccountCircleIcon
-                          onClick = {handleSubmit}
+                          onClick={handleSubmit}
                           sx={{
+                            color:'gray',
                             fontSize: "large",
                             marginBottom: "0.5rem",
                             width: "30px",
@@ -303,6 +307,27 @@ export default function Nav(props) {
                         <MenuItem name="balance" onClick={handleClose}>Logout</MenuItem>
                       </Menu>
                       </>
+                }
+                {
+                  user1.rol === 'admin'
+                    ?
+                    <Link to='/admin'>
+                      <Tooltip title="DashBoard">
+                        <DashboardIcon
+                          sx={{
+                            color: 'gray',
+                            fontSize: "large",
+                            marginBottom: "0.5rem",
+                            width: "30px",
+                            height: "30px",
+                            marginRight: "1rem",
+                            marginLeft: "1rem"
+                          }}
+                        />
+                      </Tooltip>
+                    </Link>
+                    :
+                    null
                 }
                 {/* <Tooltip
                   title={`${

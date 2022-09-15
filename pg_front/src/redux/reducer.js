@@ -28,19 +28,26 @@ import {
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO,
+  GET_ORDER_BY_ID,
+  GET_REVIEWS
 } from "./const";
 
 const initialState = {
   products: [],
   altProducts: [],
+  productAdmin:[],
   user: {},
   users:[],
+  order:[],
   errorLogin: "",
   cartItems: [],
   qty: 1,
   password: {},
-  backup:[]
+  backup:[],
+  url: "",
+  reviews:[],
   
 };
 
@@ -51,11 +58,22 @@ export const rootReducer = (state = initialState, action) => {
     console.log(productsAll)
   }
   switch (action.type) {
-    
-    case RESET_PASSWORD:
-      return {
-        ...state,
-        password: action.payload,
+      
+      case ORDER_MERCADOPAGO:
+        return {
+          ...state,
+          url: action.payload,
+      }
+      case GET_ORDER_BY_ID:
+        console.log(action.payload)
+        return{
+          ...state,
+          order: action.payload
+        }
+      case RESET_PASSWORD:
+          return {
+          ...state,
+          password: action.payload,
       }
       case REMEMBER_PASSWORD:
         return {
@@ -120,6 +138,7 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
         altProducts: action.payload,
         backup: action.payload,
+        productAdmin:action.payload
       };
 
     case SEARCH_PRODUCT:
@@ -427,6 +446,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         products: carouselBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
+
+      case GET_REVIEWS:
+        return{
+              ...state,
+              reviews: action.payload,
+   };
     default:
       return { ...state };
   }

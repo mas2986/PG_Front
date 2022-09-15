@@ -31,10 +31,14 @@ import {
   ADD_TO_CART_DETAIL,
   FILTER_BRAND_CAROUSEL,
   REMEMBER_PASSWORD,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO,
+  GET_ORDER_BY_ID,
+  GET_REVIEWS
 } from "./const";
 
 const URL = "https://pg-athen.herokuapp.com"
+//const URL = "https://localhost:3001"
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -62,10 +66,43 @@ export function signUp(body) {
   };
 } 
 
+export function mercadoPago(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`https://pg-athen.herokuapp.com/api/crear-orden`, body);
+      console.log(order.data.url)
+      return dispatch({
+        type: ORDER_MERCADOPAGO,
+        payload: order.data.url
+      });
+    } catch (e) { 
+      console.log(e);
+    }
+  };
+}
+
+export function getOrderById(id){
+  return async function(dispatch){
+    try{      
+      let orderId = await axios.get(`${URL}/api/order/${id}`)
+      
+      return dispatch({
+        type:GET_ORDER_BY_ID,
+        payload: orderId.data
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+
+  }
+}
+
 
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
+      console.log(body);
       let password = await axios.post(`${URL}/api/olvide-password`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -118,11 +155,11 @@ export function createUser(body) {
 export function getAllUsers(body) {
   return async function (dispatch) {
     try {
-      const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      const { token } = tokenJSON; 
+      /* const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
+      const { token } = tokenJSON;  */
       let users = await axios.get(`${URL}/api/user`,{
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer 23k4!jhisd&jhf8*asfdasdf$dsf45%&`,
         }
       });
       //user.data.expire = new(new Date().getTime() + user.data.expire)
@@ -188,9 +225,10 @@ export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
+  body.sport = body.sport.join();
+  console.log('body',body)
   return async function(dispatch){
     try{
-      console.log(CREATE_PRODUCT)
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON; 
       let newProduct = await axios.post(`${URL}/api/product`,body,{
@@ -209,7 +247,7 @@ export function createProduct(body) {
     Swal.fire({
       title: "Error creating product!",
       text: "Please try again",
-      icon: "Error",
+      icon: "error",
       confirmButtonText: "Back",
     });
   }
@@ -440,5 +478,17 @@ export function filterByCarousel(payload) {
   return {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
+  };
+}
+
+
+export function getReviews() {
+  return async function (dispatch) {
+    const resp = await axios.get(`/api/review`);
+    const data = resp.data
+    console.log(resp)
+    if (resp) {
+    return  dispatch({ type: GET_REVIEWS, payload: data });
+    }
   };
 }
