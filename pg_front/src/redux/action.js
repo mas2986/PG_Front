@@ -34,7 +34,8 @@ import {
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
   GET_ORDER_BY_ID,
-  GET_REVIEWS
+  GET_REVIEWS,
+  CREATE_ORDER
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -83,6 +84,22 @@ export function mercadoPago(body) {
     }
   };
 }
+
+export function createOrder(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`/api/order`, body);
+      console.log(order);
+      return dispatch({
+        type: CREATE_ORDER,
+        payload: order,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
 
 export function getOrderById(id){
   return async function(dispatch){
