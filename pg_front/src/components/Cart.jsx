@@ -151,8 +151,9 @@ function Cart() {
               <Box>
                 <Box
                   sx={{
-                    maxHeight: "30rem",
+                    maxHeight: "22rem",
                     overflowY: "scroll",
+                    overflowX: "hidden",
                     marginBottom: "0.5rem",
                   }}
                 >
@@ -163,7 +164,7 @@ function Cart() {
                         sx={{
                           padding: "1rem",
                           width: "20rem",
-                          height: "14.5rem",
+                          height: "16.5rem",
                           margin: "1rem 0",
                           border: "1px solid black",
                           borderRadius: "3px",
@@ -198,9 +199,7 @@ function Cart() {
                             <Typography sx={{ textDecoration: "underline" }}>
                               {i.brand}
                             </Typography>
-                            <Typography
-                              sx={{ fontStyle: "italic", whiteSpace: "nowrap" }}
-                            >
+                            <Typography sx={{ fontStyle: "italic" }}>
                               {i.description}
                             </Typography>
                             <select
