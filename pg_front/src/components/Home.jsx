@@ -55,7 +55,9 @@ export default function Home() {
 
   return (
     home && allProducts ? (
-    <div>
+    <div style={{
+        display:"flex",
+      }}>
       <Nav />
       <img
         id={"#"}
@@ -69,12 +71,13 @@ export default function Home() {
           borderBottomRightRadius: "40px",
         }}
       />
+      <div>
       <Link to="/products">
       <p className={style.button} >
         Go Shopping
       </p>
       </Link>
-      
+      </div>
       <a href={"#contact"} className={style.contactButton}>Contact Us!</a>
       <div className="scrollingText">
         <h1 className = {style.homeh1}
