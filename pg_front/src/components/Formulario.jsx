@@ -483,7 +483,12 @@ export default function FormPropsTextFields({ props }) {
                 variant="contained"
                 color="primary"
                 className="btn-form"
-                // onClick={(e) => handleButton(e)}
+                onClick={(e) =>
+                  Swal.fire({
+                    title: "You are not logged in",
+                    text: "Please log in or register to complete your purchase",
+                  })
+                }
                 disableElevation
                 sx={{
                   width: "40rem",
