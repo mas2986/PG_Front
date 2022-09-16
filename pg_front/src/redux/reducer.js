@@ -32,7 +32,8 @@ import {
   ORDER_MERCADOPAGO,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
-  GET_REVIEWS
+  GET_REVIEWS,
+  CREATE_ORDER
 } from "./const";
 
 const initialState = {
@@ -58,6 +59,12 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
+
+      case CREATE_ORDER: 
+        return {
+          ...state,
+          order: action.payload
+        }
       
       case ORDER_MERCADOPAGO:
         return {

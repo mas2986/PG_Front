@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import FormPropsTextFields from "./Formulario";
 import { Link, useHistory } from "react-router-dom";
 import {
   deleteFromCart,
@@ -116,7 +117,10 @@ function Cart() {
             }}
           >
             {items.length ? (
-              <Box display="flex" sx={{ alignItems: "center" }}>
+              <Box
+                display="flex"
+                sx={{ alignItems: "center", minWidth: "20rem" }}
+              >
                 <Typography
                   align="left"
                   variant="h5"

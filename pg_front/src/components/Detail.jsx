@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
+import { detailProduct, addToCart, createOrder, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
@@ -20,6 +20,7 @@ export default function Detail() {
   const history = useHistory();
 
   const users =  useSelector((state) => state.users);
+  console.log(users)
 
   let official = 149;
 
@@ -29,11 +30,11 @@ export default function Detail() {
     dispatch(detailProduct(id));
     dispatch(getReviews())
     dispatch(getAllUsers())
+    dispatch(createOrder())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
 
-  console.log(users)
 
 
   function addCart() {
@@ -75,18 +76,6 @@ export default function Detail() {
               <h1 className={d.title}>
                 {detail.title && detail.title.toUpperCase()}
               </h1>
-
-              <p className={d.description}>
-                {detail.description && detail.description}
-              </p>
-            
-              <p className={d.brand}>
-                Brand: {detail.brand && detail.brand}
-              </p>
-              
-              <p className={d.sport}>
-                Sport: {detail.sport && detail.sport}
-              </p>
               
               {/* <p>Gender: {detail.genre && detail.genre}</p> */}
 
@@ -108,15 +97,27 @@ export default function Detail() {
             <Link to="/products">
               <Button
                 //   href={`http://localhost:3000/home`} cambio a routing por link para que no se pierda el carrito
-                variant="contained"
-                color="primary"
-                size="small"
+                // variant="contained"
+                // color="primary"
+                size="large"
                 className={d.homeButton}
               >
                 GO BACK
               </Button>
             </Link>
+            <div className = {d.detailSection}>
+              <p className={d.description}>
+                {detail.description && detail.description}
+              </p>
             
+              <p className={d.brand}>
+                Brand: {detail.brand && detail.brand}
+              </p>
+              
+              <p className={d.sport}>
+                Sport: {detail.sport && detail.sport}
+              </p>
+            </div>
             </div>
 
             
