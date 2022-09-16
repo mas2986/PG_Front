@@ -86,7 +86,7 @@ export default function Nav(props) {
                               ? "#0000FF"
                               : "#888787"
                           }`,
-                          marginTop: "0.5rem",
+                          marginLeft: "1rem",
                           width: "30px",
                           height: "30px",
                         }}
