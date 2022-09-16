@@ -5,27 +5,62 @@ import Checkbox from "@mui/material/Checkbox";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import f from "./Formulario.module.css";
 import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import { createOrder } from "../redux/action"
 
-export default function FormPropsTextFields() {
+
+export default function FormPropsTextFields({props}) {
   const [checked, setChecked] = React.useState(true);
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   let items = useSelector((state) => state.cartItems);
+  console.log(items)
+  const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
-  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
-  const handleButton = (event) => {
+  const [texto, setTexto] = React.useState({
+    name: "",
+    apellido: "",
+    calle: "",
+    numero: "",
+    provincia: "",
+    localidad: "",
+    telefono: "",
+    email: "",
+    cp: "",
+  });
+  
+  let totalItems = 0;
+  let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    totalItems += items[i].qty;
+    totalPrice += items[i].price;
+  }
+  const productsId = items.map( p => p.id)
+
+  const [order, setOrder] = React.useState({
+    productId: productsId,
+    quantity: totalItems,
+    orderStatus: "created",
+    totalPrice: totalPrice,
+    email: user1.email,
+    userId: user1.id
+  });
+
+  console.log(order)
+
+  const handleButton = async (event) => {
     if (texto.name.length < 3 || texto.name.length > 10) {
       return Swal.fire({
         title: "Check the name!",
@@ -85,25 +120,14 @@ export default function FormPropsTextFields() {
         icon: "error",
       });
     }
-    // Swal.fire(
-    //   "¡Your payment was successful!",
-    //   "You will receive an email with your purchase information shortly."
-    // );
-    // Swal.fire("Coming Soon!!");
-    window.location.replace(url);
+    dispatch(createOrder(order));
+    setTimeout(function () {
+      console.log("Envié la or")
+      window.location.replace(url);
+    }, 1000)
+    
+    
   };
-
-  const [texto, setTexto] = React.useState({
-    name: "",
-    apellido: "",
-    calle: "",
-    numero: "",
-    provincia: "",
-    localidad: "",
-    telefono: "",
-    email: "",
-    cp: "",
-  });
 
   function stateInput(e) {
     setTexto({
