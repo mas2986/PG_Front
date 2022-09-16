@@ -14,25 +14,36 @@ import {
   getProduct,
 } from "../redux/action";
 import style from "./Filters.module.css";
+import h from "./Home.module.css";
 
 export default function Filters() {
   const dispatch = useDispatch();
   const [genderTrail, setGenderTrail] = useState("");
+  const [brandTrail, setBrandTrail] = useState("");
+  const [sportsTrail, setSportsTrail] = useState("");
 
   const [input, setInput] = useState("");
 
   function handleFilteredGenres(e) {
     e.preventDefault();
     dispatch(filterByGenre(e.target.value));
-    setGenderTrail(e.target.value);
+    if (e.target.value !== "All") {
+      setGenderTrail(e.target.value);
+    }
   }
   function handleFilteredSports(e) {
     e.preventDefault();
     dispatch(filterBySport(e.target.value));
+    if (e.target.value !== "All") {
+      setSportsTrail(e.target.value);
+    }
   }
   function handleFilteredBrands(e) {
     e.preventDefault();
     dispatch(filterByBrand(e.target.value));
+    if (e.target.value !== "All") {
+      setBrandTrail(e.target.value);
+    }
   }
 
   function handleOrderBy(e) {
@@ -46,51 +57,17 @@ export default function Filters() {
 
   function cleanFilter() {
     setGenderTrail("");
+    setBrandTrail("");
+    setSportsTrail("");
     dispatch(getProduct());
   }
-  const Android12Switch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    "& .MuiSwitch-track": {
-      borderRadius: 22 / 2,
-      "&:before, &:after": {
-        content: '""',
-        position: "absolute",
-        top: "50%",
-        transform: "translateY(-50%)",
-        width: 16,
-        height: 16,
-      },
-      "&:before": {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.primary.main)
-        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-        left: 12,
-      },
-      "&:after": {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.secondary.main)
-        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-        right: 12,
-      },
-    },
-    "& .MuiSwitch-thumb": {
-      boxShadow: "none",
-      width: 16,
-      height: 16,
-      margin: 2,
-    },
-  }));
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <FormGroup sx={{ position: "fixed", top: "6rem", left: "4rem" }}>
-        <FormControlLabel
-          control={<Android12Switch defaultChecked />}
-          label="Filters"
-        />
-        <Stack direction="row" spacing={1} alignItems="center"></Stack>
-      </FormGroup>
-      <section className={style.box} style={{ marginTop: "5rem" }}>
+      <section
+        className={style.box}
+        style={{ marginTop: "5rem", paddingBottom: "2.5rem" }}
+      >
         {/* <div>
         <h3>ORDER</h3>
         <select onChange={(e) => handleOrderBy(e)}>
@@ -118,6 +95,7 @@ export default function Filters() {
             className={style.selectDetail}
             onChange={(e) => {
               handleFilteredGenres(e);
+              if (e.target.value === "All") setGenderTrail("");
             }}
           >
             {/* RENDER FROM ARRAY  */}
@@ -140,7 +118,7 @@ export default function Filters() {
                 color: "#000",
                 backgroundColor: "#fff",
                 margin: 0,
-                padding: 0,
+                padding: "0.1rem 0.3rem",
                 marginLeft: "2rem",
                 display: "inline",
                 width: "4rem",
@@ -149,11 +127,12 @@ export default function Filters() {
                 textAlign: "center",
               }}
               onClick={cleanFilter}
+              className={h.trails}
             >
               {genderTrail + " X"}
             </p>
           ) : (
-            <div style={{ marginTop: "0.9rem" }}></div>
+            <div style={{ marginTop: "1rem" }}></div>
           )}
         </div>
         <div>
@@ -163,6 +142,7 @@ export default function Filters() {
             className={style.selectDetail}
             onChange={(e) => {
               handleFilteredBrands(e);
+              if (e.target.value === "All") setBrandTrail("");
             }}
           >
             <option value="Start">Start</option>
@@ -178,13 +158,38 @@ export default function Filters() {
             <option value="Giro">Giro</option>
             <option value="Troy Lee Air">Troy Lee Air</option>
           </select>
+          {brandTrail !== "" ? (
+            <p
+              style={{
+                color: "#000",
+                backgroundColor: "#fff",
+                margin: 0,
+                padding: "0.2rem 0.4rem",
+                marginLeft: "2rem",
+                display: "inline",
+                width: "4rem",
+                fontSize: "0.7rem",
+                borderRadius: "50px",
+                textAlign: "center",
+              }}
+              onClick={cleanFilter}
+              className={h.trails}
+            >
+              {brandTrail + " X"}
+            </p>
+          ) : (
+            <div style={{ marginTop: "1rem" }}></div>
+          )}
         </div>
         <div>
           <h3>SPORTS</h3>
           <select
             value="Start"
             className={style.selectDetail}
-            onChange={(e) => handleFilteredSports(e)}
+            onChange={(e) => {
+              handleFilteredSports(e);
+              if (e.target.value === "All") setSportsTrail("");
+            }}
           >
             <option value="Start">Start</option>
             <option value="All">All</option>
@@ -198,6 +203,28 @@ export default function Filters() {
             <option value="Hockey">Hockey </option>
             <option value="Ciclism">Cycling</option>
           </select>
+          {sportsTrail !== "" ? (
+            <p
+              style={{
+                color: "#000",
+                backgroundColor: "#fff",
+                margin: 0,
+                padding: "0.2rem 0.4rem",
+                marginLeft: "2rem",
+                display: "inline",
+                width: "4rem",
+                fontSize: "0.7rem",
+                borderRadius: "50px",
+                textAlign: "center",
+              }}
+              onClick={cleanFilter}
+              className={h.trails}
+            >
+              {sportsTrail + " X"}
+            </p>
+          ) : (
+            <div style={{ marginBottom: "1rem" }}></div>
+          )}
         </div>
       </section>
     </div>

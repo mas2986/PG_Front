@@ -19,6 +19,7 @@ import { createOrder } from "../redux/action";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
+  let history = useHistory();
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
@@ -151,6 +152,7 @@ export default function FormPropsTextFields({ props }) {
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
       setTotalPrice(total);
+
       // console.log(totalPrice);
     } else setTotalPrice(0);
   }, [items]);
