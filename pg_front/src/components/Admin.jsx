@@ -239,11 +239,14 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {view === "products" ? (
               <Table />
-            ) : view === "users" ? (
-              <Users />
-            ) : (
-              <Orders />
-            )}
+
+              :
+              view === 'users'
+              ?
+              <Users setView={setView}/>
+              :
+              <Orders/>
+            }
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

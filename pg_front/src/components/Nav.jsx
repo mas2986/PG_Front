@@ -6,7 +6,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import MailIcon from "@mui/icons-material/Mail";
+import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
@@ -48,9 +49,10 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
+  console.log(user1)
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
-
+  
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -293,6 +295,7 @@ export default function Nav(props) {
                         <AccountCircleIcon
                           onClick={handleSubmit}
                           sx={{
+                            color:'gray',
                             fontSize: "large",
                             marginBottom: "0.5rem",
                             width: "30px",

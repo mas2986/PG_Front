@@ -33,10 +33,13 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
+  GET_ORDER_BY_ID,
   GET_REVIEWS,
+  CREATE_ORDER
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
+//const URL = "https://localhost:3001"
 
 export function signUp(body) {
   return async function (dispatch) {
@@ -82,9 +85,44 @@ export function mercadoPago(body) {
   };
 }
 
+export function createOrder(body) {
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(`/api/order`, body);
+      console.log(order);
+      return dispatch({
+        type: CREATE_ORDER,
+        payload: order,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+
+export function getOrderById(id){
+  return async function(dispatch){
+    try{      
+      let orderId = await axios.get(`/api/order/${id}`)
+      
+      return dispatch({
+        type:GET_ORDER_BY_ID,
+        payload: orderId.data
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+
+  }
+}
+
+
 export function passwordRemember(body) {
   return async function (dispatch) {
     try {
+      console.log(body);
       let password = await axios.post(`/api/olvide-password`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -205,9 +243,10 @@ export function createProduct(body) {
   body.price = parseInt(body.price);
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
-  return async function (dispatch) {
-    try {
-      console.log(CREATE_PRODUCT);
+  body.sport = body.sport.join();
+  console.log('body',body)
+  return async function(dispatch){
+    try{
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       let newProduct = await axios.post(`/api/product`, body, {
@@ -228,8 +267,8 @@ export function createProduct(body) {
         icon: "error",
         confirmButtonText: "Back",
       });
-    }
-  };
+    }   
+} 
 }
 
 export function editProduct(id, body) {
