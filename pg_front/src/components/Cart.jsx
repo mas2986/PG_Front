@@ -117,7 +117,10 @@ function Cart() {
             }}
           >
             {items.length ? (
-              <Box display="flex" sx={{ alignItems: "center" }}>
+              <Box
+                display="flex"
+                sx={{ alignItems: "center", minWidth: "20rem" }}
+              >
                 <Typography
                   align="left"
                   variant="h5"
