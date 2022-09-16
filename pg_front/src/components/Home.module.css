@@ -82,6 +82,10 @@ h1 {
   font-size: 1.2rem;
 }
 
+.trails:hover {
+  cursor: pointer;
+}
+
 /* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 .backGround{
