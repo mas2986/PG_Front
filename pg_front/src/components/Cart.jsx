@@ -270,7 +270,16 @@ function Cart() {
                 </Box>
               </Box>
             ) : (
-              <Typography>There are no items in the cart</Typography>
+              <Typography
+                sx={{
+                  whiteSpace: "nowrap",
+                  width: "12rem",
+                  marginRight: "5rem",
+                  marginTop: "1rem",
+                }}
+              >
+                There are no items in the cart
+              </Typography>
             )}
           </Box>
         </Box>
