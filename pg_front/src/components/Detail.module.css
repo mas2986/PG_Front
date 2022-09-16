@@ -1,72 +1,85 @@
 
 
 .detailPage{
-    display: block;
+    
     width: 100%;
     height: 600px;
     max-width: 1400px;
     max-height: 1200px;
     width: 100%;
-    margin: 40px auto;
-    box-shadow: 0 0 5px #ccc;
+    margin: 0px auto;
+ 
 }
 
 .detailCard{
     display: flex;
+    height: 900px;
     justify-content: space-around;
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
     padding: 30px 0;
 }
 .title{
     font-size: 60px;
 }
 .detailCard .bigImage{
-    width: 100%;
+    width: 500px;
     height: 100%;
-    max-height: 500px;
-    max-width: 500px;
+    max-height: 550px;
+    /* max-width: 500px;
+    min-width: 500px; */
     display: block;
-    object-fit: cover;
+    object-fit: contain;
+    flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .detailCard .productDetail{
-    height: min-content;
-    max-width: 500px;
+    flex-shrink: 0;
     min-width: 290px;
     display: flex;
     flex-direction: column;
     justify-content:flex-start;
+    align-items: center;
 }
 
 .detailCard .productDetail h1{
     margin: 0;
     padding: 0;
     font-size: 40px;
-    width: max-content;
-    flex-shrink: 2;
+    flex-shrink: 0;
 }
 
 .detailCard .productDetail .price{
     font-size: 35px;
+    flex-shrink: 0;
 }
 
 .detailCard .productDetail .description{
     font-size: 25px;
-    flex-shrink:5;
+    flex-shrink: 0;
 }
 
 .detailCard .productDetail .buyButton{
-    margin:20px;
+    background-color:#40F99B;
+    color: black;
+    margin: 20px;
+    padding: 15px 120px 15px 120px;
+    font-size: 25px;
+    flex-shrink: 0;
 }
 
 .detailCard .productDetail .cartButton{
+    padding: 10px 80px 10px 80px;
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
+    font-size: 15px;
+    flex-shrink: 0;
 }
 
-.Prueba{
-    display: flex;
-    width: 100%;
-    margin-right: 20px;
+.detailCard .productDetail .detailSection{
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid;
+    border-radius: 3px;
 }

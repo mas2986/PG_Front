@@ -66,7 +66,7 @@ export default function Nav(props) {
               <Box display="flex" sx={{ alignItems: "center" }}>
                 <Box
                   className={n["login-container"]}
-                  display="flex"
+                  // display="flex"
                   sx={{ alignItems: "center", justifyContent: "center" }}
                 >
                   <Cart />

@@ -73,11 +73,15 @@ return (
   <div className='prom'>
     <Box component="fieldset" mb={3} borderColor="transparent">        
       <Rating name="read-only" value={prom} precision={0.5} readOnly />
-      <Typography component="legend">Votes {quantity} </Typography>
+      <Typography sx={{
+        display: "flex",
+        alignItems: "center",
+        paddingLeft: "30px",
+      }} component="legend">Votes: {quantity} </Typography>
       <br/>
       <br/>
 
-       <Button variant="contained" color="primary"  onClick={openPopover}>
+       <Button variant="contained" color="primary" sx={{backgroundColor:"#61707D"}}  onClick={openPopover}>
           Comments
       </Button>
       <Popover 

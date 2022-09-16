@@ -76,18 +76,6 @@ export default function Detail() {
               <h1 className={d.title}>
                 {detail.title && detail.title.toUpperCase()}
               </h1>
-
-              <p className={d.description}>
-                {detail.description && detail.description}
-              </p>
-            
-              <p className={d.brand}>
-                Brand: {detail.brand && detail.brand}
-              </p>
-              
-              <p className={d.sport}>
-                Sport: {detail.sport && detail.sport}
-              </p>
               
               {/* <p>Gender: {detail.genre && detail.genre}</p> */}
 
@@ -109,15 +97,27 @@ export default function Detail() {
             <Link to="/products">
               <Button
                 //   href={`http://localhost:3000/home`} cambio a routing por link para que no se pierda el carrito
-                variant="contained"
-                color="primary"
-                size="small"
+                // variant="contained"
+                // color="primary"
+                size="large"
                 className={d.homeButton}
               >
                 GO BACK
               </Button>
             </Link>
+            <div className = {d.detailSection}>
+              <p className={d.description}>
+                {detail.description && detail.description}
+              </p>
             
+              <p className={d.brand}>
+                Brand: {detail.brand && detail.brand}
+              </p>
+              
+              <p className={d.sport}>
+                Sport: {detail.sport && detail.sport}
+              </p>
+            </div>
             </div>
 
             
