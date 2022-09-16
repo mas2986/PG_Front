@@ -67,9 +67,9 @@ function Cart() {
   }
 
   //keep cart visible while mouse is hovering over it
-  function keepIn() {
-    setCartDisplay(true);
-  }
+  // function keepIn() {
+  //   setCartDisplay(true);
+  // }
 
   //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
@@ -98,16 +98,17 @@ function Cart() {
         <StyledBadge badgeContent={items.length} color="error">
           <ShoppingCartOutlinedIcon
             sx={{ fontSize: "29px", color: "#888787" }}
-            onMouseEnter={keepIn}
+            // onMouseEnter={keepIn}
             // onMouseOut={toggle}
+            onClick={toggle}
           />
         </StyledBadge>
       </div>
       {cartDisplay && (
         <Box
           className={n["cart-container"]}
-          onMouseEnter={keepIn}
-          onMouseLeave={toggle}
+          // onMouseEnter={keepIn}
+          // onMouseLeave={toggle}
           sx={{ marginRight: "4rem" }}
         >
           <Box
@@ -151,8 +152,9 @@ function Cart() {
               <Box>
                 <Box
                   sx={{
-                    maxHeight: "30rem",
+                    maxHeight: "22rem",
                     overflowY: "scroll",
+                    overflowX: "hidden",
                     marginBottom: "0.5rem",
                   }}
                 >
@@ -163,7 +165,7 @@ function Cart() {
                         sx={{
                           padding: "1rem",
                           width: "20rem",
-                          height: "14.5rem",
+                          height: "16.5rem",
                           margin: "1rem 0",
                           border: "1px solid black",
                           borderRadius: "3px",
@@ -198,9 +200,7 @@ function Cart() {
                             <Typography sx={{ textDecoration: "underline" }}>
                               {i.brand}
                             </Typography>
-                            <Typography
-                              sx={{ fontStyle: "italic", whiteSpace: "nowrap" }}
-                            >
+                            <Typography sx={{ fontStyle: "italic" }}>
                               {i.description}
                             </Typography>
                             <select
