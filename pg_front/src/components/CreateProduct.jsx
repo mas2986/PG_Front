@@ -39,8 +39,14 @@ export default function CardProduct(props) {
 
   async function handlePay(e) {
     e.preventDefault();
-    dispatch(mercadoPago({ price: props.price * official }));
-    history.push("/entrega");
+    if (items.some((i) => props.id == i.id)) {
+      dispatch(mercadoPago({ price: props.price * official }));
+      history.push("/entrega");
+    } else {
+      dispatch(addToCart(props.id));
+      dispatch(removeDupsCart(props.id));
+      history.push("/entrega");
+    }
   }
 
   return (

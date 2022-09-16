@@ -132,8 +132,8 @@ export default function FormPropsTextFields() {
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
       setTotalPrice(total);
       // console.log(totalPrice);
-    }
-  }, []);
+    } else setTotalPrice(0);
+  }, [items]);
 
   return (
     <div className={f.form}>
