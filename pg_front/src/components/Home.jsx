@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { getProduct } from "../redux/action";
+import Skeleton from '@mui/material/Skeleton';
 import Nav from "./Nav";
 import home from "../asset/home.png";
 import Section from "./Section";
 import HomePictures from "./HomePictures";
 import CarouselBrands from "./CarouselBrands";
 import $ from "jquery";
-import h from "./Home.module.css";
-import { useHistory } from "react-router-dom";
+import style from "./Home.module.css";
+import Contact from "./Contact"
+import { Link, useHistory } from "react-router-dom";
 window.jquery = window.$ = $;
+
+
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
@@ -29,7 +31,7 @@ export default function Home() {
 
   const jQueryCode = () => {
     $(document).on("scroll", function () {
-      $("h1").css("left", Math.max(40 - 0.2 * window.scrollY, -53) + "vw");
+      $("h1").css("left", Math.max(45 - 0.2 * window.scrollY, -33) + "vw");
     });
   };
 
@@ -51,28 +53,31 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
-  const handleButtonClick = () => {
-    history.push("/products");
-  };
   return (
+    home && allProducts ? (
     <div>
       <Nav />
       <img
+        id={"#"}
         src={home}
         style={{
           width: "100vw",
           height: "100%",
-          marginTop: "-2.5rem",
+          marginTop: "-4rem",
           marginBottom: "1rem",
           borderBottomLeftRadius: "40px",
           borderBottomRightRadius: "40px",
         }}
       />
-      <button className={h.button} onClick={handleButtonClick}>
-        Start Shopping
-      </button>
+      <Link to="/products">
+      <p className={style.button} >
+        Go Shopping
+      </p>
+      </Link>
+      
+      <a href={"#contact"} className={style.contactButton}>Contact Us!</a>
       <div className="scrollingText">
-        <h1
+        <h1 className = {style.homeh1}
         // style={{
         //   width: 2401,
         //   height: 185,
@@ -103,6 +108,10 @@ export default function Home() {
       </center>
 
       <HomePictures />
-    </div>
+
+      <Contact/>
+      
+      
+      </div>) : (<Skeleton variant="rectangular" width={1300} height={1200} />)
   );
 }
