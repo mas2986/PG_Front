@@ -67,9 +67,9 @@ function Cart() {
   }
 
   //keep cart visible while mouse is hovering over it
-  function keepIn() {
-    setCartDisplay(true);
-  }
+  // function keepIn() {
+  //   setCartDisplay(true);
+  // }
 
   //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
@@ -98,16 +98,17 @@ function Cart() {
         <StyledBadge badgeContent={items.length} color="error">
           <ShoppingCartOutlinedIcon
             sx={{ fontSize: "29px", color: "#888787" }}
-            onMouseEnter={keepIn}
+            // onMouseEnter={keepIn}
             // onMouseOut={toggle}
+            onClick={toggle}
           />
         </StyledBadge>
       </div>
       {cartDisplay && (
         <Box
           className={n["cart-container"]}
-          onMouseEnter={keepIn}
-          onMouseLeave={toggle}
+          // onMouseEnter={keepIn}
+          // onMouseLeave={toggle}
           sx={{ marginRight: "4rem" }}
         >
           <Box
