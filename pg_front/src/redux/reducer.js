@@ -30,6 +30,7 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
+  GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
   GET_REVIEWS
 } from "./const";
@@ -65,6 +66,11 @@ export const rootReducer = (state = initialState, action) => {
       }
       case GET_ORDER_BY_ID:
         console.log(action.payload)
+        return{
+          ...state,
+          order: action.payload
+        }
+      case GET_ALL_ORDERS:
         return{
           ...state,
           order: action.payload
