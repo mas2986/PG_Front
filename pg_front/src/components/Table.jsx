@@ -137,7 +137,7 @@ const Example = () => {
         accessorKey: 'title', //accessorFn used to join multiple data into a single cell
         id: 'title', //id is still required when using accessorFn instead of accessorKey
         header: 'Title',
-        size: 240,
+        size: 120,
         Cell: ({ cell, row }) => (
           <Box
             sx={{
@@ -160,7 +160,7 @@ const Example = () => {
       {
         accessorKey: 'brand',
         header: 'Brand',
-        size: 20,
+        size: 40,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -168,7 +168,7 @@ const Example = () => {
       {
         accessorKey: 'genre',
         header: 'Gender',
-        size:20,
+        size:40,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -176,7 +176,7 @@ const Example = () => {
       {
         accessorKey: 'sport',
         header: 'Sport',
-        size:20,
+        size:40,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -184,7 +184,7 @@ const Example = () => {
       {
         accessorKey: 'price',
         header: 'Price',
-        size: 20,
+        size: 30,
         Cell: ({ cell }) => (
           <Box
             sx={(theme) => ({
@@ -216,7 +216,7 @@ const Example = () => {
       {
         accessorKey: 'discount',
         header: 'Discount',
-        size: 20,
+        size: 30,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
           type: 'number',
@@ -234,7 +234,7 @@ const Example = () => {
       {
         accessorKey: 'description',
         header: 'Description',
-        size: 20,
+        size: 60,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -266,10 +266,11 @@ const Example = () => {
       <MaterialReactTable
         displayColumnDefOptions={{
           'mrt-row-actions': {
+            header: 'Edit', //change "Actions" to "Edit"
             muiTableHeadCellProps: {
               align: 'center',
             },
-            size: 50,
+            size: 60,
           },
         }}
         columns={columns}
@@ -277,6 +278,7 @@ const Example = () => {
         initialState={{ columnVisibility: { id: false } }}
         editingMode="modal" //default
         enableColumnOrdering
+        enableColumnResizing
         enableEditing
         onEditingRowSave={handleSaveRowEdits}
         renderRowActions={({ row, table }) => (
