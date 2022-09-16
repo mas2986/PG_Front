@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Menu,
   MenuItem,
   Stack,
   TextField,
@@ -16,7 +17,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
-import { getAllOrders } from '../redux/action';
+import { getAllOrders, changeOrderStatus } from '../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Orders = () => {
@@ -25,7 +26,7 @@ const Orders = () => {
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
   const orders = useSelector(state => state.order);
-  const status = ['canceled','completed']
+  const status = ['cancelled', 'completed']
 
   useEffect(() => {
     if (orders.length === 0 || edit) {
@@ -34,11 +35,11 @@ const Orders = () => {
     setEdit(() => false)
   }, [edit])
 
-
-  const handleStatus = (row, value) =>{
-    row.original.orderStatus = value
-    //const {id, }
-    //dispatch(changeStatus())
+  const handleStatus = (row,value) => {        
+    row.original.orderStatus = value;
+    const {id,orderStatus,email} = row.original;
+    setEdit(true);
+    dispatch(changeOrderStatus(id,orderStatus,email))
   }
 
   const columns = useMemo(
@@ -47,8 +48,8 @@ const Orders = () => {
         accessorKey: 'id',
         header: 'Order number',
         enableColumnOrdering: false,
+        enableFiltering: false,
         enableEditing: false, //disable editing on this column
-        enableSorting: false,
         size: 20,
       },
       {
@@ -87,14 +88,18 @@ const Orders = () => {
           </Tooltip>
           </>
         ),
-        muiTableBodyCellEditTextFieldProps: {
+        muiTableBodyCellEditTextFieldProps: ({cell,row})=>({
           select: true, //change to select for a dropdown
-          children: status.map((e) => (
-            <MenuItem key={e} value={e}>
-              {e}
-            </MenuItem>
-          )),
-        },
+          children:
+            status.map((e) => (
+              <MenuItem key={e} 
+                disabled={cell.getValue()!=="created"}
+                value={e}
+              >
+                {e}
+              </MenuItem>              
+            )),
+        }),
       },
     ],
     [],
@@ -137,9 +142,9 @@ const Orders = () => {
       getRowId={(row) => row.id}
       muiTableBodyCellEditTextFieldProps={({ row }) => ({
         //onBlur is more efficient, but could use onChange instead
-        onBlur: (event) => {
-          handleStatus(row, event.target.value);
-        },
+         onBlur: (event) => {
+           handleStatus(row, event.target.value);
+         },
       })}
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',
