@@ -49,10 +49,10 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(user1)
+  
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
-  
+  console.log(user)
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -80,9 +80,13 @@ export default function Nav(props) {
     const value = e.target.innerText;
     setAnchorElm(null);
     if (value === "Logout" && Object.keys(user1).length !== 0) {
-      dispatch(logoutEmail(history));
-    } else value === "Logout" && isAuthenticated;
-  };
+      return dispatch(logoutEmail(history));
+    }
+    if (value === "Logout" && Object.keys(user).length !== 0) {
+      console.log("hola")
+      return logout();
+    }
+  }
 
   const goHome = () => {
     history.push("/");
@@ -260,7 +264,7 @@ export default function Nav(props) {
                     <>
                       <Tooltip
                         title={
-                          `Logged as ${user1.name}` || `Logged as ${user.name}`
+                          `Logged as ${user.name}` || `Logged as ${user1.name}`
                         }
                       >
                         <img
