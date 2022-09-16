@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CardProduct from "./CreateProduct";
 import { getProduct } from "../redux/action";
+import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
-import Filters from "./Filters";
-import Image from "../asset/home.png";
-import Pagination from "./Pagination";
 import home from "../asset/home.png";
-import h from "./Home.module.css";
-
+import Section from "./Section";
+import HomePictures from "./HomePictures";
 import CarouselBrands from "./CarouselBrands";
+import $ from "jquery";
+import style from "./Home.module.css";
+import Contact from "./Contact";
+import { Link, useHistory } from "react-router-dom";
+window.jquery = window.$ = $;
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
-
-  const pageSize = 6;
+  const history = useHistory();
+  const pageSize = 12;
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
@@ -28,6 +26,16 @@ export default function Home() {
   });
 
   const products = allProducts.slice(pagination.from, pagination.to);
+
+  const jQueryCode = () => {
+    $(document).on("scroll", function () {
+      $("h1").css("left", Math.max(45 - 0.2 * window.scrollY, -33) + "vw");
+    });
+  };
+
+  useEffect(() => {
+    jQueryCode();
+  }, []);
 
   useEffect(() => {
     dispatch(getProduct());
@@ -41,113 +49,68 @@ export default function Home() {
       to: pageSize,
       currentPage: 1,
     });
-    console.log(pagination.from);
-    console.log(pagination.to);
   }, [allProducts.length]);
 
-  return (
+  return home && allProducts ? (
     <div>
       <Nav />
-      <Box
-        sx={{
-          width: "100%",
-          height: "auto",
-          backgroundImage: `url(${Image})`,
-          //borderRadius: 50
-        }}
-      />
       <img
+        id={"#"}
         src={home}
         style={{
           width: "100vw",
           height: "100%",
-          marginTop: "-1rem",
+          marginTop: "-4rem",
           marginBottom: "1rem",
+          borderBottomLeftRadius: "40px",
+          borderBottomRightRadius: "40px",
         }}
       />
-      <CarouselBrands />
-      <Filters />
-      <Typography
-        variant="h1"
-        component="h2"
-        sx={{
-          width: 2401,
-          height: 185,
-          position: "absolute",
-          left: -359,
-          top: 711,
-          fontFamily: "Roboto",
-          fontStyle: "italic",
-          fontWeight: 900,
-          fontSize: 140,
-          lineHeight: 24,
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          letterSpacing: 0.15,
-          color: "#40F99B",
-        }}
-      >
-        {/* Sports Apparel · Footwear · */}
-      </Typography>
-      <Pagination
-        products={products}
-        pagination={pagination}
-        setPagination={setPagination}
-      />
-      <div id="scrollDiv"></div>
-      <Container maxWidth="md">
-        <Box
-          sx={{
-            margin: 1,
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
+      <div>
+        <Link to="/products">
+          <p className={style.button}>Go Shopping</p>
+        </Link>
+      </div>
+      <a href={"#contact"} className={style.contactButton}>
+        Contact Us!
+      </a>
+      <div className="scrollingText">
+        <h1
+          className={style.homeh1}
+          // style={{
+          //   width: 2401,
+          //   height: 185,
+          //   position: "absolute",
+
+          //   top: 511,
+          //   fontFamily: "Roboto",
+          //   fontStyle: "italic",
+          //   fontWeight: 900,
+          //   fontSize: 120,
+          //   lineHeight: 24,
+          //   display: "flex",
+          //   alignItems: "center",
+          //   textAlign: "center",
+          //   letterSpacing: 0.15,
+          //   ,
+
+          // }}
         >
-          {products?.length ? (
-            products.map((e) => (
-              <CardProduct
-                key={e.id}
-                title={e.title[0].toUpperCase() + e.title.substring(1)}
-                sport={e.sport}
-                Image={e.Image || e.image}
-                id={e.id}
-                price={e.price}
-              />
-            ))
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "10rem 0 10rem 2rem",
-              }}
-            >
-              <Typography
-                variant="h4"
-                sx={{ whiteSpace: "nowrap", margin: "5rem 0 2rem 0" }}
-              >
-                No products were found matching your selection
-              </Typography>{" "}
-              <Button
-                color="primary"
-                onClick={() => dispatch(getProduct())}
-                sx={{
-                  display: "block",
-                  margin: "5rem 0 2rem 0",
-                  padding: "0.5rem 1rem",
-                  fontSize: "1rem",
-                  border: "1px solid #000",
-                }}
-              >
-                Refresh
-              </Button>
-            </Box>
-          )}
-        </Box>
-      </Container>
+          Sports Apparel · Footwear · Accesories
+        </h1>
+      </div>
+
+      <CarouselBrands />
+
+      <center>
+        <Section />
+      </center>
+
+      <HomePictures />
+
+      <Contact />
     </div>
+  ) : (
+    <Skeleton variant="rectangular" width={1300} height={1200} />
   );
 }

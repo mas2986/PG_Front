@@ -45,7 +45,7 @@ function validate(input) {
 
 
 const Example = () => {
-  const listProducts = useSelector((state)=>state.products);
+  const listProducts = useSelector((state)=>state.productAdmin);
   const dispatch = useDispatch();
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [tableData, setTableData] = useState(() => listProducts)
@@ -132,13 +132,12 @@ const Example = () => {
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
         enableSorting: true,
-        size: 40,
       }, 
       {
         accessorKey: 'title', //accessorFn used to join multiple data into a single cell
         id: 'title', //id is still required when using accessorFn instead of accessorKey
         header: 'Title',
-        size: 240,
+        size: 120,
         Cell: ({ cell, row }) => (
           <Box
             sx={{
@@ -161,7 +160,7 @@ const Example = () => {
       {
         accessorKey: 'brand',
         header: 'Brand',
-        size: 60,
+        size: 40,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -169,6 +168,15 @@ const Example = () => {
       {
         accessorKey: 'genre',
         header: 'Gender',
+        size:40,
+        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+          ...getCommonEditTextFieldProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'sport',
+        header: 'Sport',
+        size:40,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -176,14 +184,14 @@ const Example = () => {
       {
         accessorKey: 'price',
         header: 'Price',
-        size: 60,
+        size: 30,
         Cell: ({ cell }) => (
           <Box
             sx={(theme) => ({
               backgroundColor:
-                cell.getValue() < 50_000
+                cell.getValue() < 15
                   ? theme.palette.error.dark
-                  : cell.getValue() >= 50_000 && cell.getValue() < 75_000
+                  : cell.getValue() >= 15 && cell.getValue() < 50
                   ? theme.palette.warning.dark
                   : theme.palette.success.dark,
               borderRadius: '0.25rem',
@@ -208,7 +216,7 @@ const Example = () => {
       {
         accessorKey: 'discount',
         header: 'Discount',
-        size: 40,
+        size: 30,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
           type: 'number',
@@ -217,7 +225,7 @@ const Example = () => {
       {
         accessorKey: 'stock',
         header: 'Stock',
-        size: 40,
+        size: 20,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
           type: 'number',
@@ -226,7 +234,7 @@ const Example = () => {
       {
         accessorKey: 'description',
         header: 'Description',
-        size: 40,
+        size: 60,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -258,16 +266,19 @@ const Example = () => {
       <MaterialReactTable
         displayColumnDefOptions={{
           'mrt-row-actions': {
+            header: 'Edit', //change "Actions" to "Edit"
             muiTableHeadCellProps: {
               align: 'center',
             },
-            size: 120,
+            size: 60,
           },
         }}
         columns={columns}
         data={listProducts}
+        initialState={{ columnVisibility: { id: false } }}
         editingMode="modal" //default
         enableColumnOrdering
+        enableColumnResizing
         enableEditing
         onEditingRowSave={handleSaveRowEdits}
         renderRowActions={({ row, table }) => (
@@ -294,74 +305,15 @@ const Example = () => {
           </Button>
         )}
       />
-      <CreateNewAccountModal
-        columns={columns}
+      <FormProduct
         open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        onSubmit={handleCreateNewRow}
+        onClose={() => setCreateModalOpen(false)}  
+        setEdit={setEdit}      
       />
     </>
   );
 };
 
-//example of creating a mui dialog modal for creating new rows
-export const CreateNewAccountModal = ({ open, columns, onClose, onSubmit }) => {
-  //if(Objects.values(columns).filter(column))
-  useEffect(()=>{
-    let image = {
-      accessorKey:'image',
-      name:'image',
-      header:'Image'      
-    }
-    columns.unshift(image);
-  },[])
-
-  const [values, setValues] = useState(() =>
-    columns.reduce((acc, column) => {
-      acc[column.accessorKey ?? ''] = '';
-      return acc;
-    }, {}),
-  );
-
-  const [error, setErrors] = useState({})
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-    let errorsValidate = validate({ ...values, [e.target.name]: e.target.value })
-    setErrors(() => errorsValidate);
-  }
-
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();    
-    dispatch(createProduct(values))
-    onClose();
-  };
-  
-  return (
-    <Dialog open={open}>
-      <DialogTitle textAlign="center" >Create New Product</DialogTitle>
-      <DialogContent>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Stack
-            sx={{
-              width: '100%',
-              minWidth: { xs: '300px', sm: '360px', md: '400px' },
-              gap: '1.5rem',
-            }}
-          >
-            <FormProduct onClose={onClose}/>
-          </Stack>
-        </form>
-      </DialogContent>      
-    </Dialog>
-  );
-};
 
 const validateRequired = (value) => !!value.length;
 const validateEmail = (email) =>

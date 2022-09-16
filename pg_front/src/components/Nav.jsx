@@ -1,12 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
-import AppBar from "@mui/material/AppBar";
+import { AppBar, Button } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Slide from "@mui/material/Slide";
+import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
 import carrito from "../carrito.png";
@@ -17,11 +19,16 @@ import { StyledEngineProvider } from "@mui/material/styles";
 import n from "./Nav.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { filterByGenderInNav, getProduct } from "../redux/action";
+import {
+  filterByGenderInNav,
+  getProduct,
+  logout as logoutEmail,
+} from "../redux/action";
 import Cart from "./Cart";
-import Logout from "./Logout";
-import { useAuth0 } from "@auth0/auth0-react"
+//import Logout from "./Logout";
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./LoginAuth0";
+import { useHistory } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -37,27 +44,49 @@ function HideOnScroll(props) {
 }
 
 export default function Nav(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  console.log("user", user);
+  const [anchorElm, setAnchorElm] = React.useState(null);
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const user1 = useSelector((state) => state.user);
+  console.log(user1)
+  const [log, setLog] = useState(true);
+  const { isAuthenticated, logout, user } = useAuth0();
+  
   const handleClick = (e) => {
-    console.log(e.target.value);
+    history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
   };
-
-  const [log, setLog] = useState(true);
-  const { isAuthenticated } = useAuth0();
   const resetFilters = () => {
     dispatch(getProduct());
   };
 
-  function handleSubmit() {
-    console.log(user);
-    if (Object.keys(user).length > 0) {
-      addEventListener.location.reload();
-      history.push("/home");
-    }
+  /*   function handleSubmit() {
+      console.log(user1);
+      if (Object.keys(user1).length > 0) {
+        addEventListener.location.reload();
+        history.push("/home");
+      }
+    } */
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setAnchorElm(e.currentTarget);
+    setOpenMenu(true);
   }
+
+  const handleClose = (e) => {
+    setOpenMenu(false);
+    const value = e.target.innerText;
+    setAnchorElm(null);
+    if (value === "Logout" && Object.keys(user1).length !== 0) {
+      dispatch(logoutEmail(history));
+    } else value === "Logout" && isAuthenticated;
+  };
+
+  const goHome = () => {
+    history.push("/");
+  };
 
   return (
     <>
@@ -67,13 +96,8 @@ export default function Nav(props) {
           <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
             <Toolbar className={n.container}>
               <Box display="flex" className={n["logo-container"]}>
-                <Tooltip title={"Refresh filters"}>
-                  <img
-                    src={logo}
-                    alt=""
-                    onClick={resetFilters}
-                    className={n.reset}
-                  />
+                <Tooltip title={"Go Home"}>
+                  <img src={logo} alt="" onClick={goHome} className={n.reset} />
                 </Tooltip>
                 <Tooltip title={"Refresh filters"}>
                   <Typography
@@ -221,41 +245,120 @@ export default function Nav(props) {
                 </div>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Box display="flex">
+                <Box>
                   <SearchBar />
                 </Box>
-                <Box
-                  className={n["login-container"]}
-                  display="flex"
-                  sx={{ alignItems: "center", justifyContent: "center" }}
-                > 
-                  { isAuthenticated ? <Logout/> : <LoginAuth0/>}
-                  <Cart />
-                  <Link to="/login">
-                    <Tooltip
+                <Cart />
+                <Box className={n["login-container"]} display="flex">
+                  {!isAuthenticated && Object.keys(user1).length === 0 ? (
+                    <Link to="/login">
+                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                        Sign In
+                      </Button>
+                    </Link>
+                  ) : user1.image || isAuthenticated ? (
+                    <>
+                      <Tooltip
+                        title={
+                          `Logged as ${user1.name}` || `Logged as ${user.name}`
+                        }
+                      >
+                        <img
+                          alt="avatar"
+                          height={30}
+                          width={30}
+                          src={user1.image || user.image}
+                          loading="lazy"
+                          style={{ borderRadius: "50%" }}
+                          onClick={handleSubmit}
+                        />
+                      </Tooltip>
+                      <Menu
+                        open={openMenu}
+                        anchorEl={anchorElm}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Divider />
+                        <MenuItem name="balance" onClick={handleClose}>
+                          Logout
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  ) : (
+                    <>
+                      <Tooltip
+                        title={
+                          `Logged as ${user1.name}` || `Logged as ${user.name}`
+                        }
+                      >
+                        <AccountCircleIcon
+                          onClick={handleSubmit}
+                          sx={{
+                            color:'gray',
+                            fontSize: "large",
+                            marginBottom: "0.5rem",
+                            width: "30px",
+                            height: "30px",
+                            marginRight: "1rem",
+                          }}
+                        />
+                      </Tooltip>
+                      <Menu
+                        open={openMenu}
+                        anchorEl={anchorElm}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Divider />
+                        <MenuItem name="balance" onClick={handleClose}>
+                          Logout
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  )}
+                  {/* <Tooltip
+                  title={`${
+                    Object.keys(user1).length !== 0
+                      ? `Logged as ${user1.name}`
+                      : "Go Login"
+                    }`}> */}
+                  {/* <Tooltip
                       title={`${
                         Object.keys(user).length !== 0
                           ? `Logged as ${user.name}`
                           : "Go Login"
-                      }`}
-                    > 
-          
-                      <AccountCircleIcon
-                        onClick={(e) => handleSubmit(e)}
-                        sx={{
-                          fontSize: "large",
-                          color: `${
-                            Object.keys(user).length !== 0
-                              ? "#0000FF"
-                              : "#888787"
-                          }`,
-                          marginTop: "0.5rem",
-                          width: "30px",
-                          height: "30px",
-                        }}
-                      />
+                      }`}/> */}
+
+                  {/*  <AccountCircleIcon
+                    onClick={(e) => handleSubmit(e)}
+                    sx={{
+                      fontSize: "large",
+                      color: `${
+                        Object.keys(user1).length !== 0
+                          ? "#0000FF"
+                          : "#888787"
+                        }`,
+                      marginBottom: "0.5rem",
+                      width: "30px",
+                      height: "30px",
+                      marginRight: "1rem",
+                    }}
+                  />
+                </Tooltip>
+                <Menu open={openMenu} anchorEl={anchorElm} onClose={handleClose} >
+                  <MenuItem>
+                    <Tooltip title="Continue with email">
+                      <Link to='/login'>
+                        <MailIcon sx={{ color: 'black' }} />
+                      </Link>
                     </Tooltip>
-                  </Link>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem name="balance" onClick={handleClose} ><LoginAuth0 className={n.google} /></MenuItem>
+                </Menu>
+ */}
+                  {/* {isAuthenticated ? <Logout className={n.google} /> : } */}
                 </Box>
               </Box>
             </Toolbar>

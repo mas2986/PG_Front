@@ -8,3 +8,21 @@
 .btn-form {
   margin: 20px;
 }
+
+a {
+  text-decoration: none;
+}
+
+.cartItemsList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.cartItemsList li {
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+
+.cardMedia:hover {
+  cursor: pointer;
+}

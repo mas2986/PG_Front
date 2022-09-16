@@ -1,7 +1,7 @@
 .input-detail {
   background-color: #d9d9d9;
   padding: 4px 50px 4px 4px;
-  padding-right: 50px;
+  padding-right: 30px;
   padding-bottom: 9px;
   border-radius: 2px;
   margin-top: 20px;
@@ -23,11 +23,15 @@
 
 .search-container {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: max-content;
   align-items: center;
   margin-bottom: 1rem;
 }
 
 .input-detail {
+  order:1;
   margin-bottom: 1rem;
   padding-top: 10px;
   font-size: 1rem;
@@ -43,12 +47,8 @@
 
 .search-icon {
   transition: all 0.5s;
-  justify-content: flex-start;
+  order:2;
   color: #888787;
-}
-
-.input-btn {
-  display: flex;
 }
 
 .search-icon:hover {

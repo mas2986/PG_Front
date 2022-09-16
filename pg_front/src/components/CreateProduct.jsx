@@ -8,15 +8,17 @@ import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CardContent from "@mui/material/CardContent";
-import { addToCart, removeDupsCart } from "../redux/action";
+import { addToCart, removeDupsCart, mercadoPago } from "../redux/action";
 import plop from "../asset/plop.mp3";
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function CardProduct(props) {
   const [translate, setTranslate] = React.useState("");
   const items = useSelector((state) => state.cartItems);
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const history = useHistory();
+  let official = 149;
 
   const styles = {
     position: "relative",
@@ -33,6 +35,18 @@ export default function CardProduct(props) {
     new Audio(plop).play();
     dispatch(addToCart(props.id));
     dispatch(removeDupsCart(props.id));
+  }
+
+  async function handlePay(e) {
+    e.preventDefault();
+    if (items.some((i) => props.id == i.id)) {
+      dispatch(mercadoPago({ price: props.price * official }));
+      history.push("/entrega");
+    } else {
+      dispatch(addToCart(props.id));
+      dispatch(removeDupsCart(props.id));
+      history.push("/entrega");
+    }
   }
 
   return (
@@ -55,7 +69,7 @@ export default function CardProduct(props) {
         image={props.Image}
         alt={props.title}
         sx={{ position: "relative" }}
-        className={h.cardmedia}
+        className={props.stock > 0 ? "" : h.outOfStock}
       />
       <Typography className={h.price} sx={styles}>
         ${props.price}.00
@@ -71,16 +85,31 @@ export default function CardProduct(props) {
         </Box>
       </CardContent>
       <CardActions>
-        <Button href={"/entrega"} size="small">
-          BUY
-        </Button>
-        <Button size="small" onClick={addCart}>
+        {props.stock > 0 ? (
+          <Button
+            onClick={(e) => handlePay(e)}
+            href={"/entrega"}
+            size="small"
+            // className={props.stock < 1 ? h.buyBtnStock : ""}
+          >
+            BUY
+          </Button>
+        ) : (
+          <h3
+            style={{ color: "red", whiteSpace: "nowrap", marginLeft: "1rem" }}
+          >
+            OUT OF STOCK
+          </h3>
+        )}
+        <Button
+          size="small"
+          onClick={addCart}
+          className={props.stock < 1 ? h.stockNoShow : h.stockShow}
+        >
           ADD TO CART
         </Button>
         <Link to={`/detail/${props.id}`}>
-        <Button size="small">
-          DETAIL
-        </Button>
+          <Button size="small">DETAIL</Button>
         </Link>
         {/* target="_blank" */}
       </CardActions>

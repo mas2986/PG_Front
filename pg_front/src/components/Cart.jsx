@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Link } from "react-router-dom";
+import FormPropsTextFields from "./Formulario";
+import { Link, useHistory } from "react-router-dom";
 import {
   deleteFromCart,
   deleteAllFromCart,
   sendItemNum,
+  mercadoPago,
   removeDupsCart,
   fetchCartItems,
 } from "../redux/action";
@@ -33,9 +35,11 @@ function Cart() {
   //local state for forcing a re-render of the price
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
+  const history = useHistory();
+  let official = 149;
 
   //bring in the global state.cartItems
-  let items = useSelector((state) => state.cartItems);
+  let items = useSelector((state) => state.cartItems); // [{},{}]
   let detail = useSelector((state) => state.detail);
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
   if (items.length == 0) {
@@ -43,7 +47,19 @@ function Cart() {
       JSON.parse(localStorage.getItem("items")) == null
         ? []
         : JSON.parse(localStorage.getItem("items"));
-    console.log("getting items: " + items);
+  }
+
+  let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    totalPrice += items[i].price;
+  }
+
+  function handlePay(e) {
+    e.preventDefault();
+    dispatch(mercadoPago({ price: totalPrice * official }));
+
+    history.push("/entrega");
+    localStorage.setItem("itemsForm", JSON.stringify(items));
   }
 
   function toggle() {
@@ -51,13 +67,12 @@ function Cart() {
   }
 
   //keep cart visible while mouse is hovering over it
-  function keepIn() {
-    setCartDisplay(true);
-  }
+  // function keepIn() {
+  //   setCartDisplay(true);
+  // }
 
   //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
   function deleteItem(idxRemoval) {
-    console.log(idxRemoval);
     dispatch(deleteFromCart(idxRemoval));
     if (items.length == 1) {
       localStorage.removeItem("items");
@@ -74,7 +89,6 @@ function Cart() {
   useEffect(() => {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
-      console.log("setting items: " + items + localStorage.items[0]);
     }
   }, [items]);
 
@@ -84,16 +98,17 @@ function Cart() {
         <StyledBadge badgeContent={items.length} color="error">
           <ShoppingCartOutlinedIcon
             sx={{ fontSize: "29px", color: "#888787" }}
-            onMouseEnter={keepIn}
+            // onMouseEnter={keepIn}
             // onMouseOut={toggle}
+            onClick={toggle}
           />
         </StyledBadge>
       </div>
       {cartDisplay && (
         <Box
           className={n["cart-container"]}
-          onMouseEnter={keepIn}
-          onMouseLeave={toggle}
+          // onMouseEnter={keepIn}
+          // onMouseLeave={toggle}
           sx={{ marginRight: "4rem" }}
         >
           <Box
@@ -103,7 +118,10 @@ function Cart() {
             }}
           >
             {items.length ? (
-              <Box display="flex" sx={{ alignItems: "center" }}>
+              <Box
+                display="flex"
+                sx={{ alignItems: "center", minWidth: "20rem" }}
+              >
                 <Typography
                   align="left"
                   variant="h5"
@@ -134,8 +152,9 @@ function Cart() {
               <Box>
                 <Box
                   sx={{
-                    maxHeight: "30rem",
+                    maxHeight: "22rem",
                     overflowY: "scroll",
+                    overflowX: "hidden",
                     marginBottom: "0.5rem",
                   }}
                 >
@@ -146,7 +165,7 @@ function Cart() {
                         sx={{
                           padding: "1rem",
                           width: "20rem",
-                          height: "14.5rem",
+                          height: "16.5rem",
                           margin: "1rem 0",
                           border: "1px solid black",
                           borderRadius: "3px",
@@ -181,9 +200,7 @@ function Cart() {
                             <Typography sx={{ textDecoration: "underline" }}>
                               {i.brand}
                             </Typography>
-                            <Typography
-                              sx={{ fontStyle: "italic", whiteSpace: "nowrap" }}
-                            >
+                            <Typography sx={{ fontStyle: "italic" }}>
                               {i.description}
                             </Typography>
                             <select
@@ -237,10 +254,11 @@ function Cart() {
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
                   <Link
-                    to="/entrega"
+                    // to="/entrega"
                     style={{ textDecoration: "none", fontStyle: "none" }}
                   >
                     <Button
+                      onClick={(e) => handlePay(e)}
                       sx={{
                         margin: "0.5rem",
                         border: "1px solid #000",
@@ -252,7 +270,16 @@ function Cart() {
                 </Box>
               </Box>
             ) : (
-              <Typography>There are no items in the cart</Typography>
+              <Typography
+                sx={{
+                  whiteSpace: "nowrap",
+                  width: "12rem",
+                  marginRight: "5rem",
+                  marginTop: "1rem",
+                }}
+              >
+                There are no items in the cart
+              </Typography>
             )}
           </Box>
         </Box>
