@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
+import { getAllOrders } from '../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Orders = () => {
@@ -23,36 +24,78 @@ const Orders = () => {
   const [edit, setEdit] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
-  const orders = useSelector(state=>state.order);
+  const orders = useSelector(state => state.order);
+  const status = ['canceled','completed']
 
   useEffect(() => {
-    if (edit) {
-      //dispatch(getAllUsers());
+    if (orders.length === 0 || edit) {
+      dispatch(getAllOrders());
     }
     setEdit(() => false)
   }, [edit])
 
-  
-   const columns = useMemo(
+
+  const handleStatus = (row, value) =>{
+    row.original.orderStatus = value
+    //const {id, }
+    //dispatch(changeStatus())
+  }
+
+  const columns = useMemo(
     () => [
       {
         accessorKey: 'id',
-        header: 'ID',
+        header: 'Order number',
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
         enableSorting: false,
-        size: 80,
+        size: 20,
       },
       {
-        accesorKey: 'orderStatus', //accessorFn used to join multiple data into a single cell        
-        header: 'Status',
-        size: 50,       
+        accessorKey: 'email',
+        header: 'User',
+        enableEditing: false,
       },
       {
         accessorKey: 'adressShipping',
         header: 'Address Shipping',
         enableEditing: false,
-      },      
+      },
+      {
+        accessorKey: 'orderStatus',
+        header: 'Status',
+        size: 50,
+        Cell: ({ cell }) => (
+          <>
+          <Tooltip title="Double click for edit">
+            <Box
+              sx={(theme) => ({
+                backgroundColor:
+                  cell.getValue() === 'cancelled'
+                    ? theme.palette.error.dark
+                    : cell.getValue() === 'created'
+                      ? theme.palette.warning.dark
+                      : theme.palette.success.dark,
+                borderRadius: '0.25rem',
+                color: '#fff',
+                maxWidth: '9ch',
+                p: '0.25rem',
+              })}
+            >
+              {cell.getValue()}
+            </Box>
+          </Tooltip>
+          </>
+        ),
+        muiTableBodyCellEditTextFieldProps: {
+          select: true, //change to select for a dropdown
+          children: status.map((e) => (
+            <MenuItem key={e} value={e}>
+              {e}
+            </MenuItem>
+          )),
+        },
+      },
     ],
     [],
   );
@@ -70,7 +113,7 @@ const Orders = () => {
       }}
       columns={columns}
       data={orders}
-      initialState={{ columnVisibility: { id: false } }}
+      //initialState={{ columnVisibility: { id: false } }}
       positionRowActions="right"
       /* muiTableHeadCellProps={{
         sx: {
@@ -83,75 +126,26 @@ const Orders = () => {
              backgroundColor:'#9c9c9c'
            }
          }} */
+      editingMode="cell"
+      enableEditing
+      enableRowSelection
+      enableMultiRowSelection={false}
+      enableSelectAll={false}
+      onRowSelectionChange={setRowSelection}
+      state={{ rowSelection }}
       getRowId={(row) => row.id}
+      getRowId={(row) => row.id}
+      muiTableBodyCellEditTextFieldProps={({ row }) => ({
+        //onBlur is more efficient, but could use onChange instead
+        onBlur: (event) => {
+          handleStatus(row, event.target.value);
+        },
+      })}
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',
         disabled: row.original.isAccountLocked,
       })}
       enableColumnOrdering
-      renderTopToolbarCustomActions={({ table }) => {
-        const handleLock = () => {
-          table.getSelectedRowModel().flatRows.map((row) => {
-            console.log(row.index);
-            alert('Lock ' + row.getValue('name'));
-          });
-        };
-
-        const handleRole = () => {
-          table.getSelectedRowModel().flatRows.map((row, values) => {
-            if (row.original.rol !== 'admin') row.original.rol = "admin";
-            else row.original.rol = 'user';
-            //Guarda los datos a enviar al back;
-            const { id, ...body } = row.original;
-            //setTableData([...tableData]);
-            Swal.fire({
-              title: `Do you want change ${row.original.rol} to ${row.getValue('name')}?`,
-              text: "You can be able to revert this!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, change role!'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                dispatch(changeRoleUser(id, body))
-                setEdit(() => true);
-                Swal.fire(
-                  'Role changed!',
-                  `${row.original.name} now is ${row.original.rol}`,
-                  'success'
-                )
-              }
-            })
-          });
-        };
-
-        const handleOrder = () => {
-          table.getSelectedRowModel().flatRows.map((row) => {
-          });
-        };
-
-        return (
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Button
-              color="error"
-              disabled={table.getSelectedRowModel().flatRows.length === 0}
-              onClick={handleRole}
-              variant="contained"
-            >
-              CHANGE ROLE
-              </Button>
-            <Button
-              color="info"
-              disabled={table.getSelectedRowModel().flatRows.length === 0}
-              onClick={handleOrder}
-              variant="contained"
-            >
-              USER'S ORDERS
-              </Button>
-          </Box>
-        );
-      }}      
     />
     </>
   );
