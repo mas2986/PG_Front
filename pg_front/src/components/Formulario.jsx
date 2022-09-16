@@ -1,5 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import Swal from "sweetalert2";
@@ -11,7 +14,9 @@ import Nav2 from "./Nav2.jsx";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action"
+
 
 
 export default function FormPropsTextFields({props}) {
@@ -19,6 +24,7 @@ export default function FormPropsTextFields({props}) {
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
+  const [totalPrice, setTotalPrice] = React.useState(0);
   let items = useSelector((state) => state.cartItems);
   console.log(items)
   const user1 = useSelector((state) => state.user);
@@ -144,7 +150,15 @@ export default function FormPropsTextFields({props}) {
         : JSON.parse(localStorage.getItem("items"));
   }
 
-  console.log(items[0].image);
+  useEffect(() => {
+    if (items.length > 0) {
+      let prices = [];
+      let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
+      let total = priceEach.reduce((a, b) => Number(a) + Number(b));
+      setTotalPrice(total);
+      // console.log(totalPrice);
+    }
+  }, []);
 
   return (
     <div className={f.form}>
@@ -345,13 +359,101 @@ export default function FormPropsTextFields({props}) {
               label="ID"
               //      defaultValue="Hello World"
             /> */}
+            <div className="btn-form">
+              <Link to="/">
+                <Button
+                  // href="/"
+                  variant="contained"
+                  className="btn-form"
+                  color="primary"
+                  sx={{
+                    margin: "2rem 0 0 4rem",
+                    // borderRadius: "50%",
+                    height: "3rem",
+                  }}
+                >
+                  HOME
+                </Button>
+              </Link>
+            </div>
           </div>
+
           <Checkbox
             defaultChecked
             color="primary"
             inputProps={{ "aria-label": "secondary checkbox" }}
             sx={{ visibility: "hidden" }}
           />
+        </Box>
+        <Box>
+          <Typography
+            variant="h4"
+            color="primary"
+            align="center"
+            sx={{ marginTop: "1rem" }}
+          >
+            Your Order
+          </Typography>
+          <Box
+            sx={{
+              marginTop: "2rem",
+              marginBottom: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {items.map((i) => {
+              return (
+                <Box sx={{ marginBottom: "2rem" }}>
+                  <Card
+                    sx={{
+                      maxHeight: "10rem",
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                    }}
+                    onClick={() => history.push(`/detail/${i.id}`)}
+                    className={f.cardMedia}
+                  >
+                    <CardMedia
+                      component="img"
+                      width="1rem"
+                      height="150"
+                      image={i.image}
+                      alt={i.title[0].toUpperCase() + i.title.substring(1)}
+                      sx={{ position: "relative" }}
+                    />
+
+                    <CardContent sx={{ width: "30rem" }}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {i.title}
+                      </Typography>
+                      <Typography>${i.price * i.qty}.00</Typography>
+                      <Typography
+                        flexGrow={1}
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ marginTop: "1.5rem" }}
+                      >
+                        Number of items: {i.qty}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              );
+            })}
+          </Box>
+
+          {totalPrice > 0 ? (
+            <Typography variant="h4" color="primary" textAlign="center">
+              Total: ${totalPrice}.00
+            </Typography>
+          ) : (
+            <Typography variant="h5" color="primary" textAlign="center">
+              No Items Selected
+            </Typography>
+          )}
           {errors.name ||
           errors.apellido ||
           errors.calle ||
@@ -361,7 +463,7 @@ export default function FormPropsTextFields({props}) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : (
+          ) : totalPrice > 0 ? (
             <Button
               variant="contained"
               color="primary"
@@ -369,66 +471,19 @@ export default function FormPropsTextFields({props}) {
               onClick={(e) => handleButton(e)}
               disableElevation
               sx={{
-                width: "76%",
+                width: "40rem",
                 height: "3rem",
-                marginLeft: "12px",
+                // marginRigth: "12px",
                 marginTop: "2rem",
               }}
             >
               BUY
             </Button>
+          ) : (
+            <p></p>
           )}
         </Box>
-        <Box>
-          <Typography variant="h4" color="primary" align="center">
-            Your Order
-          </Typography>
-          <Box sx={{ marginTop: "2rem" }}>
-            {items.map((i) => {
-              return (
-                <Box
-                  sx={{
-                    border: "1px solid #000",
-                    borderRadius: "5px",
-                    heigth: "20rem",
-                    width: "40rem",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <ul
-                    style={{ lineHeight: 1.5, listStyle: "none" }}
-                    className={f.cartItemsList}
-                  >
-                    <li>{i.title}</li>
-                    <li>${i.price * i.qty}.00</li>
-                    <li>Number of items: {i.qty}</li>
-                  </ul>
-                  <img src={i.image} width="250px" height="300px" />
-                </Box>
-              );
-            })}
-          </Box>
-        </Box>
       </Box>
-      <div className="btn-form">
-        <Link to="/">
-          <Button
-            // href="/"
-            variant="contained"
-            className="btn-form"
-            color="primary"
-            sx={{
-              margin: "3rem 0 0 4rem",
-              // borderRadius: "50%",
-              height: "3rem",
-            }}
-          >
-            HOME
-          </Button>
-        </Link>
-      </div>
     </div>
   );
 }
