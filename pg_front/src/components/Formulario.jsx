@@ -15,18 +15,16 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
-import { createOrder } from "../redux/action"
+import { createOrder } from "../redux/action";
 
-
-
-export default function FormPropsTextFields({props}) {
+export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
   let items = useSelector((state) => state.cartItems);
-  console.log(items)
+  console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -46,14 +44,13 @@ export default function FormPropsTextFields({props}) {
     email: "",
     cp: "",
   });
-  
+
   let totalItems = 0;
-  let totalPrice = 0;
   for (let i = 0; i < items.length; i++) {
     totalItems += items[i].qty;
-    totalPrice += items[i].price;
+    // totalPrice += items[i].price;
   }
-  const productsId = items.map( p => p.id)
+  const productsId = items.map((p) => p.id);
 
   const [order, setOrder] = React.useState({
     productId: productsId,
@@ -61,10 +58,10 @@ export default function FormPropsTextFields({props}) {
     orderStatus: "created",
     totalPrice: totalPrice,
     email: user1.email,
-    userId: user1.id
+    userId: user1.id,
   });
 
-  console.log(order)
+  console.log(order);
 
   const handleButton = async (event) => {
     if (texto.name.length < 3 || texto.name.length > 10) {
@@ -128,11 +125,9 @@ export default function FormPropsTextFields({props}) {
     }
     dispatch(createOrder(order));
     setTimeout(function () {
-      console.log("Envié la or")
+      console.log("Envié la or");
       window.location.replace(url);
-    }, 1000)
-    
-    
+    }, 1000);
   };
 
   function stateInput(e) {
