@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useParams } from "react-router-dom";
-import { detailProduct, addToCart, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
+import { detailProduct, addToCart, createOrder, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
@@ -20,6 +20,7 @@ export default function Detail() {
   const history = useHistory();
 
   const users =  useSelector((state) => state.users);
+  console.log(users)
 
   let official = 149;
 
@@ -29,11 +30,11 @@ export default function Detail() {
     dispatch(detailProduct(id));
     dispatch(getReviews())
     dispatch(getAllUsers())
+    dispatch(createOrder())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
 
-  console.log(users)
 
 
   function addCart() {
