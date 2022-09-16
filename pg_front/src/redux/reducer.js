@@ -30,6 +30,8 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
+  GET_ALL_ORDERS,
+  CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
   GET_REVIEWS,
   CREATE_ORDER
@@ -76,6 +78,15 @@ export const rootReducer = (state = initialState, action) => {
           ...state,
           order: action.payload
         }
+      case GET_ALL_ORDERS:
+        return{
+          ...state,
+          order: action.payload
+        }
+      case CHANGE_STATUS_ORDER:
+        return {
+          ...state,
+        };
       case RESET_PASSWORD:
           return {
           ...state,
