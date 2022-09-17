@@ -11,8 +11,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
-import carrito from "../carrito.png";
-import login from "../login.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -49,7 +47,7 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(user1)
+  
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
   
@@ -83,6 +81,12 @@ export default function Nav(props) {
       dispatch(logoutEmail(history));
     } else value === "Logout" && isAuthenticated;
   };
+
+  const handleProfile = (e) => {
+    e.preventDefault();
+    console.log(e.target.innerText)
+    history.push("/profile")
+  }
 
   const goHome = () => {
     history.push("/");
@@ -278,7 +282,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
@@ -309,7 +313,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout

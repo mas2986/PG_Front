@@ -14,7 +14,8 @@ export default function Contact(){
 
         <Box id={"contact"} sx={{
             display: "flex",
-            justifyContent: "space-around"
+            justifyContent: "space-around",
+            flexWrap:"wrap",
         }}>
         
         <div style={{

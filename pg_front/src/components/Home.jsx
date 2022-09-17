@@ -66,35 +66,24 @@ export default function Home() {
           borderBottomRightRadius: "40px",
         }}
       />
-      <div>
+      <div style={{
+        display:"flex",
+        flexDirection:"column",
+        position: "absolute",
+        top: "14%",
+        left: "8rem"
+      }}>
         <Link to="/products">
           <p className={style.button}>Go Shopping</p>
         </Link>
-      </div>
+      
       <a href={"#contact"} className={style.contactButton}>
         Contact Us!
       </a>
+      </div>
       <div className="scrollingText">
         <h1
           className={style.homeh1}
-          // style={{
-          //   width: 2401,
-          //   height: 185,
-          //   position: "absolute",
-
-          //   top: 511,
-          //   fontFamily: "Roboto",
-          //   fontStyle: "italic",
-          //   fontWeight: 900,
-          //   fontSize: 120,
-          //   lineHeight: 24,
-          //   display: "flex",
-          //   alignItems: "center",
-          //   textAlign: "center",
-          //   letterSpacing: 0.15,
-          //   ,
-
-          // }}
         >
           Sports Apparel · Footwear · Accesories
         </h1>
