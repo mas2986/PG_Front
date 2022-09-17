@@ -267,7 +267,7 @@ export default function Nav(props) {
                           ?
                           `Logged as ${user1.name}`
                           :
-                          `Logged as ${use.name}`
+                          `Logged as ${user.name}`
                         }
                       >
                         <img
