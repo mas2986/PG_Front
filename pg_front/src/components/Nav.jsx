@@ -49,7 +49,7 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  
+  console.log(user1)
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
   const handleClick = (e) => {
@@ -263,7 +263,11 @@ export default function Nav(props) {
                     <>
                       <Tooltip
                         title={
-                          `Logged as ${user.name}` || `Logged as ${user1.name}`
+                          user1
+                          ?
+                          `Logged as ${user1.name}`
+                          :
+                          `Logged as ${use.name}`
                         }
                       >
                         <img
