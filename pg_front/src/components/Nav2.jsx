@@ -15,6 +15,7 @@ import n from "./Nav2.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cart from "./Cart";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -29,8 +30,12 @@ function HideOnScroll(props) {
   );
 }
 
+
+
 export default function Nav(props) {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const { user } = useAuth0();
+  console.log(user)
 
   return (
     <>
