@@ -51,55 +51,66 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
-  return home && allProducts ? (
+  return (
+    
     <div>
       <Nav />
-      <img
-        id={"#"}
-        src={home}
-        style={{
-          width: "100vw",
-          height: "100%",
-          marginTop: "-4rem",
-          marginBottom: "1rem",
-          borderBottomLeftRadius: "40px",
-          borderBottomRightRadius: "40px",
-        }}
-      />
-      <div style={{
-        display:"flex",
-        flexDirection:"column",
-        position: "absolute",
-        top: "14%",
-        left: "8rem"
-      }}>
-        <Link to="/products">
-          <p className={style.button}>Go Shopping</p>
-        </Link>
-      
-      <a href={"#contact"} className={style.contactButton}>
-        Contact Us!
-      </a>
-      </div>
-      <div className="scrollingText">
-        <h1
-          className={style.homeh1}
-        >
-          Sports Apparel · Footwear · Accesories
-        </h1>
-      </div>
 
-      <CarouselBrands />
+        {home && allProducts ? (
 
-      <center>
-        <Section />
-      </center>
+          <div>
+            <img
+              id={"#"}
+              src={home}
+              style={{
+                width: "100vw",
+                height: "100%",
+                marginTop: "-4rem",
+                marginBottom: "0",
+                borderBottomLeftRadius: "40px",
+                borderBottomRightRadius: "40px",
+              }}
+            />
+            
+            <h1
+              className={style.homeh1 + " scrollingText"}
+            >
+            Sports Apparel · Footwear · Accesories
+            </h1>
+          
+          
+            <div style={{
+              display:"flex",
+              flexDirection:"column",
+              position: "absolute",
+              top: "14%",
+              left: "8rem"
+            }}>
+              <Link to="/products">
+                <p className={style.button}>Go Shopping</p>
+              </Link>
+            
+            <a href={"#contact"} className={style.contactButton}>
+              Contact Us!
+            </a>
+            </div>
 
-      <HomePictures />
+            <CarouselBrands />
 
-      <Contact />
+            <center>
+              <Section />
+            </center>
+
+            <HomePictures />
+
+            <Contact />
+          </div>
+
+          ) : (
+            <Skeleton variant="rectangular" width={1300} height={1200} />
+          )
+          
+          }
+
     </div>
-  ) : (
-    <Skeleton variant="rectangular" width={1300} height={1200} />
-  );
-}
+)}

@@ -42,7 +42,7 @@ function CarouselBrands() {
   return (
     <div
       className="carouselbrands"
-      style={{ margin: "5rem 2.5rem 2rem 2.5rem", position:"relative" }}
+      style={{ margin: "-4rem 2.5rem 2rem 2.5rem", paddingTop:"0" }}
     >
       <Carousel itemsToShow={4}>
         {imgbrands.map((ea, index) => (

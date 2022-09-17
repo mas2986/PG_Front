@@ -103,6 +103,7 @@
 
 .login-container {
  margin: 10px;
+
 }
 
 .login-container .google{
@@ -121,7 +122,7 @@
   margin-left:0.5rem;
   margin-right:0.5rem;
   margin-top: 0;
-  /* margin-bottom: 0.6rem; */
+  margin-bottom: 0.6rem;
 }
 .shopping-cart:hover {
   cursor: pointer;

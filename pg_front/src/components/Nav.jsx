@@ -253,10 +253,10 @@ export default function Nav(props) {
                   <SearchBar />
                 </Box>
                 <Cart />
-                <Box className={n["login-container"]} display="flex">
+                <Box className={n["login-container"]}>
                   {!isAuthenticated && Object.keys(user1).length === 0 ? (
                     <Link to="/login">
-                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                      <Button variant="contained" sx={{ marginBottom: "0.7rem" }}>
                         Sign In
                       </Button>
                     </Link>

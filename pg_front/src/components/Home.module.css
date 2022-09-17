@@ -25,6 +25,7 @@ html {
   opacity: 0.3;
 }
 
+
 .carousel-img:hover {
   cursor: pointer;
 }
@@ -41,11 +42,11 @@ html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  position: absolute;
-  top: 85%;
+  position: relative;
+  top: -15rem;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-size: 6rem;
+  font-size: 8rem;
   left: 40vw;
 }
 .button {
@@ -53,7 +54,7 @@ html {
   padding: 5px;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 60px ;
+  font-size:4rem ;
   font-weight: bolder;
   border-width: 0px;
   outline: none;
