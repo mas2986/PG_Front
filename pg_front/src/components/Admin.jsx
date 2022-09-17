@@ -182,25 +182,11 @@ function DashboardContent() {
             </IconButton>
             <Menu anchorEl={anchorElm} open={openMenu} onClose={handleClose}>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <Divider />
-              <MenuItem name="balance" onClick={handleClose}>
-                Balance
-              </MenuItem>
-              <Divider />
+              <Divider />                        
               <MenuItem value="logout" onClick={handleClose}>
                 Logout
               </MenuItem>
             </Menu>
-
-            <Tooltip title="Home">
-              <IconButton color="inherit">
-                <Badge color="secondary">
-                  <LinkRouter to="/">
-                    <HomeIcon />
-                  </LinkRouter>
-                </Badge>
-              </IconButton>
-            </Tooltip>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
