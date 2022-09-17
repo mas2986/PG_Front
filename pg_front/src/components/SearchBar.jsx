@@ -6,10 +6,12 @@ import s from "./SearchBar.module.css";
 import lupa from "../lupa.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { Tooltip } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 export default function SearchBar() {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -20,6 +22,7 @@ export default function SearchBar() {
     e.preventDefault();
     dispatch(searchProduct(input));
     setInput("");
+    history.push("/products");
   }
 
   return (

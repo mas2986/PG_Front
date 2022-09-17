@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../redux/action";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
 import home from "../asset/home.png";
 import Section from "./Section";
@@ -9,11 +9,9 @@ import HomePictures from "./HomePictures";
 import CarouselBrands from "./CarouselBrands";
 import $ from "jquery";
 import style from "./Home.module.css";
-import Contact from "./Contact"
+import Contact from "./Contact";
 import { Link, useHistory } from "react-router-dom";
 window.jquery = window.$ = $;
-
-
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
@@ -53,11 +51,8 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
-  return (
-    home && allProducts ? (
-    <div style={{
-        display:"flex",
-      }}>
+  return home && allProducts ? (
+    <div>
       <Nav />
       <img
         id={"#"}
@@ -72,33 +67,34 @@ export default function Home() {
         }}
       />
       <div>
-      <Link to="/products">
-      <p className={style.button} >
-        Go Shopping
-      </p>
-      </Link>
+        <Link to="/products">
+          <p className={style.button}>Go Shopping</p>
+        </Link>
       </div>
-      <a href={"#contact"} className={style.contactButton}>Contact Us!</a>
+      <a href={"#contact"} className={style.contactButton}>
+        Contact Us!
+      </a>
       <div className="scrollingText">
-        <h1 className = {style.homeh1}
-        // style={{
-        //   width: 2401,
-        //   height: 185,
-        //   position: "absolute",
+        <h1
+          className={style.homeh1}
+          // style={{
+          //   width: 2401,
+          //   height: 185,
+          //   position: "absolute",
 
-        //   top: 511,
-        //   fontFamily: "Roboto",
-        //   fontStyle: "italic",
-        //   fontWeight: 900,
-        //   fontSize: 120,
-        //   lineHeight: 24,
-        //   display: "flex",
-        //   alignItems: "center",
-        //   textAlign: "center",
-        //   letterSpacing: 0.15,
-        //   ,
+          //   top: 511,
+          //   fontFamily: "Roboto",
+          //   fontStyle: "italic",
+          //   fontWeight: 900,
+          //   fontSize: 120,
+          //   lineHeight: 24,
+          //   display: "flex",
+          //   alignItems: "center",
+          //   textAlign: "center",
+          //   letterSpacing: 0.15,
+          //   ,
 
-        // }}
+          // }}
         >
           Sports Apparel · Footwear · Accesories
         </h1>
@@ -112,9 +108,9 @@ export default function Home() {
 
       <HomePictures />
 
-      <Contact/>
-      
-      
-      </div>) : (<Skeleton variant="rectangular" width={1300} height={1200} />)
+      <Contact />
+    </div>
+  ) : (
+    <Skeleton variant="rectangular" width={1300} height={1200} />
   );
 }

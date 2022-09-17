@@ -19,10 +19,12 @@ import { createOrder } from "../redux/action";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
+  let history = useHistory();
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
+  const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
   console.log(items);
   const user1 = useSelector((state) => state.user);
@@ -151,6 +153,7 @@ export default function FormPropsTextFields({ props }) {
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
       setTotalPrice(total);
+
       // console.log(totalPrice);
     } else setTotalPrice(0);
   }, [items]);
@@ -458,7 +461,7 @@ export default function FormPropsTextFields({ props }) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : totalPrice > 0 ? (
+          ) : Object.keys(user).length > 0 ? (
             <Button
               variant="contained"
               color="primary"
@@ -474,6 +477,29 @@ export default function FormPropsTextFields({ props }) {
             >
               BUY
             </Button>
+          ) : totalPrice.length > 0 ? (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                color="primary"
+                className="btn-form"
+                onClick={(e) =>
+                  Swal.fire({
+                    title: "You are not logged in",
+                    text: "Please log in or register to complete your purchase",
+                  })
+                }
+                disableElevation
+                sx={{
+                  width: "40rem",
+                  height: "3rem",
+                  // marginRigth: "12px",
+                  marginTop: "2rem",
+                }}
+              >
+                BUY
+              </Button>
+            </Link>
           ) : (
             <p></p>
           )}

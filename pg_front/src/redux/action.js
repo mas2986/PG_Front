@@ -33,6 +33,8 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
+  GET_ALL_ORDERS,
+  CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
   GET_REVIEWS,
   CREATE_ORDER
@@ -115,6 +117,23 @@ export function getOrderById(id){
       console.log(e)
     }
 
+  }
+}
+
+export function changeOrderStatus(id,orderStatus,email){
+  let body = {orderStatus,email}
+  console.log(body)
+  return async function(dispatch){
+    try{
+      let statusOrder = await axios.put(`/api/order/${id}`,body)
+      console.log(statusOrder.data);
+      return dispatch({
+        type:CHANGE_STATUS_ORDER        
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
   }
 }
 
@@ -495,6 +514,22 @@ export function filterByCarousel(payload) {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
   };
+}
+
+export function getAllOrders(){
+  return async function(dispatch){
+    try{
+      let order = await axios.get(`/api/order`);
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: order.data
+      })
+    }
+    catch(e){
+      console.log(e);
+    }
+
+  }
 }
 
 export function getReviews() {
