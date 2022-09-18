@@ -530,11 +530,9 @@ export function orderByPrice(payload) {
 }
 
 export function detailProduct(id) {
-  console.log(id);
   return async function (dispatch) {
     try {
       var product = await axios.get(`/api/product/${id}`);
-      console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
         payload: product.data,
