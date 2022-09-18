@@ -278,7 +278,7 @@ export default function Nav(props) {
                           alt="avatar"
                           height={30}
                           width={30}
-                          src={user1.image || user.image}
+                          src={user1.image || user.picture}
                           loading="lazy"
                           style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}

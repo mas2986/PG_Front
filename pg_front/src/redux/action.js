@@ -73,7 +73,7 @@ export function mercadoPago(body) {
   return async function (dispatch) {
     try {
       let order = await axios.post(
-        `https://pg-athen.herokuapp.com/api/crear-orden`,
+        `/api/crear-orden`,
         body
       );
       console.log(order.data.url);
@@ -126,13 +126,23 @@ export function changeOrderStatus(id,orderStatus,email){
   return async function(dispatch){
     try{
       let statusOrder = await axios.put(`/api/order/${id}`,body)
-      console.log(statusOrder.data);
+      Swal.fire({
+        title: "Changed status!",
+        text: `Order number ${id} is now ${orderStatus}`,
+        icon: "success",
+        confirmButtonText: "ACCEPT",
+      });
       return dispatch({
         type:CHANGE_STATUS_ORDER        
       })
     }
     catch(e){
-      console.log(e)
+      Swal.fire({
+        title: "Error changing status!",
+        text: `There was a trouble changing order status. Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });
     }
   }
 }
@@ -163,12 +173,24 @@ export function resetPassword(body) {
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
+      Swal.fire({
+        title:'User password reset!',
+        text:`The user was asked to change password`,
+        icon: 'success',
+        confirmButtonText:"ACCEPT"        
+        }
+      )
       return dispatch({
         type: RESET_PASSWORD,
         payload: newPassword,
       });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "Error resetting user's password!",
+        text: `There was a trouble resetting user's password Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });    
     }
   };
 }
@@ -178,12 +200,24 @@ export function createUser(body) {
     try {
       let user = await axios.post(`/api/user`, body);
       console.log(user.data.data.user);
+      Swal.fire({
+        title:'User created!',
+        text:`Your user was created successfully`,
+        icon: 'success',
+        confirmButtonText:"ACCEPT"        
+        }
+      )
       return dispatch({
         type: CREATE_USER,
         payload: user.data.data.user,
       });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "Error creating user!",
+        text: `There was a trouble creating your user.Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });
     }
   };
 }
@@ -225,17 +259,29 @@ export function changeRoleUser(id, body) {
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
+      Swal.fire({
+        title: 'Role changed!',
+        text: `${body.name} now is ${body.rol}`,
+        icon:'success',
+        confirmButtonText: 'ACCEPT'
+        }
+      )
       return dispatch({
         type: CHANGE_ROLE_USER,
         payload: userChange.data,
       });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "Error changing user's role!",
+        text: `There was a trouble changing user's role. Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });
     }
   };
 }
 
-export function deleteUser(id) {
+export function deleteUser(id,name) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -248,13 +294,24 @@ export function deleteUser(id) {
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
+      Swal.fire({
+        title:'User deleted!',
+        text:`${name} was deleted`,
+        icon:'success',
+        confirmButtonText: "ACCEPT"
+        }
+      )
       return dispatch({
         type: DELETE_USER,
         payload: userDelete.data,
       });
     } catch (e) {
-      console.log(e);
-    }
+      Swal.fire({
+        title: "Error deleting user!",
+        text: `The user ${name} could not deleted. Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });    }
   };
 }
 
@@ -317,7 +374,7 @@ export function editProduct(id, body) {
   };
 }
 
-export function deleteProduct(id) {
+export function deleteProduct(id,title) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -327,7 +384,13 @@ export function deleteProduct(id) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(deleteProduct.data);
+      Swal.fire({
+        title:'Deleted product!',
+        text:`${title} was deleted`,
+        icon:'success',
+        confirmButtonText: "ACCEPT"
+        }
+      )
       return dispatch({
         type: DELETE_PRODUCT,
         payload: id,
