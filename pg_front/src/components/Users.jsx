@@ -105,7 +105,6 @@ const Users = ({setView}) => {
               gap: '1rem',
             }}
           >
-          {console.log(row.original.image)}          
             {row.original.image === '' || row.original.image==='ss'
               ?
               <AccountCircle
