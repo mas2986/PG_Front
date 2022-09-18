@@ -105,8 +105,20 @@ const Users = ({setView}) => {
               gap: '1rem',
             }}
           >
-            {row.original.image !== null
+          {console.log(row.original.image)}          
+            {row.original.image === '' || row.original.image==='ss'
               ?
+              <AccountCircle
+              sx={{
+                color: 'gray',
+                fontSize: "large",
+                marginBottom: "0.5rem",
+                width: "30px",
+                height: "30px",
+                marginRight: "1rem",
+              }}
+            />
+            :
               <img
                 alt="avatar"
                 height={30}
@@ -114,9 +126,7 @@ const Users = ({setView}) => {
                 loading="lazy"
                 style={{ borderRadius: '50%' }}
               />
-              :
-              <AccountCircle />
-            }
+              }
             <Typography>{cell.getValue()}</Typography>
           </Box>
         ),

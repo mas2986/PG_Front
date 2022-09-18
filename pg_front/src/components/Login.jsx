@@ -60,6 +60,8 @@ export default function SignUp() {
   const { isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  // const { user } = useAuth0();
+  // console.log(user)
   const history = useHistory();
   const handleChange = (e) => {
     e.preventDefault();
