@@ -49,7 +49,6 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(user1)
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
   const handleClick = (e) => {

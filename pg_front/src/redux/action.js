@@ -40,13 +40,13 @@ import {
   CREATE_ORDER
 } from "./const";
 
-//const URL = "https://pg-athen.herokuapp.com"
+const URL = "https://pg-athen.herokuapp.com"
 //const URL = "https://localhost:3001"
 
 export function signUp(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`/api/login`, body);
+      let user = await axios.post(`${URL}/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -73,7 +73,7 @@ export function mercadoPago(body) {
   return async function (dispatch) {
     try {
       let order = await axios.post(
-        `/api/crear-orden`,
+        `${URL}/api/crear-orden`,
         body
       );
       console.log(order.data.url);
@@ -90,7 +90,7 @@ export function mercadoPago(body) {
 export function createOrder(body) {
   return async function (dispatch) {
     try {
-      let order = await axios.post(`/api/order`, body);
+      let order = await axios.post(`${URL}/api/order`, body);
       console.log(order);
       return dispatch({
         type: CREATE_ORDER,
@@ -106,7 +106,7 @@ export function createOrder(body) {
 export function getOrderById(id){
   return async function(dispatch){
     try{      
-      let orderId = await axios.get(`/api/order/${id}`)
+      let orderId = await axios.get(`${URL}/api/order/${id}`)
       
       return dispatch({
         type:GET_ORDER_BY_ID,
@@ -125,7 +125,7 @@ export function changeOrderStatus(id,orderStatus,email){
   console.log(body)
   return async function(dispatch){
     try{
-      let statusOrder = await axios.put(`/api/order/${id}`,body)
+      let statusOrder = await axios.put(`${URL}/api/order/${id}`,body)
       Swal.fire({
         title: "Changed status!",
         text: `Order number ${id} is now ${orderStatus}`,
@@ -152,7 +152,7 @@ export function passwordRemember(body) {
   return async function (dispatch) {
     try {
       console.log(body);
-      let password = await axios.post(`/api/olvide-password`, body);
+      let password = await axios.post(`${URL}/api/olvide-password`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(password);
@@ -169,7 +169,7 @@ export function passwordRemember(body) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(`/api/olvide-passwords`, body);
+      let newPassword = await axios.post(`${URL}/api/olvide-passwords`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
@@ -198,7 +198,7 @@ export function resetPassword(body) {
 export function createUser(body) {
   return async function (dispatch) {
     try {
-      let user = await axios.post(`/api/user`, body);
+      let user = await axios.post(`${URL}/api/user`, body);
       console.log(user.data.data.user);
       Swal.fire({
         title:'User created!',
@@ -227,7 +227,7 @@ export function getAllUsers(body) {
     try {
       // const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       // const { token } = tokenJSON;
-      let users = await axios.get(`/api/user`, {
+      let users = await axios.get(`${URL}/api/user`, {
         headers: {
           Authorization: `Bearer 23k4!jhisd&jhf8*asfdasdf$dsf45%&`,
         },
@@ -251,7 +251,7 @@ export function changeRoleUser(id, body) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let userChange = await axios.put(`/api/user/${id}`, body, {
+      let userChange = await axios.put(`${URL}/api/user/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -286,7 +286,7 @@ export function deleteUser(id,name) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let userDelete = await axios.delete(`/api/user/${id}`, {
+      let userDelete = await axios.delete(`${URL}/api/user/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -325,7 +325,7 @@ export function createProduct(body) {
     try{
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let newProduct = await axios.post(`/api/product`, body, {
+      let newProduct = await axios.post(`${URL}/api/product`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -353,7 +353,7 @@ export function editProduct(id, body) {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       console.log(body);
-      let putProduct = await axios.put(`/api/product/${id}`, body, {
+      let putProduct = await axios.put(`${URL}/api/product/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -379,7 +379,7 @@ export function deleteProduct(id,title) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
-      let deleteProduct = await axios.delete(`/api/product/${id}`, {
+      let deleteProduct = await axios.delete(`${URL}/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -409,7 +409,7 @@ export function deleteProduct(id,title) {
 export function getProduct() {
   return async function (dispatch) {
     try {
-      let res = await axios.get(`/api/products`);
+      let res = await axios.get(`${URL}/api/products`);
       // console.log("Products", res.data);
       return dispatch({
         type: GET_PRODUCTS,
@@ -424,7 +424,7 @@ export function getProduct() {
 export function searchProduct(payload) {
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/products?title=${payload}`, {});
+      var product = await axios.get(`${URL}/api/products?title=${payload}`, {});
       return dispatch({
         type: SEARCH_PRODUCT,
         payload: product.data,
@@ -488,7 +488,7 @@ export function detailProduct(id) {
   console.log(id);
   return async function (dispatch) {
     try {
-      var product = await axios.get(`/api/product/${id}`);
+      var product = await axios.get(`${URL}/api/product/${id}`);
       console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
@@ -512,7 +512,7 @@ export function logout(history) {
 export function checkLogin(id, token) {
   // console.log(id);
   return async function (dispatch) {
-    let user = await axios.get(`/api/user/${id}`, {
+    let user = await axios.get(`${URL}/api/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -582,7 +582,7 @@ export function filterByCarousel(payload) {
 export function getAllOrders(){
   return async function(dispatch){
     try{
-      let order = await axios.get(`/api/order`);
+      let order = await axios.get(`${URL}/api/order`);
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: order.data
@@ -597,7 +597,7 @@ export function getAllOrders(){
 
 export function getReviews() {
   return async function (dispatch) {
-    const resp = await axios.get(`/api/review`);
+    const resp = await axios.get(`${URL}/api/review`);
     const data = resp.data;
     console.log(resp);
     if (resp) {
