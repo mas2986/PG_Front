@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
+import Swal from 'sweetalert2';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Box,
   Button,
@@ -76,18 +78,26 @@ const Example = () => {
 
   const handleDeleteRow = useCallback(
     (row) => {
-      if (
-        !confirm(`Are you sure you want to delete ${row.getValue('title')}`)
-      ) {
-        return;
-      }
+      Swal.fire({
+        title: `Do you want delete ${row.getValue('title')}?`,
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete product!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          tableData.splice(row.index, 1);      
+          setTableData([...tableData]);
+          const id = row.getValue("id")
+          const title = row.getValue("title")
+          dispatch(deleteProduct(id,title));
+          setEdit(()=>true);      
+        }
+      })      
       //send api delete request here, then refetch or update local table data for re-render
-      tableData.splice(row.index, 1);      
-      setTableData([...tableData]);
-      const id = row.getValue("id")
-      console.log(id);
-      dispatch(deleteProduct(id));
-      setEdit(()=>true);
+      
     },
     [tableData],
   );
@@ -145,14 +155,14 @@ const Example = () => {
               alignItems: 'center',
               gap: '1rem',
             }}
-          >
-            <img
-              alt="avatar"
-              height={30}
-              src={row.original.image}
-              loading="lazy"
-              style={{ borderRadius: '50%' }}
-            />
+          >            
+              <img
+                alt="avatar"
+                height={30}
+                src={row.original.image}
+                loading="lazy"
+                style={{ borderRadius: '50%' }}
+              />                  
             <Typography>{cell.getValue()}</Typography>
           </Box>
         ),
@@ -271,6 +281,12 @@ const Example = () => {
               align: 'center',
             },
             size: 60,
+          },
+        }}
+        muiTableHeadCellProps={{
+          sx: {
+            backgroundColor: '#00BB29',
+            color: 'white',
           },
         }}
         columns={columns}

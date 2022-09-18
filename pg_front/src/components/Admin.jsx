@@ -117,6 +117,7 @@ function DashboardContent() {
 
   const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
   let { name } = tokenJSON ? tokenJSON.data.user : null;
+  let { image } = tokenJSON ? tokenJSON.data.user : null;
 
   const handleClose = (e) => {
     setOpenMenu(false);
@@ -176,31 +177,30 @@ function DashboardContent() {
             <IconButton color="inherit">
               <Badge color="secondary">
                 <Tooltip title={`Logged as ${name}`}>
-                  <AccountCircleIcon onClick={handleClick} />
+                  {
+                    image===''||image==='ss'
+                    ?
+                    <AccountCircleIcon onClick={handleClick} />
+                    :
+                    <img
+                    alt="avatar"
+                    height={30}
+                    src={image}
+                    loading="lazy"
+                    style={{ borderRadius: '50%' }}
+                    onClick={handleClick}
+                  />
+                  }
                 </Tooltip>
               </Badge>
             </IconButton>
             <Menu anchorEl={anchorElm} open={openMenu} onClose={handleClose}>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <Divider />
-              <MenuItem name="balance" onClick={handleClose}>
-                Balance
-              </MenuItem>
-              <Divider />
+              <Divider />                        
               <MenuItem value="logout" onClick={handleClose}>
                 Logout
               </MenuItem>
             </Menu>
-
-            <Tooltip title="Home">
-              <IconButton color="inherit">
-                <Badge color="secondary">
-                  <LinkRouter to="/">
-                    <HomeIcon />
-                  </LinkRouter>
-                </Badge>
-              </IconButton>
-            </Tooltip>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

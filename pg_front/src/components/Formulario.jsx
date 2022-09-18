@@ -24,8 +24,9 @@ export default function FormPropsTextFields({ props }) {
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
+  const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
-  console.log(items);
+  // console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ export default function FormPropsTextFields({ props }) {
     userId: user1.id,
   });
 
-  console.log(order);
+  // console.log(order);
 
   const handleButton = async (event) => {
     if (texto.name.length < 3 || texto.name.length > 10) {
@@ -399,6 +400,7 @@ export default function FormPropsTextFields({ props }) {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              maxHeight: "100%",
             }}
           >
             {items.map((i) => {
@@ -409,6 +411,8 @@ export default function FormPropsTextFields({ props }) {
                       maxHeight: "10rem",
                       display: "flex",
                       flexDirection: "row-reverse",
+                      maxWidth: "35rem",
+                      zIndex: "-1",
                     }}
                     onClick={() => history.push(`/detail/${i.id}`)}
                     className={f.cardMedia}
@@ -460,7 +464,7 @@ export default function FormPropsTextFields({ props }) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : totalPrice > 0 ? (
+          ) : Object.keys(user).length > 0 ? (
             <Button
               variant="contained"
               color="primary"
@@ -472,10 +476,35 @@ export default function FormPropsTextFields({ props }) {
                 height: "3rem",
                 // marginRigth: "12px",
                 marginTop: "2rem",
+                position: "absolute",
+                zIndex: 99,
               }}
             >
               BUY
             </Button>
+          ) : totalPrice.length > 0 ? (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                color="primary"
+                className="btn-form"
+                onClick={(e) =>
+                  Swal.fire({
+                    title: "You are not logged in",
+                    text: "Please log in or register to complete your purchase",
+                  })
+                }
+                disableElevation
+                sx={{
+                  width: "40rem",
+                  height: "3rem",
+                  // marginRigth: "12px",
+                  marginTop: "2rem",
+                }}
+              >
+                BUY
+              </Button>
+            </Link>
           ) : (
             <p></p>
           )}

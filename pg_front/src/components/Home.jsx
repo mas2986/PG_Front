@@ -51,66 +51,66 @@ export default function Home() {
     });
   }, [allProducts.length]);
 
-  return home && allProducts ? (
+  return (
+    
     <div>
       <Nav />
-      <img
-        id={"#"}
-        src={home}
-        style={{
-          width: "100vw",
-          height: "100%",
-          marginTop: "-4rem",
-          marginBottom: "1rem",
-          borderBottomLeftRadius: "40px",
-          borderBottomRightRadius: "40px",
-        }}
-      />
-      <div>
-        <Link to="/products">
-          <p className={style.button}>Go Shopping</p>
-        </Link>
-      </div>
-      <a href={"#contact"} className={style.contactButton}>
-        Contact Us!
-      </a>
-      <div className="scrollingText">
-        <h1
-          className={style.homeh1}
-          // style={{
-          //   width: 2401,
-          //   height: 185,
-          //   position: "absolute",
 
-          //   top: 511,
-          //   fontFamily: "Roboto",
-          //   fontStyle: "italic",
-          //   fontWeight: 900,
-          //   fontSize: 120,
-          //   lineHeight: 24,
-          //   display: "flex",
-          //   alignItems: "center",
-          //   textAlign: "center",
-          //   letterSpacing: 0.15,
-          //   ,
+        {home && allProducts ? (
 
-          // }}
-        >
-          Sports Apparel · Footwear · Accesories
-        </h1>
-      </div>
+          <div>
+            <img
+              id={"#"}
+              src={home}
+              style={{
+                width: "100vw",
+                height: "100%",
+                marginTop: "-4rem",
+                marginBottom: "0",
+                borderBottomLeftRadius: "40px",
+                borderBottomRightRadius: "40px",
+              }}
+            />
+            
+            <h1
+              className={style.homeh1 + " scrollingText"}
+            >
+            Sports Apparel · Footwear · Accesories
+            </h1>
+          
+          
+            <div style={{
+              display:"flex",
+              flexDirection:"column",
+              position: "absolute",
+              top: "14%",
+              left: "8rem"
+            }}>
+              <Link to="/products">
+                <p className={style.button}>Go Shopping</p>
+              </Link>
+            
+            <a href={"#contact"} className={style.contactButton}>
+              Contact Us!
+            </a>
+            </div>
 
-      <CarouselBrands />
+            <CarouselBrands />
 
-      <center>
-        <Section />
-      </center>
+            <center>
+              <Section />
+            </center>
 
-      <HomePictures />
+            <HomePictures />
 
-      <Contact />
+            <Contact />
+          </div>
+
+          ) : (
+            <Skeleton variant="rectangular" width={1300} height={1200} />
+          )
+          
+          }
+
     </div>
-  ) : (
-    <Skeleton variant="rectangular" width={1300} height={1200} />
-  );
-}
+)}

@@ -25,6 +25,7 @@ html {
   opacity: 0.3;
 }
 
+
 .carousel-img:hover {
   cursor: pointer;
 }
@@ -41,11 +42,11 @@ html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  position: absolute;
-  top: 85%;
+  position: relative;
+  top: -15rem;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-size: 6rem;
+  font-size: 8rem;
   left: 40vw;
 }
 .button {
@@ -53,31 +54,28 @@ html {
   padding: 5px;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 60px ;
+  font-size:4rem ;
   font-weight: bolder;
-  position: absolute;
-  top: 14%;
-  left: 8rem;
   border-width: 0px;
   outline: none;
   border-radius: 5px;
   background: #27ae60/*rgba(0,0,0,0)*/;
   color: #ecf0f1;
   transition: 0.3s;
+  margin-bottom: 0;
 }
 
 .contactButton{
+  margin-top: 2rem;
   background-color: rgba(0,0,0,0.5);
   border-color: #27ae60;
   border-style: solid;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   border-width: 2px;
   font-size: 25px;
   color: white;
-  position: absolute;
-  top: 40%;
-  left: 8rem;
+  width: max-content;
   transition: 0.3s;
 }
 

@@ -11,8 +11,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
-import carrito from "../carrito.png";
-import login from "../login.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -49,10 +47,9 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(user1)
+  
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
-  
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -80,9 +77,19 @@ export default function Nav(props) {
     const value = e.target.innerText;
     setAnchorElm(null);
     if (value === "Logout" && Object.keys(user1).length !== 0) {
-      dispatch(logoutEmail(history));
-    } else value === "Logout" && isAuthenticated;
-  };
+      return dispatch(logoutEmail(history));
+    }
+    if (value === "Logout" && Object.keys(user).length !== 0) {
+      console.log("hola")
+      return logout();
+    }
+  }
+
+  const handleProfile = (e) => {
+    e.preventDefault();
+    console.log(e.target.innerText)
+    history.push("/profile")
+  }
 
   const goHome = () => {
     history.push("/");
@@ -90,169 +97,169 @@ export default function Nav(props) {
 
   return (
     <>
-      <StyledEngineProvider injectFirst>
-        <CssBaseline />
-        <HideOnScroll {...props}>
-          <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
-            <Toolbar className={n.container}>
-              <Box display="flex" className={n["logo-container"]}>
-                <Tooltip title={"Go Home"}>
-                  <img src={logo} alt="" onClick={goHome} className={n.reset} />
-                </Tooltip>
-                <Tooltip title={"Refresh filters"}>
-                  <Typography
-                    variant="h4"
-                    style={{ color: "#000", marginLeft: "1rem" }}
-                    onClick={resetFilters}
-                    className={n.reset}
-                  >
-                    Athens
+    <StyledEngineProvider injectFirst>
+      <CssBaseline />
+      <HideOnScroll {...props}>
+        <AppBar style={{ backgroundColor: "#FDFFFF" }} className={n.appbar}>
+          <Toolbar className={n.container}>
+            <Box display="flex" className={n["logo-container"]}>
+              <Tooltip title={"Go Home"}>
+                <img src={logo} alt="" onClick={goHome} className={n.reset} />
+              </Tooltip>
+              <Tooltip title={"Refresh filters"}>
+                <Typography
+                  variant="h4"
+                  style={{ color: "#000", marginLeft: "1rem" }}
+                  onClick={resetFilters}
+                  className={n.reset}
+                >
+                  Athens
                   </Typography>
-                </Tooltip>
-              </Box>
-              <Box className={n["options-container"]}>
-                <div style={{ position: "relative" }}>
-                  <Typography
-                    variant="h6"
-                    color="primary"
-                    className={n["options-women"]}
-                  >
-                    Women
+              </Tooltip>
+            </Box>
+            <Box className={n["options-container"]}>
+              <div style={{ position: "relative" }}>
+                <Typography
+                  variant="h6"
+                  color="primary"
+                  className={n["options-women"]}
+                >
+                  Women
                   </Typography>
-                  <div className={n["options-dropdown-women"]}>
-                    <ul>
-                      <a href="#scrollDiv">
-                        <button value="women-jersey" onClick={handleClick}>
-                          Jerseys
+                <div className={n["options-dropdown-women"]}>
+                  <ul>
+                    <a href="#scrollDiv">
+                      <button value="women-jersey" onClick={handleClick}>
+                        Jerseys
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="women-shorts" onClick={handleClick}>
-                          Shorts
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="women-shorts" onClick={handleClick}>
+                        Shorts
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="women-boots" onClick={handleClick}>
-                          Boots
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="women-boots" onClick={handleClick}>
+                        Boots
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="women-more" onClick={handleClick}>
-                          More
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="women-more" onClick={handleClick}>
+                        More
                         </button>
-                      </a>
-                    </ul>
-                  </div>
+                    </a>
+                  </ul>
                 </div>
-                <div style={{ position: "relative" }}>
-                  <Typography
-                    color="primary"
-                    variant="h6"
-                    className={n["options-men"]}
-                  >
-                    Men
+              </div>
+              <div style={{ position: "relative" }}>
+                <Typography
+                  color="primary"
+                  variant="h6"
+                  className={n["options-men"]}
+                >
+                  Men
                   </Typography>
-                  <div className={n["options-dropdown-men"]}>
-                    <ul>
-                      <a href="#scrollDiv">
-                        <button value="men-jerseys" onClick={handleClick}>
-                          Jerseys
+                <div className={n["options-dropdown-men"]}>
+                  <ul>
+                    <a href="#scrollDiv">
+                      <button value="men-jerseys" onClick={handleClick}>
+                        Jerseys
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="men-shorts" onClick={handleClick}>
-                          Shorts
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="men-shorts" onClick={handleClick}>
+                        Shorts
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="men-boots" onClick={handleClick}>
-                          Boots
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="men-boots" onClick={handleClick}>
+                        Boots
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="men-more" onClick={handleClick}>
-                          More
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="men-more" onClick={handleClick}>
+                        More
                         </button>
-                      </a>
-                    </ul>
-                  </div>
+                    </a>
+                  </ul>
                 </div>
-                <div style={{ position: "relative" }}>
-                  <Typography
-                    color="primary"
-                    variant="h6"
-                    className={n["options-children"]}
-                  >
-                    Kids
+              </div>
+              <div style={{ position: "relative" }}>
+                <Typography
+                  color="primary"
+                  variant="h6"
+                  className={n["options-children"]}
+                >
+                  Kids
                   </Typography>
-                  <div className={n["options-dropdown-children"]}>
-                    <ul>
-                      <a href="#scrollDiv">
-                        <button value="kids-jerseys" onClick={handleClick}>
-                          Jerseys
+                <div className={n["options-dropdown-children"]}>
+                  <ul>
+                    <a href="#scrollDiv">
+                      <button value="kids-jerseys" onClick={handleClick}>
+                        Jerseys
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="kids-shorts" onClick={handleClick}>
-                          Shorts
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="kids-shorts" onClick={handleClick}>
+                        Shorts
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="kids-boots" onClick={handleClick}>
-                          Boots
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="kids-boots" onClick={handleClick}>
+                        Boots
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="kids-more" onClick={handleClick}>
-                          More
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="kids-more" onClick={handleClick}>
+                        More
                         </button>
-                      </a>
-                    </ul>
-                  </div>
+                    </a>
+                  </ul>
                 </div>
-                <div style={{ position: "relative" }}>
-                  <Typography
-                    color="primary"
-                    variant="h6"
-                    className={n["options-other"]}
-                  >
-                    Sports
+              </div>
+              <div style={{ position: "relative" }}>
+                <Typography
+                  color="primary"
+                  variant="h6"
+                  className={n["options-other"]}
+                >
+                  Sports
                   </Typography>
-                  <div className={n["options-dropdown-other"]}>
-                    <ul>
-                      <a href="#scrollDiv">
-                        <button value="sports-soccer" onClick={handleClick}>
-                          Soccer
+                <div className={n["options-dropdown-other"]}>
+                  <ul>
+                    <a href="#scrollDiv">
+                      <button value="sports-soccer" onClick={handleClick}>
+                        Soccer
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="sports-basketball" onClick={handleClick}>
-                          Basketball
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="sports-basketball" onClick={handleClick}>
+                        Basketball
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="sports-tennis" onClick={handleClick}>
-                          Tennis
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="sports-tennis" onClick={handleClick}>
+                        Tennis
                         </button>
-                      </a>
-                      <a href="#scrollDiv">
-                        <button value="sports-others" onClick={handleClick}>
-                          Others
+                    </a>
+                    <a href="#scrollDiv">
+                      <button value="sports-others" onClick={handleClick}>
+                        Others
                         </button>
-                      </a>
-                    </ul>
-                  </div>
+                    </a>
+                  </ul>
                 </div>
-              </Box>
+              </div>
+            </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
                 <Box>
                   <SearchBar />
                 </Box>
                 <Cart />
-                <Box className={n["login-container"]} display="flex">
+                <Box className={n["login-container"]}>
                   {!isAuthenticated && Object.keys(user1).length === 0 ? (
                     <Link to="/login">
-                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                      <Button variant="contained" sx={{ marginBottom: "0.7rem" }}>
                         Sign In
                       </Button>
                     </Link>
@@ -260,14 +267,18 @@ export default function Nav(props) {
                     <>
                       <Tooltip
                         title={
-                          `Logged as ${user1.name}` || `Logged as ${user.name}`
+                          user1
+                          ?
+                          `Logged as ${user1.name}`
+                          :
+                          `Logged as ${user.name}`
                         }
                       >
                         <img
                           alt="avatar"
                           height={30}
                           width={30}
-                          src={user1.image || user.image}
+                          src={user1.image || user.picture}
                           loading="lazy"
                           style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
@@ -278,15 +289,15 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
-                      </Menu>
-                    </>
-                  ) : (
-                    <>
+                  </Menu>
+                  </>
+                ) : (
+                      <>
                       <Tooltip
                         title={
                           `Logged as ${user1.name}` || `Logged as ${user.name}`
@@ -295,7 +306,7 @@ export default function Nav(props) {
                         <AccountCircleIcon
                           onClick={handleSubmit}
                           sx={{
-                            color:'gray',
+                            color: 'gray',
                             fontSize: "large",
                             marginBottom: "0.5rem",
                             width: "30px",
@@ -309,28 +320,28 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
                       </Menu>
-                    </>
-                  )}
-                  {/* <Tooltip
+                      </>
+                    )}                
+                {/* <Tooltip
                   title={`${
                     Object.keys(user1).length !== 0
                       ? `Logged as ${user1.name}`
                       : "Go Login"
                     }`}> */}
-                  {/* <Tooltip
+                {/* <Tooltip
                       title={`${
                         Object.keys(user).length !== 0
                           ? `Logged as ${user.name}`
                           : "Go Login"
                       }`}/> */}
 
-                  {/*  <AccountCircleIcon
+                {/*  <AccountCircleIcon
                     onClick={(e) => handleSubmit(e)}
                     sx={{
                       fontSize: "large",
@@ -357,15 +368,15 @@ export default function Nav(props) {
                   <Divider />
                   <MenuItem name="balance" onClick={handleClose} ><LoginAuth0 className={n.google} /></MenuItem>
                 </Menu>
- */}
-                  {/* {isAuthenticated ? <Logout className={n.google} /> : } */}
-                </Box>
+                    */}
+                {/* {isAuthenticated ? <Logout className={n.google} /> : } */}
               </Box>
-            </Toolbar>
-          </AppBar>
-        </HideOnScroll>
-        <Toolbar />
-      </StyledEngineProvider>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      <Toolbar />
+    </StyledEngineProvider>
     </>
   );
 }

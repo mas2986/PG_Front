@@ -35,7 +35,7 @@ const Users = ({setView}) => {
   }, [edit])
 
   const handleDelete = (row) => {
-    const { id } = row.original;
+    const { id,name } = row.original;
     Swal.fire({
       title: `Do you want delete ${row.original.name}?`,
       text: "You won't be able to revert this!",
@@ -46,13 +46,8 @@ const Users = ({setView}) => {
       confirmButtonText: 'Yes, delete user!'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteUser(id))
-        setEdit(() => true);
-        Swal.fire(
-          'User deleted!',
-          `${row.original.name} was deleted`,
-          'success'
-        )
+        dispatch(deleteUser(id,name))
+        setEdit(() => true);        
       }
     })
   }
@@ -71,12 +66,7 @@ const Users = ({setView}) => {
     }).then((result) => {
       if (result.isConfirmed) {        
         dispatch(passwordRemember({email:email}))
-        setEdit(() => true);
-        Swal.fire(
-          'User password reset!',
-          `${row.original.name} was asked to change password`,
-          'success'
-        )
+        setEdit(() => true);        
       }
     })    
   }
@@ -105,8 +95,19 @@ const Users = ({setView}) => {
               gap: '1rem',
             }}
           >
-            {row.original.image !== null
+            {row.original.image === '' || row.original.image==='ss'
               ?
+              <AccountCircle
+              sx={{
+                color: 'gray',
+                fontSize: "large",
+                marginBottom: "0.5rem",
+                width: "30px",
+                height: "30px",
+                marginRight: "1rem",
+              }}
+            />
+            :
               <img
                 alt="avatar"
                 height={30}
@@ -114,9 +115,7 @@ const Users = ({setView}) => {
                 loading="lazy"
                 style={{ borderRadius: '50%' }}
               />
-              :
-              <AccountCircle />
-            }
+              }
             <Typography>{cell.getValue()}</Typography>
           </Box>
         ),
@@ -166,12 +165,12 @@ const Users = ({setView}) => {
       data={users}
       initialState={{ columnVisibility: { id: false } }}
       positionRowActions="right"
-      /* muiTableHeadCellProps={{
+      muiTableHeadCellProps={{
         sx: {
-          backgroundColor: 'black',
+          backgroundColor: '#FF0000',
           color: 'white',
         },
-      }} */
+      }}
       /*    muiTableBodyCellProps={{
            sx:{
              backgroundColor:'#9c9c9c'
@@ -215,12 +214,7 @@ const Users = ({setView}) => {
             }).then((result) => {
               if (result.isConfirmed) {
                 dispatch(changeRoleUser(id, body))
-                setEdit(() => true);
-                Swal.fire(
-                  'Role changed!',
-                  `${row.original.name} now is ${row.original.rol}`,
-                  'success'
-                )
+                setEdit(() => true);                
               }
             })
           });
