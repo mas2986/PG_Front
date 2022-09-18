@@ -21,7 +21,7 @@ let ramdom = []
  const userOrder = order.filter((item) => item.userId === id) && (order.filter(item => item.orderStatus === "completed"))
  
 
- console.log(order)
+ console.log(userOrder)
 
 
 
@@ -54,7 +54,7 @@ for (let i = 0; i < userOrder.length; i++) {
     <div className='general-cont'>
       <Box component="fieldset" mb={3} borderColor="transparent">
         
-    {ramdom.length && !post.length?  (
+    {ramdom.length? (
       <>
         <Typography component="legend">Califica este producto:</Typography>
         <div className='stars'>

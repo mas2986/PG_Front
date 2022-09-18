@@ -25,7 +25,7 @@ export default function Detail() {
   const UserId = user.id
   const userOrder = order.filter((item) => item.userId === UserId) && (order.filter(item => item.orderStatus === "completed")) 
 
-  console.log(userOrder)
+  console.log(order)
 
   const users =  useSelector((state) => state.users);
   console.log(users)
@@ -34,12 +34,15 @@ export default function Detail() {
 
   const review = useSelector((state) => state.reviews);
 
-  // for (let i = 0; i < review.length; i++) {
-  //   if(review[i]['userId'] === user.id){
-  //     setRender(true)
-  //   } 
+  let flag = null
+  for (let i = 0; i < review.length; i++) {
+    if(review[i]['userId'] === user.id){
+      flag = true
+    } else{
+      flag = false
+    }
     
-  // }
+  }
   
  
 
@@ -77,7 +80,7 @@ export default function Detail() {
     <center>
       <Nav2 />
       <Section/>
-     {!render &&  <Review id={id}/> }
+     {!flag && <Review id={id}/> }
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
         {detail ? (
