@@ -76,8 +76,10 @@ export default function Detail() {
   return (
     <center>
       <Nav2 />
+
       <Section/>
      {!render &&  <Review id={id}/> }
+
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
         {detail ? (
