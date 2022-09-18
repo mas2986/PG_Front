@@ -73,7 +73,7 @@ export function mercadoPago(body) {
   return async function (dispatch) {
     try {
       let order = await axios.post(
-        `https://pg-athen.herokuapp.com/api/crear-orden`,
+        `/api/crear-orden`,
         body
       );
       console.log(order.data.url);
@@ -126,13 +126,23 @@ export function changeOrderStatus(id,orderStatus,email){
   return async function(dispatch){
     try{
       let statusOrder = await axios.put(`/api/order/${id}`,body)
-      console.log(statusOrder.data);
+      Swal.fire({
+        title: "Changed status!",
+        text: `Order number ${id} is now ${orderStatus}`,
+        icon: "success",
+        confirmButtonText: "ACCEPT",
+      });
       return dispatch({
         type:CHANGE_STATUS_ORDER        
       })
     }
     catch(e){
-      console.log(e)
+      Swal.fire({
+        title: "Error changing status!",
+        text: `There was a trouble changing order status. Please try again`,
+        icon: "error",
+        confirmButtonText: "ACCEPT",
+      });
     }
   }
 }
