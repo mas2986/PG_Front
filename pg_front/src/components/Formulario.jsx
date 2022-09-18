@@ -56,6 +56,7 @@ export default function FormPropsTextFields({ props }) {
 
   const [order, setOrder] = React.useState({
     productId: productsId,
+    idProduct: productId,
     quantity: totalItems,
     orderStatus: "created",
     totalPrice: totalPrice,
@@ -125,11 +126,12 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
+    console.log(order)
     dispatch(createOrder(order));
     setTimeout(function () {
       console.log("Envié la or");
       window.location.replace(url);
-    }, 1000);
+    }, 1000); 
   };
 
   function stateInput(e) {
@@ -153,9 +155,15 @@ export default function FormPropsTextFields({ props }) {
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
       setTotalPrice(total);
-
-      // console.log(totalPrice);
-    } else setTotalPrice(0);
+      setOrder({
+        ...order,
+        totalPrice:total
+      })
+      console.log('En if de useEffect',order)
+    } else {
+      setTotalPrice(0);
+      console.log('En else de useEffect',totalPrice)
+    }
   }, [items]);
 
   return (
