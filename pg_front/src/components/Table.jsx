@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Box,
   Button,
@@ -85,7 +86,6 @@ const Example = () => {
       tableData.splice(row.index, 1);      
       setTableData([...tableData]);
       const id = row.getValue("id")
-      console.log(id);
       dispatch(deleteProduct(id));
       setEdit(()=>true);
     },
@@ -145,14 +145,14 @@ const Example = () => {
               alignItems: 'center',
               gap: '1rem',
             }}
-          >
-            <img
-              alt="avatar"
-              height={30}
-              src={row.original.image}
-              loading="lazy"
-              style={{ borderRadius: '50%' }}
-            />
+          >            
+              <img
+                alt="avatar"
+                height={30}
+                src={row.original.image}
+                loading="lazy"
+                style={{ borderRadius: '50%' }}
+              />                  
             <Typography>{cell.getValue()}</Typography>
           </Box>
         ),
