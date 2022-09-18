@@ -11,8 +11,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem, Divider, Slide } from "@mui/material";
 import Box from "@mui/material/Box";
 import logo from "../logo.png";
-import carrito from "../carrito.png";
-import login from "../login.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -49,7 +47,7 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(user1)
+  
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
   const handleClick = (e) => {
@@ -85,6 +83,12 @@ export default function Nav(props) {
       console.log("hola")
       return logout();
     }
+  }
+
+  const handleProfile = (e) => {
+    e.preventDefault();
+    console.log(e.target.innerText)
+    history.push("/profile")
   }
 
   const goHome = () => {
@@ -247,16 +251,16 @@ export default function Nav(props) {
                 </div>
               </div>
             </Box>
-            <Box display="flex" sx={{ alignItems: "center" }}>
-              <Box>
-                <SearchBar />
-              </Box>
-              <Cart />
-              <Box className={n["login-container"]} display="flex">
-                {!isAuthenticated && Object.keys(user1).length === 0 ? (
-                  <Link to="/login">
-                    <Button variant="contained" sx={{ marginBottom: "1px" }}>
-                      Sign In
+              <Box display="flex" sx={{ alignItems: "center" }}>
+                <Box>
+                  <SearchBar />
+                </Box>
+                <Cart />
+                <Box className={n["login-container"]}>
+                  {!isAuthenticated && Object.keys(user1).length === 0 ? (
+                    <Link to="/login">
+                      <Button variant="contained" sx={{ marginBottom: "0.7rem" }}>
+                        Sign In
                       </Button>
                     </Link>
                   ) : user1.image || isAuthenticated ? (
@@ -285,7 +289,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
@@ -316,7 +320,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
@@ -364,7 +368,7 @@ export default function Nav(props) {
                   <Divider />
                   <MenuItem name="balance" onClick={handleClose} ><LoginAuth0 className={n.google} /></MenuItem>
                 </Menu>
- */}
+                    */}
                 {/* {isAuthenticated ? <Logout className={n.google} /> : } */}
               </Box>
             </Box>
