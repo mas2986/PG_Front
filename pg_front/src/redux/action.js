@@ -37,7 +37,10 @@ import {
   CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
   GET_REVIEWS,
-  CREATE_ORDER
+  CREATE_ORDER,
+  GET_ORDER_BY_USER,
+  CREATE_REVIEW,
+  DUPLICATE_REVIEW
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -102,8 +105,28 @@ export function createOrder(body) {
   };
 }
 
+export function createReview(id,body) {
+   console.log(body)
+   return async function (dispatch) {
+    try {
+      let {review} = await axios.post(`api/product/review/${id}`, body);
+      console.log(review.data);
+      return dispatch({
+        type: CREATE_REVIEW,
+         payload: review.data
+      });
+    } catch (e) {
+      return dispatch({
+        type: DUPLICATE_REVIEW,
+         payload: "You have post in this product"
+      });
+    }
+  };
+}
+
 
 export function getOrderById(id){
+  
   return async function(dispatch){
     try{      
       let orderId = await axios.get(`/api/order/${id}`)
@@ -119,6 +142,26 @@ export function getOrderById(id){
 
   }
 }
+
+export function getOrderByUser(id){
+  return async function(dispatch){
+    try{      
+      let orderUser = await axios.get(`/api/order/user/${id}`)
+      
+      return dispatch({
+        type:GET_ORDER_BY_ID,
+        payload: orderUser.data
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+
+  }
+}
+
+
+
 
 export function changeOrderStatus(id,orderStatus,email){
   let body = {orderStatus,email}

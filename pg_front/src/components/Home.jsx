@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../redux/action";
+import { getProduct,getOrderByUser, getAllOrders } from "../redux/action";
 import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
 import home from "../asset/home.png";
@@ -11,10 +11,16 @@ import $ from "jquery";
 import style from "./Home.module.css";
 import Contact from "./Contact";
 import { Link, useHistory } from "react-router-dom";
+import HistoryOrder from "./HistoryOrder";
+
+
+
 window.jquery = window.$ = $;
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
+  const user = useSelector((state) => state.user)
+  const id = user.id
   const dispatch = useDispatch();
   const history = useHistory();
   const pageSize = 12;
@@ -39,6 +45,9 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProduct());
+    dispatch(getOrderByUser(id))
+    dispatch(getAllOrders())
+   
   }, [dispatch]);
 
   useEffect(() => {
@@ -54,6 +63,7 @@ export default function Home() {
   return (
     
     <div>
+
       <Nav />
 
         {home && allProducts ? (

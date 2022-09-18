@@ -34,7 +34,10 @@ import {
   CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
   GET_REVIEWS,
-  CREATE_ORDER
+  CREATE_ORDER,
+  CREATE_REVIEW,
+  GET_ORDER_BY_USER,
+  DUPLICATE_REVIEW
 } from "./const";
 
 const initialState = {
@@ -51,6 +54,8 @@ const initialState = {
   backup: [],
   url: "",
   reviews: [],
+  postreviews: "",
+  
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -66,18 +71,33 @@ export const rootReducer = (state = initialState, action) => {
           ...state,
           order: action.payload
         }
-      
+        case CREATE_REVIEW: 
+        return {
+          ...state,
+          reviews: action.payload
+        }  
+      case DUPLICATE_REVIEW:
+        return {
+          ...state,
+          postreviews: action.payload
+        }
       case ORDER_MERCADOPAGO:
         return {
           ...state,
           url: action.payload,
       }
       case GET_ORDER_BY_ID:
-        console.log(action.payload)
+
         return{
           ...state,
           order: action.payload
         }
+        case GET_ORDER_BY_USER:
+        console.log(action.payload)
+          return{
+            ...state,
+            order: action.payload
+          }
       case GET_ALL_ORDERS:
         return{
           ...state,
