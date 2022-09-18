@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import n from "./Nav.module.css";
@@ -33,7 +33,8 @@ function Cart() {
   //local state for toggling cart items list
   const [cartDisplay, setCartDisplay] = useState(false);
   //local state for forcing a re-render of the price
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(false);
+  const [render, setRender] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
   let official = 149;
@@ -53,6 +54,12 @@ function Cart() {
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price;
   }
+
+  let itemsQty = items.map((i) => i.qty);
+
+  useEffect(() => {
+    setRender((prev) => !prev);
+  }, [itemsQty]);
 
   function handlePay(e) {
     e.preventDefault();
@@ -101,6 +108,7 @@ function Cart() {
             // onMouseEnter={keepIn}
             // onMouseOut={toggle}
             onClick={toggle}
+            // ref={ref}
           />
         </StyledBadge>
       </div>
