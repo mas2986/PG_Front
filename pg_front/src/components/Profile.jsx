@@ -12,7 +12,7 @@ export default function Profile() {
     const { user, isAuthenticated } = useAuth0();
     const dispatch = useDispatch();
     const userEmail = useSelector(state =>  state.user ) ;
-    const profilePic = userEmail.birthdate
+    const profilePic = userEmail.name
 
     return (
         <div >
@@ -22,9 +22,9 @@ export default function Profile() {
                 userEmail ? (  
                     <div>
                         <img src={
+                            userEmail.image||
                             `https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`
-                            ||
-                            userEmail.image} 
+                            } 
                             name={userEmail.name} alt="image not found"></img>
                         <h1>{userEmail.name}</h1>
                         <h2>{userEmail.email}</h2>
@@ -33,7 +33,8 @@ export default function Profile() {
                 : 
                 (
                     <div>
-                        <img src={user.picture} name={user.name}></img>
+                        <img src={user.picture || `https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`}
+                         name={user.name}/>
                         <h1>{user.name}</h1>
                         <h2>{user.email}</h2>
                     </div> 

@@ -2,50 +2,77 @@ import React, {useState} from "react";
 import {Box, FormControl, InputLabel, OutlinedInput} from "@mui/material"
 import mapsMock from "../asset/maps-mock"
 import Button from "@mui/material/Button";
+import Swal from "sweetalert2";
+import emailjs from "emailjs-com";
 
 export default function Contact(){
 
-  const [name, setName] = useState();
+  const SERVICE_ID="service_hhrzemm";
+  const TEMPLATE_ID="template_tfwbmr9";
+  const USER_ID="4DsQ07NDajgU8ymNP";
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
+  const [contact, setContact] = useState({
+    email: "",
+    name: "",
+    message:"",
+  });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID)
+      .then((result) => {
+        console.log(result.text);
+        Swal.fire({
+          icon: "success",
+          title:  "Message Sent Successfully"
+        })
+      }, (error) => {
+        console.log(error.text);
+        Swal.fire({
+          icon: "error",
+          title: "Ooops, something went wrong",
+          text: error.text,
+        })
+      });
+    e.target.reset()
+  };
+
+  function stateInput(e){
+    setContact({
+      ...contact,
+      [e.target.name]: e.target.value,
+    });
   }
+
     return(
 
-        <Box id={"contact"} sx={{
+        <Box  sx={{
             display: "flex",
-            justifyContent: "space-around",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems:"center",
             flexWrap:"wrap",
         }}>
         
-        <div style={{
-            
-          display: "flex", 
-          justifyContent:"center",
-          alignItems:"center",
-          flexDirection:"column", 
-          margin:"20px", 
-          width:"50%"
-            
-        }}>
-          <h2 style={{
-            
+        <div id="contact">
+          <h2  style={{
+          
             fontSize:"30px",
-            marginTop:"-20px",
             marginBottom:"5px", 
             marginLeft:"25px"
             
           }}>
           Write to us!
           </h2>
+
+
           <form onSubmit={handleSubmit} style={{
-            
-          
-          }}>
+          display: "inline-flex", 
+          justifyContent:"space-evenly",
+          alignItems:"stretch",
+          flexDirection:"column",
+          width:"35rem", 
+        }}>
             <FormControl sx={{
                 margin: "20px"
             }}>
@@ -54,8 +81,12 @@ export default function Contact(){
               </InputLabel>
               
               <OutlinedInput
+                fullWidth
                 id="component-outlined"
                 label="E-mail"
+                onChange={(e)=>{stateInput(e);}}
+                value={contact.email}
+                name="email"
               />
             </FormControl>
 
@@ -68,9 +99,10 @@ export default function Contact(){
               
               <OutlinedInput
                 id="component-outlined"
-                value={name}
-                onChange={handleChange}
+                value={contact.name}
+                onChange={(e)=>{stateInput(e);}}
                 label="Name"
+                name="name"
               />
             </FormControl>
 
@@ -84,12 +116,19 @@ export default function Contact(){
               <OutlinedInput
                 id="component-outlined"
                 label="Message"
+                name="message"
+                value={contact.message}
+                multiline
                 sx={{
                   height: "200px"
                 }}
+                onChange={(e)=>{stateInput(e);}}
               />
             </FormControl>
-            <Button type="submit" variant="contained" sx={{ width: "200px"}}> Submit </Button>
+            <Button type="submit" variant="contained" sx={{
+              alignSelf:"flex-end",
+              width: "200px",
+              margin: "20px"}}> Submit </Button>
           </form>
         </div>
 
