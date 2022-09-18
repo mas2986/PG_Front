@@ -22,6 +22,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./components/LoginAuth0";
 import Password from "./components/Password";
 import ResetPassword from "./components/ResetPassword";
+import Profile from "./components/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ function App() {
           render={({ match }) => <EditProduct match={match} />}
         />
         <Route exact path={["/", "/login"]} component={Footer} />
+        <Route exact path="/profile" component={Profile} />
       </header>
     </Auth0Provider>
   );
