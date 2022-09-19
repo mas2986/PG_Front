@@ -40,8 +40,11 @@ function Cart() {
 
   //bring in the global state.cartItems
   let items = useSelector((state) => state.cartItems); // [{},{}]
+
   let detail = useSelector((state) => state.detail);
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
+
+  console.log(items);
   if (items.length == 0) {
     items =
       JSON.parse(localStorage.getItem("items")) == null
