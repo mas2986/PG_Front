@@ -69,7 +69,7 @@ export default function Detail() {
   useEffect(() => {
     dispatch(detailProduct(id));
     dispatch(getReviews())
-    dispatch(getOrderByUser())
+    dispatch(getOrderByUser(UserId))
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);

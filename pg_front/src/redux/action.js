@@ -149,11 +149,11 @@ export function getOrderById(id){
 export function getOrderByUser(userId){
   return async function(dispatch){
     try{      
-      let orderUser = await axios.get(`/api/order/user/${userId}`)
-      
+      let userOrders = await axios.get(`/api/order/user/${userId}`)
+      console.log(userOrders.data)
       return dispatch({
         type:GET_ORDER_BY_USER,
-        payload: orderUser.data
+        payload: userOrders.data
       })
     }
     catch(e){

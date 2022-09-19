@@ -165,7 +165,7 @@ export const rootReducer = (state = initialState, action) => {
         backup: action.payload,
         productAdmin: action.payload,
         cartItems:
-          localStorage.items !== null
+          localStorage.items !== undefined
             ? JSON.parse(localStorage.getItem("items"))
             : [],
       };
