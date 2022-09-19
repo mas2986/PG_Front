@@ -29,8 +29,9 @@ export default function Profile() {
                 {
                 userEmail ? (  
                     <div>
-                        <img src={img} 
-                            name={userEmail.name} alt="image not found"></img>
+                        <img src={userEmail?.image || img} 
+                            name={userEmail.name} alt="image not found"
+                            style={{height: "300px"}}></img>
                         <h1>{userEmail.name}</h1>
                         <h2>{userEmail.email}</h2>
                     </div> 
@@ -38,8 +39,9 @@ export default function Profile() {
                 : 
                 (
                     <div>
-                        <img src={img}
-                         name={user.name}/>
+                        <img src={user?.picture || img}
+                         name={user.name}
+                         style={{height: "300px"}}/>
                         <h1>{user.name}</h1>
                         <h2>{user.email}</h2>
                     </div> 
