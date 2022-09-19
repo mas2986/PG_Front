@@ -495,8 +495,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
-<<<<<<< HEAD
-=======
+
     case CLEAN_DETAIL:
       return {
         ...state,
@@ -507,7 +506,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         postreviews: action.payload,
       };
->>>>>>> develop
+
     default:
       return { ...state };
   }
