@@ -96,7 +96,7 @@ return (
           horizontal: "left"
       }}
       onClose={() =>setAnchor(null)}>
-      <Typography variant="legend"> <ul> {render.map(el => <li><div className={d.Prueba}><p>{el.user+":  "}</p><p>{el.comments}</p></div></li>)} </ul>    </Typography> 
+      <Typography variant="legend"> <ul> {render.map((el,i) => <li key={i}><div className={d.Prueba}><p>{el.user+":  "}</p><p>{el.comments}</p></div></li>)} </ul>    </Typography> 
 
       </Popover>
     </Box>

@@ -16,10 +16,12 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
+  const userAuth0 = useAuth0().user;
   let history = useHistory();
   
   // const [leyenda, setLeyenda] = React.useState("");
@@ -59,6 +61,7 @@ export default function FormPropsTextFields({ props }) {
 
   const [order, setOrder] = React.useState({
     productId: productsId,
+    idProduct: productsId,
     quantity: totalItems,
     orderStatus: "created",
     totalPrice: totalPrice,
@@ -128,6 +131,7 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
+    console.log(order);
     dispatch(createOrder(order));
     setTimeout(function () {
       console.log("Envié la or");
@@ -156,9 +160,15 @@ export default function FormPropsTextFields({ props }) {
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
       setTotalPrice(total);
-
-      // console.log(totalPrice);
-    } else setTotalPrice(0);
+      setOrder({
+        ...order,
+        totalPrice: total,
+      });
+      // console.log("En if de useEffect", order);
+    } else {
+      setTotalPrice(0);
+      console.log("En else de useEffect", totalPrice);
+    }
   }, [items]);
 
   return (
@@ -468,6 +478,7 @@ export default function FormPropsTextFields({ props }) {
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
           ) : Object.keys(user).length > 0 ? (
+
             <Button
               variant="contained"
               color="primary"
@@ -485,7 +496,7 @@ export default function FormPropsTextFields({ props }) {
             >
               BUY
             </Button>
-          ) : totalPrice.length > 0 ? (
+          ) : (
             <Link to="/login">
               <Button
                 variant="contained"
@@ -508,8 +519,6 @@ export default function FormPropsTextFields({ props }) {
                 BUY
               </Button>
             </Link>
-          ) : (
-            <p></p>
           )}
         </Box>
       </Box>

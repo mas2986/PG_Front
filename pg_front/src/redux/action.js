@@ -41,7 +41,8 @@ import {
   GET_ORDER_BY_USER,
   CREATE_REVIEW,
   DUPLICATE_REVIEW,
-  VIEW_ORDER
+  VIEW_ORDER,
+  CLEAN_DETAIL
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -139,6 +140,7 @@ export function createReview(id,body) {
     }
   };
 }
+
 
 
 export function getOrderById(id){
@@ -664,3 +666,12 @@ export function getReviews() {
     }
   };
 }
+
+
+export function cleanDetail() {
+  return async function(dispatch) {
+      return dispatch({
+          type: CLEAN_DETAIL
+      })
+
+  }}

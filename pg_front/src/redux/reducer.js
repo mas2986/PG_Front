@@ -35,19 +35,18 @@ import {
   GET_ORDER_BY_ID,
   GET_REVIEWS,
   CREATE_ORDER,
-  CREATE_REVIEW,
-  GET_ORDER_BY_USER,
+  CLEAN_DETAIL,
   DUPLICATE_REVIEW,
-  VIEW_ORDER
+  VIEW_ORDER,
 } from "./const";
 
 const initialState = {
   products: [],
   altProducts: [],
-  productAdmin:[],
+  productAdmin: [],
   user: {},
-  users:[],
-  order:[],
+  users: [],
+  order: [],
   errorLogin: "",
   cartItems: [],
   qty: 1,
@@ -55,8 +54,6 @@ const initialState = {
   backup: [],
   url: "",
   reviews: [],
-  postreviews: "",
-  
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -66,63 +63,42 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
+    case CREATE_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
 
-      case CREATE_ORDER: 
-        return {
-          ...state,
-          order: action.payload
-        }
-        case CREATE_REVIEW: 
-        return {
-          ...state,
-          reviews: action.payload
-        }  
-      case DUPLICATE_REVIEW:
-        return {
-          ...state,
-          postreviews: action.payload
-        }
-      case VIEW_ORDER: 
-        return {
-          ...state,
-          order: action.payload
-        }
-      case ORDER_MERCADOPAGO:
-        return {
-          ...state,
-          url: action.payload,
-      }
-      case GET_ORDER_BY_ID:
-
-        return{
-          ...state,
-          order: action.payload
-        }
-        case GET_ORDER_BY_USER:
-        console.log(action.payload)
-          return{
-            ...state,
-            order: action.payload
-          }
-      case GET_ALL_ORDERS:
-        return{
-          ...state,
-          order: action.payload
-        }
-      case CHANGE_STATUS_ORDER:
-        return {
-          ...state,
-        };
-      case RESET_PASSWORD:
-          return {
-          ...state,
-          password: action.payload,
-      }
-      case REMEMBER_PASSWORD:
-        return {
-          ...state,
-          password: action.payload,
-        }
+    case ORDER_MERCADOPAGO:
+      return {
+        ...state,
+        url: action.payload,
+      };
+    case GET_ORDER_BY_ID:
+      console.log(action.payload);
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case CHANGE_STATUS_ORDER:
+      return {
+        ...state,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
+    case REMEMBER_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
     case SIGN_UP:
       return {
         ...state,
@@ -181,7 +157,11 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
         altProducts: action.payload,
         backup: action.payload,
-        productAdmin:action.payload
+        productAdmin: action.payload,
+        cartItems:
+          localStorage.items !== null
+            ? JSON.parse(localStorage.getItem("items"))
+            : [],
       };
 
     case SEARCH_PRODUCT:
@@ -311,7 +291,7 @@ export const rootReducer = (state = initialState, action) => {
       const allProds = state.altProducts;
       const cart = state.cartItems;
       const id = action.payload;
-      console.log(state.cartItems);
+
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
@@ -512,6 +492,16 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
+      };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        detail: [],
+      };
+    case DUPLICATE_REVIEW:
+      return {
+        ...state,
+        postreviews: action.payload,
       };
     default:
       return { ...state };

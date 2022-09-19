@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cart from "./Cart";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
+import { logout as logoutEmail } from "../redux/action";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -30,8 +32,6 @@ function HideOnScroll(props) {
   );
 }
 
-
-
 export default function Nav(props) {
   // const user = useSelector((state) => state.user);
   const [anchorElm, setAnchorElm] = React.useState(null);
@@ -39,6 +39,9 @@ export default function Nav(props) {
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = React.useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
+  const history = useHistory();
+  const dispatch = useDispatch()
+   
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -56,7 +59,9 @@ export default function Nav(props) {
     if (value === "Logout" && Object.keys(user).length !== 0) {
       return logout();
     }
-  }
+
+  };
+
 
   return (
     <>
@@ -90,12 +95,14 @@ export default function Nav(props) {
                 </Link>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Cart />
+
+                {window.location.pathname !== "/entrega" && <Cart />}
                 <Box className={n["login-container"]} display="flex">
-                {!isAuthenticated && Object.keys(user1).length === 0 ? (
-                  <Link to="/login">
-                    <Button variant="contained" sx={{ marginBottom: "1px" }}>
-                      Sign In
+                  {!isAuthenticated && Object.keys(user1).length === 0 ? (
+                    <Link to="/login">
+                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                        Sign In
+
                       </Button>
                     </Link>
                   ) : user1.image || isAuthenticated ? (
@@ -103,10 +110,10 @@ export default function Nav(props) {
                       <Tooltip
                         title={
                           user1
-                          ?
-                          `Logged as ${user1.name}`
-                          :
-                          `Logged as ${user.name}`
+
+                            ? `Logged as ${user1.name}`
+                            : `Logged as ${user.name}`
+
                         }
                       >
                         <img
@@ -129,10 +136,12 @@ export default function Nav(props) {
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
-                  </Menu>
-                  </>
-                ) : (
-                      <>
+
+                      </Menu>
+                    </>
+                  ) : (
+                    <>
+
                       <Tooltip
                         title={
                           `Logged as ${user1.name}` || `Logged as ${user.name}`
@@ -141,7 +150,7 @@ export default function Nav(props) {
                         <AccountCircleIcon
                           onClick={handleSubmit}
                           sx={{
-                            color: 'gray',
+                            color: "gray",
                             fontSize: "large",
                             marginBottom: "0.5rem",
                             width: "30px",
@@ -161,9 +170,9 @@ export default function Nav(props) {
                           Logout
                         </MenuItem>
                       </Menu>
-                      </>
-                    )}      
-                </Box>                                  
+                    </>
+                  )}
+                </Box>
               </Box>
             </Toolbar>
           </AppBar>
