@@ -40,11 +40,13 @@ export default function CardProduct(props) {
   async function handlePay(e) {
     e.preventDefault();
     if (items.some((i) => props.id == i.id)) {
+      console.log('Despachando accion para pago')
       dispatch(mercadoPago({ price: props.price * official }));
       history.push("/entrega");
     } else {
       dispatch(addToCart(props.id));
       dispatch(removeDupsCart(props.id));
+      dispatch(mercadoPago({ price: props.price * official }));
       history.push("/entrega");
     }
   }
@@ -88,7 +90,7 @@ export default function CardProduct(props) {
         {props.stock > 0 ? (
           <Button
             onClick={(e) => handlePay(e)}
-            href={"/entrega"}
+            //href={"/entrega"}
             size="small"
             // className={props.stock < 1 ? h.buyBtnStock : ""}
           >
