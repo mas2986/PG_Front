@@ -37,8 +37,7 @@ import {
   CREATE_ORDER,
   CLEAN_DETAIL,
   DUPLICATE_REVIEW,
-  CHANGE_STATUS_ORDER,
-  CREATE_USER
+  CHANGE_STATUS_ORDER
 } from "./const";
 
 const initialState = {
