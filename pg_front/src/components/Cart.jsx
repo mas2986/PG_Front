@@ -54,8 +54,7 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-  
-  function handlePay(e) {
+function handlePay(e) {
     e.preventDefault();
     dispatch(mercadoPago({ price: totalPrice * official }));
 
@@ -111,7 +110,7 @@ function Cart() {
           className={n["cart-container"]}
           // onMouseEnter={keepIn}
           // onMouseLeave={toggle}
-          sx={{ marginRight: "4rem" }}
+          sx={{ marginRigth: "4rem" }}
         >
           <Box
             sx={{

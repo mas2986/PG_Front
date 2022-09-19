@@ -24,10 +24,12 @@ export default function Detail() {
   const userOrder = order.filter((item) => item.userId === UserId) && (order.filter(item => item.orderStatus === "completed")) 
  
   console.log(userOrder)
+
   
   const users =  useSelector((state) => state.users);
   
   
+
   let official = 149;
   
   const review = useSelector((state) => state.reviews);
@@ -86,24 +88,25 @@ export default function Detail() {
   function addCart() {
     new Audio(plop).play();
     detail.qty = 1;
-    dispatch(addToCartDetail(detail.id)); 
+    dispatch(addToCartDetail(detail.id));
     dispatch(removeDupsCart(detail.id));
     detail.qty(qty)
   }
-   
-   async function handlePay(e) {
-        e.preventDefault();
-        dispatch(mercadoPago({price: detail.price * official}));
-        history.push('/entrega')
-    }
 
-    
+  async function handlePay(e) {
+    e.preventDefault();
+    dispatch(mercadoPago({ price: detail.price * official }));
+    history.push('/entrega')
+  }
 
-  
+
+
+  console.log(detail ?.stock)
 
   return (
     <center>
       <Nav2 />
+
       <Section/>
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
@@ -118,17 +121,16 @@ export default function Detail() {
             </div>
 
             <div className={d.productDetail}>
-                
+
               <h1 className={d.title}>
                 {detail.title && detail.title.toUpperCase()}
               </h1>
-              
+
               {/* <p>Gender: {detail.genre && detail.genre}</p> */}
 
               <p className={d.price}>
                 Price: ${detail.price && detail.price},00
               </p>
-
               <RatingProm id={id} reviews={review} users={users}/>
 
             <Button onClick={(e)=> handlePay(e)} variant="contained" size="small" sx={{
@@ -167,18 +169,19 @@ export default function Detail() {
             <div>
                   { <Review id={id}/> }
              </div>     
+
             </div>
 
-            
+
 
           </div>
 
         ) : (
-          <CircularProgress color="success" sx={{
-            marginTop:35
-          }}/>
-        )}
-        
+            <CircularProgress color="success" sx={{
+              marginTop: 35
+            }} />
+          )}
+
       </div>
     </center>
   );
