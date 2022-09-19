@@ -17,16 +17,18 @@ import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
 
+
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
   let history = useHistory();
+  
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
   const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
-  // console.log(items);
+   console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -53,6 +55,7 @@ export default function FormPropsTextFields({ props }) {
     // totalPrice += items[i].price;
   }
   const productsId = items.map((p) => p.id);
+  console.log(productsId)
 
   const [order, setOrder] = React.useState({
     productId: productsId,
@@ -66,10 +69,10 @@ export default function FormPropsTextFields({ props }) {
   // console.log(order);
 
   const handleButton = async (event) => {
-    if (texto.name.length < 3 || texto.name.length > 10) {
+    if (!texto.name.length || texto.name.length < 3) {
       return Swal.fire({
         title: "Check the name!",
-        text: "It must contain from 3 to 10 characters.",
+        text: "It must contain 3 characters.",
         icon: "error",
       });
     }

@@ -40,7 +40,8 @@ import {
   CREATE_ORDER,
   GET_ORDER_BY_USER,
   CREATE_REVIEW,
-  DUPLICATE_REVIEW
+  DUPLICATE_REVIEW,
+  VIEW_ORDER
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -98,6 +99,21 @@ export function createOrder(body) {
       return dispatch({
         type: CREATE_ORDER,
         payload: order,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function viewOrder(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios(`api/order/user/${id}`);
+      console.log(json.data);
+      return dispatch({
+        type: VIEW_ORDER,
+        payload: json.data,
       });
     } catch (e) {
       console.log(e);
