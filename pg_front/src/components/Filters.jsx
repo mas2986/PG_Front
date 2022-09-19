@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
-import { useDispatch } from "react-redux";
-
-=======
 import { useDispatch, useSelector} from "react-redux";
 import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
->>>>>>> luciano
 import {
   filterByGenre,
   filterBySport,
