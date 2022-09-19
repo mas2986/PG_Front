@@ -1,6 +1,15 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { useDispatch } from "react-redux";
 
+=======
+import { useDispatch, useSelector} from "react-redux";
+import { styled } from "@mui/material/styles";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+>>>>>>> luciano
 import {
   filterByGenre,
   filterBySport,
@@ -18,6 +27,13 @@ export default function Filters() {
   const [genderTrail, setGenderTrail] = useState("");
   const [brandTrail, setBrandTrail] = useState("");
   const [sportsTrail, setSportsTrail] = useState("");
+  const [activeFilters, setActiveFilters] = useState({
+    gender: "",
+    brand: "",
+    sport: ""
+  });
+
+  
 
   const [input, setInput] = useState("");
 
@@ -26,6 +42,10 @@ export default function Filters() {
     dispatch(filterByGenre(e.target.value));
     if (e.target.value !== "All") {
       setGenderTrail(e.target.value);
+      setActiveFilters(prev => ({
+        ...prev,
+        gender: e.target.value
+      }))
     }
   }
   function handleFilteredSports(e) {
@@ -33,6 +53,10 @@ export default function Filters() {
     dispatch(filterBySport(e.target.value));
     if (e.target.value !== "All") {
       setSportsTrail(e.target.value);
+      setActiveFilters(prev => ({
+        ...prev,
+        sport: e.target.value
+      }))
     }
   }
   function handleFilteredBrands(e) {
@@ -40,6 +64,10 @@ export default function Filters() {
     dispatch(filterByBrand(e.target.value));
     if (e.target.value !== "All") {
       setBrandTrail(e.target.value);
+      setActiveFilters(prev => ({
+        ...prev,
+        brand: e.target.value
+      }))
     }
   }
 
@@ -52,11 +80,19 @@ export default function Filters() {
     dispatch(orderByPrice(e.target.value));
   }
 
-  function cleanFilter() {
+  function cleanFilterGenres() {
     setGenderTrail("");
-    setBrandTrail("");
-    setSportsTrail("");
+    setActiveFilters({
+      ...activeFilters,
+      gender: ''
+    })
+    // setBrandTrail("");
+    // setSportsTrail("");
     dispatch(getProduct());
+    console.log(activeFilters.brand)
+  if(activeFilters["brand"] != "") { 
+    dispatch(filterByBrand("Adidas"))}
+    else if (activeFilters.sport != "") dispatch(filterBySport(activeFilters.sport))
   }
 
   return (
@@ -123,7 +159,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              onClick={cleanFilterGenres}
               className={h.trails}
             >
               {genderTrail + " X"}
@@ -169,7 +205,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              //onClick={cleanFilter}
               className={h.trails}
             >
               {brandTrail + " X"}
@@ -214,7 +250,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              //onClick={cleanFilter}
               className={h.trails}
             >
               {sportsTrail + " X"}
