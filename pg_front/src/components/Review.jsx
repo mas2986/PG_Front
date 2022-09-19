@@ -51,7 +51,7 @@ export default function Review(props) {
     <div className='general-cont'>
       <Box component="fieldset" mb={3} borderColor="transparent">           
       { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  <>
-        <Typography component="legend">Califica este producto:</Typography>
+        <Typography component="legend">Comment and rate this product:</Typography>
         <div className='stars'>
             <h2 className='number'>{rating}</h2>
             <Rating
@@ -66,8 +66,8 @@ export default function Review(props) {
          
         <form className='little-form'>
             <textarea value={comment} onChange={(e)=>handleChange(e)} 
-            placeholder='Escribe tu reseña sobre este artículo aqui.' />
-            <button onClick={(e)=>{e.preventDefault();handleSubmit()}} >Enviar</button>
+            placeholder='Write your review about this product here.' />
+            <button onClick={(e)=>{e.preventDefault();handleSubmit()}} >Send</button>
         </form> 
 </> : null}  
       </Box>

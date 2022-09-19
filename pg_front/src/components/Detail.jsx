@@ -76,27 +76,7 @@ export default function Detail() {
     dispatch(getReviews())
     dispatch(getAllUsers())
     dispatch(getAllOrders())
-    // if(Object.keys(user).length === 0) setRender(true)  
-    //   if(prueba.length > 0){
-    //     for (let i = 0; i < prueba.length; i++) {
-    //      if(prueba[i].uservacio === UserId){
-    //        setRender(true)
-    //        console.log("HOLA")
-    //      }else{
-    //        setRender(false)
-    //      }
-    //     }
-    //    }
-    //   if(userOrder.length>0){ 
-    //    for (let i = 0; i < userOrder.length; i++) {
-    //     if(userOrder[i]['idProduct'].split(", ").includes(id)){
-    //       ramdom.push(userOrder[i]['idProduct'])
-    //       console.log(ramdom)
-    //     } 
-        
-    //   }   
-    // }
-       
+         
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
@@ -125,7 +105,6 @@ export default function Detail() {
     <center>
       <Nav2 />
       <Section/>
-     { <Review id={id}/> }
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
         {detail ? (
@@ -135,7 +114,7 @@ export default function Detail() {
                 src={detail.img ? detail.img : detail.image}
                 alt="Image not found"
                 className={d.bigImage}
-              />
+                />
             </div>
 
             <div className={d.productDetail}>
@@ -153,7 +132,7 @@ export default function Detail() {
               <RatingProm id={id} reviews={review} users={users}/>
 
             <Button onClick={(e)=> handlePay(e)} variant="contained" size="small" sx={{
-             padding:2
+              padding:2
             }} className={d.buyButton}>
               BUY
             </Button>
@@ -168,7 +147,7 @@ export default function Detail() {
                 // color="primary"
                 size="large"
                 className={d.homeButton}
-              >
+                >
                 GO BACK
               </Button>
             </Link>
@@ -185,6 +164,9 @@ export default function Detail() {
                 Sport: {detail.sport && detail.sport}
               </p>
             </div>
+            <div>
+                  { <Review id={id}/> }
+             </div>     
             </div>
 
             
