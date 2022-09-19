@@ -16,9 +16,11 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
+  const userAuth0 = useAuth0().user
   let history = useHistory();
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
@@ -472,7 +474,7 @@ export default function FormPropsTextFields({ props }) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : Object.keys(user).length > 0 ? (
+          ) : Object.keys(user).length > 0 || Object.keys(userAuth0).length > 0 ? (
             <Button
               variant="contained"
               color="primary"
