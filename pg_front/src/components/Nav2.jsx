@@ -1,6 +1,6 @@
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
-import {AppBar , Button, Menu, MenuItem, Divider} from "@mui/material";
+import { AppBar, Button, Menu, MenuItem, Divider } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -32,8 +32,6 @@ function HideOnScroll(props) {
   );
 }
 
-
-
 export default function Nav(props) {
   // const user = useSelector((state) => state.user);
   const [anchorElm, setAnchorElm] = React.useState(null);
@@ -42,8 +40,8 @@ export default function Nav(props) {
   const [log, setLog] = React.useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
   const history = useHistory();
-  const dispatch = useDispatch()
-   
+  const dispatch = useDispatch();
+
   function handleSubmit(e) {
     e.preventDefault();
     setAnchorElm(e.currentTarget);
@@ -60,7 +58,7 @@ export default function Nav(props) {
     if (value === "Logout" && Object.keys(user).length !== 0) {
       return logout();
     }
-  }
+  };
 
   return (
     <>
@@ -94,12 +92,12 @@ export default function Nav(props) {
                 </Link>
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
-                <Cart />
+                {window.location.pathname !== "/entrega" && <Cart />}
                 <Box className={n["login-container"]} display="flex">
-                {!isAuthenticated && Object.keys(user1).length === 0 ? (
-                  <Link to="/login">
-                    <Button variant="contained" sx={{ marginBottom: "1px" }}>
-                      Sign In
+                  {!isAuthenticated && Object.keys(user1).length === 0 ? (
+                    <Link to="/login">
+                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                        Sign In
                       </Button>
                     </Link>
                   ) : user1.image || isAuthenticated ? (
@@ -107,10 +105,8 @@ export default function Nav(props) {
                       <Tooltip
                         title={
                           user1
-                          ?
-                          `Logged as ${user1.name}`
-                          :
-                          `Logged as ${user.name}`
+                            ? `Logged as ${user1.name}`
+                            : `Logged as ${user.name}`
                         }
                       >
                         <img
@@ -133,10 +129,10 @@ export default function Nav(props) {
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
-                  </Menu>
-                  </>
-                ) : (
-                      <>
+                      </Menu>
+                    </>
+                  ) : (
+                    <>
                       <Tooltip
                         title={
                           `Logged as ${user1.name}` || `Logged as ${user.name}`
@@ -145,7 +141,7 @@ export default function Nav(props) {
                         <AccountCircleIcon
                           onClick={handleSubmit}
                           sx={{
-                            color: 'gray',
+                            color: "gray",
                             fontSize: "large",
                             marginBottom: "0.5rem",
                             width: "30px",
@@ -165,9 +161,9 @@ export default function Nav(props) {
                           Logout
                         </MenuItem>
                       </Menu>
-                      </>
-                    )}      
-                </Box>                                  
+                    </>
+                  )}
+                </Box>
               </Box>
             </Toolbar>
           </AppBar>

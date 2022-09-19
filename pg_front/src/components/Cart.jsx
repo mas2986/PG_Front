@@ -55,11 +55,12 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-  let itemsQty = items.map((i) => i.qty);
+  console.log(window.location.pathname);
+  // let itemsQty = items.map((i) => i.qty);
 
-  useEffect(() => {
-    setRender((prev) => !prev);
-  }, [itemsQty]);
+  // useEffect(() => {
+  //   setRender((prev) => !prev);
+  // }, [itemsQty]);
 
   function handlePay(e) {
     e.preventDefault();
@@ -117,7 +118,7 @@ function Cart() {
           className={n["cart-container"]}
           // onMouseEnter={keepIn}
           // onMouseLeave={toggle}
-          sx={{ marginRight: "4rem" }}
+          sx={{ marginRigth: "4rem" }}
         >
           <Box
             sx={{
