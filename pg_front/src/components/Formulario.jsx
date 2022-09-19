@@ -474,7 +474,7 @@ export default function FormPropsTextFields({ props }) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : Object.keys(user).length > 0 || Object.keys(userAuth0).length > 0 ? (
+          ) : Object.keys(user).length > 0 || userAuth0!==null? (
             <Button
               variant="contained"
               color="primary"
