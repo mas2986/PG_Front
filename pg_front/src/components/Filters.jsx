@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { styled } from "@mui/material/styles";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import Stack from "@mui/material/Stack";
+
 import {
   filterByGenre,
   filterBySport,
@@ -15,6 +11,7 @@ import {
 } from "../redux/action";
 import style from "./Filters.module.css";
 import h from "./Home.module.css";
+import { useHistory } from 'react-router-dom';
 
 export default function Filters() {
   const dispatch = useDispatch();

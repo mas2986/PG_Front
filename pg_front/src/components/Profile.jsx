@@ -12,7 +12,15 @@ export default function Profile() {
     const { user, isAuthenticated } = useAuth0();
     const dispatch = useDispatch();
     const userEmail = useSelector(state =>  state.user ) ;
-    const profilePic = userEmail.name
+    const profilePic = userEmail?.name || user?.name
+    const img =`https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`;
+    // if (userEmail.image!=""){
+    //     img = userEmail.image
+    // } else if(user?.picture!=""){
+    //     img = user.picture
+    // } else {
+    //     img = `https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`
+    // }
 
     return (
         <div >
@@ -21,10 +29,7 @@ export default function Profile() {
                 {
                 userEmail ? (  
                     <div>
-                        <img src={
-                            userEmail.image||
-                            `https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`
-                            } 
+                        <img src={img} 
                             name={userEmail.name} alt="image not found"></img>
                         <h1>{userEmail.name}</h1>
                         <h2>{userEmail.email}</h2>
@@ -33,7 +38,7 @@ export default function Profile() {
                 : 
                 (
                     <div>
-                        <img src={user.picture || `https://avatars.dicebear.com/api/jdenticon/${profilePic}.svg`}
+                        <img src={img}
                          name={user.name}/>
                         <h1>{user.name}</h1>
                         <h2>{user.email}</h2>
