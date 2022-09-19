@@ -96,7 +96,7 @@ export default function Nav(props) {
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
 
-                {window.location.pathname !== "/entrega" && <Cart />}
+                {window.location.pathname !== "/entrega" && <Cart/>}
                 <Box className={n["login-container"]} display="flex">
                   {!isAuthenticated && Object.keys(user1).length === 0 ? (
                     <Link to="/login">

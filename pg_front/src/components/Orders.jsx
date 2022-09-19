@@ -99,14 +99,14 @@ const Orders = () => {
                 gap: '1rem',
               }}
             >
-              {productPurchase.map(e =>
-              <Tooltip title={`${e?.title}`} key={e?.id}>
+              {productPurchase.map((e,i) =>
+              <Tooltip title={`${e?.title}`} key={i}>
                 <img
                   alt="avatar"
                   height={30}
                   src={e?.image}
                   loading="lazy"
-                  key = { e?.id }
+                  key = { i }
                   style={{ borderRadius: '50%' }}
                 />
                 </Tooltip>
