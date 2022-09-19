@@ -217,7 +217,6 @@ const Orders = () => {
       onRowSelectionChange={setRowSelection}
       state={{ rowSelection }}
       getRowId={(row) => row.id}
-      getRowId={(row) => row.id}
       muiTableBodyCellEditTextFieldProps={({ row }) => ({
         //onBlur is more efficient, but could use onChange instead
         onBlur: (event) => {

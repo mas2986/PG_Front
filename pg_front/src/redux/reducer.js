@@ -30,13 +30,10 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
-  GET_ALL_ORDERS,
-  CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
+  GET_ORDER_BY_USER,
   GET_REVIEWS,
-  CREATE_ORDER,
-  CLEAN_DETAIL,
-  DUPLICATE_REVIEW
+  CREATE_ORDER
 } from "./const";
 
 const initialState = {
@@ -80,15 +77,6 @@ export const rootReducer = (state = initialState, action) => {
           ...state,
           order: action.payload
         }
-      case GET_ALL_ORDERS:
-        return{
-          ...state,
-          order: action.payload
-        }
-      case CHANGE_STATUS_ORDER:
-        return {
-          ...state,
-        };
       case RESET_PASSWORD:
           return {
           ...state,
@@ -134,6 +122,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    
+    case GET_ORDER_BY_USER:
+      return {
+        ...state,
+        order: action.payload
+      }
 
     case GET_ALL_USERS:
       return {
@@ -277,7 +271,6 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case DETAIL_PRODUCT:
-      console.log(action.payload);
       return {
         ...state,
         detail: action.payload,
@@ -372,7 +365,6 @@ export const rootReducer = (state = initialState, action) => {
         filteredGender = allGenders.filter((g) =>
           g.genre.toLowerCase().includes("female")
         );
-        console.log(value);
         if (value.includes("jersey")) {
           filteredProduct = filteredGender.filter((prods) =>
             prods.title.includes("jersey")
@@ -489,16 +481,6 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
-      case CLEAN_DETAIL:
-            return {
-                ...state,
-                detail:[]
-            }
-      case DUPLICATE_REVIEW: 
-      return {
-        ...state,
-        postreviews: action.payload
-      }
     default:
       return { ...state };
   }

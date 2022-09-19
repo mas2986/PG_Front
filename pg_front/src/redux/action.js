@@ -145,13 +145,14 @@ export function getOrderById(id){
   }
 }
 
-export function getOrderByUser(id){
+
+export function getOrderByUser(userId){
   return async function(dispatch){
     try{      
-      let orderUser = await axios.get(`/api/order/user/${id}`)
+      let orderUser = await axios.get(`/api/order/user/${userId}`)
       
       return dispatch({
-        type:GET_ORDER_BY_ID,
+        type:GET_ORDER_BY_USER,
         payload: orderUser.data
       })
     }

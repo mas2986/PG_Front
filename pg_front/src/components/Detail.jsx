@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useParams } from "react-router-dom";
-import { detailProduct, getAllOrders, createOrder, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers } from "../redux/action";
+import { detailProduct, getAllOrders, createOrder, removeDupsCart, addToCartDetail, mercadoPago, getReviews, getAllUsers, getOrderByUser } from "../redux/action";
 import d from "./Detail.module.css";
 import Nav2 from "./Nav2.jsx";
 import Button from "@mui/material/Button";
@@ -65,20 +65,11 @@ export default function Detail() {
   }
 
   const prueba = rendercomment.filter(el => el)
-  
- 
-
-
- 
-
-
 
   useEffect(() => {
     dispatch(detailProduct(id));
     dispatch(getReviews())
-    dispatch(getAllUsers())
-    dispatch(getAllOrders())
-         
+    dispatch(getOrderByUser())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
