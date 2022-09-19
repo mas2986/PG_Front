@@ -18,6 +18,8 @@ import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
 
 export default function FormPropsTextFields({ props }) {
+  import { useAuth0 } from "@auth0/auth0-react";
+  const { user as Auth0 } = useAuth0();
   const [checked, setChecked] = React.useState(true);
   let history = useHistory();
   // const [leyenda, setLeyenda] = React.useState("");
@@ -472,7 +474,7 @@ export default function FormPropsTextFields({ props }) {
           errors.telefono ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : Object.keys(user).length > 0 ? (
+          ) : Object.keys(user).length > 0 || Object.keys(Auth0).length > 0 ? (
             <Button
               variant="contained"
               color="primary"
