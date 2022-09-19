@@ -53,6 +53,7 @@ export default function Nav(props) {
     setOpenMenu(false);
     const value = e.target.innerText;
     setAnchorElm(null);
+    if (value === "Profile") history.push("/profile")
     if (value === "Logout" && Object.keys(user1).length !== 0) {
       return dispatch(logoutEmail(history));
     }
@@ -96,7 +97,7 @@ export default function Nav(props) {
               </Box>
               <Box display="flex" sx={{ alignItems: "center" }}>
 
-                {window.location.pathname !== "/entrega" && <Cart />}
+                {window.location.pathname !== "/entrega" && <Cart/>}
                 <Box className={n["login-container"]} display="flex">
                   {!isAuthenticated && Object.keys(user1).length === 0 ? (
                     <Link to="/login">
@@ -152,7 +153,7 @@ export default function Nav(props) {
                           sx={{
                             color: "gray",
                             fontSize: "large",
-                            marginBottom: "0.5rem",
+                            marginBottom: "0",
                             width: "30px",
                             height: "30px",
                             marginRight: "1rem",
