@@ -26,8 +26,8 @@ import Profile from "./components/Profile";
 
 function App() {
   const dispatch = useDispatch();
-  const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-  const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+  const domain = "dev-u8j4zcx3.us.auth0.com"
+  const clientId = "QwMRGoXqdw9dhg4eH0m9qShionzCwy7Q"
   const { isAuthenticated, isLoading, user } = useAuth0();
 
   useEffect(() => {

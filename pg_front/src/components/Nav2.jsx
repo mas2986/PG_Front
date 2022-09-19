@@ -1,6 +1,6 @@
 import * as React from "react";
 import Tooltip from "@mui/material/Tooltip";
-import {AppBar ,Button} from "@mui/material";
+import {AppBar , Button, Menu, MenuItem, Divider} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cart from "./Cart";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
+import { logout as logoutEmail } from "../redux/action";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -39,7 +41,9 @@ export default function Nav(props) {
   const user1 = useSelector((state) => state.user);
   const [log, setLog] = React.useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
-
+  const history = useHistory();
+  const dispatch = useDispatch()
+   
   function handleSubmit(e) {
     e.preventDefault();
     setAnchorElm(e.currentTarget);
