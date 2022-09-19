@@ -38,6 +38,7 @@ function CarouselBrands() {
     history.push('/products')
     console.log(e);
   }
+ 
 
   return (
     <div
