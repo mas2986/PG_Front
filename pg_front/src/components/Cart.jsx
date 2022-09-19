@@ -34,7 +34,6 @@ function Cart() {
   const [cartDisplay, setCartDisplay] = useState(false);
   //local state for forcing a re-render of the price
   const [qty, setQty] = useState(false);
-  const [render, setRender] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
   let official = 149;
@@ -55,13 +54,7 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-  let itemsQty = items.map((i) => i.qty);
-
-  useEffect(() => {
-    setRender((prev) => !prev);
-  }, [itemsQty]);
-
-  function handlePay(e) {
+function handlePay(e) {
     e.preventDefault();
     dispatch(mercadoPago({ price: totalPrice * official }));
 
@@ -117,7 +110,7 @@ function Cart() {
           className={n["cart-container"]}
           // onMouseEnter={keepIn}
           // onMouseLeave={toggle}
-          sx={{ marginRight: "4rem" }}
+          sx={{ marginRigth: "4rem" }}
         >
           <Box
             sx={{
