@@ -63,6 +63,13 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
+
+    case VIEW_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
+
     case CREATE_ORDER:
       return {
         ...state,
