@@ -73,7 +73,7 @@ function Cart() {
   //   setCartDisplay(true);
   // }
 
-  //deleting an item from a specific index of the items array. An action is dispatched to the reducer and logic is setup there.
+  //deleting an item from a specific index of the items array. An action is dispatched to the reducer and the logic is setup there.
   function deleteItem(idxRemoval) {
     dispatch(deleteFromCart(idxRemoval));
     if (items.length == 1) {
