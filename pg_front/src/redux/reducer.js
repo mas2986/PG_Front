@@ -33,13 +33,9 @@ import {
   GET_ORDER_BY_ID,
   GET_ORDER_BY_USER,
   GET_REVIEWS,
-<<<<<<< HEAD
-  CREATE_ORDER
-=======
   CREATE_ORDER,
   CLEAN_DETAIL,
   DUPLICATE_REVIEW,
->>>>>>> develop
 } from "./const";
 
 const initialState = {
