@@ -55,7 +55,7 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-  console.log(window.location.pathname);
+  // console.log(window.location.pathname);
   // let itemsQty = items.map((i) => i.qty);
 
   // useEffect(() => {
