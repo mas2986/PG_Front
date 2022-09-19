@@ -256,20 +256,15 @@ function Cart() {
                   </Typography>
                 </Box>
                 <Box display="flex" sx={{ justifyContent: "center" }}>
-                  <Link
-                    // to="/entrega"
-                    style={{ textDecoration: "none", fontStyle: "none" }}
+                  <Button
+                    onClick={(e) => handlePay(e)}
+                    sx={{
+                      margin: "0.5rem",
+                      border: "1px solid #000",
+                    }}
                   >
-                    <Button
-                      onClick={(e) => handlePay(e)}
-                      sx={{
-                        margin: "0.5rem",
-                        border: "1px solid #000",
-                      }}
-                    >
-                      Proceed to checkout
-                    </Button>
-                  </Link>
+                    Proceed to checkout
+                  </Button>
                 </Box>
               </Box>
             ) : (
