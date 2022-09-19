@@ -23,6 +23,7 @@ import {
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
   GET_ALL_USERS,
+  GET_ALL_ORDERS,
   CHANGE_ROLE_USER,
   DELETE_USER,
   ADD_TO_CART_DETAIL,
@@ -30,23 +31,22 @@ import {
   REMEMBER_PASSWORD,
   RESET_PASSWORD,
   ORDER_MERCADOPAGO,
-  GET_ALL_ORDERS,
-  CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
   GET_ORDER_BY_USER,
   GET_REVIEWS,
   CREATE_ORDER,
   CLEAN_DETAIL,
-  DUPLICATE_REVIEW
+  DUPLICATE_REVIEW,
+  CHANGE_STATUS_ORDER
 } from "./const";
 
 const initialState = {
   products: [],
   altProducts: [],
-  productAdmin:[],
+  productAdmin: [],
   user: {},
-  users:[],
-  order:[],
+  users: [],
+  order: [],
   errorLogin: "",
   cartItems: [],
   qty: 1,
@@ -63,43 +63,42 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
+    case CREATE_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
 
-      case CREATE_ORDER: 
-        return {
-          ...state,
-          order: action.payload
-        }
-      
-      case ORDER_MERCADOPAGO:
-        return {
-          ...state,
-          url: action.payload,
-      }
-      case GET_ORDER_BY_ID:
-        console.log(action.payload)
-        return{
-          ...state,
-          order: action.payload
-        }
-      case GET_ALL_ORDERS:
-        return{
-          ...state,
-          order: action.payload
-        }
-      case CHANGE_STATUS_ORDER:
-        return {
-          ...state,
-        };
-      case RESET_PASSWORD:
-          return {
-          ...state,
-          password: action.payload,
-      }
-      case REMEMBER_PASSWORD:
-        return {
-          ...state,
-          password: action.payload,
-        }
+    case ORDER_MERCADOPAGO:
+      return {
+        ...state,
+        url: action.payload,
+      };
+    case GET_ORDER_BY_ID:
+      console.log(action.payload);
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case CHANGE_STATUS_ORDER:
+      return {
+        ...state,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
+    case REMEMBER_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
     case SIGN_UP:
       return {
         ...state,
@@ -135,6 +134,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    
+    case GET_ORDER_BY_USER:
+      return {
+        ...state,
+        order: action.payload
+      }
 
     case GET_ALL_USERS:
       return {
@@ -158,7 +163,11 @@ export const rootReducer = (state = initialState, action) => {
         products: action.payload,
         altProducts: action.payload,
         backup: action.payload,
-        productAdmin:action.payload
+        productAdmin: action.payload,
+        cartItems:
+          localStorage.items !== undefined
+            ? JSON.parse(localStorage.getItem("items"))
+            : [],
       };
 
     case SEARCH_PRODUCT:
@@ -278,7 +287,6 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case DETAIL_PRODUCT:
-      console.log(action.payload);
       return {
         ...state,
         detail: action.payload,
@@ -288,7 +296,7 @@ export const rootReducer = (state = initialState, action) => {
       const allProds = state.altProducts;
       const cart = state.cartItems;
       const id = action.payload;
-      console.log(state.cartItems);
+
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
@@ -373,7 +381,6 @@ export const rootReducer = (state = initialState, action) => {
         filteredGender = allGenders.filter((g) =>
           g.genre.toLowerCase().includes("female")
         );
-        console.log(value);
         if (value.includes("jersey")) {
           filteredProduct = filteredGender.filter((prods) =>
             prods.title.includes("jersey")
@@ -499,13 +506,15 @@ export const rootReducer = (state = initialState, action) => {
       case CLEAN_DETAIL:
             return {
                 ...state,
-                detail:[]
+                detail:[],
+                order: []
             }
-      case DUPLICATE_REVIEW: 
+    case DUPLICATE_REVIEW:
       return {
         ...state,
-        postreviews: action.payload
-      }
+        postreviews: action.payload,
+      };
+
     default:
       return { ...state };
   }

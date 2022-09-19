@@ -42,7 +42,7 @@ function Cart() {
   let items = useSelector((state) => state.cartItems); // [{},{}]
   let detail = useSelector((state) => state.detail);
   //if global state is empty, look for any saved items local storage, if there're none, set items as an empty string
-  if (items.length == 0) {
+  if (items?.length == 0) {
     items =
       JSON.parse(localStorage.getItem("items")) == null
         ? []
@@ -54,7 +54,7 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-function handlePay(e) {
+  function handlePay(e) {
     e.preventDefault();
     dispatch(mercadoPago({ price: totalPrice * official }));
 
@@ -110,7 +110,7 @@ function handlePay(e) {
           className={n["cart-container"]}
           // onMouseEnter={keepIn}
           // onMouseLeave={toggle}
-          sx={{ marginRigth: "4rem" }}
+          sx={{ position: "absolute", top: "1rem", right: "2rem" }}
         >
           <Box
             sx={{

@@ -65,13 +65,6 @@ export default function Detail() {
   }
 
   const prueba = rendercomment.filter(el => el)
-  
- 
-
-
- 
-
-
 
   useEffect(() => {
     dispatch(detailProduct(id));
