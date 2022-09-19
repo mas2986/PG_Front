@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams, Link as LinkRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
+import { 
+  Select, 
+  Chip, 
+  ListItemText, 
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Stack } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
-import Checkbox from "@mui/material/Checkbox";
+import DialogActions from "@mui/material/DialogActions";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -24,8 +30,6 @@ import { createProduct } from "../redux/action";
 
 function validate(input) {
   let errors = {};
-  console.log("En funcion validate");
-  console.log(input);
   if (!input.title) errors.title = "Required Field";
 
   if (input.title.length > 50) errors.title = "Title very long";
@@ -45,7 +49,6 @@ function validate(input) {
   if (input.description.length > 250)
     errors.description = "Description very long";
 
-  console.log(errors);
   return errors;
 }
 
@@ -58,7 +61,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit">
         {/* Cambiar href por nuestra URL */}
         Athens
       </Link>{" "}
@@ -68,12 +71,24 @@ function Copyright(props) {
   );
 }
 
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 const theme = createTheme();
 
-export default function FormProduct() {
+export default function FormProduct({ open, onClose, setEdit }) {
   const user = useSelector((state) => state.user);
   const allProducts = useSelector((state) => state.products);
-  console.log(allProducts);
+  const [sportState,setSport] = useState([]);
   const [input, setInput] = useState({
     title: "",
     brand: "",
@@ -84,14 +99,13 @@ export default function FormProduct() {
     //status: "",
     stock: 0,
     genre: "",
-    sport: "",
   });
 
   const [errors, setErrors] = useState({});
 
   const genre = ["Male", "Female", "Kids", "Other"];
-  const sport = [
-    "Soccer",
+  const sports = [
+    "Football",
     "Rugby",
     "Tennis",
     "Basketball",
@@ -102,13 +116,9 @@ export default function FormProduct() {
     "Hockey",
   ];
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  console.log(input);
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
-    console.log(e.target.name);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -132,42 +142,64 @@ export default function FormProduct() {
 
   const handleChangeSelect = (event) => {
     event.preventDefault();
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value,
-    });
+    const {
+      target: { value },
+    } = event;
+    setSport(
+      typeof value === 'string' ? value.split(',') : value
+    )      
   };
+
+  const handleWidget = () => {
+    var myWidget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: 'athensimages',
+        uploadPreset: 'AthensImages'
+      },
+      (error, result) => {
+        console.log(error)
+        if (!error && result && result.event === "success") {
+          console.log('Done! Here is the image info: ', result.info);
+          setInput({
+            ...input,
+            image: result.info.url
+          })
+        }
+      }
+    );
+    myWidget.open()
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    onClose();
+    input.sport = sportState
     dispatch(createProduct(input));
+    setEdit(()=>true);
+    setInput({
+      title:'',
+      image:'',
+      stock:0,
+      price:0,
+      discount:0,
+      brand:'',
+      genre:'',
+      description:''
+    })
+    setSport([])
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container
-        component="main"
-        maxWidth="sm"
-        sx={{
-          boxShadow: "10px -10px 5px 0px rgba(0,0,0,0.75)",
-          //-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75)
-          //-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-          paddingLeft: "20px",
-        }}
-      >
-        <CssBaseline />
-        <Box
+    <Dialog open={open}>
+      <DialogTitle textAlign="center" >Create New Product</DialogTitle>
+      <DialogContent>
+        <Stack
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            width: '100%',
+            minWidth: { xs: '300px', sm: '360px', md: '400px' },
+            gap: '1.5rem',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
-          <Typography variant="h4">CREATE NEW PRODUCT</Typography>
           <Box
             component="form"
             noValidate
@@ -179,7 +211,7 @@ export default function FormProduct() {
                 <TextField
                   required
                   fullWidth
-                  value={input?.title}
+                  value={input ?.title}
                   name="title"
                   error={!!errors.title}
                   helperText={errors.title}
@@ -189,18 +221,16 @@ export default function FormProduct() {
                 />
               </Grid>
               <Grid item sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="image"
-                  value={input?.image}
-                  onChange={handleChange}
-                  label="Image"
-                  type="text"
-                  //error={!!errors.image}
-                  //helperText={errors.image}
-                  id="image"
-                />
+                <Box sx={{ display: 'flex' }}>
+                  <Button id="upload-widget"
+                    className="cloudinary-button"
+                    variant="contained"
+                    fullWidth
+                    onClick={handleWidget}
+                    endIcon={<AddAPhotoIcon />}>
+                    Add a photo
+                    </Button>
+                </Box>                
               </Grid>
               <Box
                 maxWidth="sm"
@@ -216,7 +246,7 @@ export default function FormProduct() {
                     required
                     fullWidth
                     name="stock"
-                    value={input?.stock}
+                    value={input ?.stock}
                     onChange={handleChange}
                     label="Stock"
                     type="number"
@@ -230,7 +260,7 @@ export default function FormProduct() {
                     required
                     fullWidth
                     name="price"
-                    value={input?.price}
+                    value={input ?.price}
                     onChange={handleChange}
                     label="Price"
                     type="number"
@@ -243,7 +273,7 @@ export default function FormProduct() {
                   <TextField
                     fullWidth
                     name="discount"
-                    value={input?.discount}
+                    value={input ?.discount}
                     onChange={handleChange}
                     label="Discount"
                     type="number"
@@ -266,11 +296,23 @@ export default function FormProduct() {
                   <TextField
                     required
                     fullWidth
+                    name="brand"
+                    value={input ?.brand}
+                    onChange={handleChange}
+                    label="Brand"
+                    type="text"
+                    id="brand"
+                  />
+                </Grid>
+                <Grid item sm={12}>
+                  <TextField
+                    required
+                    fullWidth
                     select={true}
                     label="Genre"
                     name="genre"
-                    value={input?.genre}
-                    onChange={handleChangeSelect}
+                    value={input ?.genre}
+                    onChange={handleChange}
                     id="genre"
                   >
                     {genre.map((e) => (
@@ -280,44 +322,36 @@ export default function FormProduct() {
                     ))}
                   </TextField>
                 </Grid>
-                <Grid item sm={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    label="Sport"
-                    name="sport"
-                    select={true}
-                    value={input?.sport}
-                    onChange={handleChangeSelect}
-                    id="sport"
-                  >
-                    {sport.map((e) => (
-                      <MenuItem key={e} value={e}>
-                        {e}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item sm={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="brand"
-                    value={input?.brand}
-                    onChange={handleChange}
-                    label="Brand"
-                    type="text"
-                    id="brand"
-                  />
-                </Grid>
               </Box>
+              <Grid item sm={12}>
+                <InputLabel id="demo-multiple-name-label">Sport</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  multiple
+                  name="sport"
+                  value={sportState}
+                  onChange={handleChangeSelect}
+                  input={<OutlinedInput label="Sport" />}
+                  MenuProps={MenuProps}
+                >
+                  {sports.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+            </Grid>
               <Grid item sm={12}>
                 <TextField
                   required
                   fullWidth
                   name="description"
-                  value={input?.description}
+                  value={input ?.description}
                   onChange={handleChange}
                   label="Description"
                   type="text"
@@ -326,49 +360,29 @@ export default function FormProduct() {
                   id="description"
                 />
               </Grid>
-              {/*               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="status"
-                  value={input.status}
-                  onChange={handleChange}
-                  label="Status"
-                  type="text"
-                  id="status"
-                />
-              </Grid> */}
             </Grid>
-            <Box sx={{ display: "flex" }}>
-              <Button
-                //href = '/home'
-                disabled={
-                  Object.keys(errors)?.length !== 0 ||
-                  input.title === "" ||
-                  input.stock === "" ||
-                  input.brand === "" ||
-                  input.genre === "" ||
-                  input.price === "" ||
-                  input.sport === "" ||
-                  input.description === ""
-                }
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Create Product
-              </Button>
-              <LinkRouter to="/admin/dashboard">
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Cancel
-                </Button>
-              </LinkRouter>
-            </Box>
+            <DialogActions sx={{ p: '1.25rem' }}>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button color="secondary" onClick={handleSubmit}
+                disabled={Object.keys(errors) ?.length !== 0 ||
+                  input.title === '' ||
+                  input.stock === '' ||
+                  input.brand === '' ||
+                  input.genre === '' ||
+                  input.price === '' ||
+                  input.image === '' ||
+                  sportState.length === 0 ||
+                  input.description === ''
+        }
+
+                variant="contained">
+                Create New Product
+        </Button>
+            </DialogActions>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+        </Stack>
+
+      </DialogContent>
+    </Dialog>
   );
 }

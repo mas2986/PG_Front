@@ -2,11 +2,13 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
+import "../styles/Footer.css"
 
 export default function Footer() {
   return (
     <footer>
-      <Box px={{ xs: 3, sm: 8 }} py={{ xs: 5, sm: 10 }} backgroundColor="#9999">
+      
+      <Box px={{ xs: 3, sm: 8 }} py={{ xs: 5, sm: 5 }} backgroundColor="#9999">
         <Container>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={4}>
@@ -17,7 +19,7 @@ export default function Footer() {
                 </Link>
               </Box>
               <Box>
-                <Link href="/" color="inherit" underline="none">
+                <Link href="#" color="inherit" underline="none">
                   Home
                 </Link>
               </Box>

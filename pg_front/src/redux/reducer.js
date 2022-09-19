@@ -6,6 +6,7 @@ import {
   GET_PAGINATED_PRODUCTS,
   SIGN_UP,
   CHECK_LOGIN,
+  LOGOUT,
   ERROR_LOGIN,
   SEARCH_PRODUCT,
   FILTER_SPORT,
@@ -21,20 +22,83 @@ import {
   UPDATE_ITEM_NUM,
   REMOVE_DUPLICATES_CART,
   CREATE_USER,
-  FETCH_SAVED_ITEMS,
+  GET_ALL_USERS,
+  GET_ALL_ORDERS,
+  CHANGE_ROLE_USER,
+  DELETE_USER,
+  ADD_TO_CART_DETAIL,
+  FILTER_BRAND_CAROUSEL,
+  REMEMBER_PASSWORD,
+  RESET_PASSWORD,
+  ORDER_MERCADOPAGO,
+  GET_ORDER_BY_ID,
+  GET_ORDER_BY_USER,
+  GET_REVIEWS,
+  CREATE_ORDER,
+  CLEAN_DETAIL,
+  DUPLICATE_REVIEW,
+  CHANGE_STATUS_ORDER
 } from "./const";
 
 const initialState = {
   products: [],
   altProducts: [],
+  productAdmin: [],
   user: {},
+  users: [],
+  order: [],
   errorLogin: "",
   cartItems: [],
   qty: 1,
+  password: {},
+  backup: [],
+  url: "",
+  reviews: [],
 };
 
 export const rootReducer = (state = initialState, action) => {
+  let productsAll = state.products;
+  if (productsAll.length === 0) {
+    productsAll = state.altProducts;
+    // console.log(productsAll)
+  }
   switch (action.type) {
+    case CREATE_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
+
+    case ORDER_MERCADOPAGO:
+      return {
+        ...state,
+        url: action.payload,
+      };
+    case GET_ORDER_BY_ID:
+      console.log(action.payload);
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case CHANGE_STATUS_ORDER:
+      return {
+        ...state,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
+    case REMEMBER_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
     case SIGN_UP:
       return {
         ...state,
@@ -55,6 +119,14 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case LOGOUT:
+      localStorage.clear();
+      console.log("LOGOUT");
+      return {
+        ...state,
+        user: {},
+        cartItems: [],
+      };
 
     case CREATE_USER:
       console.log(action.payload);
@@ -62,11 +134,40 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    
+    case GET_ORDER_BY_USER:
+      return {
+        ...state,
+        order: action.payload
+      }
+
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
+    case CHANGE_ROLE_USER:
+      console.log(action.payload);
+      return {
+        ...state,
+      };
+    case DELETE_USER:
+      console.log(action.payload);
+      return {
+        ...state,
+      };
     case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         altProducts: action.payload,
+        backup: action.payload,
+        productAdmin: action.payload,
+        cartItems:
+          localStorage.items !== undefined
+            ? JSON.parse(localStorage.getItem("items"))
+            : [],
       };
 
     case SEARCH_PRODUCT:
@@ -74,37 +175,58 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         products: action.payload,
       };
+
     case FILTER_SPORT:
-      const allProducts = state.altProducts;
-      const filteredSports =
-        action.payload === "All"
-          ? allProducts
-          : allProducts.filter((p) => p.sport.includes(action.payload));
+      const filteredSports = productsAll.filter((p) =>
+        p.sport.includes(action.payload)
+      );
+
       return {
         ...state,
-        products: filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ? state.backup : filteredSports, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_BRAND:
-      const allBrands = state.altProducts;
-      const filteredBrands =
-        action.payload === "All"
-          ? allBrands
-          : allBrands.filter((p) => p.brand.includes(action.payload));
-      console.log(action.payload);
+      const filteredBrands = productsAll.filter((p) =>
+        p.brand.includes(action.payload)
+      );
       return {
         ...state,
-        products: filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ? state.backup : filteredBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case FILTER_GENRE:
-      const allGenres = state.products;
-      const filteredGenres =
-        action.payload === "All"
-          ? allGenres
-          : allGenres.filter((g) => g.genre.includes(action.payload));
-      console.log(action.payload);
+      const actions = action.payload;
+      let filterBrands = "";
+      if (actions === "Male" || actions === "male")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      if (actions === "Female" || actions === "female")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      if (actions === "Kids" || actions === "kids")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      if (actions === "Adults" || actions === "adults")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      if (actions === "None" || actions === "none")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      if (actions === "Unisex" || actions === "unisex")
+        filterBrands = productsAll.filter((m) =>
+          m.genre.includes(action.payload)
+        );
+      //state.products.filter((g) => g.genre.includes(action.payload));
+
+      //const women = state.altProducts.filter((g) => g.genre.includes(action.payload));
       return {
         ...state,
-        products: filteredGenres, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+        products: action.payload === "All" ? state.backup : filterBrands,
+        //products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
       let stateProduct = state.products;
@@ -161,11 +283,10 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: sortPrice,
-        altProducts: sortPrice,
+        // altProducts: sortPrice,
       };
 
     case DETAIL_PRODUCT:
-      console.log(action.payload);
       return {
         ...state,
         detail: action.payload,
@@ -175,11 +296,12 @@ export const rootReducer = (state = initialState, action) => {
       const allProds = state.altProducts;
       const cart = state.cartItems;
       const id = action.payload;
+
       if (cart.some((c) => c.id === id)) {
         Swal.fire({
           title: "You already have this item in the cart!",
-          text: "You can choose the quantity of an item by selecting the number in the cart ",
-          icon: "error",
+          text: "Please change the quantity to order from the cart",
+          icon: "Error",
           confirmButtonText: "Back",
         });
         return {
@@ -196,10 +318,27 @@ export const rootReducer = (state = initialState, action) => {
         cartItems: [...state.cartItems, item].flat(),
       };
 
+    case ADD_TO_CART_DETAIL:
+      const detail = state.detail;
+      const cartI = state.cartItems;
+      //console.log(state.cartItems)
+      if (cartI.some((c) => c.id === detail.id)) {
+        Swal.fire({
+          title: "You already have this item in the cart!",
+          text: "Please change the quantity to order from the cart",
+          icon: "error",
+          confirmButtonText: "Back",
+        });
+      }
+
+      return {
+        ...state,
+        cartItems: [...cartI].concat(detail),
+      };
+
     case DELETE_FROM_CART:
       const allItems = state.cartItems;
       const index = action.payload;
-      // localStorage.setItem("items", JSON.stringify(state.cartItems));
       const item2 = allItems.filter((e, idx) => idx !== index);
       return {
         ...state,
@@ -233,12 +372,6 @@ export const rootReducer = (state = initialState, action) => {
         qty: action.payload,
       };
 
-    case FETCH_SAVED_ITEMS:
-      return {
-        ...state,
-        cartItems: action.payload,
-      };
-
     case FILTER_NAV_GENDER:
       let value = action.payload;
       let allGenders = state.altProducts;
@@ -248,7 +381,6 @@ export const rootReducer = (state = initialState, action) => {
         filteredGender = allGenders.filter((g) =>
           g.genre.toLowerCase().includes("female")
         );
-        console.log(value);
         if (value.includes("jersey")) {
           filteredProduct = filteredGender.filter((prods) =>
             prods.title.includes("jersey")
@@ -350,6 +482,31 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: filteredProduct,
+      };
+    case FILTER_BRAND_CAROUSEL:
+      const carouselBrands = state.altProducts.filter((p) =>
+        p.brand.includes(action.payload)
+      );
+      return {
+        ...state,
+        products: carouselBrands, //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        detail: [],
+      };
+    case DUPLICATE_REVIEW:
+      return {
+        ...state,
+        postreviews: action.payload,
       };
 
     default:

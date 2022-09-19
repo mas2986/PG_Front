@@ -8,6 +8,7 @@ import store from "./redux/index";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
+//import 'semantic-ui-css/semantic.min.css';
 
 axios.defaults.baseURL = process.env.REACT_APP_API;
 
@@ -18,6 +19,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#fdfff",
+    },
+    third: {
+      main: "#286596",
     },
   },
 });

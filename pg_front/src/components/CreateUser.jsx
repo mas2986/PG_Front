@@ -3,6 +3,7 @@ import { Grid, TextField, Box} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import MailIcon from '@mui/icons-material/Mail';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import Swal from "sweetalert2";
 import "../styles/CreateUser.css"
 import Nav from './Nav2';
 import { createUser } from '../redux/action';
+import logo from "../logo.png";
 
 
 
@@ -20,6 +22,7 @@ export default function CreateUser() {
     name: "",
     lastName: "",
     email: "",
+    image:"",
     password: "",
     passConfirmation: ""
   })
@@ -40,28 +43,49 @@ export default function CreateUser() {
     }
     if(texto.password !== texto.passConfirmation) return Swal.fire({title:'¡Password and confirmation must match!', text: 'Both fields must be strictly the same.', icon: "error"})
     if(texto.password.length !== texto.passConfirmation.length) return Swal.fire({title:'¡Password and confirmation must match!', text:'Both fields must be strictly the same.', icon: "error"})
-    if (!texto.email.includes("@")) {
+    if (!texto.email.includes("@") && texto.email.length < 8) {
       return Swal.fire({title:'¡There was an error in the email!', text:"The email should be for example: ..@mail.com.ar", icon: "error"})
     }
     // Swal.fire("¡User created successfully!", "¡Thank you for visiting our website!"),
     console.log(texto)
     dispatch(createUser(texto))
     Swal.fire({
-      title: "User created successfully.!",
+      title: "User created successfully!",
       text: "Check your email to validate your account.",
       icon: "success",
     })
     history.push('/')
   }
 
+  const handleWidget = () =>{
+    console.log('Abrir widget')
+    var myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: 'athensimages', 
+      uploadPreset: 'AthensImages'
+    },
+     (error, result) => { 
+       console.log(error)
+        if (!error && result && result.event === "success") { 
+          console.log('Done! Here is the image info: ', result.info);
+          setTexto({
+            ...texto,
+            image: result.info.url
+          })
+        }
+      }
+    );
+    myWidget.open()
+  }
+
   return (
      <>
-     <Nav></Nav>
+     {/* <Nav></Nav> */}
      
      <div className='body'>
      
      <center>
-     
+     <h1>Register and live the Athens experience.</h1>
               
      <Box
           component="form"
@@ -122,6 +146,19 @@ export default function CreateUser() {
               />
               { (texto.email.includes("@") ? <VerifiedIcon item xs={8} className='icon'/> : <VerifiedIcon item xs={8} className='iconRed'/>) }
         </Grid>
+        <Grid item md={20}>
+          <AddAPhotoIcon onClick = {handleWidget}/>
+          <TextField
+            disabled                
+            label="Image"
+            name="image"
+            value={texto.image}            
+            //error={!!errors.image}
+            //helperText={errors.image}
+            id="image"
+            />       
+            { (texto.image ? <VerifiedIcon item xs={8} className='icon'/> : <VerifiedIcon item xs={8} className='iconRed'/>) }
+        </Grid>
         <Grid item md={12}>
         <PasswordIcon/>
         <TextField
@@ -171,12 +208,13 @@ export default function CreateUser() {
             variant="contained"
             color='primary'
             onClick={(e) => {handleChange(e)}}
-            >¡Register!</button>
+            >REGISTER </button>
+            <img src={logo} alt="logo not found" />
      <center></center>
      <br />
+     
      </Box>
      </center>
-
      </div>
     
     

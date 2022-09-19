@@ -1,5 +1,6 @@
 .appbar {
   height: 50px;
+
 }
 
 .container {
@@ -101,9 +102,12 @@
 }
 
 .login-container {
-  display: flex;
-  align-items: center;
-  margin: 0 0rem 1rem 1.3rem;
+ margin: 10px;
+
+}
+
+.login-container .google{
+  margin-left: 2rem;
 }
 
 .login-container img:hover {
@@ -115,7 +119,10 @@
 }
 
 .shopping-cart {
-  margin-right: 1.5rem;
+  margin-left:0.5rem;
+  margin-right:0.5rem;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
 }
 .shopping-cart:hover {
   cursor: pointer;
@@ -124,10 +131,12 @@
 .cart-container {
   background-color: rgba(253, 255, 255, 1);
   color: #000;
+  position: fixed;
   top: 3.5rem;
-  position: absolute;
+  right: 0.2rem;
   padding: 1rem;
   border-radius: 3px;
+  box-shadow: 0 0 5px #ccc;
   transition: all 2s;
 }
 

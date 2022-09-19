@@ -112,7 +112,7 @@ export default function EditProduct({ match }) {
     setErrors(() => errorsValidate);
   };
 
-  const handleChangeSelect = (event: SelectChangeEvent) => {
+  const handleChangeSelect = (event) => {
     event.preventDefault();  
     setInput  
     ({

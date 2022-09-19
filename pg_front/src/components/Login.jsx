@@ -14,10 +14,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useAuth0 } from "@auth0/auth0-react"
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/action";
-import LoginGoogle from "./LoginGoogle";
+import LoginAuth0 from "./LoginAuth0";
+import "../styles/Login.css"
+import logo from "../../src/logo.png"
 
 function validate(input) {
   let errors = {};
@@ -55,9 +57,11 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-
+  const { isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  // const { user } = useAuth0();
+  // console.log(user)
   const history = useHistory();
   const handleChange = (e) => {
     e.preventDefault();
@@ -90,7 +94,12 @@ export default function SignUp() {
 
   if (user !== {}) {
     if (user.rol === "admin") return history.push("/admin");
-    if (user.rol === "user") return history.push("/home");
+    if (user.rol === "user") return history.push("/");
+  }
+
+  function rememberPassword(e) {
+    e.preventDefault();
+    history.push("/password")
   }
 
   return (
@@ -103,24 +112,24 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          }}>
+          <h1>ATHENS</h1>
+          <img src={logo}/>
+          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{ mt: 3, borderRadius: "20px" }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   value={input.email}
                   name="email"
                   onChange={handleChange}
@@ -132,7 +141,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="password"
                   value={input.password}
@@ -144,6 +152,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            <Link><button type="button" onClick={(e) => rememberPassword(e)} className="olvidarPassword">I forgot my password</button></Link>
             <Button
               //href = '/home'
               type="submit"
@@ -164,7 +173,7 @@ export default function SignUp() {
               Register
             </Button>
             <Box display="flex" sx={{ justifyContent: "center" }}>
-              <LoginGoogle />
+            <center>{ isAuthenticated ? <LoginAuth0/> : <LoginAuth0/>  }</center>
             </Box>
           </Box>
         </Box>

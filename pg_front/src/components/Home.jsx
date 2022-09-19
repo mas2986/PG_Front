@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CardProduct from "./CreateProduct";
-import { getProduct } from "../redux/action";
+import { getProduct,getOrderByUser, getAllOrders } from "../redux/action";
+import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
-import Filters from "./Filters";
-import Image from "../asset/home.png";
-import Pagination from "./Pagination";
 import home from "../asset/home.png";
-import h from "./Home.module.css";
-
+import Section from "./Section";
+import HomePictures from "./HomePictures";
 import CarouselBrands from "./CarouselBrands";
+import $ from "jquery";
+import style from "./Home.module.css";
+import Contact from "./Contact";
+import { Link, useHistory } from "react-router-dom";
+import HistoryOrder from "./HistoryOrder";
+
+
+
+window.jquery = window.$ = $;
 
 export default function Home() {
   const allProducts = useSelector((state) => state.products);
+  const user = useSelector((state) => state.user)
+  const id = user.id
   const dispatch = useDispatch();
-
-  const pageSize = 6;
+  const history = useHistory();
+  const pageSize = 12;
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
@@ -28,8 +33,22 @@ export default function Home() {
 
   const products = allProducts.slice(pagination.from, pagination.to);
 
+  const jQueryCode = () => {
+    $(document).on("scroll", function () {
+      $("h1").css("left", Math.max(45 - 0.2 * window.scrollY, -33) + "vw");
+    });
+  };
+
   useEffect(() => {
-    if (allProducts.length === 0) dispatch(getProduct());
+    jQueryCode();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProduct());
+    dispatch(getAllOrders())
+  }, [dispatch]);
+
+  useEffect(() => {
     setPagination({
       ...pagination,
       count: allProducts.length,
@@ -37,82 +56,69 @@ export default function Home() {
       to: pageSize,
       currentPage: 1,
     });
-    console.log(pagination.from);
-    console.log(pagination.to);
-  }, [dispatch, allProducts.length]);
+  }, [allProducts.length]);
 
   return (
+    
     <div>
+
       <Nav />
-      <Box
-        sx={{
-          width: "100%",
-          height: "auto",
-          backgroundImage: `url(${Image})`,
-          //borderRadius: 50
-        }}
-      />
-      <img
-        src={home}
-        style={{
-          width: "100vw",
-          height: "100%",
-          marginTop: "-1rem",
-          marginBottom: "1rem",
-        }}
-      />
-      <CarouselBrands />
-      <Filters />
-      <Typography
-        variant="h1"
-        component="h2"
-        sx={{
-          width: 2401,
-          height: 185,
-          position: "absolute",
-          left: -359,
-          top: 711,
-          fontFamily: "Roboto",
-          fontStyle: "italic",
-          fontWeight: 900,
-          fontSize: 140,
-          lineHeight: 24,
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          letterSpacing: 0.15,
-          color: "#40F99B",
-        }}
-      >
-        {/* Sports Apparel · Footwear · */}
-      </Typography>
-      <Pagination
-        products={products}
-        pagination={pagination}
-        setPagination={setPagination}
-      />
-      <div id="scrollDiv"></div>
-      <Container maxWidth="md">
-        <Box
-          sx={{
-            margin: 1,
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
-        >
-          {products?.length > 0 &&
-            products.map((e) => (
-              <CardProduct
-                key={e.id}
-                title={e.title[0].toUpperCase() + e.title.substring(1)}
-                sport={e.sport}
-                Image={e.Image || e.image}
-                id={e.id}
-                price={e.price}
-              />
-            ))}
-        </Box>
-      </Container>
+
+        {home && allProducts ? (
+
+          <div>
+            <img
+              id={"#"}
+              src={home}
+              style={{
+                width: "100vw",
+                height: "100%",
+                marginTop: "-4rem",
+                marginBottom: "0",
+                borderBottomLeftRadius: "40px",
+                borderBottomRightRadius: "40px",
+              }}
+            />
+            
+            <h1
+              className={style.homeh1 + " scrollingText"}
+            >
+            Sports Apparel · Footwear · Accesories
+            </h1>
+          
+          
+            <div style={{
+              display:"flex",
+              flexDirection:"column",
+              position: "absolute",
+              top: "14%",
+              left: "8rem"
+            }}>
+              <Link to="/products">
+                <p className={style.button}>Go Shopping</p>
+              </Link>
+            
+            <a href={"#contact"} className={style.contactButton}>
+              Contact Us!
+            </a>
+            </div>
+
+            <CarouselBrands />
+
+            <center>
+              <Section />
+            </center>
+
+            <HomePictures />
+
+            <Contact />
+          </div>
+
+          ) : (
+            <Skeleton variant="rectangular" width={1300} height={1200} />
+          )
+          
+          }
+
     </div>
-  );
-}
+)}
