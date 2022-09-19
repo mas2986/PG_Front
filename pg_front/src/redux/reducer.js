@@ -33,6 +33,7 @@ import {
   GET_ALL_ORDERS,
   CHANGE_STATUS_ORDER,
   GET_ORDER_BY_ID,
+  GET_ORDER_BY_USER,
   GET_REVIEWS,
   CREATE_ORDER,
   CLEAN_DETAIL,
@@ -489,6 +490,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
+    case GET_ORDER_BY_USER:
+      // console.log(action.payload)
+      return {
+        ...state,
+        order: [...action.payload]
+      }
       case CLEAN_DETAIL:
             return {
                 ...state,
