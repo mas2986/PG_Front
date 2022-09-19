@@ -11,34 +11,31 @@ export default function Review(props) {
 
   const order = useSelector((state) => state.order)
   const user = useSelector((state) => state.user)
-  const products = useSelector((state) => state.products)
-  const post = useSelector((state) => state.postreviews)
+  const post = useSelector((state) => state.reviews)
    let id = props.id
-  const UserId = user.id
-
-let ramdom = []
-  
- const userOrder = order.filter((item) => item.userId === id) && (order.filter(item => item.orderStatus === "completed"))
- 
-
- console.log(userOrder)
-
-
-
-for (let i = 0; i < userOrder.length; i++) {
-  if(userOrder[i]['idProduct'].split(", ").includes(id)){
-    ramdom.push(userOrder[i]['idProduct'])
-    console.log(ramdom)
-  } 
-  
-}
-
- 
-  
+  let UserId = user.id
+  let userCommentbyProd = [] 
+  let userOrder = []
   const [rating, setRating] = useState(0);
   const [comment,setComment]= useState('');
   const dispatch=useDispatch();
-
+  
+  let ramdom = []
+  if(UserId){
+  let userComment = post.filter((item) => item.userId === UserId) // review del usuario 
+   userCommentbyProd = userComment.filter((item) => item.productId === Number(id)) // review del usuario que realizo en el producto
+  console.log(userCommentbyProd)
+  userOrder = order.filter((item) => item.userId === UserId) && (order.filter(item => item.orderStatus === "completed"))  // ordenes completadas del usuario 
+  console.log(userOrder)
+  for (let i = 0; i < userOrder.length; i++) {
+    if(userOrder[i]['idProduct'].split(", ").includes(id)){
+      ramdom.push(userOrder[i]['idProduct'])
+     console.log(ramdom)
+    } 
+    
+  }  
+  console.log(userOrder)
+}
     const handleChange=(e)=>{
         e.preventDefault();
         setComment(e.target.value)
@@ -52,10 +49,8 @@ for (let i = 0; i < userOrder.length; i++) {
 
   return (
     <div className='general-cont'>
-      <Box component="fieldset" mb={3} borderColor="transparent">
-        
-    {ramdom.length? (
-      <>
+      <Box component="fieldset" mb={3} borderColor="transparent">           
+      { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  <>
         <Typography component="legend">Califica este producto:</Typography>
         <div className='stars'>
             <h2 className='number'>{rating}</h2>
@@ -74,8 +69,7 @@ for (let i = 0; i < userOrder.length; i++) {
             placeholder='Escribe tu reseña sobre este artículo aqui.' />
             <button onClick={(e)=>{e.preventDefault();handleSubmit()}} >Enviar</button>
         </form> 
-        </> )
-: ramdom.length && post.length?  post : <p></p>} 
+</> : null}  
       </Box>
     </div>
   );

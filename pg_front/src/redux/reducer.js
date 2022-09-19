@@ -35,7 +35,8 @@ import {
   GET_ORDER_BY_ID,
   GET_REVIEWS,
   CREATE_ORDER,
-  CLEAN_DETAIL
+  CLEAN_DETAIL,
+  DUPLICATE_REVIEW
 } from "./const";
 
 const initialState = {
@@ -493,6 +494,11 @@ export const rootReducer = (state = initialState, action) => {
                 ...state,
                 detail:[]
             }
+      case DUPLICATE_REVIEW: 
+      return {
+        ...state,
+        postreviews: action.payload
+      }
     default:
       return { ...state };
   }

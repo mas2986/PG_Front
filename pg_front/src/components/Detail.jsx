@@ -13,45 +13,90 @@ import RatingProm from "./RatingProm"
 import Review from "./Review";
 
 export default function Detail() {
-  const items = useSelector((state) => state.cartItems);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const history = useHistory();
   const [render, setRender] = useState(false);
-
   const order = useSelector((state) => state.order)
   const user = useSelector((state) => state.user)
   const UserId = user.id
   const userOrder = order.filter((item) => item.userId === UserId) && (order.filter(item => item.orderStatus === "completed")) 
-
-  console.log(order)
-
+ 
+  console.log(userOrder)
+  
   const users =  useSelector((state) => state.users);
-  console.log(users)
-
+  
+  
   let official = 149;
-
+  
   const review = useSelector((state) => state.reviews);
+ 
 
-  let flag = null
+ 
+  
+  let quantity=0;
+  let array = [];
+  let comments = ""
+  let uservacio = ""
+  let rendercomment =[]
+  let ramdom = []
+  
+  
   for (let i = 0; i < review.length; i++) {
-    if(review[i]['userId'] === user.id){
-      flag = true
-    } else{
-      flag = false
-    }
-    
+      if(review[i].productId === Number(id)) {
+          array.push(review[i])
+          quantity += 1;
+          comments = (review[i].comment + " ")
+           users.forEach(element => { if(element.id === review[i].userId) uservacio = element.id       
+          });
+          rendercomment[i] = {uservacio: uservacio,
+                      comments:comments } 
+        
+        
+          
+         
+      } else{
+          array
+      }
+      
   }
+
+  const prueba = rendercomment.filter(el => el)
   
  
+
+
+ 
+
+
 
   useEffect(() => {
     dispatch(detailProduct(id));
     dispatch(getReviews())
     dispatch(getAllUsers())
     dispatch(getAllOrders())
-    
+    // if(Object.keys(user).length === 0) setRender(true)  
+    //   if(prueba.length > 0){
+    //     for (let i = 0; i < prueba.length; i++) {
+    //      if(prueba[i].uservacio === UserId){
+    //        setRender(true)
+    //        console.log("HOLA")
+    //      }else{
+    //        setRender(false)
+    //      }
+    //     }
+    //    }
+    //   if(userOrder.length>0){ 
+    //    for (let i = 0; i < userOrder.length; i++) {
+    //     if(userOrder[i]['idProduct'].split(", ").includes(id)){
+    //       ramdom.push(userOrder[i]['idProduct'])
+    //       console.log(ramdom)
+    //     } 
+        
+    //   }   
+    // }
+       
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
@@ -80,7 +125,7 @@ export default function Detail() {
     <center>
       <Nav2 />
       <Section/>
-     {!flag && <Review id={id}/> }
+     { <Review id={id}/> }
       <div className={d.detailPage}>
         {/*console.log(detail)*/}
         {detail ? (
