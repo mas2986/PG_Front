@@ -20,7 +20,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
-  const userAuth0 = useAuth0().user === null ? {} : useAuth0().user
+  const userAuth0 = {}
+  if !!userAuth0().user userAuth0 = userAuth0().user
   let history = useHistory();
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
