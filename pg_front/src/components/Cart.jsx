@@ -34,7 +34,6 @@ function Cart() {
   const [cartDisplay, setCartDisplay] = useState(false);
   //local state for forcing a re-render of the price
   const [qty, setQty] = useState(false);
-  const [render, setRender] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
   let official = 149;
@@ -54,13 +53,6 @@ function Cart() {
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price;
   }
-
-  // console.log(window.location.pathname);
-  // let itemsQty = items.map((i) => i.qty);
-
-  // useEffect(() => {
-  //   setRender((prev) => !prev);
-  // }, [itemsQty]);
 
   function handlePay(e) {
     e.preventDefault();

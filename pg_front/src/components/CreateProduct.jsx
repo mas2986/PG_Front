@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import h from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CardContent from "@mui/material/CardContent";
-import { addToCart, removeDupsCart, mercadoPago } from "../redux/action";
+import { addToCart, removeDupsCart, mercadoPago, cleanDetail } from "../redux/action";
 import plop from "../asset/plop.mp3";
 import { Link, useHistory } from "react-router-dom";
 
@@ -40,14 +40,19 @@ export default function CardProduct(props) {
   async function handlePay(e) {
     e.preventDefault();
     if (items.some((i) => props.id == i.id)) {
+      console.log('Despachando accion para pago')
       dispatch(mercadoPago({ price: props.price * official }));
       history.push("/entrega");
     } else {
       dispatch(addToCart(props.id));
       dispatch(removeDupsCart(props.id));
+      dispatch(mercadoPago({ price: props.price * official }));
       history.push("/entrega");
     }
   }
+  function handleClick() {
+    dispatch(cleanDetail())
+};
 
   return (
     <Card
@@ -88,7 +93,7 @@ export default function CardProduct(props) {
         {props.stock > 0 ? (
           <Button
             onClick={(e) => handlePay(e)}
-            href={"/entrega"}
+            //href={"/entrega"}
             size="small"
             // className={props.stock < 1 ? h.buyBtnStock : ""}
           >
@@ -109,7 +114,7 @@ export default function CardProduct(props) {
           ADD TO CART
         </Button>
         <Link to={`/detail/${props.id}`}>
-          <Button size="small">DETAIL</Button>
+          <Button size="small" onClick={handleClick} >DETAIL</Button>
         </Link>
         {/* target="_blank" */}
       </CardActions>
