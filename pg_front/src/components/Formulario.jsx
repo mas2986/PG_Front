@@ -56,7 +56,7 @@ export default function FormPropsTextFields({ props }) {
 
   const [order, setOrder] = React.useState({
     productId: productsId,
-    idProduct: productId,
+    idProduct: productsId,
     quantity: totalItems,
     orderStatus: "created",
     totalPrice: totalPrice,
