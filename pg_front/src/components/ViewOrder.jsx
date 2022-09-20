@@ -28,33 +28,40 @@ export default function ViewOrder() {
     return (
         <> 
         <Nav/>
-        <Section className="section-home" />
+        <Section className="section-home"/>
         <Typography
-            variant="h5"
+            variant="h3"
             color="primary"
-            align="left"
-            sx={{ margin: "auto", marginLeft: "150px" }}
+            align="center"
+            sx={{ marginTop: "2rem" }}
           >
             Your purchases
           </Typography>
+          <Box sx={{
+            display:"flex",
+            flexDirection:"column",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
         { order?.length ? (
                 order.map((e,i) => (
                   <Box key={i} sx={{ marginBottom: "2rem" }}>
                     <Card
                     sx={{
-                      maxHeight: "15rem",
+                      height: "auto",
                       display: "flex",
                       flexDirection: "row-reverse",
                       marginTop: "2rem",
                       marginLeft: "2rem",
-                      maxWidth: "35rem",
+                      width: "80vw",
                       zIndex: "-1",
                       backgroundColor: "ffff"
                     }}
                     // className={f.cardMedia}
                   >
                     
-                    <CardContent sx={{ width: "30rem" }}>
+                    <CardContent sx={{ width: "87rem" }}>
                       <Typography gutterBottom variant="h6" component="div">
                       You paid ${e.totalPrice},00
                       </Typography>
@@ -76,7 +83,7 @@ export default function ViewOrder() {
                       >
                       Received on {e.createdAt.substring(0,10)}
                       </Typography>
-                      <Button className="info-btn" href="/products" variant="contained" color="success" size="small">Volver a comprar</Button>
+                      <Button className="info-btn" href="/products" variant="contained" color="success" size="large">Keep Shopping</Button>
                     </CardContent>
 
 
@@ -89,12 +96,13 @@ export default function ViewOrder() {
                   flexGrow={1}
               variant="body2"
               color="text.secondary"
-              sx={{ marginTop: "0.2rem", display: "flex" }}
+              sx={{ marginTop: "1rem", display: "flex" }}
             >
-            YOU HAVE NOT MADE ANY PURCHASES.
+            YOU HAVE NOT MADE ANY PURCHASES YET.
             </Typography>
               
           }
+          </Box>
         </>
     )
 }
