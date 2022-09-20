@@ -23,6 +23,7 @@ export default function Detail() {
   const order = useSelector((state) => state.order)
   const user = useSelector((state) => state.user)
   const UserId = user.id
+  const cartItem = useSelector(state=>state.cartItems)
   const userOrder = order.filter((item) => item.userId === UserId) && (order.filter(item => item.orderStatus === "completed")) 
 
   console.log(userOrder)
@@ -60,11 +61,13 @@ export default function Detail() {
     detail.qty = 1;
     dispatch(addToCartDetail(detail.id));
     dispatch(removeDupsCart(detail.id));
-    detail.qty(qty)
+    //detail.qty(qty)
   }
 
   async function handlePay(e) {
     e.preventDefault();
+    if (cartItem.filter((c) => c.id !== detail.id)) {
+      addCart()}
     dispatch(mercadoPago({ price: detail.price * official }));
     history.push('/entrega')
   }
