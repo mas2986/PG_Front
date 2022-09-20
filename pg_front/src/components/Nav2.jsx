@@ -99,29 +99,24 @@ export default function Nav(props) {
 
                 {window.location.pathname !== "/entrega" && <Cart/>}
                 <Box className={n["login-container"]} display="flex">
-                  {!isAuthenticated && Object.keys(user1).length === 0 ? (
+                {!isAuthenticated && Object.keys(user1).length === 0 ? (
                     <Link to="/login">
-                      <Button variant="contained" sx={{ marginBottom: "1px" }}>
+                      <Button variant="contained" sx={{ marginBottom: "0.7rem" }}>
                         Sign In
-
                       </Button>
                     </Link>
-                  ) : user1.image || isAuthenticated ? (
+                  ) : Object.keys(user1).length !== 0 ? (
                     <>
                       <Tooltip
                         title={
-                          user1
-
-                            ? `Logged as ${user1.name}`
-                            : `Logged as ${user.name}`
-
+                          `Logged as ${user1.name}`
                         }
                       >
                         <img
                           alt="avatar"
                           height={30}
                           width={30}
-                          src={user1.image || user.picture}
+                          src={user1.image ? user1.image : img}
                           loading="lazy"
                           style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
@@ -132,32 +127,29 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                        <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
                         <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
-
-                      </Menu>
-                    </>
-                  ) : (
-                    <>
-
+                  </Menu>
+                  </>
+                ) : (
+                      <>
                       <Tooltip
-                        title={
-                          `Logged as ${user1.name}` || `Logged as ${user.name}`
-                        }
+                        title={`Logged as ${user.given_name}`}
                       >
-                        <AccountCircleIcon
+                        <img
+                          alt="avatar"
+                          height={30}
+                          width={30}
+                          src={user.picture}
+                          loading="lazy"
+                          style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
-                          sx={{
-                            color: "gray",
-                            fontSize: "large",
-                            marginBottom: "0",
-                            width: "30px",
-                            height: "30px",
-                            marginRight: "1rem",
-                          }}
                         />
                       </Tooltip>
                       <Menu
@@ -165,14 +157,17 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
+                        <Divider/>
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
                       </Menu>
-                    </>
-                  )}
+                      </>
+                    )}
                 </Box>
               </Box>
             </Toolbar>
