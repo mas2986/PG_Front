@@ -1,10 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Rating from '@mui/material/Rating';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Swal from 'sweetalert2';
-import { createReview } from '../redux/action';
+import { createReview, getReviews } from '../redux/action';
 import axios from "axios";
 
 export default function Review(props) {
@@ -18,10 +18,12 @@ export default function Review(props) {
   let userOrder = []
   const [rating, setRating] = useState(0);
   const [comment,setComment]= useState('');
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+
+  
   
   let ramdom = []
-  if(UserId){
+  if(UserId ){
   let userComment = post.filter((item) => item.userId === UserId) // review del usuario 
    userCommentbyProd = userComment.filter((item) => item.productId === Number(id)) // review del usuario que realizo en el producto
   console.log(userCommentbyProd)
@@ -34,17 +36,23 @@ export default function Review(props) {
     } 
     
   }  
-  console.log(userOrder)
 }
+console.log(userCommentbyProd)
+useEffect(() => {
+  if(post.length){
+    dispatch(createReview())
+  }
+}, [dispatch])
+
     const handleChange=(e)=>{
         e.preventDefault();
         setComment(e.target.value)
     }
     const handleSubmit=()=>{
-      console.log(typeof(toString(rating)))
-         dispatch(createReview(id, {comment:comment, rating:rating, userId:UserId}))
+     dispatch(createReview(id, {comment:comment, rating:rating, userId:UserId}))
           setRating(0);
           setComment('')
+         
     }
 
   return (

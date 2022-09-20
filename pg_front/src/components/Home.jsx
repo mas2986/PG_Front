@@ -15,6 +15,7 @@ import HistoryOrder from "./HistoryOrder";
 
 
 
+
 window.jquery = window.$ = $;
 
 export default function Home() {
@@ -73,8 +74,8 @@ export default function Home() {
               id={"#"}
               src={home}
               style={{
-                width: "100vw",
-                height: "100%",
+                width: "100%",
+                height: "auto",
                 marginTop: "-4rem",
                 marginBottom: "0",
                 borderBottomLeftRadius: "40px",
@@ -108,7 +109,7 @@ export default function Home() {
             <CarouselBrands />
 
             <center>
-              <Section />
+              <Section/>
             </center>
 
             <HomePictures />

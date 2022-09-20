@@ -27,6 +27,7 @@ import Cart from "./Cart";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./LoginAuth0";
 import { useHistory } from "react-router-dom";
+import ViewOrder from "./ViewOrder";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -94,6 +95,11 @@ export default function Nav(props) {
   const goHome = () => {
     history.push("/");
   };
+
+  function handleHistory(e) {
+    e.preventDefault(e);
+    history.push("/order");
+  }
 
   return (
     <>
@@ -291,6 +297,9 @@ export default function Nav(props) {
                       >
                         <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
+                        <Divider />
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
@@ -322,6 +331,9 @@ export default function Nav(props) {
                       >
                         <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
+                        <Divider/>
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>

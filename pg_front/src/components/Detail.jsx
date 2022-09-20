@@ -69,9 +69,8 @@ export default function Detail() {
   useEffect(() => {
     dispatch(detailProduct(id));
     dispatch(getReviews())
+    dispatch(getOrderByUser(UserId))
     dispatch(getAllUsers())
-    dispatch(getOrderByUser()) //a chequear 
-         
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);
