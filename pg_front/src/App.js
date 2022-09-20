@@ -23,6 +23,7 @@ import LoginAuth0 from "./components/LoginAuth0";
 import Password from "./components/Password";
 import ResetPassword from "./components/ResetPassword";
 import Profile from "./components/Profile";
+import ViewOrder from "./components/ViewOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ function App() {
         />
         <Route exact path={["/", "/login"]} component={Footer} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/order" component={ViewOrder} />
       </header>
     </Auth0Provider>
   );

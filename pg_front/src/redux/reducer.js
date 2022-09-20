@@ -37,7 +37,9 @@ import {
   CREATE_ORDER,
   CLEAN_DETAIL,
   DUPLICATE_REVIEW,
+  VIEW_ORDER,
   CHANGE_STATUS_ORDER
+
 } from "./const";
 
 const initialState = {
@@ -63,6 +65,13 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
+
+    case VIEW_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
+
     case CREATE_ORDER:
       return {
         ...state,
