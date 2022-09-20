@@ -70,6 +70,7 @@ export default function Detail() {
     dispatch(detailProduct(id));
     dispatch(getReviews())
     dispatch(getOrderByUser(UserId))
+    dispatch(getAllUsers())
   }, [dispatch, id]);
 
   const detail = useSelector((state) => state.detail);

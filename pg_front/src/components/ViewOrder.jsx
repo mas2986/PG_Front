@@ -38,8 +38,8 @@ export default function ViewOrder() {
             Your purchases
           </Typography>
         { order?.length ? (
-                order.map((e) => (
-                  <Box sx={{ marginBottom: "2rem" }}>
+                order.map((e,i) => (
+                  <Box key={i} sx={{ marginBottom: "2rem" }}>
                     <Card
                     sx={{
                       maxHeight: "15rem",
