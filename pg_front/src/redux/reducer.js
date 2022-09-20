@@ -506,12 +506,18 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
-
-    case CLEAN_DETAIL:
+    case GET_ORDER_BY_USER:
+      // console.log(action.payload)
       return {
         ...state,
-        detail: [],
-      };
+        order: [...action.payload]
+      }
+      case CLEAN_DETAIL:
+            return {
+                ...state,
+                detail:[],
+                order: []
+            }
     case DUPLICATE_REVIEW:
       return {
         ...state,

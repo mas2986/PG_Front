@@ -150,6 +150,7 @@ export default function FormProduct({ open, onClose, setEdit }) {
     )      
   };
 
+
   const handleWidget = () => {
     var myWidget = window.cloudinary.createUploadWidget(
       {
@@ -159,6 +160,7 @@ export default function FormProduct({ open, onClose, setEdit }) {
       (error, result) => {
         console.log(error)
         if (!error && result && result.event === "success") {
+
           console.log('Done! Here is the image info: ', result.info);
           setInput({
             ...input,
@@ -168,7 +170,9 @@ export default function FormProduct({ open, onClose, setEdit }) {
       }
     );
     myWidget.open()
+
   }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -221,6 +225,7 @@ export default function FormProduct({ open, onClose, setEdit }) {
                 />
               </Grid>
               <Grid item sm={12}>
+
                 <Box sx={{ display: 'flex' }}>
                   <Button id="upload-widget"
                     className="cloudinary-button"
@@ -231,6 +236,7 @@ export default function FormProduct({ open, onClose, setEdit }) {
                     Add a photo
                     </Button>
                 </Box>                
+
               </Grid>
               <Box
                 maxWidth="sm"

@@ -46,7 +46,9 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProduct());
-    dispatch(getAllOrders())
+    // dispatch(getOrderByUser(id))
+    // dispatch(getAllOrders())
+   
   }, [dispatch]);
 
   useEffect(() => {
