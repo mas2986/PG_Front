@@ -18,19 +18,18 @@ import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
   const userAuth0 = useAuth0().user;
   let history = useHistory();
-  
+
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
   const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
-   console.log(items);
+  console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -57,7 +56,7 @@ export default function FormPropsTextFields({ props }) {
     // totalPrice += items[i].price;
   }
   const productsId = items.map((p) => p.id);
-  console.log(productsId)
+  console.log(productsId);
 
   const [order, setOrder] = React.useState({
     productId: productsId,
@@ -169,7 +168,7 @@ export default function FormPropsTextFields({ props }) {
       setTotalPrice(0);
       console.log("En else de useEffect", totalPrice);
     }
-  }, [items]);
+  }, []);
 
   return (
     <div className={f.form}>
