@@ -28,7 +28,7 @@ export default function Products() {
 
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setPagination({
@@ -89,9 +89,9 @@ export default function Products() {
               <Button
                 color="primary"
                 onClick={() => {
+                  // dispatch(getProduct());
                   // dispatch(cleanTrails())
                   location.reload();
-                  // dispatch(getProduct());
                 }}
                 sx={{
                   display: "block",

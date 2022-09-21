@@ -486,7 +486,7 @@ export function searchProduct(payload) {
           type: SEARCH_PRODUCT,
           payload: product.data,
         });
-      }, 500);
+      }, 290);
     } catch (error) {
       Swal.fire({
         title: "Product not found!",

@@ -72,10 +72,13 @@ export default function Nav(props) {
 
   const handleClick = (e) => {
     history.push("/products");
-    dispatch(filterByGenderInNav(e.target.value));
+    setTimeout(() => {
+      dispatch(filterByGenderInNav(e.target.value));
+    }, 290);
   };
   const resetFilters = () => {
     dispatch(getProduct());
+    location.reload();
   };
 
   console.log(users);
@@ -129,10 +132,7 @@ export default function Nav(props) {
                   <Typography
                     variant="h4"
                     style={{ color: "#000", marginLeft: "1rem" }}
-                    onClick={() => {
-                      resetFilters;
-                      location.reload();
-                    }}
+                    onClick={() => resetFilters()}
                     className={n.reset}
                   >
                     Athens
