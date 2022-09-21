@@ -157,7 +157,7 @@ export default function Detail() {
                   OUT OF STOCK
                 </h3>
               )}
-              <Link to="/products">
+              {/* <Link to="/products">
                 <Button
                   onClick={(e) => handlePay(e)}
                   variant="contained"
@@ -189,7 +189,7 @@ export default function Detail() {
                 >
                   GO BACK
                 </Button>
-              </Link>
+              </Link> */}
               <div className={d.detailSection}>
                 <p className={d.description}>
                   {detail.description && detail.description}
