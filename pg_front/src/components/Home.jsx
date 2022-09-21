@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct,getOrderByUser, getAllOrders } from "../redux/action";
+import { getProduct,getOrderByUser, getAllOrders, getAllUsers } from "../redux/action";
 import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
 import home from "../asset/home.png";
@@ -46,7 +46,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProduct());
-    dispatch(getAllOrders())
+    dispatch(getAllUsers())
   }, [dispatch]);
 
   useEffect(() => {
