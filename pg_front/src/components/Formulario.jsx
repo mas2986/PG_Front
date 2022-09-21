@@ -16,18 +16,23 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
+
 import { TextsmsOutlined } from "@mui/icons-material";
+
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
+  const userAuth0 = useAuth0().user;
   let history = useHistory();
+
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
   const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
-  // console.log(items);
+  console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -47,6 +52,7 @@ export default function FormPropsTextFields({ props }) {
     // totalPrice += items[i].price;
   }
   const productsId = items.map((p) => p.id);
+  console.log(productsId);
 
   const [order, setOrder] = React.useState({
     productId: productsId,
@@ -60,7 +66,9 @@ export default function FormPropsTextFields({ props }) {
   // console.log(order);
 
   const handleButton = async (event) => {
+
     if (!texto.celNumber || texto.celNumber.length < 5) {
+
       return Swal.fire({
         title: "Check your cell phone!",
         text: "It must contain at least 5 characters.",
@@ -74,12 +82,14 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
+
     dispatch(createOrder(order,texto));  
     console.log(url)  
+    
     setTimeout(function () {
       localStorage.removeItem(`items`);
       window.location.replace(url);
-    }, 1000); 
+    }, 1000);
   };
 
   function stateInput(e) {
@@ -109,6 +119,7 @@ export default function FormPropsTextFields({ props }) {
       })
     } else {
       setTotalPrice(0);
+
     }
   }, []);
 
@@ -304,7 +315,7 @@ export default function FormPropsTextFields({ props }) {
             >
               BUY
             </Button>
-          ) : totalPrice.length > 0 ? (
+          ) : (
             <Link to="/login">
               <Button
                 variant="contained"
@@ -327,8 +338,6 @@ export default function FormPropsTextFields({ props }) {
                 BUY
               </Button>
             </Link>
-          ) : (
-            <p></p>
           )}
         </Box>
       </Box>

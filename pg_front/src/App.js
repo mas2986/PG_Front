@@ -24,11 +24,12 @@ import LoginAuth0 from "./components/LoginAuth0";
 import Password from "./components/Password";
 import ResetPassword from "./components/ResetPassword";
 import Profile from "./components/Profile";
+import ViewOrder from "./components/ViewOrder";
 
 function App() {
   const dispatch = useDispatch();
-  const domain = process.env.REACT_APP_DOMAIN;
-  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+  const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
   const { isAuthenticated, isLoading, user } = useAuth0();
 
   useEffect(() => {
@@ -73,6 +74,7 @@ function App() {
         />
         <Route exact path={["/", "/login"]} component={Footer} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/order" component={ViewOrder} />
       </header>
     </Auth0Provider>
   );

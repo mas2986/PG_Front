@@ -131,8 +131,9 @@
 .cart-container {
   background-color: rgba(253, 255, 255, 1);
   color: #000;
+  position: fixed;
   top: 3.5rem;
-  position: absolute;
+  right: 0.2rem;
   padding: 1rem;
   border-radius: 3px;
   box-shadow: 0 0 5px #ccc;

@@ -41,7 +41,10 @@ import {
   GET_ORDER_BY_USER,
   CREATE_REVIEW,
   DUPLICATE_REVIEW,
-  CREATE_BILL
+  CREATE_BILL,
+  VIEW_ORDER,
+  CLEAN_DETAIL
+
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -110,6 +113,21 @@ export function createOrder(body,texto) {
   };
 }
 
+export function viewOrder(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios(`api/order/user/${id}`);
+      console.log(json.data);
+      return dispatch({
+        type: VIEW_ORDER,
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
 export function createReview(id,body) {
    console.log(body)
    return async function (dispatch) {
@@ -130,6 +148,7 @@ export function createReview(id,body) {
 }
 
 
+
 export function getOrderById(id){
   
   return async function(dispatch){
@@ -148,13 +167,14 @@ export function getOrderById(id){
   }
 }
 
+
 export function getOrderByUser(id){
   return async function(dispatch){
     try{      
       let orderUser = await axios.get(`/api/order/user/${id}`)
-      
+      // console.log(orderUser)
       return dispatch({
-        type:GET_ORDER_BY_ID,
+        type:GET_ORDER_BY_USER,
         payload: orderUser.data
       })
     }
@@ -533,11 +553,9 @@ export function orderByPrice(payload) {
 }
 
 export function detailProduct(id) {
-  console.log(id);
   return async function (dispatch) {
     try {
       var product = await axios.get(`/api/product/${id}`);
-      console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
         payload: product.data,
@@ -654,6 +672,7 @@ export function getReviews() {
   };
 }
 
+
  export function createBill(body){
   return async function(dispatch){
     try{      
@@ -668,3 +687,13 @@ export function getReviews() {
     }
   }
 } 
+
+
+export function cleanDetail() {
+  return async function(dispatch) {
+      return dispatch({
+          type: CLEAN_DETAIL
+      })
+
+  }}
+

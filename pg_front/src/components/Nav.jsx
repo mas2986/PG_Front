@@ -27,6 +27,8 @@ import Cart from "./Cart";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./LoginAuth0";
 import { useHistory } from "react-router-dom";
+import ViewOrder from "./ViewOrder";
+import img from "../loginAzul.png"
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -47,9 +49,11 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  
+  console.log(Object.keys(user1).length)
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
+  console.log(user)
+  console.log(isAuthenticated)
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -94,6 +98,11 @@ export default function Nav(props) {
   const goHome = () => {
     history.push("/");
   };
+
+  function handleHistory(e) {
+    e.preventDefault(e);
+    history.push("/order");
+  }
 
   return (
     <>
@@ -263,22 +272,51 @@ export default function Nav(props) {
                         Sign In
                       </Button>
                     </Link>
-                  ) : user1.image || isAuthenticated ? (
+                  ) : Object.keys(user1).length !== 0 ? (
                     <>
+                    
                       <Tooltip
                         title={
-                          user1
-                          ?
                           `Logged as ${user1.name}`
-                          :
-                          `Logged as ${user.name}`
                         }
+                        >
+                        {/* <div style={{background: "ligth-blue", borderRadius: "50%", width:"1.8rem", height: "1.8rem" }}> */}
+                        <img
+                          alt="avatar"
+                          height={30}
+                          width={30}
+                          src={user1.image ? user1.image : img}
+                          loading="lazy"
+                          style={{ borderRadius: "50%" }}
+                          onClick={handleSubmit}
+                          />
+                          {/* </div> */}
+                      </Tooltip>
+                      <Menu
+                        open={openMenu}
+                        anchorEl={anchorElm}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                        <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
+                        <Divider />
+                        <MenuItem name="balance" onClick={handleClose}>
+                          Logout
+                        </MenuItem>
+                  </Menu>
+                  </>
+                ) : (
+                      <>
+                      <Tooltip
+                        title={`Logged as ${user.given_name}`}
                       >
                         <img
                           alt="avatar"
                           height={30}
                           width={30}
-                          src={user1.image || user.picture}
+                          src={user.picture}
                           loading="lazy"
                           style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
@@ -291,37 +329,9 @@ export default function Nav(props) {
                       >
                         <MenuItem onClick={handleProfile}>Profile</MenuItem>
                         <Divider />
-                        <MenuItem name="balance" onClick={handleClose}>
-                          Logout
-                        </MenuItem>
-                  </Menu>
-                  </>
-                ) : (
-                      <>
-                      <Tooltip
-                        title={
-                          `Logged as ${user1.name}` || `Logged as ${user.name}`
-                        }
-                      >
-                        <AccountCircleIcon
-                          onClick={handleSubmit}
-                          sx={{
-                            color: 'gray',
-                            fontSize: "large",
-                            marginBottom: "0.5rem",
-                            width: "30px",
-                            height: "30px",
-                            marginRight: "1rem",
-                          }}
-                        />
-                      </Tooltip>
-                      <Menu
-                        open={openMenu}
-                        anchorEl={anchorElm}
-                        onClose={handleClose}
-                      >
-                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                        <Divider />
+                        <MenuItem onClick={(e) => handleHistory(e)}
+                        >My purchases</MenuItem>
+                        <Divider/>
                         <MenuItem name="balance" onClick={handleClose}>
                           Logout
                         </MenuItem>
