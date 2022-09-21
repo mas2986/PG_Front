@@ -127,7 +127,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
                         <Divider />
                         <MenuItem onClick={(e) => handleHistory(e)}
                         >My purchases</MenuItem>
@@ -157,7 +157,7 @@ export default function Nav(props) {
                         anchorEl={anchorElm}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
                         <Divider />
                         <MenuItem onClick={(e) => handleHistory(e)}
                         >My purchases</MenuItem>
