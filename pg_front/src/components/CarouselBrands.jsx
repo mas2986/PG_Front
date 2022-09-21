@@ -9,7 +9,7 @@ import Speedo from "../img brands/speedo2.png";
 import Wilson from "../img brands/Wilson.png";
 import Troy from "../img brands/troy.png";
 import Everlast from "../img brands/Everlast.png";
-import { filterByCarousel } from "../redux/action";
+import { filterByCarousel, filterByBrand } from "../redux/action";
 import { useDispatch } from "react-redux";
 import h from "./Home.module.css";
 import { useHistory } from "react-router-dom";
