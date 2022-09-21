@@ -27,9 +27,7 @@ export default function Products() {
   const products = allProducts.slice(pagination.from, pagination.to);
 
   useEffect(() => {
-    
-      dispatch(getProduct());
-
+    dispatch(getProduct());
   }, [dispatch]);
 
   useEffect(() => {
@@ -91,9 +89,9 @@ export default function Products() {
               <Button
                 color="primary"
                 onClick={() => {
-                  //dispatch(getProduct())
+                  // dispatch(getProduct());
                   // dispatch(cleanTrails())
-                  location.reload()
+                  location.reload();
                 }}
                 sx={{
                   display: "block",

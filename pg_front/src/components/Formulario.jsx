@@ -61,7 +61,6 @@ export default function FormPropsTextFields({ props }) {
     orderStatus: "created",
     totalPrice: totalPrice,
     email: user1.email,
-    userId:user1.id
   });
 
   // console.log(order);
