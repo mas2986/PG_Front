@@ -135,11 +135,11 @@ function DashboardContent() {
     if (tokenJSON) {
       const { token } = tokenJSON;
       const { rol } = tokenJSON.data.user;
-      console.log(name);
+      // console.log(name);
       if (token && rol === "user") return history.push("/login");
     }
     if (!tokenJSON) return history.push("/login");
-  }, []);
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={mdTheme}>
