@@ -37,7 +37,8 @@ import {
   CREATE_ORDER,
   CREATE_REVIEW,
   GET_ORDER_BY_USER,
-  DUPLICATE_REVIEW
+  DUPLICATE_REVIEW,
+  CREATE_BILL
 } from "./const";
 
 const initialState = {
@@ -53,6 +54,7 @@ const initialState = {
   password: {},
   backup: [],
   url: "",
+  bill:[],
   reviews: [],
   postreviews: "",
   
@@ -138,8 +140,8 @@ export const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case LOGOUT:
-      localStorage.clear();
-      console.log("LOGOUT");
+      localStorage.removeItem("userDetails")
+      localStorage.removeItem("items")
       return {
         ...state,
         user: {},
@@ -507,6 +509,11 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
+    case CREATE_BILL:
+      return{
+        ...state,
+        bill: action.payload
+      }
     default:
       return { ...state };
   }
