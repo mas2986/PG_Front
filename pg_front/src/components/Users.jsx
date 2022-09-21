@@ -221,15 +221,15 @@ const Users = ({setView}) => {
           });
         };
 
-        const handleOrder = () => {
-          table.getSelectedRowModel().flatRows.map((row) => {
-            const { id } = row.original;
-            // console.log(id)
-            dispatch(getOrderByUser(id));
-            setView('orders')
-            dispatch(cleanDetail())
-          });
-        };
+        // const handleOrder = () => {
+        //   table.getSelectedRowModel().flatRows.map((row) => {
+        //     const { id } = row.original;
+        //     // console.log(id)
+        //     dispatch(getOrderByUser(id));
+        //     setView('orders')
+        //     dispatch(cleanDetail())
+        //   });
+        // };
 
         const handleAllOrders = () => {
           
@@ -249,14 +249,14 @@ const Users = ({setView}) => {
             >
               CHANGE ROLE
               </Button>
-            <Button
+            {/* <Button
               color="info"
               disabled={table.getSelectedRowModel().flatRows.length === 0}
               onClick={handleOrder}
               variant="contained"
             >
               USER ORDERS
-              </Button>
+              </Button> */}
               <Button
               color="info"
               
