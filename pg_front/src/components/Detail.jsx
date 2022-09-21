@@ -157,39 +157,7 @@ export default function Detail() {
                   OUT OF STOCK
                 </h3>
               )}
-              {/* <Link to="/products">
-                <Button
-                  onClick={(e) => handlePay(e)}
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    padding: 2,
-                  }}
-                  className={d.buyButton}
-                >
-                  BUY
-                </Button>
-              </Link>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={addCart}
-                className={d.cartButton}
-              >
-                ADD TO CART
-              </Button>
 
-              <Link to="/products">
-                <Button
-                  //   href={`http://localhost:3000/home`}d cambio a routing por link para que no se pierda el carrito
-                  // variant="contained"
-                  // color="primary"
-                  size="large"
-                  className={d.homeButton}
-                >
-                  GO BACK
-                </Button>
-              </Link> */}
               <div className={d.detailSection}>
                 <p className={d.description}>
                   {detail.description && detail.description}
