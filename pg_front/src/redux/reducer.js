@@ -42,6 +42,7 @@ import {
   VIEW_ORDER,
   CHANGE_STATUS_ORDER
 
+
 } from "./const";
 
 const initialState = {
@@ -66,6 +67,7 @@ export const rootReducer = (state = initialState, action) => {
   if (productsAll.length === 0) {
     productsAll = state.altProducts;
     // console.log(productsAll)
+
   }
   switch (action.type) {
 
@@ -240,7 +242,7 @@ export const rootReducer = (state = initialState, action) => {
         //products: women //Se modifica este estado pero sin embargo siempre queda el alternativo para seguir utilizando toda la info
       };
     case ORDER_BY:
-      let stateProduct = state.products;
+      let stateProduct = state.products 
       let sortProduct =
         action.payload === "asc"
           ? [...stateProduct].sort((a, b) => {
@@ -532,6 +534,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         postreviews: action.payload,
       };
+
 
     default:
       return { ...state };

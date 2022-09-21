@@ -57,11 +57,13 @@ export default function Filters() {
       }));
     }
   }
+ 
 
   function handleOrderByPrice(e) {
     e.preventDefault();
     dispatch(orderByPrice(e.target.value));
-  }
+}
+  
 
   function cleanFilterGenres() {
     setGenderTrail("");
