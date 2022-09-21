@@ -1,0 +1,13 @@
+
+.section-home {
+    padding: 5px;
+    background-color: rgba(47, 15, 135, 0.922);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+    color: aliceblue;
+    width: 100vw;
+}
+
+a {
+    color: aliceblue;
+}

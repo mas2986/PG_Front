@@ -1,0 +1,16 @@
+
+.info-btn {
+    float: inline-end;
+}
+
+.MuiToolbar-root .MuiToolbar-gutters .MuiToolbar-regular .css-hyum1k-MuiToolbar-root{
+    margin:0;
+    padding:0;
+    position:absolute;
+    display:none;
+}
+
+.section-home{
+    display: flex;
+    justify-content: center;
+}
