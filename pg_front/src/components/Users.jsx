@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, changeRoleUser,deleteUser,getOrderByUser, passwordRemember, cleanDetail } from '../redux/action'
+import { getAllUsers, changeRoleUser,deleteUser,getOrderByUser, passwordRemember, cleanDetail, getAllOrders } from '../redux/action'
 import { data, role } from './data';
 
 const Users = ({setView}) => {
@@ -30,9 +30,10 @@ const Users = ({setView}) => {
   useEffect(() => {
     if (users.length === 0 || edit) {
       dispatch(getAllUsers());
+      // console.log(edit)
     }
     setEdit(() => false)
-  }, [edit])
+  }, [dispatch])
 
   const handleDelete = (row) => {
     const { id,name } = row.original;
@@ -223,10 +224,19 @@ const Users = ({setView}) => {
         const handleOrder = () => {
           table.getSelectedRowModel().flatRows.map((row) => {
             const { id } = row.original;
+            // console.log(id)
             dispatch(getOrderByUser(id));
             setView('orders')
             dispatch(cleanDetail())
           });
+        };
+
+        const handleAllOrders = () => {
+          
+            dispatch(getAllOrders());
+            setView('orders')
+            dispatch(cleanDetail())
+          ;
         };
 
         return (
@@ -247,6 +257,14 @@ const Users = ({setView}) => {
             >
               USER ORDERS
               </Button>
+              <Button
+              color="info"
+              
+              onClick={handleAllOrders}
+              variant="contained"
+            >
+              ALL ORDERS
+            </Button>
           </Box>
         );
       }}
