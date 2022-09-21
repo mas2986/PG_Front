@@ -49,11 +49,6 @@ export default function CreateUser() {
     // Swal.fire("¡User created successfully!", "¡Thank you for visiting our website!"),
     console.log(texto)
     dispatch(createUser(texto))
-    Swal.fire({
-      title: "User created successfully!",
-      text: "Check your email to validate your account.",
-      icon: "success",
-    })
     history.push('/')
   }
 

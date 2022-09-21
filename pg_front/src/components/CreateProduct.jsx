@@ -80,7 +80,11 @@ export default function CardProduct(props) {
         ${props.price}.00
       </Typography>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" sx={{
+          overflow:"hidden",
+          whiteSpace:"nowrap",
+          textOverflow: "ellipsis"}}
+        >
           {props.title}
         </Typography>
         <Box display="flex">
@@ -94,7 +98,7 @@ export default function CardProduct(props) {
           <Button
             onClick={(e) => handlePay(e)}
             //href={"/entrega"}
-            size="small"
+            size="large"
             // className={props.stock < 1 ? h.buyBtnStock : ""}
           >
             BUY

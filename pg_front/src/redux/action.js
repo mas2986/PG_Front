@@ -241,17 +241,18 @@ export function resetPassword(body) {
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
+      
+      return (dispatch({
+        type: RESET_PASSWORD,
+        payload: newPassword,
+      }),
       Swal.fire({
         title:'User password reset!',
         text:`The user was asked to change password`,
         icon: 'success',
         confirmButtonText:"ACCEPT"        
         }
-      )
-      return dispatch({
-        type: RESET_PASSWORD,
-        payload: newPassword,
-      });
+      ))
     } catch (e) {
       Swal.fire({
         title: "Error resetting user's password!",
@@ -268,6 +269,12 @@ export function createUser(body) {
     try {
       let user = await axios.post(`/api/user`, body);
       console.log(user.data.data.user);
+      
+      return (
+      dispatch({
+        type: CREATE_USER,
+        payload: user.data.data.user,
+      }),
       Swal.fire({
         title:'User created!',
         text:`Your user was created successfully`,
@@ -275,10 +282,7 @@ export function createUser(body) {
         confirmButtonText:"ACCEPT"        
         }
       )
-      return dispatch({
-        type: CREATE_USER,
-        payload: user.data.data.user,
-      });
+      )
     } catch (e) {
       Swal.fire({
         title: "Error creating user!",

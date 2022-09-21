@@ -21,6 +21,7 @@ import {
   filterByGenderInNav,
   getProduct,
   logout as logoutEmail,
+  createUser
 } from "../redux/action";
 import Cart from "./Cart";
 //import Logout from "./Logout";
@@ -49,11 +50,29 @@ export default function Nav(props) {
   const [anchorElm, setAnchorElm] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const user1 = useSelector((state) => state.user);
-  console.log(Object.keys(user1).length)
+  const users = useSelector((state) => state.users);
+
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
+
   console.log(user)
-  console.log(isAuthenticated)
+  React.useEffect(()=>{
+
+    if(user){
+    user1.lastName = user.family_name
+    user1.name=user.given_name
+    user1.email=user.email
+    user1.password="HOLA"
+    user1.passConfirmation ="HOLA"
+    user1.image=user.picture
+    user1.id=users.length
+
+    
+    dispatch(createUser(user1))
+    }
+  },[dispatch])
+  
+
   const handleClick = (e) => {
     history.push("/products");
     dispatch(filterByGenderInNav(e.target.value));
@@ -62,13 +81,7 @@ export default function Nav(props) {
     dispatch(getProduct());
   };
 
-  /*   function handleSubmit() {
-      console.log(user1);
-      if (Object.keys(user1).length > 0) {
-        addEventListener.location.reload();
-        history.push("/home");
-      }
-    } */
+  console.log(users)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -81,7 +94,7 @@ export default function Nav(props) {
     const value = e.target.innerText;
     setAnchorElm(null);
     if (value === "Logout" && Object.keys(user1).length !== 0) {
-      return dispatch(logoutEmail(history));
+      return dispatch(logoutEmail(history)) && logout()
     }
     if (value === "Logout" && Object.keys(user).length !== 0) {
       console.log("hola")

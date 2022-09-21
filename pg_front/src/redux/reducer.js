@@ -141,7 +141,6 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case CREATE_USER:
-      console.log(action.payload);
       return {
         ...state,
         user: action.payload,
