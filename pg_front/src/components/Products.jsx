@@ -27,7 +27,9 @@ export default function Products() {
   const products = allProducts.slice(pagination.from, pagination.to);
 
   useEffect(() => {
-    dispatch(getProduct());
+    if (allProducts.length == 0) {
+      dispatch(getProduct());
+    }
   }, [dispatch]);
 
   useEffect(() => {
