@@ -146,7 +146,7 @@ export default function Detail() {
 
               <Link to="/products">
                 <Button
-                  //   href={`http://localhost:3000/home`} cambio a routing por link para que no se pierda el carrito
+                  //   href={`http://localhost:3000/home`}d cambio a routing por link para que no se pierda el carrito
                   // variant="contained"
                   // color="primary"
                   size="large"
