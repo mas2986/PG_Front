@@ -17,7 +17,7 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import { getAllOrders, changeOrderStatus, editProduct as editStock } from '../redux/action';
+import { getAllOrders, changeOrderStatus, editProduct as editStock, getOrderByUser } from '../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Orders = () => {
@@ -63,7 +63,7 @@ const Orders = () => {
 
   useEffect(() => {
     if (orders.length === 0 || edit) {
-      dispatch(getAllOrders());
+      dispatch(getOrderByUser());
       setEdit(() => false)
     }
   }, [edit])

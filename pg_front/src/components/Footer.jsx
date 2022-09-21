@@ -2,12 +2,14 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import "../styles/Footer.css"
+import "../styles/Footer.css";
+import { useHistory } from "react-router-dom";
 
 export default function Footer() {
+  const history = useHistory();
+
   return (
     <footer>
-      
       <Box px={{ xs: 3, sm: 8 }} py={{ xs: 5, sm: 5 }} backgroundColor="#9999">
         <Container>
           <Grid container spacing={5}>
@@ -19,7 +21,13 @@ export default function Footer() {
                 </Link>
               </Box>
               <Box>
-                <Link href="#" color="inherit" underline="none">
+                <Link
+                  onClick={() => history.push("/")}
+                  href="/"
+                  to="/home"
+                  color="inherit"
+                  underline="none"
+                >
                   Home
                 </Link>
               </Box>

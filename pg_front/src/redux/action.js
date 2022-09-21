@@ -41,8 +41,10 @@ import {
   GET_ORDER_BY_USER,
   CREATE_REVIEW,
   DUPLICATE_REVIEW,
+  CREATE_BILL,
   VIEW_ORDER,
   CLEAN_DETAIL
+
 } from "./const";
 
 //const URL = "https://pg-athen.herokuapp.com"
@@ -77,11 +79,9 @@ export function signUp(body) {
 export function mercadoPago(body) {
   return async function (dispatch) {
     try {
-      let order = await axios.post(
-        `/api/crear-orden`,
-        body
-      );
-      console.log(order.data.url);
+      console.log("En funcion MP")
+      let order = await axios.post(`/api/crear-orden`,body);
+      console.log(order.data);
       return dispatch({
         type: ORDER_MERCADOPAGO,
         payload: order.data.url,
@@ -92,11 +92,17 @@ export function mercadoPago(body) {
   };
 }
 
-export function createOrder(body) {
+export function createOrder(body,texto) {
   return async function (dispatch) {
     try {
+      const bill = {};
       let order = await axios.post(`/api/order`, body);
-      console.log(order);
+      const { id } = order.data;
+      bill.orderId = id;  
+      bill.totalAmount = body.totalPrice[0];      
+      bill.celNumber = texto.celNumber;
+      bill.email = texto.email;
+      localStorage.setItem(`billDetails`,JSON.stringify(bill))
       return dispatch({
         type: CREATE_ORDER,
         payload: order,
@@ -126,7 +132,7 @@ export function createReview(id,body) {
    console.log(body)
    return async function (dispatch) {
     try {
-      let {review} = await axios.post(`api/product/review/${id}`, body);
+      let {review} = await axios.post(`/api/product/review/${id}`, body);
       console.log(review.data);
       return dispatch({
         type: CREATE_REVIEW,
@@ -165,11 +171,11 @@ export function getOrderById(id){
 export function getOrderByUser(id){
   return async function(dispatch){
     try{      
-      let userOrders = await axios.get(`/api/order/user/${id}`)
-      console.log(userOrders.data)
+      let orderUser = await axios.get(`/api/order/user/${id}`)
+      // console.log(orderUser)
       return dispatch({
         type:GET_ORDER_BY_USER,
-        payload: userOrders.data
+        payload: orderUser.data
       })
     }
     catch(e){
@@ -671,6 +677,22 @@ export function getReviews() {
 }
 
 
+ export function createBill(body){
+  return async function(dispatch){
+    try{      
+      let bill = await axios.post(`/api/bill`,body)
+      return dispatch({
+        type: CREATE_BILL,
+        payload: bill.data
+      })      
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+} 
+
+
 export function cleanDetail() {
   return async function(dispatch) {
       return dispatch({
@@ -678,3 +700,4 @@ export function cleanDetail() {
       })
 
   }}
+

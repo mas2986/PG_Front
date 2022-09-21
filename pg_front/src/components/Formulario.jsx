@@ -16,21 +16,23 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { createOrder } from "../redux/action";
-import { useAuth0 } from "@auth0/auth0-react";
 
+import { TextsmsOutlined } from "@mui/icons-material";
+
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function FormPropsTextFields({ props }) {
   const [checked, setChecked] = React.useState(true);
   const userAuth0 = useAuth0().user;
   let history = useHistory();
-  
+
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [totalPrice, setTotalPrice] = React.useState(0);
   const user = useSelector((state) => state.user);
   let items = useSelector((state) => state.cartItems);
-   console.log(items);
+  console.log(items);
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
@@ -39,16 +41,9 @@ export default function FormPropsTextFields({ props }) {
     setChecked(event.target.checked);
   };
 
-  const [texto, setTexto] = React.useState({
-    name: "",
-    apellido: "",
-    calle: "",
-    numero: "",
-    provincia: "",
-    localidad: "",
-    telefono: "",
-    email: "",
-    cp: "",
+  const [texto, setTexto] = React.useState({    
+    celNumber: "",
+    email: "",    
   });
 
   let totalItems = 0;
@@ -57,7 +52,7 @@ export default function FormPropsTextFields({ props }) {
     // totalPrice += items[i].price;
   }
   const productsId = items.map((p) => p.id);
-  console.log(productsId)
+  console.log(productsId);
 
   const [order, setOrder] = React.useState({
     productId: productsId,
@@ -66,58 +61,14 @@ export default function FormPropsTextFields({ props }) {
     orderStatus: "created",
     totalPrice: totalPrice,
     email: user1.email,
-    userId: user1.id,
   });
 
   // console.log(order);
 
   const handleButton = async (event) => {
-    if (!texto.name.length || texto.name.length < 3) {
-      return Swal.fire({
-        title: "Check the name!",
-        text: "It must contain 3 characters.",
-        icon: "error",
-      });
-    }
-    if (texto.apellido.length < 3) {
-      return Swal.fire({
-        title: "Check the lastname!",
-        text: "The last name is required.",
-        icon: "error",
-      });
-    }
-    if (texto.calle.length < 3) {
-      return Swal.fire({
-        title: "Check the address!",
-        text: "An address is required.",
-        icon: "error",
-      });
-    }
-    if (!texto.numero) {
-      return Swal.fire({
-        title: "Check the number!",
-        text: "Number is required.",
-        icon: "error",
-      });
-    }
-    if (!texto.cp) {
-      return Swal.fire({
-        title: "Check the CP!",
-        text: "Enter your zip code.",
-        icon: "error",
-      });
-    }
-    if (texto.provincia.length < 3) {
-      return Swal.fire({
-        title: "Check your province or state!",
-        text: "Enter your province or state.",
-        icon: "error",
-      });
-    }
-    if (texto.localidad.length < 3) {
-      return Swal.fire({ title: "Check your city!", icon: "error" });
-    }
-    if (!texto.telefono || texto.telefono.length < 5) {
+
+    if (!texto.celNumber || texto.celNumber.length < 5) {
+
       return Swal.fire({
         title: "Check your cell phone!",
         text: "It must contain at least 5 characters.",
@@ -131,10 +82,12 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
-    console.log(order);
-    dispatch(createOrder(order));
+
+    dispatch(createOrder(order,texto));  
+    console.log(url)  
+    
     setTimeout(function () {
-      console.log("Envié la or");
+      localStorage.removeItem(`items`);
       window.location.replace(url);
     }, 1000);
   };
@@ -162,14 +115,13 @@ export default function FormPropsTextFields({ props }) {
       setTotalPrice(total);
       setOrder({
         ...order,
-        totalPrice: total,
-      });
-      // console.log("En if de useEffect", order);
+        totalPrice:total
+      })
     } else {
       setTotalPrice(0);
-      console.log("En else de useEffect", totalPrice);
+
     }
-  }, [items]);
+  }, []);
 
   return (
     <div className={f.form}>
@@ -197,134 +149,8 @@ export default function FormPropsTextFields({ props }) {
           autoComplete="off"
         >
           <center className={f.form}>
-            <h2>PURCHASE INFORMATION</h2>
-          </center>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "20% 20%",
-              // justifyContent: "space-evenly",
-              gridGap: "1rem 10rem",
-              marginLeft: "3rem",
-            }}
-          >
-            <div>
-              <TextField
-                onChange={(e) => {
-                  stateInput(e);
-                }}
-                label="Name"
-                helperText={"Máximo de caracteres 10."}
-                name="name"
-                type={"text"}
-                value={texto.name}
-              />
-            </div>
-
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              helperText={
-                errors.apellido && <p className={f.colour}>{errors.apellido}</p>
-              }
-              type="text"
-              id="outlined-required"
-              label="Last Name"
-              name="apellido"
-              value={texto.apellido}
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              helperText={
-                errors.calle && <p className={f.colour}>{errors.calle}</p>
-              }
-              id="outlined-required"
-              label="Street"
-              name="calle"
-              value={texto.calle}
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              id="outlined-required"
-              label="Number"
-              helperText={
-                errors.numero && <p className={f.colour}>{errors.numero}</p>
-              }
-              name="numero"
-              value={texto.numero}
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              id="outlined-required"
-              label="Floor"
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              id="outlined-required"
-              label="Apartment n°"
-              type="number"
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              id="outlined-required"
-              label="Postal Code"
-              type="number"
-              helperText={errors.cp && <p className={f.colour}>{errors.cp}</p>}
-              name="cp"
-              value={texto.cp}
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              id="outlined-required"
-              label="Province"
-              helperText={
-                errors.provincia && (
-                  <p className={f.colour}>{errors.provincia}</p>
-                )
-              }
-              name="provincia"
-              value={texto.provincia}
-              //   defaultValue="Hello World"
-            />
-            <TextField
-              onChange={(e) => {
-                stateInput(e);
-              }}
-              required
-              id="outlined-required"
-              label="City"
-              helperText={
-                errors.localidad && (
-                  <p className={f.colour}>{errors.localidad}</p>
-                )
-              }
-              name="localidad"
-              value={texto.localidad}
-              //   defaultValue="Hello World"
-            />
-          </div>
-          <div>
-            <center>
-              <h2>CONTACT INFORMATION</h2>
-            </center>
+            <h2>CONTACT INFORMATION</h2>
+          </center>          
             <div
               style={{
                 display: "grid",
@@ -342,12 +168,12 @@ export default function FormPropsTextFields({ props }) {
                 id="outlined-required"
                 label="Phone Number"
                 helperText={
-                  errors.telefono && (
-                    <p className={f.colour}>{errors.telefono}</p>
+                  errors.celNumber && (
+                    <p className={f.colour}>{errors.celNumber}</p>
                   )
                 }
-                name="telefono"
-                value={texto.telefono}
+                name="celNumber"
+                value={texto.celNumber}
                 //      defaultValue="Hello World"
               />
               <TextField
@@ -387,7 +213,6 @@ export default function FormPropsTextFields({ props }) {
                 </Button>
               </Link>
             </div>
-          </div>
 
           <Checkbox
             defaultChecked
@@ -396,7 +221,9 @@ export default function FormPropsTextFields({ props }) {
             sx={{ visibility: "hidden" }}
           />
         </Box>
-        <Box>
+        <Box
+          
+        >
           <Typography
             variant="h4"
             color="primary"
@@ -413,7 +240,7 @@ export default function FormPropsTextFields({ props }) {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              maxHeight: "100%",
+              maxHeight: "100%",              
             }}
           >
             {items.map((i) => {
@@ -468,19 +295,14 @@ export default function FormPropsTextFields({ props }) {
               No Items Selected
             </Typography>
           )}
-          {errors.name ||
-          errors.apellido ||
-          errors.calle ||
-          errors.numero ||
-          errors.provincia ||
-          errors.localidad ||
-          errors.telefono ||
+          {
+          errors.celNumber ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
           ) : Object.keys(user).length > 0 ? (
             <Button
               variant="contained"
-              color="primary"
+              color="primary"              
               className="btn-form"
               onClick={(e) => handleButton(e)}
               disableElevation
@@ -489,8 +311,6 @@ export default function FormPropsTextFields({ props }) {
                 height: "3rem",
                 // marginRigth: "12px",
                 marginTop: "2rem",
-                position: "absolute",
-                zIndex: 99,
               }}
             >
               BUY

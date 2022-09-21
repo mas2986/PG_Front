@@ -29,6 +29,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginAuth0 from "./LoginAuth0";
 import { useHistory } from "react-router-dom";
 import ViewOrder from "./ViewOrder";
+import img from "../loginAzul.png"
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -284,26 +285,25 @@ export default function Nav(props) {
                         Sign In
                       </Button>
                     </Link>
-                  ) : user1.image || isAuthenticated ? (
+                  ) : Object.keys(user1).length !== 0 ? (
                     <>
+                    
                       <Tooltip
                         title={
-                          user1
-                          ?
                           `Logged as ${user1.name}`
-                          :
-                          `Logged as ${user.name}`
                         }
-                      >
+                        >
+                        {/* <div style={{background: "ligth-blue", borderRadius: "50%", width:"1.8rem", height: "1.8rem" }}> */}
                         <img
                           alt="avatar"
                           height={30}
                           width={30}
-                          src={user1.image || user.picture}
+                          src={user1.image ? user1.image : img}
                           loading="lazy"
                           style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
-                        />
+                          />
+                          {/* </div> */}
                       </Tooltip>
                       <Menu
                         open={openMenu}
@@ -323,20 +323,16 @@ export default function Nav(props) {
                 ) : (
                       <>
                       <Tooltip
-                        title={
-                          `Logged as ${user1.name}` || `Logged as ${user.name}`
-                        }
+                        title={`Logged as ${user.given_name}`}
                       >
-                        <AccountCircleIcon
+                        <img
+                          alt="avatar"
+                          height={30}
+                          width={30}
+                          src={user.picture}
+                          loading="lazy"
+                          style={{ borderRadius: "50%" }}
                           onClick={handleSubmit}
-                          sx={{
-                            color: 'gray',
-                            fontSize: "large",
-                            marginBottom: "0.5rem",
-                            width: "30px",
-                            height: "30px",
-                            marginRight: "1rem",
-                          }}
                         />
                       </Tooltip>
                       <Menu

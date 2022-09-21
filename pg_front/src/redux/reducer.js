@@ -35,8 +35,10 @@ import {
   GET_ORDER_BY_USER,
   GET_REVIEWS,
   CREATE_ORDER,
-  CLEAN_DETAIL,
+  CREATE_REVIEW,
   DUPLICATE_REVIEW,
+  CREATE_BILL,
+  CLEAN_DETAIL,
   VIEW_ORDER,
   CHANGE_STATUS_ORDER
 
@@ -55,6 +57,7 @@ const initialState = {
   password: {},
   backup: [],
   url: "",
+  bill:[],
   reviews: [],
 };
 
@@ -129,8 +132,8 @@ export const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case LOGOUT:
-      localStorage.clear();
-      console.log("LOGOUT");
+      localStorage.removeItem("userDetails")
+      localStorage.removeItem("items")
       return {
         ...state,
         user: {},
@@ -506,11 +509,24 @@ export const rootReducer = (state = initialState, action) => {
         reviews: action.payload,
       };
 
-    case CLEAN_DETAIL:
+    case CREATE_BILL:
+      return{
+        ...state,
+        bill: action.payload
+      }
+
+    case GET_ORDER_BY_USER:
+      // console.log(action.payload)
       return {
         ...state,
-        detail: [],
-      };
+        order: [...action.payload]
+      }
+      case CLEAN_DETAIL:
+            return {
+                ...state,
+                detail:[],
+                order: []
+            }
     case DUPLICATE_REVIEW:
       return {
         ...state,
