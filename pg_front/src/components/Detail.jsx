@@ -122,19 +122,54 @@ export default function Detail() {
               <p className={d.price}>
                 Price: ${detail.price && detail.price},00
               </p>
-              <RatingProm id={id} reviews={review} users={users} />
 
-              <Button
-                onClick={(e) => handlePay(e)}
-                variant="contained"
-                size="small"
-                sx={{
-                  padding: 2,
-                }}
-                className={d.buyButton}
-              >
-                BUY
-              </Button>
+              <RatingProm id={id} reviews={review} users={users} />
+              {detail?.stock !== 0 ? (
+                <>
+                  <Button
+                    onClick={(e) => handlePay(e)}
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      padding: 2,
+                    }}
+                    className={d.buyButton}
+                  >
+                    BUY
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={addCart}
+                    className={d.cartButton}
+                  >
+                    ADD TO CART
+                  </Button>
+                </>
+              ) : (
+                <h3
+                  style={{
+                    color: "red",
+                    whiteSpace: "nowrap",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  OUT OF STOCK
+                </h3>
+              )}
+              <Link to="/products">
+                <Button
+                  onClick={(e) => handlePay(e)}
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    padding: 2,
+                  }}
+                  className={d.buyButton}
+                >
+                  BUY
+                </Button>
+              </Link>
               <Button
                 variant="outlined"
                 size="small"
