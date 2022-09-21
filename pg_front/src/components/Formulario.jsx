@@ -59,7 +59,6 @@ export default function FormPropsTextFields({ props }) {
     idProduct: productsId,
     quantity: totalItems,
     orderStatus: "created",
-    totalPrice: totalPrice,
     email: user1.email,
   });
 
@@ -82,7 +81,8 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
-
+    if(typeof totalPrice !== 'number') order.totalPrice = totalPrice[0]
+    else order.totalPrice = totalPrice;
     dispatch(createOrder(order,texto));  
     console.log(url)  
     
@@ -112,11 +112,7 @@ export default function FormPropsTextFields({ props }) {
       let prices = [];
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
-      setTotalPrice(total);
-      setOrder({
-        ...order,
-        totalPrice:total
-      })
+      setTotalPrice(total);      
     } else {
       setTotalPrice(0);
 

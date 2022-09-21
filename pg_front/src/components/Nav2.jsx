@@ -61,8 +61,12 @@ export default function Nav(props) {
     if (value === "Logout" && Object.keys(user).length !== 0) {
       return logout();
     }
-
   };
+  
+   function handleHistory(e) {
+    e.preventDefault(e);
+    history.push("/order");
+  }
 
 
   return (
