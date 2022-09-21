@@ -18,6 +18,7 @@ import Cart from "./Cart";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 import { logout as logoutEmail } from "../redux/action";
+import img from "../loginAzul.png";
 
 function HideOnScroll(props) {
   const { children, window } = props;
