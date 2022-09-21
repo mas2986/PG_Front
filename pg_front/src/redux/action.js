@@ -98,7 +98,7 @@ export function createOrder(body, texto) {
       let order = await axios.post(`/api/order`, body);
       const { id } = order.data;
       bill.orderId = id;
-      bill.totalAmount = body.totalPrice[0];
+      bill.totalAmount = body.totalPrice;
       bill.celNumber = texto.celNumber;
       bill.email = texto.email;
       localStorage.setItem(`billDetails`, JSON.stringify(bill));
