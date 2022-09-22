@@ -26,8 +26,6 @@ export default function FormPropsTextFields({ props }) {
   const userAuth0 = useAuth0().user;
   let history = useHistory();
 
-
-
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
@@ -38,15 +36,15 @@ export default function FormPropsTextFields({ props }) {
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
-  console.log(user1)
+  console.log(user1);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
-  const [texto, setTexto] = React.useState({    
+  const [texto, setTexto] = React.useState({
     celNumber: "",
-    email: "",    
+    email: "",
   });
 
   let totalItems = 0;
@@ -63,15 +61,13 @@ export default function FormPropsTextFields({ props }) {
     quantity: totalItems,
     orderStatus: "created",
     email: user1.email,
-    userId:user1.id
+    userId: user1.id,
   });
 
   // console.log(order);
 
   const handleButton = async (event) => {
-
     if (!texto.celNumber || texto.celNumber.length < 5) {
-
       return Swal.fire({
         title: "Check your cell phone!",
         text: "It must contain at least 5 characters.",
@@ -85,9 +81,9 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
-    if(typeof totalPrice !== 'number') order.totalPrice = totalPrice[0]
+    if (typeof totalPrice !== "number") order.totalPrice = totalPrice[0];
     else order.totalPrice = totalPrice;
-    dispatch(createOrder(order,texto));  
+    dispatch(createOrder(order, texto));
     setTimeout(function () {
       localStorage.removeItem(`items`);
       window.location.replace(url);
@@ -114,10 +110,9 @@ export default function FormPropsTextFields({ props }) {
       let prices = [];
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
-      setTotalPrice(total);      
+      setTotalPrice(total);
     } else {
       setTotalPrice(0);
-
     }
   }, []);
 
@@ -148,164 +143,58 @@ export default function FormPropsTextFields({ props }) {
         >
           <center className={f.form}>
             <h2>CONTACT INFORMATION</h2>
-          </center>          
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "20% 20%",
-                // justifyContent: "space-evenly",
-                gridGap: "1rem 10rem",
-                marginLeft: "3rem",
-              }}
-            >
-              <TextField
-                onChange={(e) => {
-                  stateInput(e);
-                }}
-                required
-                id="outlined-required"
-                label="Phone Number"
-                helperText={
-                  errors.celNumber && (
-                    <p className={f.colour}>{errors.celNumber}</p>
-                  )
-                }
-                name="celNumber"
-                value={texto.celNumber}
-                //      defaultValue="Hello World"
-              />
-              <TextField
-                onChange={(e) => {
-                  stateInput(e);
-                }}
-                required
-                id="outlined-required"
-                label="Email"
-                helperText={
-                  errors.email && <p className={f.colour}>{errors.email}</p>
-                }
-                name="email"
-                value={texto.email}
-                //      defaultValue="Hello World"
-              />
-            </div>
-            {/* <TextField
-              id="outlined-required"
-              label="ID"
-              //      defaultValue="Hello World"
-            /> */}
-            <div className="btn-form">
-              <Link to="/">
-                <Button
-                  // href="/"
-                  variant="contained"
-                  className="btn-form"
-                  color="primary"
-                  sx={{
-                    margin: "2rem 0 0 4rem",
-                    // borderRadius: "50%",
-                    height: "3rem",
-                  }}
-                >
-                  HOME
-                </Button>
-              </Link>
-            </div>
-
-          <Checkbox
-            defaultChecked
-            color="primary"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-            sx={{ visibility: "hidden" }}
-          />
-        </Box>
-        <Box
-          
-        >
-          <Typography
-            variant="h4"
-            color="primary"
-            align="center"
-            sx={{ marginTop: "1rem" }}
-          >
-            Your Order
-          </Typography>
-          <Box
-            sx={{
-              marginTop: "2rem",
-              marginBottom: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              maxHeight: "100%",              
+          </center>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "20% 20%",
+              // justifyContent: "space-evenly",
+              gridGap: "1rem 10rem",
+              marginLeft: "3rem",
             }}
           >
-            {items.map((i) => {
-              return (
-                <Box sx={{ marginBottom: "2rem" }}>
-                  <Card
-                    sx={{
-                      maxHeight: "10rem",
-                      display: "flex",
-                      flexDirection: "row-reverse",
-                      maxWidth: "35rem",
-                      zIndex: "-1",
-                    }}
-                    onClick={() => history.push(`/detail/${i.id}`)}
-                    className={f.cardMedia}
-                  >
-                    <CardMedia
-                      component="img"
-                      width="1rem"
-                      height="150"
-                      image={i.image}
-                      alt={i.title[0].toUpperCase() + i.title.substring(1)}
-                      sx={{ position: "relative" }}
-                    />
-
-                    <CardContent sx={{ width: "30rem" }}>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {i.title}
-                      </Typography>
-                      <Typography>${i.price * i.qty}.00</Typography>
-                      <Typography
-                        flexGrow={1}
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ marginTop: "1.5rem" }}
-                      >
-                        Number of items: {i.qty}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {totalPrice > 0 ? (
-            <Typography variant="h4" color="primary" textAlign="center">
-              Total: ${totalPrice}.00
-            </Typography>
-          ) : (
-            <Typography variant="h5" color="primary" textAlign="center">
-              No Items Selected
-            </Typography>
-          )}
-          {
-          errors.celNumber ||
-          errors.email ? (
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Phone Number"
+              helperText={
+                errors.celNumber && (
+                  <p className={f.colour}>{errors.celNumber}</p>
+                )
+              }
+              name="celNumber"
+              value={texto.celNumber}
+              //      defaultValue="Hello World"
+            />
+            <TextField
+              onChange={(e) => {
+                stateInput(e);
+              }}
+              required
+              id="outlined-required"
+              label="Email"
+              helperText={
+                errors.email && <p className={f.colour}>{errors.email}</p>
+              }
+              name="email"
+              value={texto.email}
+              //      defaultValue="Hello World"
+            />
+          </div>
+          {errors.celNumber || errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : Object.keys(user).length > 0 ?(
+          ) : Object.keys(user).length > 0 ? (
             <Button
               variant="contained"
-              color="primary"              
+              color="primary"
               className="btn-form"
               onClick={(e) => handleButton(e)}
               disableElevation
               sx={{
-                width: "40rem",
+                width: "30rem",
                 height: "3rem",
                 // marginRigth: "12px",
                 marginTop: "2rem",
@@ -327,15 +216,135 @@ export default function FormPropsTextFields({ props }) {
                 }
                 disableElevation
                 sx={{
-                  width: "40rem",
-                  height: "3rem",
-                  // marginRigth: "12px",
-                  marginTop: "2rem",
+                  width: "34.5rem",
+                  height: "4rem",
+                  marginLeft: "7%",
+                  marginTop: "4rem",
                 }}
               >
                 BUY
               </Button>
             </Link>
+          )}
+          {/* <TextField
+              id="outlined-required"
+              label="ID"
+              //      defaultValue="Hello World"
+            /> */}
+          <div className="btn-form">
+            <Link to="/">
+              <Button
+                // href="/"
+                variant="contained"
+                className="btn-form"
+                color="primary"
+                sx={{
+                  width: "34.5rem",
+                  height: "3rem",
+                  marginLeft: "6%",
+                  marginTop: "1.5rem",
+                }}
+              >
+                CANCEL
+              </Button>
+            </Link>
+          </div>
+
+          <Checkbox
+            defaultChecked
+            color="primary"
+            inputProps={{ "aria-label": "secondary checkbox" }}
+            sx={{ visibility: "hidden" }}
+          />
+        </Box>
+        <Box>
+          <Typography
+            variant="h4"
+            color="primary"
+            align="center"
+            sx={{ marginTop: "1rem" }}
+          >
+            Your Order
+          </Typography>
+          <Box
+            sx={{
+              marginTop: "2rem",
+              marginBottom: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              maxHeight: "100%",
+            }}
+          >
+            {items.map((i) => {
+              return (
+                <Box sx={{ marginBottom: "2rem" }}>
+                  <Card
+                    sx={{
+                      maxHeight: "11rem",
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      maxWidth: "35rem",
+                      zIndex: "-1",
+                    }}
+                    onClick={() => history.push(`/detail/${i.id}`)}
+                    className={f.cardMedia}
+                  >
+                    <CardMedia
+                      component="img"
+                      width="1rem"
+                      height="180"
+                      image={i.image}
+                      alt={i.title[0].toUpperCase() + i.title.substring(1)}
+                      sx={{ position: "relative" }}
+                    />
+
+                    <CardContent sx={{ width: "30rem" }}>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {i.title}
+                      </Typography>
+                      <Typography>${i.price * i.qty}.00</Typography>
+                      <Typography
+                        flexGrow={1}
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ marginTop: "0.5rem" }}
+                      >
+                        Number of items: {i.qty}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              );
+            })}
+          </Box>
+
+          {totalPrice > 0 ? (
+            <Box
+              sx={{
+                border: "1px solid #000",
+                padding: "1rem",
+                borderRadius: "3px",
+                margin: "1rem 0 5rem 0",
+              }}
+            >
+              <Typography variant="h4" color="primary" textAlign="center">
+                Total: ${totalPrice}.00
+              </Typography>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                border: "1px solid #000",
+                padding: "1rem",
+                margin: "1rem 0 2rem 0",
+              }}
+            >
+              <Typography variant="h5" color="primary" textAlign="center">
+                No Items Selected
+              </Typography>
+            </Box>
           )}
         </Box>
       </Box>
