@@ -235,24 +235,7 @@ export default function FormPropsTextFields({ props }) {
               </Button>
                   </Link>
                 )}
-            <div className="btn-form">
-              <Link to="/">
-                <Button
-                  // href="/"
-                  variant="contained"
-                  className="btn-form"
-                  color="primary"
-                  sx={{                                        
-                    width:"30vw",
-                    height: "3rem",
-                    marginTop: "1rem",
-                    marginLeft:"6.5rem"
-                }}
-                >
-                  CANCEL
-                </Button>
-              </Link>
-            </div>
+           
           {/* <TextField
               id="outlined-required"
               label="ID"
