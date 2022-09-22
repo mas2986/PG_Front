@@ -26,6 +26,11 @@ export default function Contact(){
           icon: "success",
           title:  "Message Sent Successfully"
         })
+        setContact({
+          email: "",
+          name: "",
+          message:""
+        })
       }, (error) => {
         console.log(error.text);
         Swal.fire({
@@ -34,7 +39,6 @@ export default function Contact(){
           text: error.text,
         })
       });
-    e.target.reset()
   };
 
   function stateInput(e){
@@ -103,6 +107,7 @@ export default function Contact(){
                 onChange={(e)=>{stateInput(e);}}
                 label="Name"
                 name="name"
+                
               />
             </FormControl>
 
@@ -132,14 +137,20 @@ export default function Contact(){
           </form>
         </div>
 
-        <img
-            src={mapsMock}
-            alt="image not found."
-            style={{
-                height: "500px",
-                width: "500px"
-            }}
-        />
+        <div style={{position:"relative", textAlign:"right",height:"500px",width:"500px"}}>
+          <div style={{overflow:"hidden",background:"none!important",height:"500px",width:"500px"}}>
+            <iframe 
+              width="500" 
+              height="500" 
+              id="gmap_canvas" 
+              src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            </iframe>
+            <a href="https://fmovies-online.net">
+              fmovies
+            </a>
+            
+            <a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
+            </div></div>
 
         </Box>
 

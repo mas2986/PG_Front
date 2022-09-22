@@ -61,12 +61,6 @@ export default function Nav(props) {
  const filtergoogle = users?.some(el=>el.email === user?.email)
 
 
- console.log(user)
-
-console.log(filtergoogle)
-
-
-
    React.useEffect(() => {
     if (user && !filtergoogle ) {
       usuarioGoogle.lastName = user.family_name;
@@ -88,10 +82,7 @@ console.log(filtergoogle)
       dispatch(signUp(user1))
     }
   }, [dispatch]);
-
-
-  console.log(user1)
-
+  
   const handleClick = (e) => {
     history.push("/products");
     setTimeout(() => {
