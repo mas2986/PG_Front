@@ -22,6 +22,7 @@ import {
   getProduct,
   logout as logoutEmail,
   createUser,
+  signUp
 } from "../redux/action";
 import Cart from "./Cart";
 //import Logout from "./Logout";
@@ -55,21 +56,33 @@ export default function Nav(props) {
   const [log, setLog] = useState(true);
   const { isAuthenticated, logout, user } = useAuth0();
 
-  console.log(user);
-  React.useEffect(() => {
-    if (user) {
+  let usuarioGoogle= {};
+
+ const filtergoogle = users?.some(el=>el.email === user?.email)
+
+
+   React.useEffect(() => {
+    if (user && !filtergoogle ) {
+      usuarioGoogle.lastName = user.family_name;
+      usuarioGoogle.name = user.given_name;
+      usuarioGoogle.email = user.email;
+      usuarioGoogle.password = "HOLA";
+      usuarioGoogle.passConfirmation = "HOLA";
+      usuarioGoogle.image = user.picture;
+      dispatch(createUser(usuarioGoogle));
+      
+    }
+    if(user && filtergoogle){
       user1.lastName = user.family_name;
       user1.name = user.given_name;
       user1.email = user.email;
       user1.password = "HOLA";
       user1.passConfirmation = "HOLA";
       user1.image = user.picture;
-      user1.id = users.length;
-
-      dispatch(createUser(user1));
+      dispatch(signUp(user1))
     }
   }, [dispatch]);
-
+  
   const handleClick = (e) => {
     history.push("/products");
     setTimeout(() => {
@@ -81,7 +94,7 @@ export default function Nav(props) {
     location.reload();
   };
 
-  console.log(users);
+
 
   function handleSubmit(e) {
     e.preventDefault();

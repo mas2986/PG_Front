@@ -28,6 +28,7 @@ const Orders = () => {
   const orders = useSelector(state => state.order);
   const products = useSelector(state => state.productAdmin)
   const status = ['cancelled', 'completed']
+  const [table,setTable] = useState(orders);
 
   const handleStatus = (row, value) => {
     row.original.orderStatus = value;
@@ -43,7 +44,7 @@ const Orders = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(changeOrderStatus(id, orderStatus, email, total))
-        setEdit(true);
+        setTable([...table]);
         if (value === 'completed') {
           idProduct = idProduct.split(', ')
           titleProduct = titleProduct.split(', ')
@@ -62,9 +63,9 @@ const Orders = () => {
   }
 
   useEffect(() => {
+    setTable(orders);
     if (orders.length === 0 || edit) {
-      dispatch(getOrderByUser());
-      setEdit(() => false)
+      //dispatch(getOrderByUser());
     }
   }, [edit])
 
@@ -168,6 +169,13 @@ const Orders = () => {
         muiTableBodyCellEditTextFieldProps: ({ cell, row }) => ({
           //select: cell.getValue()!=="created"?false:true, //change to select for a dropdown
           select: true,
+          onBlur: (event) => {
+            row.original.orderStatus === "created"
+              ?
+              handleStatus(row, event.target.value)
+              :
+              null;
+          },
           children:
             status.map((e) => (
               <MenuItem key={e}
@@ -195,7 +203,7 @@ const Orders = () => {
         },
       }}
       columns={columns}
-      data={orders}
+      data={table}
       enableColumResizing
       initialState={{ columnVisibility: { titleProduct: false } }}
       positionRowActions="right"
@@ -217,16 +225,7 @@ const Orders = () => {
       onRowSelectionChange={setRowSelection}
       state={{ rowSelection }}
       getRowId={(row) => row.id}
-      muiTableBodyCellEditTextFieldProps={({ row }) => ({
-        //onBlur is more efficient, but could use onChange instead
-        onBlur: (event) => {
-          row.original.orderStatus === "created"
-            ?
-            handleStatus(row, event.target.value)
-            :
-            null;
-        },
-      })}
+      
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',
         disabled: row.original.isAccountLocked,
