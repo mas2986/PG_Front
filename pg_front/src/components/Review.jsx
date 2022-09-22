@@ -40,31 +40,34 @@ export default function Review(props) {
 }
 console.log(userCommentbyProd)
 useEffect(() => {
-  if(post.length){
-    dispatch(createReview())
-  }
-}, [dispatch])
+  
+    dispatch(getReviews())
+  
+}, [post.length])
 
     const handleChange=(e)=>{
         e.preventDefault();
         setComment(e.target.value)
     }
-    const handleSubmit=()=>{
-     dispatch(createReview(id, {comment:comment, rating:rating, userId:UserId}))
-          setRating(0);
-          setComment('')
-         
+    const handleSubmit=(e)=>{
+      e.preventDefault();
+      dispatch(createReview(id, {comment:comment, rating:rating, userId:UserId}))
+      setRating(0);
+      setComment('')  
     }
 
   return (
     <div className='general-cont'>
-      <Box component="fieldset" mb={3} borderColor="#40F99B" >         
-      { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  <div sx={{
+      <Box component="fieldset" mb={3} borderColor="transparent" >         
+      { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  
+      <div sx={{
+        borderColor:"#40F99B",
+        borderRadius:"10px",
         margin:"200px"
       }}>  
         <Typography align="center" component="h1" sx={{
           marginTop:"1rem",
-          fontSize:"1.5rem"
+          fontSize:"1rem"
         }}>Comment and rate this product:</Typography>
         <div className='stars'>
             <h2 className='number'>{rating}</h2>
@@ -89,19 +92,24 @@ useEffect(() => {
               marginTop:"20px"
             }}/>
             <button 
-              onClick={(e)=>{e.preventDefault();handleSubmit()}} 
+              onClick={(e)=>handleSubmit(e)} 
               style={{
+                backgroundColor: "#DE6B48",
+                color:"white",
                 marginTop:"30px",
                 height:"50px",
                 fontSize:"1.5rem",
                 width:"400px",
-                alignSelf:"center"
+                alignSelf:"center",
+                borderRadius:"8px",
+                border:"0"
               }}            
             >
               Send
             </button>
         </form> 
-</div> : null}  
+        </div> 
+: <div/>}  
       </Box>
     </div>
   );

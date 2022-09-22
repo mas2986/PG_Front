@@ -21,13 +21,9 @@ export default function RatingProm(props) {
    setAnchor(e.currentTarget)
   }
 
-  useEffect(()=>{
-    if(quantity)  
-    setAverage(prom=promedio(array));
-    console.log(average)
-  },[])
+  
 
-
+  let prom=0;
   let id = props.id
   const review=props.reviews
   let quantity=0;
@@ -69,10 +65,15 @@ export default function RatingProm(props) {
       return suma/cont;
   }
   
-  let prom=0;
   
   
-    
+  
+  useEffect(()=>{
+    if(quantity)  
+    prom=promedio(array)
+    setAverage(prom);
+    console.log(average)
+  },[])
   
 return (
   <div className='prom'>
