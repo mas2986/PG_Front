@@ -45,6 +45,7 @@ const Orders = () => {
       if (result.isConfirmed) {
         dispatch(changeOrderStatus(id, orderStatus, email, total))
         setTable([...table]);
+        setEdit(true)
         if (value === 'completed') {
           idProduct = idProduct.split(', ')
           titleProduct = titleProduct.split(', ')
@@ -64,10 +65,11 @@ const Orders = () => {
 
   useEffect(() => {
     setTable(orders);
-    if (orders.length === 0 || edit) {
+    setEdit(false)
+   // if (orders.length === 0 || edit) {
       //dispatch(getOrderByUser());
-    }
-  }, [edit])
+   // }
+  }, [orders.length,edit])
 
   const columns = useMemo(
     () => [
