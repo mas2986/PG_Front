@@ -29,6 +29,7 @@ export default function Products() {
   useEffect(() => {
     if (allProducts.length == 0) {
       dispatch(getProduct());
+
     }
   }, [dispatch]);
 
