@@ -21,8 +21,8 @@ export default function ViewOrder() {
  console.log(user)
  
  useEffect(() => {
-    dispatch(viewOrder(user.id))
-  }, [dispatch]);
+   if(user.id) dispatch(viewOrder(user.id))
+  }, [dispatch,Object.keys(user).length]);
 
 
     return (
