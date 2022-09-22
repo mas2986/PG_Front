@@ -196,9 +196,6 @@ function DashboardContent() {
               </Badge>
             </IconButton>
             <Menu anchorEl={anchorElm} open={openMenu} onClose={handleClose}>
-              <MenuItem  onClick={handleClose}>
-                Profile
-              </MenuItem>
               <Divider />
               <MenuItem value="logout" onClick={handleClose}>
                 Logout
