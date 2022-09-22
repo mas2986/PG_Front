@@ -88,8 +88,6 @@ export default function FormPropsTextFields({ props }) {
     if(typeof totalPrice !== 'number') order.totalPrice = totalPrice[0]
     else order.totalPrice = totalPrice;
     dispatch(createOrder(order,texto));  
-    console.log(url)  
-    
     setTimeout(function () {
       localStorage.removeItem(`items`);
       window.location.replace(url);
