@@ -10,8 +10,17 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import {useDispatch } from 'react-redux';
+import { getAllOrders } from '../redux/action'
 
 export default function SideBar({setView}) {
+  const dispatch = useDispatch();
+  
+  const handleOrders = () => {
+    setView(()=>"orders")
+    dispatch(getAllOrders())
+  }
+  
   return(
     <>
     <ListItemButton>
@@ -36,7 +45,7 @@ export default function SideBar({setView}) {
       </ListItemIcon>
       <ListItemText primary="Users" />
     </ListItemButton>
-    <ListItemButton onClick={()=>setView('orders')}>
+    <ListItemButton onClick={handleOrders}>
       <ListItemIcon>
         <Tooltip title="All Orders">
           <BarChartIcon />
