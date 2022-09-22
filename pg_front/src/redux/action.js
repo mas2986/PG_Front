@@ -57,16 +57,11 @@ export function signUp(body,history) {
       let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-<<<<<<< Updated upstream
-      history.push("/")
-=======
-      console.log("asd123")      
->>>>>>> Stashed changes
+      history.push("/");
       return dispatch({
         type: SIGN_UP,
         payload: user.data.data,
       });
-<<<<<<< Updated upstream
       } catch(e){
         Swal.fire({
             title: "Error!",
@@ -81,16 +76,6 @@ export function signUp(body,history) {
       //   icon: "error",
       //   confirmButtonText: "GO HOME",
       // });
-=======
-    } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password invalid",
-        icon: "error",
-        confirmButtonText: "GO BACK",
-      });
-      console.log(e)
->>>>>>> Stashed changes
       // Swal.fire(
       //   "¡User created successfully!",
       //   "¡Thank you for visiting our website!"
