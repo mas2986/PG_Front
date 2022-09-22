@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { createReview, getReviews } from '../redux/action';
 import axios from "axios";
 
+
 export default function Review(props) {
 
   const order = useSelector((state) => state.order)
@@ -57,9 +58,14 @@ useEffect(() => {
 
   return (
     <div className='general-cont'>
-      <Box component="fieldset" mb={3} borderColor="transparent">           
-      { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  <>
-        <Typography component="legend">Comment and rate this product:</Typography>
+      <Box component="fieldset" mb={3} borderColor="#40F99B" >         
+      { userCommentbyProd.length === 0 && ramdom.length !== 0 ?  <div sx={{
+        margin:"200px"
+      }}>  
+        <Typography align="center" component="h1" sx={{
+          marginTop:"1rem",
+          fontSize:"1.5rem"
+        }}>Comment and rate this product:</Typography>
         <div className='stars'>
             <h2 className='number'>{rating}</h2>
             <Rating
@@ -72,12 +78,30 @@ useEffect(() => {
             />
         </div> 
          
-        <form className='little-form'>
+        <form className='little-form' style={{
+          display:"flex",
+          flexDirection:"column"
+        }}>
             <textarea value={comment} onChange={(e)=>handleChange(e)} 
-            placeholder='Write your review about this product here.' />
-            <button onClick={(e)=>{e.preventDefault();handleSubmit()}} >Send</button>
+            placeholder='Write your review about this product here.' style={{
+              fontSize:"1rem",
+              height:"100px",
+              marginTop:"20px"
+            }}/>
+            <button 
+              onClick={(e)=>{e.preventDefault();handleSubmit()}} 
+              style={{
+                marginTop:"30px",
+                height:"50px",
+                fontSize:"1.5rem",
+                width:"400px",
+                alignSelf:"center"
+              }}            
+            >
+              Send
+            </button>
         </form> 
-</> : null}  
+</div> : null}  
       </Box>
     </div>
   );
