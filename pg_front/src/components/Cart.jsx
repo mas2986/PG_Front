@@ -93,7 +93,7 @@ function Cart() {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
     }
-  }, [items]);
+  }, [items.length]);
 
   return (
     <>

@@ -506,7 +506,6 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
-
     case CREATE_BILL:
       return {
         ...state,
