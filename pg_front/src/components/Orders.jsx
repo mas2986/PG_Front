@@ -26,9 +26,10 @@ const Orders = () => {
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
   const orders = useSelector(state => state.order);
+  const [table,setTable] = useState(orders);
   const products = useSelector(state => state.productAdmin)
   const status = ['cancelled', 'completed']
-  const [table,setTable] = useState(orders);
+  //const [table,setTable] = useState(orders);
 
   const handleStatus = (row, value) => {
     row.original.orderStatus = value;
@@ -44,7 +45,8 @@ const Orders = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(changeOrderStatus(id, orderStatus, email, total))
-        setTable([...table]);
+        setEdit(true)
+        setTable([...table]); //re-render with new data
         if (value === 'completed') {
           idProduct = idProduct.split(', ')
           titleProduct = titleProduct.split(', ')
@@ -63,11 +65,15 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    setTable(orders);
-    if (orders.length === 0 || edit) {
-      //dispatch(getOrderByUser());
-    }
-  }, [edit])
+    // if(edit) {
+    //   setTimeout(()=>{
+    //     dispatch(getAllOrders());
+    //     setEdit(()=>false);
+    //   },500)
+    //}    
+    setTable(()=>orders);
+    setEdit(false)
+  }, [orders.length,edit])
 
   const columns = useMemo(
     () => [
@@ -180,7 +186,7 @@ const Orders = () => {
             status.map((e) => (
               <MenuItem key={e}
                 disabled={cell.getValue() !== "created"}
-                value={e}
+                value={e}                
               >
                 {e}
               </MenuItem>
@@ -223,8 +229,8 @@ const Orders = () => {
       enableMultiRowSelection={false}
       enableSelectAll={false}
       onRowSelectionChange={setRowSelection}
-      state={{ rowSelection }}
-      getRowId={(row) => row.id}
+      state={{ rowSelection }} 
+      getRowId={(row) => row.id} 
       
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',

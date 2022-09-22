@@ -22,13 +22,13 @@ import { data, role } from './data';
 
 const Users = ({setView}) => {
   //const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(true);
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
 
   useEffect(() => {
-    if (users.length === 0 || edit) {
+    if (edit) {
       dispatch(getAllUsers());
       // console.log(edit)
     }

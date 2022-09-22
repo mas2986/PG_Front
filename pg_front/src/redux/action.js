@@ -45,13 +45,14 @@ import {
   VIEW_ORDER,
   CLEAN_DETAIL,
 } from "./const";
-
 //const URL = "https://pg-athen.herokuapp.com"
 //const URL = "https://localhost:3001"
 
-export function signUp(body) {
+export function signUp(body,history) {
   return async function (dispatch) {
-    try {
+    
+      console.log(body)
+      try{
       let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
@@ -59,27 +60,34 @@ export function signUp(body) {
         type: SIGN_UP,
         payload: user.data.data,
       });
-    } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password invalid",
-        icon: "error",
-        confirmButtonText: "GO HOME",
-      });
+      } catch(e){
+        Swal.fire({
+            title: "Error!",
+            text: "Email or password invalid",
+            icon: "error",
+            confirmButtonText: "GO HOME",
+          });
+      }
+      // Swal.fire({
+      //   title: "Error!",
+      //   text: "Email or password invalid",
+      //   icon: "error",
+      //   confirmButtonText: "GO HOME",
+      // });
       // Swal.fire(
       //   "¡User created successfully!",
       //   "¡Thank you for visiting our website!"
       // );
       // console.log(e)
-    }
+    
   };
 }
 
 export function mercadoPago(body) {
   return async function (dispatch) {
     try {
-      console.log("En funcion MP");
-      let order = await axios.post(`/api/crear-orden`, body);
+      console.log("En funcion MP")
+      let order = await axios.post(`/api/crear-orden`,body);
       console.log(order.data);
       return dispatch({
         type: ORDER_MERCADOPAGO,
@@ -97,8 +105,8 @@ export function createOrder(body, texto) {
       const bill = {};
       let order = await axios.post(`/api/order`, body);
       const { id } = order.data;
-      bill.orderId = id;
-      bill.totalAmount = body.totalPrice;
+      bill.orderId = id;  
+      bill.totalAmount = body.totalPrice;      
       bill.celNumber = texto.celNumber;
       bill.email = texto.email;
       localStorage.setItem(`billDetails`, JSON.stringify(bill));
@@ -115,7 +123,7 @@ export function createOrder(body, texto) {
 export function viewOrder(id) {
   return async function (dispatch) {
     try {
-      let json = await axios(`api/order/user/${id}`);
+      let json = await axios(`/api/order/user/${id}`);
       console.log(json.data);
       return dispatch({
         type: VIEW_ORDER,
