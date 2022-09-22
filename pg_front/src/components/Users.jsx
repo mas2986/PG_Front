@@ -17,18 +17,18 @@ import {
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, changeRoleUser,deleteUser,getOrderById, passwordRemember } from '../redux/action'
+import { getAllUsers, changeRoleUser,deleteUser,getOrderByUser, passwordRemember } from '../redux/action'
 import { data, role } from './data';
 
 const Users = ({setView}) => {
   //const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(true);
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
 
   useEffect(() => {
-    if (users.length === 0 || edit) {
+    if (edit) {
       dispatch(getAllUsers());
     }
     setEdit(() => false)
@@ -223,7 +223,7 @@ const Users = ({setView}) => {
         const handleOrder = () => {
           table.getSelectedRowModel().flatRows.map((row) => {
             const { id } = row.original;
-            dispatch(getOrderById(id));
+            dispatch(getOrderByUser(id));
             setView('orders')
           });
         };

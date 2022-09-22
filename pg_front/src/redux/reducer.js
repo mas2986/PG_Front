@@ -38,7 +38,8 @@ import {
   CREATE_REVIEW,
   GET_ORDER_BY_USER,
   DUPLICATE_REVIEW,
-  CREATE_BILL
+  CREATE_BILL,
+  CLEAN_ORDER
 } from "./const";
 
 const initialState = {
@@ -509,6 +510,11 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
+    case CLEAN_ORDER:
+      return{
+        ...state,
+        order:[]
+      }
     case CREATE_BILL:
       return{
         ...state,

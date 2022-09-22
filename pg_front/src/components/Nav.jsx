@@ -97,6 +97,7 @@ export default function Nav(props) {
 
   return (
     <>
+    {console.log(user)}
     <StyledEngineProvider injectFirst>
       <CssBaseline />
       <HideOnScroll {...props}>

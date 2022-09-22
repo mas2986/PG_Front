@@ -26,9 +26,11 @@ const Orders = () => {
   const [rowSelection, setRowSelection] = useState({});
   const dispatch = useDispatch();
   const orders = useSelector(state => state.order);
+  const [table,setTable] = useState(orders);
   const products = useSelector(state => state.productAdmin)
   const status = ['cancelled', 'completed']
-  const [table,setTable] = useState(orders);
+  //const [table,setTable] = useState(orders);
+
   const handleStatus = (row, value) => {
     row.original.orderStatus = value;
     let { id, orderStatus, email, total, idProduct, titleProduct } = row.original;
@@ -43,6 +45,7 @@ const Orders = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(changeOrderStatus(id, orderStatus, email, total))
+        setEdit(true)
         setTable([...table]); //re-render with new data
         if (value === 'completed') {
           idProduct = idProduct.split(', ')
@@ -62,12 +65,15 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    setTable(orders);
-    if (orders.length === 0) {
-      //dispatch(getOrderByUser());
-      //setTimeout(function (){setEdit(() => false)},500)
-    }
-  }, [edit])
+    // if(edit) {
+    //   setTimeout(()=>{
+    //     dispatch(getAllOrders());
+    //     setEdit(()=>false);
+    //   },500)
+    //}    
+    setTable(()=>orders);
+    setEdit(false)
+  }, [orders.length,edit])
 
   const columns = useMemo(
     () => [

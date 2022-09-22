@@ -55,11 +55,11 @@ function Cart() {
     totalPrice += items[i].price;
   }
 
-  let itemsQty = items.map((i) => i.qty);
+  // let itemsQty = items.map((i) => i.qty);
 
-  useEffect(() => {
-    setRender((prev) => !prev);
-  }, [itemsQty]);
+  // useEffect(() => {
+  //   setRender((prev) => !prev);
+  // }, [itemsQty]);
 
   function handlePay(e) {
     e.preventDefault();
@@ -97,7 +97,7 @@ function Cart() {
     if (items.length) {
       localStorage.setItem("items", JSON.stringify(items));
     }
-  }, [items]);
+  }, [items.length]);
 
   return (
     <>
@@ -117,7 +117,7 @@ function Cart() {
           className={n["cart-container"]}
           // onMouseEnter={keepIn}
           // onMouseLeave={toggle}
-          sx={{ marginRight: "4rem" }}
+          sx={{ marginRigth: "4rem" }}
         >
           <Box
             sx={{

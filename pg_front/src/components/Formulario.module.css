@@ -6,7 +6,10 @@
 }
 
 .btn-form {
-  margin: 20px;
+  overflow: "hidden";
+  white-space:"nowarp";
+  text-overflow:"ellipsis"
+  /* margin: 20px; */
 }
 
 a {
