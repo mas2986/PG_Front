@@ -44,6 +44,7 @@ const CREATE_BILL = "CREATE_BILL";
 
 
 module.exports = {
+  SIGN_UP,
   CREATE_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,

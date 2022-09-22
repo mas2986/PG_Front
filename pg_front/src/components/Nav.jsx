@@ -107,7 +107,7 @@ export default function Nav(props) {
     const value = e.target.innerText;
     setAnchorElm(null);
     if (value === "Logout" && Object.keys(user1).length !== 0) {
-      return dispatch(logoutEmail(history)) && logout();
+      return dispatch(logoutEmail(history));
     }
     if (value === "Logout" && Object.keys(user).length !== 0) {
       console.log("hola");

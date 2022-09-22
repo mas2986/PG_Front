@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Rating from '@mui/material/Rating';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -14,18 +14,17 @@ import d from "./Detail.module.css";
 
 export default function RatingProm(props) {
 
-
-
   const [anchor, setAnchor] = useState(null)
+  const [average, setAverage] = useState(0)
 
   const openPopover = (e) => {
    setAnchor(e.currentTarget)
   }
 
+  
 
-
-
-   let id = props.id
+  let prom=0;
+  let id = props.id
   const review=props.reviews
   let quantity=0;
   let array = [];
@@ -66,13 +65,20 @@ export default function RatingProm(props) {
       return suma/cont;
   }
   
-  let prom=0;
-  if(quantity) prom=promedio(array);
-  console.log(prom)
+  
+  
+  
+  useEffect(()=>{
+    if(quantity)  
+    prom=promedio(array)
+    setAverage(prom);
+    console.log(average)
+  },[])
+  
 return (
   <div className='prom'>
     <Box component="fieldset" mb={3} borderColor="transparent">        
-      <Rating name="read-only" value={prom} precision={0.5} readOnly />
+      <Rating name="read-only" value={average} precision={0.5} readOnly />
       <Typography sx={{
         display: "flex",
         alignItems: "center",

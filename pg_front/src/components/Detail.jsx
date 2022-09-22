@@ -112,8 +112,9 @@ export default function Detail() {
                 alt="Image not found"
                 className={d.bigImage}
               />
+              
             </div>
-
+            
             <div className={d.productDetail}>
               <h1 className={d.title}>
                 {detail.title && detail.title.toUpperCase()}
@@ -125,9 +126,12 @@ export default function Detail() {
                 Price: ${detail.price && detail.price},00
               </p>
 
+              <div style={{alignSelf:'center'}}>{<Review id={id} />}</div>
+
               <RatingProm id={id} reviews={review} users={users} />
               {detail?.stock !== 0 ? (
                 <>
+                
                   <Button
                     onClick={(e) => handlePay(e)}
                     variant="contained"
@@ -178,7 +182,7 @@ export default function Detail() {
 
                 <p className={d.sport}>Sport: {detail.sport && detail.sport}</p>
               </div>
-              <div>{<Review id={id} />}</div>
+              
             </div>
           </div>
         ) : (

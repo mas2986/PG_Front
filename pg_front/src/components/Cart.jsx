@@ -186,7 +186,14 @@ function Cart() {
                               variant="h7"
                               color="primary"
                               flexGrow={1}
-                              sx={{ fontWeight: 700, marginBottom: "0.5rem" }}
+                              sx={{ 
+                                marginRight:"5px",
+                                fontWeight: 700, 
+                                marginBottom: "0.5rem",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                              }}
                             >
                               {i.title[0].toUpperCase() + i.title.substring(1)}
                             </Typography>
