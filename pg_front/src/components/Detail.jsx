@@ -93,7 +93,9 @@ export default function Detail() {
     history.push("/entrega");
   }
 
-  console.log(detail?.stock);
+  const handleBack = () => {
+    history.push("/products")
+  }
 
   return (
     <center>
@@ -145,17 +147,26 @@ export default function Detail() {
                   >
                     ADD TO CART
                   </Button>
+
+                  <Button variant="outlined" size="small" onClick={handleBack} sx={{ fontSize: "1rem", alignSelf:"center"}}>
+                            GO BACK
+                  </Button>
                 </>
               ) : (
+                <div>
                 <h3
                   style={{
                     color: "red",
                     whiteSpace: "nowrap",
-                    marginLeft: "1rem",
+                    fontSize:"2rem"
                   }}
                 >
                   OUT OF STOCK
                 </h3>
+                <Button variant="outlined" size="small" onClick={handleBack} sx={{ fontSize: "1rem", alignSelf:"center"}}>
+                            GO BACK
+                  </Button>
+                </div>
               )}
 
               <div className={d.detailSection}>
