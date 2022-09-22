@@ -55,10 +55,10 @@ export default function Purchase() {
       };
 
     const handleButton = async (event) => {
-        if (texto.name.length < 3 || texto.name.length > 10) {
+        if (texto.name.length < 3 || texto.name.length > 25) {
             return Swal.fire({
                 title: "Check the name!",
-                text: "It must contain from 3 to 10 characters.",
+                text: "It must contain from 3 to 25 characters.",
                 icon: "error",
             });
         }
@@ -123,8 +123,7 @@ export default function Purchase() {
         delete texto.calle;
         delete texto.numero;
         delete texto.apartament;
-        delete texto.floor;
-        console.log(texto)   
+        delete texto.floor;        
         localStorage.removeItem("billDetails");
         dispatch(createBill(texto));
         history.push("/")    
