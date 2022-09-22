@@ -89,16 +89,14 @@ export default function Filters() {
 
     dispatch(getProduct());
 
-    
+    setTimeout(() => {
       if (activeFilters.gender != "") {
-        setTimeout(() => {
+        
         dispatch(filterByGenre(activeFilters.gender));
-      }, 500);
       }
       if (activeFilters.sport != "")
-      setTimeout(() => {  
       dispatch(filterBySport(activeFilters.sport));
-      }, 500);
+    }, 500);
   }
 
   function cleanFilterSport() {
