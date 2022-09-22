@@ -26,6 +26,8 @@ export default function FormPropsTextFields({ props }) {
   const userAuth0 = useAuth0().user;
   let history = useHistory();
 
+
+
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
@@ -36,6 +38,7 @@ export default function FormPropsTextFields({ props }) {
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
+  console.log(user1)
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -59,8 +62,8 @@ export default function FormPropsTextFields({ props }) {
     idProduct: productsId,
     quantity: totalItems,
     orderStatus: "created",
-    totalPrice: totalPrice,
     email: user1.email,
+    userId:user1.id
   });
 
   // console.log(order);
@@ -82,7 +85,8 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
-
+    if(typeof totalPrice !== 'number') order.totalPrice = totalPrice[0]
+    else order.totalPrice = totalPrice;
     dispatch(createOrder(order,texto));  
     console.log(url)  
     
@@ -112,11 +116,7 @@ export default function FormPropsTextFields({ props }) {
       let prices = [];
       let priceEach = items.map((i) => [...prices, Number(i.qty) * i.price]);
       let total = priceEach.reduce((a, b) => Number(a) + Number(b));
-      setTotalPrice(total);
-      setOrder({
-        ...order,
-        totalPrice:total
-      })
+      setTotalPrice(total);      
     } else {
       setTotalPrice(0);
 
@@ -299,7 +299,7 @@ export default function FormPropsTextFields({ props }) {
           errors.celNumber ||
           errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-          ) : Object.keys(user).length > 0 ? (
+          ) : Object.keys(user).length > 0 ?(
             <Button
               variant="contained"
               color="primary"              

@@ -40,8 +40,7 @@ import {
   CREATE_BILL,
   CLEAN_DETAIL,
   VIEW_ORDER,
-  CHANGE_STATUS_ORDER
-
+  CHANGE_STATUS_ORDER,
 } from "./const";
 
 const initialState = {
@@ -57,7 +56,7 @@ const initialState = {
   password: {},
   backup: [],
   url: "",
-  bill:[],
+  bill: [],
   reviews: [],
 };
 
@@ -68,7 +67,6 @@ export const rootReducer = (state = initialState, action) => {
     // console.log(productsAll)
   }
   switch (action.type) {
-
     case VIEW_ORDER:
       return {
         ...state,
@@ -132,8 +130,8 @@ export const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
     case LOGOUT:
-      localStorage.removeItem("userDetails")
-      localStorage.removeItem("items")
+      localStorage.removeItem("userDetails");
+      localStorage.removeItem("items");
       return {
         ...state,
         user: {},
@@ -145,12 +143,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
-    
+
     case GET_ORDER_BY_USER:
       return {
         ...state,
-        order: action.payload
-      }
+        order: action.payload,
+      };
 
     case GET_ALL_USERS:
       return {
@@ -510,23 +508,23 @@ export const rootReducer = (state = initialState, action) => {
       };
 
     case CREATE_BILL:
-      return{
+      return {
         ...state,
-        bill: action.payload
-      }
+        bill: action.payload,
+      };
 
     case GET_ORDER_BY_USER:
       // console.log(action.payload)
       return {
         ...state,
-        order: [...action.payload]
-      }
-      case CLEAN_DETAIL:
-            return {
-                ...state,
-                detail:[],
-                order: []
-            }
+        order: [...action.payload],
+      };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        detail: [],
+        order: [],
+      };
     case DUPLICATE_REVIEW:
       return {
         ...state,

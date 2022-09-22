@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Filters() {
   const dispatch = useDispatch();
-  const cleanFilter = useSelector(state => state.boolean)
+  const cleanFilter = useSelector((state) => state.boolean);
   const [genderTrail, setGenderTrail] = useState("");
   const [brandTrail, setBrandTrail] = useState("");
   const [sportsTrail, setSportsTrail] = useState("");
@@ -70,11 +70,10 @@ export default function Filters() {
       gender: "",
     });
     dispatch(getProduct());
-
     setTimeout(() => {
-      if (activeFilters.brand != "" ) {
+      if (activeFilters.brand != "") {
         dispatch(filterByBrand(activeFilters.brand));
-      } 
+      }
       if (activeFilters.sport != "")
         dispatch(filterBySport(activeFilters.sport));
     }, 500);
@@ -86,17 +85,16 @@ export default function Filters() {
       ...activeFilters,
       brand: "",
     });
-
     dispatch(getProduct());
-
-    setTimeout(() => {
-      if (activeFilters.gender != "") {
-        
+    if (activeFilters.gender != "") {
+      setTimeout(() => {
         dispatch(filterByGenre(activeFilters.gender));
-      }
-      if (activeFilters.sport != "")
-      dispatch(filterBySport(activeFilters.sport));
-    }, 500);
+      }, 500);
+    }
+    if (activeFilters.sport != "")
+      setTimeout(() => {
+        dispatch(filterBySport(activeFilters.sport));
+      }, 500);
   }
 
   function cleanFilterSport() {
@@ -105,15 +103,13 @@ export default function Filters() {
       ...activeFilters,
       sport: "",
     });
-
     dispatch(getProduct());
-
     setTimeout(() => {
       if (activeFilters.gender != "") {
         dispatch(filterByGenre(activeFilters.gender));
       }
       if (activeFilters.brand != "")
-        dispatch(filterByBrand(activeFilters.sport));
+        dispatch(filterByBrand(activeFilters.brand));
     }, 500);
   }
 
@@ -123,7 +119,6 @@ export default function Filters() {
         className={style.box}
         style={{ marginTop: "5rem", paddingBottom: "2.5rem" }}
       >
-
         <div>
           <h3>ORDER BY PRICE</h3>
           <select
