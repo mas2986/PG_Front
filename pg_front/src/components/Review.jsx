@@ -53,7 +53,7 @@ useEffect(() => {
       e.preventDefault();
       dispatch(createReview(id, {comment:comment, rating:rating, userId:UserId}))
       setRating(0);
-      setComment('')  
+      setComment('');  
     }
 
   return (
