@@ -56,7 +56,6 @@ export function signUp(body,history) {
       let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      
       return dispatch({
         type: SIGN_UP,
         payload: user.data.data,

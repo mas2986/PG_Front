@@ -7,11 +7,6 @@ import Button from '@mui/material/Button';
 import {useState} from 'react'
 import d from "./Detail.module.css";
 
-
-
-
-
-
 export default function RatingProm(props) {
 
   const [anchor, setAnchor] = useState(null)
@@ -20,8 +15,6 @@ export default function RatingProm(props) {
   const openPopover = (e) => {
    setAnchor(e.currentTarget)
   }
-
-  
 
   let prom=0;
   let id = props.id
@@ -42,10 +35,7 @@ export default function RatingProm(props) {
            users.forEach(element => { if(element.id === review[i].userId) user = element.name       
           });
           render[i] = {user: user,
-                      comments:comments } 
-        
-        
-          
+                      comments:comments }     
          
       } else{
           array
@@ -64,16 +54,13 @@ export default function RatingProm(props) {
       }
       return suma/cont;
   }
-  
-  
-  
-  
+
   useEffect(()=>{
     if(quantity)  
     prom=promedio(array)
     setAverage(prom);
     console.log(average)
-  },[])
+  },[average])
   
 return (
   <div className='prom'>
