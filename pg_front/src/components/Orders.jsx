@@ -230,7 +230,7 @@ const Orders = () => {
       enableSelectAll={false}
       onRowSelectionChange={setRowSelection}
       state={{ rowSelection }} 
-      getRowId={(row) => row.id}
+      getRowId={(row) => row.id} 
       
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',
