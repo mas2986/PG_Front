@@ -60,7 +60,7 @@ export default function RatingProm(props) {
     prom=promedio(array)
     setAverage(prom);
     console.log(average)
-  },[average])
+  },[review])
   
 return (
   <div className='prom'>
