@@ -155,7 +155,7 @@ export default function FormPropsTextFields({ props }) {
               gridTemplateColumns: "20% 20%",
               // justifyContent: "space-evenly",
               gridGap: "1rem 10rem",
-              marginLeft: "3rem",
+              marginLeft: "8rem",
             }}
           >
             <TextField
@@ -188,48 +188,50 @@ export default function FormPropsTextFields({ props }) {
               value={texto.email}
             //      defaultValue="Hello World"
             />
-         </div>                   
-             {
-            errors.celNumber ||
-              errors.email ? (
-                <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-              ) : Object.keys(user).length > 0 ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="btn-form"
-                  onClick={(e) => handleButton(e)}
-                  disableElevation
-                  sx={{       
-                      width:"30vw",                                   
-                      height: "3rem",
-                      marginTop: "1rem",
-                      marginLeft:"7rem"
-                  }}
-                >
-                  BUY
+          </div>
+          <div style={{
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center",
+            justifyContent:"center"
+          }}>
+          {errors.celNumber || errors.email ? (
+            <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
+          ) : Object.keys(user).length > 0 ? (
+            <Button
+              variant="contained"
+              color="primary"
+              className="btn-form"
+              onClick={(e) => handleButton(e)}
+              disableElevation
+              sx={{
+                width:"400px",
+                height:"70px",
+                margin:"40px"
+              }}
+            >
+              BUY
             </Button>
-              ) : (
-                  <Link to="/login">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className="btn-form"
-                      onClick={(e) =>
-                        Swal.fire({
-                          title: "You are not logged in",
-                          text: "Please log in or register to complete your purchase",
-                        })
-                      }
-                      disableElevation
-                      sx={{ 
-                        width:"30vw",                                           
-                        height: "3rem",
-                        marginTop: "1rem",
-                        marginLeft:"7rem"
-                    }}
-                    >
-                      BUY
+          ) : (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                color="primary"
+                className="btn-form"
+                onClick={(e) =>
+                  Swal.fire({
+                    title: "You are not logged in",
+                    text: "Please log in or register to complete your purchase",
+                  })
+                }
+                disableElevation
+                sx={{
+                  width:"400px",
+                  height:"70px",
+                  margin:"40px"
+                }}
+              >
+                BUY
               </Button>
                   </Link>
                 )}
@@ -256,6 +258,20 @@ export default function FormPropsTextFields({ props }) {
               label="ID"
               //      defaultValue="Hello World"
             /> */}
+          
+            <Link to="/">
+              <Button
+                // href="/"
+                variant="contained"
+                color="primary"
+                sx={{
+                  width:"200px"
+                }}
+              >
+                CANCEL
+              </Button>
+            </Link>
+            </div>
 
           <Checkbox
             defaultChecked
