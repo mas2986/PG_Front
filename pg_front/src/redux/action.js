@@ -48,29 +48,39 @@ import {
 //const URL = "https://pg-athen.herokuapp.com"
 //const URL = "https://localhost:3001"
 
-export function signUp(body) {
+export function signUp(body,history) {
   return async function (dispatch) {
-    try {
+    
+      console.log(body)
+      try{
       let user = await axios.post(`/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
-      localStorage.setItem(`userDetails`, JSON.stringify(user.data));      
+      localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      history.push("/")
       return dispatch({
         type: SIGN_UP,
         payload: user.data.data,
       });
-    } catch (e) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password invalid",
-        icon: "error",
-        confirmButtonText: "GO HOME",
-      });
+      } catch(e){
+        Swal.fire({
+            title: "Error!",
+            text: "Email or password invalid",
+            icon: "error",
+            confirmButtonText: "GO HOME",
+          });
+      }
+      // Swal.fire({
+      //   title: "Error!",
+      //   text: "Email or password invalid",
+      //   icon: "error",
+      //   confirmButtonText: "GO HOME",
+      // });
       // Swal.fire(
       //   "¡User created successfully!",
       //   "¡Thank you for visiting our website!"
       // );
       // console.log(e)
-    }
+    
   };
 }
 
