@@ -209,7 +209,14 @@ function Cart() {
                               <Typography sx={{ textDecoration: "underline" }}>
                                 {i.brand}
                               </Typography>
-                              <Typography sx={{ fontStyle: "italic" }}>
+                              <Typography
+                                sx={{
+                                  fontStyle: "italic",
+                                  overflow: "hidden",
+                                  whiteSpace: "nowrap",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
                                 {i.description}
                               </Typography>
                               <select
