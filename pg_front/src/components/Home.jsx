@@ -45,7 +45,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    dispatch(getProduct()),
+    dispatch(getProduct());
     dispatch(getAllUsers())
   }, [dispatch]);
 
