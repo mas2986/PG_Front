@@ -67,10 +67,7 @@ console.log(filtergoogle)
 
 
 
- if(user1.length){
- dispatch(signUp(user1))
- }
-  React.useEffect(() => {
+   React.useEffect(() => {
     if (user && !filtergoogle ) {
       usuarioGoogle.lastName = user.family_name;
       usuarioGoogle.name = user.given_name;
