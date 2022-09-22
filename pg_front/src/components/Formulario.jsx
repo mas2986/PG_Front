@@ -151,7 +151,7 @@ export default function FormPropsTextFields({ props }) {
               gridTemplateColumns: "20% 20%",
               // justifyContent: "space-evenly",
               gridGap: "1rem 10rem",
-              marginLeft: "3rem",
+              marginLeft: "8rem",
             }}
           >
             <TextField
@@ -185,6 +185,13 @@ export default function FormPropsTextFields({ props }) {
               //      defaultValue="Hello World"
             />
           </div>
+          <div style={{
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center",
+            justifyContent:"center"
+          }}>
+
           {errors.celNumber || errors.email ? (
             <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
           ) : Object.keys(user).length > 0 ? (
@@ -195,10 +202,9 @@ export default function FormPropsTextFields({ props }) {
               onClick={(e) => handleButton(e)}
               disableElevation
               sx={{
-                width: "30rem",
-                height: "3rem",
-                // marginRigth: "12px",
-                marginTop: "2rem",
+                width:"400px",
+                height:"70px",
+                margin:"40px"
               }}
             >
               BUY
@@ -217,39 +223,38 @@ export default function FormPropsTextFields({ props }) {
                 }
                 disableElevation
                 sx={{
-                  width: "34.5rem",
-                  height: "4rem",
-                  marginLeft: "7%",
-                  marginTop: "4rem",
+                  width:"400px",
+                  height:"70px",
+                  margin:"40px"
                 }}
               >
                 BUY
               </Button>
-            </Link>
-          )}
+
+                  </Link>
+                )}
+           
+
           {/* <TextField
               id="outlined-required"
               label="ID"
               //      defaultValue="Hello World"
             /> */}
-          <div className="btn-form">
+
             <Link to="/">
               <Button
                 // href="/"
                 variant="contained"
-                className="btn-form"
                 color="primary"
                 sx={{
-                  width: "34.5rem",
-                  height: "3rem",
-                  marginLeft: "6%",
-                  marginTop: "1.5rem",
+                  width:"200px"
                 }}
               >
                 CANCEL
               </Button>
             </Link>
-          </div>
+            </div>
+
 
           <Checkbox
             defaultChecked
