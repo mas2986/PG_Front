@@ -43,11 +43,6 @@ export default function ResetPassword() {
         return Swal.fire({title:'New password must contain at least 8 characters!', text:'Ups! We know how cumbersome this tends to be.', icon: "error"})
       }
       dispatch(resetPassword(texto));
-      Swal.fire({
-        title: "Your password was successfully updated!",
-        text: "Have a great experience in Athens.",
-        icon: "success",
-      })
       history.push('/login')
     }
 

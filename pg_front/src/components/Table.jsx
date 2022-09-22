@@ -18,8 +18,7 @@ import {
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 // import { data } from './data';
-import { useSelector, useDispatch } from 'react-redux';
-import { createProduct, editProduct, getProduct, deleteProduct } from '../redux/action'
+import { useSelector, useDispatch } from 'react-redux';import { createProduct, editProduct, getProduct, deleteProduct } from '../redux/action'
 import FormProduct from './FormProduct';
 
 function validate(input) {
@@ -59,6 +58,7 @@ const Example = () => {
   const handleCreateNewRow = (values) => {
     tableData.push(values);
     setTableData([...tableData]);
+
   };
 
 

@@ -1,10 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { styled } from "@mui/material/styles";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import Stack from "@mui/material/Stack";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   filterByGenre,
   filterBySport,
@@ -15,20 +10,29 @@ import {
 } from "../redux/action";
 import style from "./Filters.module.css";
 import h from "./Home.module.css";
+import { useHistory } from "react-router-dom";
 
 export default function Filters() {
   const dispatch = useDispatch();
+  const cleanFilter = useSelector((state) => state.boolean);
   const [genderTrail, setGenderTrail] = useState("");
   const [brandTrail, setBrandTrail] = useState("");
   const [sportsTrail, setSportsTrail] = useState("");
-
-  const [input, setInput] = useState("");
+  const [activeFilters, setActiveFilters] = useState({
+    gender: "",
+    brand: "",
+    sport: "",
+  });
 
   function handleFilteredGenres(e) {
     e.preventDefault();
     dispatch(filterByGenre(e.target.value));
     if (e.target.value !== "All") {
       setGenderTrail(e.target.value);
+      setActiveFilters((prev) => ({
+        ...prev,
+        gender: e.target.value,
+      }));
     }
   }
   function handleFilteredSports(e) {
@@ -36,6 +40,10 @@ export default function Filters() {
     dispatch(filterBySport(e.target.value));
     if (e.target.value !== "All") {
       setSportsTrail(e.target.value);
+      setActiveFilters((prev) => ({
+        ...prev,
+        sport: e.target.value,
+      }));
     }
   }
   function handleFilteredBrands(e) {
@@ -43,23 +51,66 @@ export default function Filters() {
     dispatch(filterByBrand(e.target.value));
     if (e.target.value !== "All") {
       setBrandTrail(e.target.value);
+      setActiveFilters((prev) => ({
+        ...prev,
+        brand: e.target.value,
+      }));
     }
   }
 
-  function handleOrderBy(e) {
-    e.preventDefault();
-    dispatch(orderBy(e.target.value));
-  }
   function handleOrderByPrice(e) {
     e.preventDefault();
     dispatch(orderByPrice(e.target.value));
   }
 
-  function cleanFilter() {
+  function cleanFilterGenres() {
     setGenderTrail("");
-    setBrandTrail("");
-    setSportsTrail("");
+    setActiveFilters({
+      ...activeFilters,
+      gender: "",
+    });
     dispatch(getProduct());
+    setTimeout(() => {
+      if (activeFilters.brand != "") {
+        dispatch(filterByBrand(activeFilters.brand));
+      }
+      if (activeFilters.sport != "")
+        dispatch(filterBySport(activeFilters.sport));
+    }, 500);
+  }
+
+  function cleanFilterBrands() {
+    setBrandTrail("");
+    setActiveFilters({
+      ...activeFilters,
+      brand: "",
+    });
+    dispatch(getProduct());
+    if (activeFilters.gender != "") {
+      setTimeout(() => {
+        dispatch(filterByGenre(activeFilters.gender));
+      }, 500);
+    }
+    if (activeFilters.sport != "")
+      setTimeout(() => {
+        dispatch(filterBySport(activeFilters.sport));
+      }, 500);
+  }
+
+  function cleanFilterSport() {
+    setSportsTrail("");
+    setActiveFilters({
+      ...activeFilters,
+      sport: "",
+    });
+    dispatch(getProduct());
+    setTimeout(() => {
+      if (activeFilters.gender != "") {
+        dispatch(filterByGenre(activeFilters.gender));
+      }
+      if (activeFilters.brand != "")
+        dispatch(filterByBrand(activeFilters.brand));
+    }, 500);
   }
 
   return (
@@ -68,16 +119,7 @@ export default function Filters() {
         className={style.box}
         style={{ marginTop: "5rem", paddingBottom: "2.5rem" }}
       >
-        {/* <div>
-        <h3>ORDER</h3>
-        <select onChange={(e) => handleOrderBy(e)}>
-          <option value="asc"> A-Z</option>
-          <option value="desc"> Z-A</option>
-        </select>
-      </div> */}
-
         <div>
-          {/* <h3>ORDER BY :</h3> */}
           <h3>ORDER BY PRICE</h3>
           <select
             className={style.selectDetail}
@@ -126,7 +168,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              onClick={cleanFilterGenres}
               className={h.trails}
             >
               {genderTrail + " X"}
@@ -172,7 +214,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              onClick={cleanFilterBrands}
               className={h.trails}
             >
               {brandTrail + " X"}
@@ -217,7 +259,7 @@ export default function Filters() {
                 borderRadius: "50px",
                 textAlign: "center",
               }}
-              onClick={cleanFilter}
+              onClick={cleanFilterSport}
               className={h.trails}
             >
               {sportsTrail + " X"}

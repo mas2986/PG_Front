@@ -126,6 +126,9 @@ function DashboardContent() {
     if (value === "Logout") {
       dispatch(logout(history));
     }
+    if (value === "Profile") {
+      history.push("/profile");
+    }
   };
 
   React.useEffect(() => {
@@ -177,26 +180,23 @@ function DashboardContent() {
             <IconButton color="inherit">
               <Badge color="secondary">
                 <Tooltip title={`Logged as ${name}`}>
-                  {
-                    image===''||image==='ss'
-                    ?
+                  {image === "" || image === "ss" ? (
                     <AccountCircleIcon onClick={handleClick} />
-                    :
+                  ) : (
                     <img
-                    alt="avatar"
-                    height={30}
-                    src={image}
-                    loading="lazy"
-                    style={{ borderRadius: '50%' }}
-                    onClick={handleClick}
-                  />
-                  }
+                      alt="avatar"
+                      height={30}
+                      src={image}
+                      loading="lazy"
+                      style={{ borderRadius: "50%" }}
+                      onClick={handleClick}
+                    />
+                  )}
                 </Tooltip>
               </Badge>
             </IconButton>
             <Menu anchorEl={anchorElm} open={openMenu} onClose={handleClose}>
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <Divider />                        
+              <Divider />
               <MenuItem value="logout" onClick={handleClose}>
                 Logout
               </MenuItem>

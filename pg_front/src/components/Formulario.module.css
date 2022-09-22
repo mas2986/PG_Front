@@ -28,4 +28,5 @@ a {
 
 .cardMedia:hover {
   cursor: pointer;
+  color: rgb(82, 169, 245);
 }

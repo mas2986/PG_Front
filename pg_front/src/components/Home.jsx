@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct,getOrderByUser, getAllOrders } from "../redux/action";
+import { getProduct,getOrderByUser, getAllOrders, getAllUsers } from "../redux/action";
 import Skeleton from "@mui/material/Skeleton";
 import Nav from "./Nav";
 import home from "../asset/home.png";
@@ -12,6 +12,7 @@ import style from "./Home.module.css";
 import Contact from "./Contact";
 import { Link, useHistory } from "react-router-dom";
 import HistoryOrder from "./HistoryOrder";
+
 
 
 
@@ -45,9 +46,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProduct());
-    dispatch(getOrderByUser(id))
-    dispatch(getAllOrders())
-   
+    dispatch(getAllUsers())
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,6 +58,8 @@ export default function Home() {
       currentPage: 1,
     });
   }, [allProducts.length]);
+
+
 
   return (
     
@@ -73,8 +74,8 @@ export default function Home() {
               id={"#"}
               src={home}
               style={{
-                width: "100vw",
-                height: "100%",
+                width: "100%",
+                height: "auto",
                 marginTop: "-4rem",
                 marginBottom: "0",
                 borderBottomLeftRadius: "40px",
@@ -108,7 +109,7 @@ export default function Home() {
             <CarouselBrands />
 
             <center>
-              <Section />
+              <Section/>
             </center>
 
             <HomePictures />

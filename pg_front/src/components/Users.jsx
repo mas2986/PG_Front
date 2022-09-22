@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Delete, Password, AccountCircle } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, changeRoleUser,deleteUser,getOrderByUser, passwordRemember } from '../redux/action'
+import { getAllUsers, changeRoleUser,deleteUser,getOrderByUser, passwordRemember, cleanDetail } from '../redux/action'
 import { data, role } from './data';
 
 const Users = ({setView}) => {
@@ -225,6 +225,7 @@ const Users = ({setView}) => {
             const { id } = row.original;
             dispatch(getOrderByUser(id));
             setView('orders')
+            dispatch(cleanDetail())
           });
         };
 
@@ -244,7 +245,7 @@ const Users = ({setView}) => {
               onClick={handleOrder}
               variant="contained"
             >
-              USER'S ORDERS
+              USER ORDERS
               </Button>
           </Box>
         );

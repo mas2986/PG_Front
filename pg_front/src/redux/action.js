@@ -42,7 +42,8 @@ import {
   CREATE_REVIEW,
   DUPLICATE_REVIEW,
   CREATE_BILL,
-  CLEAN_ORDER
+  VIEW_ORDER,
+  CLEAN_DETAIL,
 } from "./const";
 
 const URL = "https://pg-athen.herokuapp.com"
@@ -52,6 +53,7 @@ export function signUp(body) {
   return async function (dispatch) {
     try {
       let user = await axios.post(`${URL}/api/login`, body);
+      console.log(user.data)
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));      
       return dispatch({
@@ -90,7 +92,7 @@ export function mercadoPago(body) {
   };
 }
 
-export function createOrder(body,texto) {
+export function createOrder(body, texto) {
   return async function (dispatch) {
     try {
       const bill = {};
@@ -100,7 +102,7 @@ export function createOrder(body,texto) {
       bill.totalAmount = body.totalPrice;      
       bill.celNumber = texto.celNumber;
       bill.email = texto.email;
-      localStorage.setItem(`billDetails`,JSON.stringify(bill))
+      localStorage.setItem(`billDetails`, JSON.stringify(bill));
       return dispatch({
         type: CREATE_ORDER,
         payload: order,
@@ -111,75 +113,76 @@ export function createOrder(body,texto) {
   };
 }
 
-export function createReview(id,body) {
-   console.log(body)
-   return async function (dispatch) {
+export function viewOrder(id) {
+  return async function (dispatch) {
     try {
-      let {review} = await axios.post(`${URL}/api/product/review/${id}`, body);
+      let json = await axios(`${URL}/api/order/user/${id}`);
+      console.log(json.data);
+      return dispatch({
+        type: VIEW_ORDER,
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function createReview(id, body) {
+  console.log(body);
+  return async function (dispatch) {
+    try {
+      let { review } = await axios.post(`${URL}/api/product/review/${id}`, body);
       console.log(review.data);
       return dispatch({
         type: CREATE_REVIEW,
-         payload: review.data
+        payload: review.data,
       });
     } catch (e) {
       return dispatch({
         type: DUPLICATE_REVIEW,
-         payload: "You have post in this product"
+        payload: "You have post in this product",
       });
     }
   };
 }
 
+export function getOrderById(id) {
+  return async function (dispatch) {
+    try {
+      let orderId = await axios.get(`${URL}/api/order/${id}`);
 
-export function getOrderById(id){
-  
-  return async function(dispatch){
-    try{      
-      let orderId = await axios.get(`${URL}/api/order/${id}`)      
       return dispatch({
-        type:GET_ORDER_BY_ID,
-        payload: orderId.data
-      })
+        type: GET_ORDER_BY_ID,
+        payload: orderId.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch(e){
-      console.log(e)
-    }
-
-  }
+  };
 }
 
-export function cleanOrder(){
-  return{
-    type:CLEAN_ORDER    
-  }
-}
-
-export function getOrderByUser(id){
-  return async function(dispatch){
-    try{      
-      let orderUser = await axios.get(`${URL}/api/order/user/${id}`)
-      
+export function getOrderByUser(id) {
+  return async function (dispatch) {
+    try {
+      let orderUser = await axios.get(`${URL}/api/order/user/${id}`);
+      // console.log(orderUser)
       return dispatch({
-        type:GET_ORDER_BY_ID,
-        payload: orderUser.data
-      })
+        type: GET_ORDER_BY_USER,
+        payload: orderUser.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch(e){
-      console.log(e)
-    }
-
-  }
+  };
 }
 
-
-
-
-export function changeOrderStatus(id,orderStatus,email){
-  let body = {orderStatus,email}
-  console.log(body)
-  return async function(dispatch){
-    try{
-      let statusOrder = await axios.put(`${URL}/api/order/${id}`,body)
+export function changeOrderStatus(id, orderStatus, email) {
+  let body = { orderStatus, email };
+  console.log(body);
+  return async function (dispatch) {
+    try {
+      let statusOrder = await axios.put(`${URL}/api/order/${id}`, body);
       Swal.fire({
         title: "Changed status!",
         text: `Order number ${id} is now ${orderStatus}`,
@@ -187,10 +190,9 @@ export function changeOrderStatus(id,orderStatus,email){
         confirmButtonText: "ACCEPT",
       });
       return dispatch({
-        type:CHANGE_STATUS_ORDER        
-      })
-    }
-    catch(e){
+        type: CHANGE_STATUS_ORDER,
+      });
+    } catch (e) {
       Swal.fire({
         title: "Error changing status!",
         text: `There was a trouble changing order status. Please try again`,
@@ -198,9 +200,8 @@ export function changeOrderStatus(id,orderStatus,email){
         confirmButtonText: "ACCEPT",
       });
     }
-  }
+  };
 }
-
 
 export function passwordRemember(body) {
   return async function (dispatch) {
@@ -227,24 +228,26 @@ export function resetPassword(body) {
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       console.log(newPassword);
-      Swal.fire({
-        title:'User password reset!',
-        text:`The user was asked to change password`,
-        icon: 'success',
-        confirmButtonText:"ACCEPT"        
-        }
-      )
-      return dispatch({
-        type: RESET_PASSWORD,
-        payload: newPassword,
-      });
+
+      return (
+        dispatch({
+          type: RESET_PASSWORD,
+          payload: newPassword,
+        }),
+        Swal.fire({
+          title: "User password reset!",
+          text: `The user was asked to change password`,
+          icon: "success",
+          confirmButtonText: "ACCEPT",
+        })
+      );
     } catch (e) {
       Swal.fire({
         title: "Error resetting user's password!",
         text: `There was a trouble resetting user's password Please try again`,
         icon: "error",
         confirmButtonText: "ACCEPT",
-      });    
+      });
     }
   };
 }
@@ -254,17 +257,19 @@ export function createUser(body) {
     try {
       let user = await axios.post(`${URL}/api/user`, body);
       console.log(user.data.data.user);
-      Swal.fire({
-        title:'User created!',
-        text:`Your user was created successfully`,
-        icon: 'success',
-        confirmButtonText:"ACCEPT"        
-        }
-      )
-      return dispatch({
-        type: CREATE_USER,
-        payload: user.data.data.user,
-      });
+
+      return (
+        dispatch({
+          type: CREATE_USER,
+          payload: user.data.data.user,
+        }),
+        Swal.fire({
+          title: "User created!",
+          text: `Your user was created successfully`,
+          icon: "success",
+          confirmButtonText: "ACCEPT",
+        })
+      );
     } catch (e) {
       Swal.fire({
         title: "Error creating user!",
@@ -314,12 +319,11 @@ export function changeRoleUser(id, body) {
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
       Swal.fire({
-        title: 'Role changed!',
+        title: "Role changed!",
         text: `${body.name} now is ${body.rol}`,
-        icon:'success',
-        confirmButtonText: 'ACCEPT'
-        }
-      )
+        icon: "success",
+        confirmButtonText: "ACCEPT",
+      });
       return dispatch({
         type: CHANGE_ROLE_USER,
         payload: userChange.data,
@@ -335,7 +339,7 @@ export function changeRoleUser(id, body) {
   };
 }
 
-export function deleteUser(id,name) {
+export function deleteUser(id, name) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -349,12 +353,11 @@ export function deleteUser(id,name) {
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       //console.log(user.data.data.user);
       Swal.fire({
-        title:'User deleted!',
-        text:`${name} was deleted`,
-        icon:'success',
-        confirmButtonText: "ACCEPT"
-        }
-      )
+        title: "User deleted!",
+        text: `${name} was deleted`,
+        icon: "success",
+        confirmButtonText: "ACCEPT",
+      });
       return dispatch({
         type: DELETE_USER,
         payload: userDelete.data,
@@ -365,7 +368,8 @@ export function deleteUser(id,name) {
         text: `The user ${name} could not deleted. Please try again`,
         icon: "error",
         confirmButtonText: "ACCEPT",
-      });    }
+      });
+    }
   };
 }
 
@@ -374,9 +378,9 @@ export function createProduct(body) {
   body.discount = parseInt(body.discount);
   body.stock = parseInt(body.stock);
   body.sport = body.sport.join();
-  console.log('body',body)
-  return async function(dispatch){
-    try{
+  console.log("body", body);
+  return async function (dispatch) {
+    try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
       const { token } = tokenJSON;
       let newProduct = await axios.post(`${URL}/api/product`, body, {
@@ -397,8 +401,8 @@ export function createProduct(body) {
         icon: "error",
         confirmButtonText: "Back",
       });
-    }   
-} 
+    }
+  };
 }
 
 export function editProduct(id, body) {
@@ -428,7 +432,7 @@ export function editProduct(id, body) {
   };
 }
 
-export function deleteProduct(id,title) {
+export function deleteProduct(id, title) {
   return async function (dispatch) {
     try {
       const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
@@ -439,12 +443,11 @@ export function deleteProduct(id,title) {
         },
       });
       Swal.fire({
-        title:'Deleted product!',
-        text:`${title} was deleted`,
-        icon:'success',
-        confirmButtonText: "ACCEPT"
-        }
-      )
+        title: "Deleted product!",
+        text: `${title} was deleted`,
+        icon: "success",
+        confirmButtonText: "ACCEPT",
+      });
       return dispatch({
         type: DELETE_PRODUCT,
         payload: id,
@@ -479,10 +482,12 @@ export function searchProduct(payload) {
   return async function (dispatch) {
     try {
       var product = await axios.get(`${URL}/api/products?title=${payload}`, {});
-      return dispatch({
-        type: SEARCH_PRODUCT,
-        payload: product.data,
-      });
+      setTimeout(() => {
+        return dispatch({
+          type: SEARCH_PRODUCT,
+          payload: product.data,
+        });
+      }, 290);
     } catch (error) {
       Swal.fire({
         title: "Product not found!",
@@ -539,11 +544,9 @@ export function orderByPrice(payload) {
 }
 
 export function detailProduct(id) {
-  console.log(id);
   return async function (dispatch) {
     try {
       var product = await axios.get(`${URL}/api/product/${id}`);
-      console.log(product);
       return dispatch({
         type: DETAIL_PRODUCT,
         payload: product.data,
@@ -626,28 +629,24 @@ export function fetchCartItems(payload) {
 }
 
 export function filterByCarousel(payload) {
-  // console.log(payload);
   return {
     type: FILTER_BRAND_CAROUSEL,
     payload, //Acá llegaría el tipo de genero
   };
 }
 
-export function getAllOrders(){
-  return async function(dispatch){
-    try{
+export function getAllOrders() {
+  return async function (dispatch) {
+    try {
       let order = await axios.get(`${URL}/api/order`);
-      console.log(order.data)
       return dispatch({
         type: GET_ALL_ORDERS,
-        payload: order.data
-      })
-    }
-    catch(e){
+        payload: order.data,
+      });
+    } catch (e) {
       console.log(e);
     }
-
-  }
+  };
 }
 
 export function getReviews() {
@@ -661,17 +660,24 @@ export function getReviews() {
   };
 }
 
- export function createBill(body){
-  return async function(dispatch){
-    try{      
-      let bill = await axios.post(`${URL}/api/bill`,body)
+export function createBill(body) {
+  return async function (dispatch) {
+    try {
+      let bill = await axios.post(`${URL}/api/bill`, body);
       return dispatch({
         type: CREATE_BILL,
-        payload: bill.data
-      })      
+        payload: bill.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch(e){
-      console.log(e)
-    }
-  }
-} 
+  };
+}
+
+export function cleanDetail() {
+  return async function (dispatch) {
+    return dispatch({
+      type: CLEAN_DETAIL,
+    });
+  };
+}

@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CardProduct from "./CreateProduct";
-import { getProduct } from "../redux/action";
+import { getProduct, cleanTrails } from "../redux/action";
 import Nav from "./Nav";
 import Filters from "./Filters";
 import Pagination from "./Pagination";
@@ -27,8 +27,9 @@ export default function Products() {
   const products = allProducts.slice(pagination.from, pagination.to);
 
   useEffect(() => {
-    if (allProducts <= 0) {
+    if (allProducts.length == 0) {
       dispatch(getProduct());
+
     }
   }, [dispatch]);
 
@@ -90,7 +91,11 @@ export default function Products() {
               </Typography>{" "}
               <Button
                 color="primary"
-                onClick={() => dispatch(getProduct())}
+                onClick={() => {
+                  // dispatch(getProduct());
+                  // dispatch(cleanTrails())
+                  location.reload();
+                }}
                 sx={{
                   display: "block",
                   margin: "5rem 0 2rem 0",

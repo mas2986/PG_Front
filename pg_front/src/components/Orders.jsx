@@ -231,16 +231,7 @@ const Orders = () => {
       onRowSelectionChange={setRowSelection}
       state={{ rowSelection }}
       getRowId={(row) => row.id}
-/*       muiTableBodyCellEditTextFieldProps={({ row }) => ({
-        //onBlur is more efficient, but could use onChange instead
-        onBlur: (event) => {
-          row.original.orderStatus === "created"
-            ?
-            handleStatus(row, event.target.value)
-            :
-            null;
-        },
-      })} */
+      
       muiSelectCheckboxProps={({ row }) => ({
         color: 'secondary',
         disabled: row.original.isAccountLocked,
