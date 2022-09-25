@@ -26,8 +26,6 @@ export default function FormPropsTextFields({ props }) {
   const userAuth0 = useAuth0().user;
   let history = useHistory();
 
-
-
   // const [leyenda, setLeyenda] = React.useState("");
   // const [errorTexto, setErrorTexto] = React.useState(false);
   const [errors, setErrors] = React.useState({});
@@ -38,7 +36,7 @@ export default function FormPropsTextFields({ props }) {
   const user1 = useSelector((state) => state.user);
   const url = useSelector((state) => state.url);
   const dispatch = useDispatch();
-  console.log(user1)
+  console.log(user1);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -63,15 +61,13 @@ export default function FormPropsTextFields({ props }) {
     quantity: totalItems,
     orderStatus: "created",
     email: user1.email,
-    userId: user1.id
+    userId: user1.id,
   });
 
   // console.log(order);
 
   const handleButton = async (event) => {
-
     if (!texto.celNumber || texto.celNumber.length < 5) {
-
       return Swal.fire({
         title: "Check your cell phone!",
         text: "It must contain at least 5 characters.",
@@ -85,7 +81,8 @@ export default function FormPropsTextFields({ props }) {
         icon: "error",
       });
     }
-    if (typeof totalPrice !== 'number') order.totalPrice = totalPrice[0]
+    if (typeof totalPrice !== "number") order.totalPrice = totalPrice[0];
+
     else order.totalPrice = totalPrice;
     dispatch(createOrder(order, texto));
     setTimeout(function () {
@@ -117,7 +114,6 @@ export default function FormPropsTextFields({ props }) {
       setTotalPrice(total);
     } else {
       setTotalPrice(0);
-
     }
   }, []);
 
@@ -155,7 +151,7 @@ export default function FormPropsTextFields({ props }) {
               gridTemplateColumns: "20% 20%",
               // justifyContent: "space-evenly",
               gridGap: "1rem 10rem",
-              marginLeft: "3rem",
+              marginLeft: "8rem",
             }}
           >
             <TextField
@@ -172,7 +168,7 @@ export default function FormPropsTextFields({ props }) {
               }
               name="celNumber"
               value={texto.celNumber}
-            //      defaultValue="Hello World"
+              //      defaultValue="Hello World"
             />
             <TextField
               onChange={(e) => {
@@ -186,76 +182,79 @@ export default function FormPropsTextFields({ props }) {
               }
               name="email"
               value={texto.email}
-            //      defaultValue="Hello World"
+              //      defaultValue="Hello World"
             />
-         </div>                   
-             {
-            errors.celNumber ||
-              errors.email ? (
-                <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
-              ) : Object.keys(user).length > 0 ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="btn-form"
-                  onClick={(e) => handleButton(e)}
-                  disableElevation
-                  sx={{       
-                      width:"30vw",                                   
-                      height: "3rem",
-                      marginTop: "1rem",
-                      marginLeft:"7rem"
-                  }}
-                >
-                  BUY
+          </div>
+          <div style={{
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center",
+            justifyContent:"center"
+          }}>
+
+          {errors.celNumber || errors.email ? (
+            <h3 className={f.colour}>MANDATORY FIELDS MISSING</h3>
+          ) : Object.keys(user).length > 0 ? (
+            <Button
+              variant="contained"
+              color="primary"
+              className="btn-form"
+              onClick={(e) => handleButton(e)}
+              disableElevation
+              sx={{
+                width:"400px",
+                height:"70px",
+                margin:"40px"
+              }}
+            >
+              BUY
             </Button>
-              ) : (
-                  <Link to="/login">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className="btn-form"
-                      onClick={(e) =>
-                        Swal.fire({
-                          title: "You are not logged in",
-                          text: "Please log in or register to complete your purchase",
-                        })
-                      }
-                      disableElevation
-                      sx={{ 
-                        width:"30vw",                                           
-                        height: "3rem",
-                        marginTop: "1rem",
-                        marginLeft:"7rem"
-                    }}
-                    >
-                      BUY
+          ) : (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                color="primary"
+                className="btn-form"
+                onClick={(e) =>
+                  Swal.fire({
+                    title: "You are not logged in",
+                    text: "Please log in or register to complete your purchase",
+                  })
+                }
+                disableElevation
+                sx={{
+                  width:"400px",
+                  height:"70px",
+                  margin:"40px"
+                }}
+              >
+                BUY
               </Button>
+
                   </Link>
                 )}
-            <div className="btn-form">
-              <Link to="/">
-                <Button
-                  // href="/"
-                  variant="contained"
-                  className="btn-form"
-                  color="primary"
-                  sx={{                                        
-                    width:"30vw",
-                    height: "3rem",
-                    marginTop: "1rem",
-                    marginLeft:"6.5rem"
-                }}
-                >
-                  CANCEL
-                </Button>
-              </Link>
-            </div>
+           
+
           {/* <TextField
               id="outlined-required"
               label="ID"
               //      defaultValue="Hello World"
             /> */}
+
+            <Link to="/">
+              <Button
+                // href="/"
+                variant="contained"
+                color="primary"
+                sx={{
+                  width:"200px"
+                }}
+              >
+                CANCEL
+              </Button>
+            </Link>
+            </div>
+
 
           <Checkbox
             defaultChecked
@@ -264,9 +263,7 @@ export default function FormPropsTextFields({ props }) {
             sx={{ visibility: "hidden" }}
           />
         </Box>
-        <Box
-
-        >
+        <Box>
           <Typography
             variant="h4"
             color="primary"
@@ -291,7 +288,7 @@ export default function FormPropsTextFields({ props }) {
                 <Box sx={{ marginBottom: "2rem" }}>
                   <Card
                     sx={{
-                      maxHeight: "10rem",
+                      maxHeight: "11rem",
                       display: "flex",
                       flexDirection: "row-reverse",
                       maxWidth: "35rem",
@@ -303,14 +300,14 @@ export default function FormPropsTextFields({ props }) {
                     <CardMedia
                       component="img"
                       width="1rem"
-                      height="150"
+                      height="180"
                       image={i.image}
                       alt={i.title[0].toUpperCase() + i.title.substring(1)}
                       sx={{ position: "relative" }}
                     />
 
                     <CardContent sx={{ width: "30rem" }}>
-                      <Typography gutterBottom variant="h5" component="div">
+                      <Typography gutterBottom variant="h6" component="div">
                         {i.title}
                       </Typography>
                       <Typography>${i.price * i.qty}.00</Typography>
@@ -318,7 +315,7 @@ export default function FormPropsTextFields({ props }) {
                         flexGrow={1}
                         variant="body2"
                         color="text.secondary"
-                        sx={{ marginTop: "1.5rem" }}
+                        sx={{ marginTop: "0.5rem" }}
                       >
                         Number of items: {i.qty}
                       </Typography>
@@ -330,15 +327,31 @@ export default function FormPropsTextFields({ props }) {
           </Box>
 
           {totalPrice > 0 ? (
-            <Typography variant="h4" color="primary" textAlign="center">
-              Total: ${totalPrice}.00
-            </Typography>
+            <Box
+              sx={{
+                border: "1px solid #000",
+                padding: "1rem",
+                borderRadius: "3px",
+                margin: "1rem 0 5rem 0",
+              }}
+            >
+              <Typography variant="h4" color="primary" textAlign="center">
+                Total: ${totalPrice}.00
+              </Typography>
+            </Box>
           ) : (
+            <Box
+              sx={{
+                border: "1px solid #000",
+                padding: "1rem",
+                margin: "1rem 0 2rem 0",
+              }}
+            >
               <Typography variant="h5" color="primary" textAlign="center">
                 No Items Selected
-            </Typography>
-            )}
-
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
     </div>

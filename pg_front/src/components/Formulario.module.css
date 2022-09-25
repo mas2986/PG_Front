@@ -5,12 +5,7 @@
   border-radius: 20px;
 }
 
-.btn-form {
-  overflow: "hidden";
-  white-space:"nowarp";
-  text-overflow:"ellipsis"
-  /* margin: 20px; */
-}
+
 
 a {
   text-decoration: none;
