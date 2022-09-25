@@ -78,8 +78,7 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (input.email && input.password) {
-      console.log(input)
-      dispatch(signUp(input));
+      dispatch(signUp(input,history));
       // if(error!==''){
       // }
       //return history.push('/')

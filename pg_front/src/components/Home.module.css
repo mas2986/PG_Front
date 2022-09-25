@@ -25,7 +25,6 @@ html {
   opacity: 0.3;
 }
 
-
 .carousel-img:hover {
   cursor: pointer;
 }
@@ -37,7 +36,7 @@ html {
   overflow-x: hidden;
 }
 
-.homeh1{
+.homeh1 {
   color: #40f99b;
   margin: 0;
   padding: 0;
@@ -54,20 +53,20 @@ html {
   padding: 5px;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size:4rem ;
+  font-size: 4rem;
   font-weight: bolder;
   border-width: 0px;
   outline: none;
   border-radius: 5px;
-  background: #27ae60/*rgba(0,0,0,0)*/;
+  background: #27ae60 /*rgba(0,0,0,0)*/;
   color: #ecf0f1;
   transition: 0.3s;
   margin-bottom: 0;
 }
 
-.contactButton{
+.contactButton {
   margin-top: 2rem;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   border-color: #27ae60;
   border-style: solid;
   padding: 10px;
@@ -79,8 +78,8 @@ html {
   transition: 0.3s;
 }
 
-.contactButton:hover{
-  background-color: rgba(0,0,0,0.8);
+.contactButton:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .button:hover,
@@ -101,6 +100,10 @@ html {
 }
 
 .trails:hover {
+  cursor: pointer;
+}
+
+.homePictures:hover {
   cursor: pointer;
 }
 
