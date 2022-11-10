@@ -9,6 +9,7 @@ import {
   FILTER_SPORT,
   FILTER_GENRE,
   FILTER_BRAND,
+  GET_ABOUT,
   FILTER_NAV_GENDER,
   CHECK_LOGIN,
   LOGOUT,
@@ -45,14 +46,14 @@ import {
   VIEW_ORDER,
   CLEAN_DETAIL,
 } from "./const";
-const URL = "https://pg-athen.herokuapp.com"
+const URL = "https://backenhenry-production.up.railway.app"
 //const URL = "https://localhost:3001"
 
 export function signUp(body,history) {
   return async function (dispatch) {    
       console.log(body)
       try{
-      let user = await axios.post(`/api/login`, body);
+      let user = await axios.post(`${URL}/api/login`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       localStorage.setItem(`userDetails`, JSON.stringify(user.data));
       return dispatch({
@@ -86,6 +87,22 @@ export function mercadoPago(body) {
   };
 }
 
+export function getAbout(){
+  return async function(dispatch){
+    try{
+      let us = await axios.get('https://apimocha.com/henryapi/abauth');
+      console.log(us.data);
+      return dispatch({
+        type: GET_ABOUT,
+        payload: us.data
+      })
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+}
+
 export function createOrder(body, texto) {
   return async function (dispatch) {
     try {
@@ -110,8 +127,7 @@ export function createOrder(body, texto) {
 export function viewOrder(id) {
   return async function (dispatch) {
     try {
-      let json = await axios(`${URL}/api/order/user/${id}`);
-      console.log(json.data);
+      let json = await axios(`${URL}/api/order/user/${id}`);      
       return dispatch({
         type: VIEW_ORDER,
         payload: json.data,
@@ -122,12 +138,10 @@ export function viewOrder(id) {
   };
 }
 
-export function createReview(id, body) {
-  console.log(body);
+export function createReview(id, body) {  
   return async function (dispatch) {
     try {
-      let { review } = await axios.post(`${URL}/api/product/review/${id}`, body);
-      console.log(review.data);
+      let { review } = await axios.post(`${URL}/api/product/review/${id}`, body);      
       return dispatch({
         type: CREATE_REVIEW,
         payload: review.data,
@@ -197,20 +211,36 @@ export function changeOrderStatus(id, orderStatus, email) {
   };
 }
 
-export function passwordRemember(body) {
+export function passwordRemember(body,history) {
   return async function (dispatch) {
-    try {
-      console.log(body);
+    try {      
       let password = await axios.post(`${URL}/api/olvide-password`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
       // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      console.log(password);
+      Swal.fire({
+        title: "Ready! Check your email!",
+        text: "We have sent you the instructions to the email to reset your password.",
+        icon: "success",
+      })
+      history.push('/token')
       return dispatch({
         type: REMEMBER_PASSWORD,
         payload: password,
       });
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "User not found!",
+        text: `The user ${body.email} wasn't founded. Please, you must register `,
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "REGISTER",
+      }).then((result)=>{
+        if(result.isConfirmed) {history.push('/user')}
+        else history.push('/')
+      });
+      
     }
   };
 }
@@ -220,8 +250,7 @@ export function resetPassword(body) {
     try {
       let newPassword = await axios.post(`${URL}/api/olvide-passwords`, body);
       //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      console.log(newPassword);
+      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));      
 
       return (
         dispatch({

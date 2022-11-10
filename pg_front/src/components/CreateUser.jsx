@@ -31,8 +31,7 @@ export default function CreateUser() {
       //Al ser un objeto debemos pasarle el obj y no solo los inputs
       ...texto,
       [e.target.name]: e.target.value,
-    });
-    console.log(e.target.value);
+    });    
   }
 
   function handleChange(e) {
@@ -69,23 +68,19 @@ export default function CreateUser() {
         icon: "error",
       });
     }
-    // Swal.fire("¡User created successfully!", "¡Thank you for visiting our website!"),
-    console.log(texto);
+    // Swal.fire("¡User created successfully!", "¡Thank you for visiting our website!"),    
     dispatch(createUser(texto));
     history.push("/");
   }
 
-  const handleWidget = () => {
-    console.log("Abrir widget");
+  const handleWidget = () => {    
     var myWidget = window.cloudinary.createUploadWidget(
       {
         cloudName: "athensimages",
         uploadPreset: "AthensImages",
       },
-      (error, result) => {
-        console.log(error);
-        if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
+      (error, result) => {        
+        if (!error && result && result.event === "success") {          
           setTexto({
             ...texto,
             image: result.info.url,
