@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button/Button";
 import s from "./SearchBar.module.css";
 import lupa from "../lupa.png";
+import Swal from "sweetalert2";
 import SearchIcon from "@mui/icons-material/Search";
 import { Tooltip } from "@mui/material";
 import { useHistory } from "react-router-dom";
@@ -14,15 +15,22 @@ export default function SearchBar() {
   const history = useHistory();
 
   function handleInput(e) {
-    setInput(e.target.value);
-    console.log(e.target.value);
+    setInput(e.target.value);    
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(searchProduct(input));
-    setInput("");
-    history.push("/products");
+    if(input!==''){
+      dispatch(searchProduct(input));
+      setInput("");
+      return history.push("/products");
+    }
+    Swal.fire({
+      title: "Item not valid!",
+      text: `Please, enter an item to search`,
+      icon: "warning",
+      confirmButtonText: "ACCEPT",
+    });
   }
 
   return (
