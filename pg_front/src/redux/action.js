@@ -229,8 +229,7 @@ export function passwordRemember(body,history) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(`${URL}/api/olvide-passwords`, bod   
-
+    let newPassword = await axios.post(`${URL}/api/olvide-passwords`, body);
       return (
         dispatch({
           type: RESET_PASSWORD,
