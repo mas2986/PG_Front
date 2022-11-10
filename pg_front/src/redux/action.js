@@ -46,6 +46,7 @@ import {
   VIEW_ORDER,
   CLEAN_DETAIL,
 } from "./const";
+
 const URL = "https://backenhenry-production.up.railway.app"
 //const URL = "https://localhost:3001"
 
@@ -76,7 +77,6 @@ export function mercadoPago(body) {
     try {
       console.log("En funcion MP")
       let order = await axios.post(`${URL}/api/crear-orden`,body);
-      console.log(order.data);
       return dispatch({
         type: ORDER_MERCADOPAGO,
         payload: order.data.url,
@@ -87,21 +87,6 @@ export function mercadoPago(body) {
   };
 }
 
-export function getAbout(){
-  return async function(dispatch){
-    try{
-      let us = await axios.get('https://apimocha.com/henryapi/abauth');
-      console.log(us.data);
-      return dispatch({
-        type: GET_ABOUT,
-        payload: us.data
-      })
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
-}
 
 export function createOrder(body, texto) {
   return async function (dispatch) {
@@ -173,8 +158,7 @@ export function getOrderById(id) {
 export function getOrderByUser(id) {
   return async function (dispatch) {
     try {
-      let orderUser = await axios.get(`${URL}/api/order/user/${id}`);
-      // console.log(orderUser)
+      let orderUser = await axios.get(`${URL}/api/order/user/${id}`);      
       return dispatch({
         type: GET_ORDER_BY_USER,
         payload: orderUser.data,
@@ -186,8 +170,7 @@ export function getOrderByUser(id) {
 }
 
 export function changeOrderStatus(id, orderStatus, email) {
-  let body = { orderStatus, email };
-  console.log(body);
+  let body = { orderStatus, email };  
   return async function (dispatch) {
     try {
       let statusOrder = await axios.put(`${URL}/api/order/${id}`, body);
@@ -214,9 +197,7 @@ export function changeOrderStatus(id, orderStatus, email) {
 export function passwordRemember(body,history) {
   return async function (dispatch) {
     try {      
-      let password = await axios.post(`${URL}/api/olvide-password`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
+      let password = await axios.post(`${URL}/api/olvide-password`, body);      
       Swal.fire({
         title: "Ready! Check your email!",
         text: "We have sent you the instructions to the email to reset your password.",
@@ -248,9 +229,7 @@ export function passwordRemember(body,history) {
 export function resetPassword(body) {
   return async function (dispatch) {
     try {
-      let newPassword = await axios.post(`${URL}/api/olvide-passwords`, body);
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));      
+      let newPassword = await axios.post(`${URL}/api/olvide-passwords`, bod   
 
       return (
         dispatch({
@@ -307,17 +286,12 @@ export function createUser(body) {
 export function getAllUsers(body) {
   return async function (dispatch) {
     try {
-      // const tokenJSON = JSON.parse(localStorage.getItem("userDetails"));
-      // const { token } = tokenJSON;
       let users = await axios.get(`${URL}/api/user`, {
         headers: {
           Authorization: `Bearer 23k4!jhisd&jhf8*asfdasdf$dsf45%&`,
         },
       });
 
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      //console.log(user.data.data.user);
       return dispatch({
         type: GET_ALL_USERS,
         payload: users.data,
@@ -338,9 +312,6 @@ export function changeRoleUser(id, body) {
           Authorization: `Bearer ${token}`,
         },
       });
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      //console.log(user.data.data.user);
       Swal.fire({
         title: "Role changed!",
         text: `${body.name} now is ${body.rol}`,
@@ -372,9 +343,6 @@ export function deleteUser(id, name) {
           Authorization: `Bearer ${token}`,
         },
       });
-      //user.data.expire = new(new Date().getTime() + user.data.expire)
-      // localStorage.setItem(`userDetails`, JSON.stringify(user.data));
-      //console.log(user.data.data.user);
       Swal.fire({
         title: "User deleted!",
         text: `${name} was deleted`,
@@ -537,8 +505,7 @@ export function filterByGenre(payload) {
   };
 }
 
-export function filterByBrand(payload) {
-  console.log(payload);
+export function filterByBrand(payload) {  
   return {
     type: FILTER_BRAND,
     payload, //Acá llegaría el tipo de genero
@@ -581,8 +548,7 @@ export function detailProduct(id) {
 }
 
 export function logout(history) {
-  history.push("/");
-  console.log("En action logout");
+  history.push("/");  
   return {
     type: LOGOUT,
   };
@@ -675,8 +641,7 @@ export function getAllOrders() {
 export function getReviews() {
   return async function (dispatch) {
     const resp = await axios.get(`${URL}/api/review`);
-    const data = resp.data;
-    console.log(resp);
+    const data = resp.data;    
     if (resp) {
       return dispatch({ type: GET_REVIEWS, payload: data });
     }
