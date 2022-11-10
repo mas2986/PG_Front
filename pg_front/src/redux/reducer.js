@@ -110,6 +110,7 @@ export const rootReducer = (state = initialState, action) => {
         password: action.payload,
       };
     case SIGN_UP:
+    console.log(action.payload)
       return {
         ...state,
         user: action.payload.user,

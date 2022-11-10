@@ -28,8 +28,7 @@ export default function Password() {
         //Al ser un objeto debemos pasarle el obj y no solo los inputs
         ...texto,
        email: e.target.value,
-      });
-      console.log(e.target.value)
+      });      
     }
 
   function handleClick (e) {
@@ -40,13 +39,7 @@ export default function Password() {
       if (!texto.email.includes("@")) {
         return Swal.fire({title:'¡There was an error in the email!', text:"The email should be for example: ..@mail.com.ar", icon: "error"})
       }
-      dispatch(passwordRemember(texto));
-      Swal.fire({
-        title: "Ready! Check your email!",
-        text: "We have sent you the instructions to the email to reset your password.",
-        icon: "success",
-      })
-      history.push('/token')
+      dispatch(passwordRemember(texto,history));
     }
 
   return (
